@@ -1,0 +1,1 @@
+<td class="pNews10"><?=$title?></td>

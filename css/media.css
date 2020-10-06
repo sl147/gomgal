@@ -1,0 +1,112 @@
+/*==========  Desktop First Method  ==========*/
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+
+.bordLeft {
+height:120px;
+}
+.reklPicture {
+padding: 10px 30px; 
+}
+.arhYear {
+margin-left: 30px;
+font-size: 12px;
+}
+.arhYear2 {
+margin-left: 30px;
+font-size: 12px; 
+}
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 1024px) {
+
+}
+
+@media only screen and (max-width : 992px) {
+	.showLarge {
+		display: none;	
+	}
+	.showSmall {
+		display: block;	
+	}
+
+	.showRekl {
+    display: block;  
+  }
+	#vote {
+		width: 100%;
+	}
+	.main_menu{
+		display: none;
+		position: absolute;
+		width: 100%;
+	}
+	.reklPicture {
+		padding: 10px 180px; 
+	}	
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+	.top_links {
+		background-color: #585d61;
+		display: none;
+		margin-top: 15px;
+		padding: 14px;
+		position: absolute;
+		vertical-align: middle;
+		width: 100%;
+	}
+	.header_topline {
+		display: none;
+	}
+
+	.fb {
+		display: none;
+	}	
+	.reklT {
+		display: none;
+	}
+	.reklPicture {
+		padding: 10px 120px; 
+	}
+
+}
+
+@media only screen and (max-width : 736px) {
+
+}
+
+@media only screen and (max-width : 667px) {
+
+}
+
+@media only screen and (max-width : 600px) {
+
+}
+
+@media only screen and (max-width : 568px) {
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px) {
+.reklPicture {
+display: none;
+}
+}
+@media only screen and (max-width : 414px) {
+
+}
+
+@media only screen and (max-width : 384px) {
+
+}
+@media only screen and (max-width : 375px) {
+
+}
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width : 320px) {
+
+}
