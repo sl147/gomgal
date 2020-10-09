@@ -56,6 +56,15 @@ class classGetData extends classGetDB
 		return $this->getRow($this->getDB("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue)));
 	}
 
+/** Отримуєм записи з таблиці $this->table по елементу $elName
+ *
+ *  @return масив даних
+ */
+	public function getDataFromTableByNameWithOutRow ($elValue,$elName) {
+		//return $this->getRow($this->getDB("SELECT * FROM ".$this->table." WHERE ".$elName."= '$elValue'"));	
+		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue));
+	}
+
 /** Отримуєм записи з таблиці $this->table по елементу $elName->fetch()
  *
  *  @return елемент даних
@@ -135,6 +144,14 @@ class classGetData extends classGetDB
  */
 	public function getDataByOffset ($id,$show,$offset) {
 		return $this->getRow($this->getDB("SELECT * FROM ".$this->table." ORDER BY ".$id." DESC LIMIT ".$show." OFFSET $offset"));	
+	}
+
+/** Отримуєм записи з таблиці $this->table по offset
+ *
+ *  @return масив даних
+ */
+	public function getDataByOffsetWithOutRow ($id,$show,$offset) {
+		return $this->getDB("SELECT * FROM ".$this->table." ORDER BY ".$id." DESC LIMIT ".$show." OFFSET $offset");	
 	}
 
 /** Видадаєм запис з таблиці $this->table

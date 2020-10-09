@@ -34,17 +34,21 @@ class FA {
 	}
 
 	public static function getFAName($name) {
-		$sql    = "SELECT * FROM photoalbum WHERE name_FA='".$name."' LIMIT 1";
-		$result = Auxiliary::getSQLAux($sql);
-		return $result->fetch();
+		$getData  = new classGetData('photoalbum');
+		$NewsList = $getData->getDataFromTableByNameFetch($name,'name_FA');
+		unset($getData);
+		return $NewsList;
 	}
 
 	public static function getFAId($id) {
-		$result = Auxiliary::getSQLAux("SELECT * FROM photoalbum".Auxiliary::formSqlAux("id_FA",$id)." LIMIT 1");
-		return $result->fetch();
+		$getData  = new classGetData('photoalbum');
+		$NewsList = $getData->getDataFromTableByNameFetch($id,'id_FA');
+		unset($getData);
+		return $NewsList;
 	}
 
-	public static function getFA() {
+/*	public static function getFA() {
+		echo "here getFA";
 		$sql    = "SELECT * FROM photoalbum, photoInAlbum WHERE photoInAlbum.id_album = photoalbum.id_FA";
 		$result = Auxiliary::getSQLAux($sql);
 		$i      = 1;
@@ -56,13 +60,13 @@ class FA {
 			$i++;
 		}
 		return $faList ?? [];
-	}
+	}*/
 
 	public static function getFAAll($page = 1) {
-		$page   = Auxiliary::getIntval($page);
-		$offset = (intval($page) - 1) * SHOWFA_BY_DEFAULT;
-		$sql    = "SELECT * FROM photoalbum ORDER BY id_FA DESC LIMIT ".SHOWFA_BY_DEFAULT." OFFSET $offset";
-		$result = Auxiliary::getSQLAux($sql);
+		$offset = (Auxiliary::getIntval($page) - 1) * SHOWFA_BY_DEFAULT;
+		$getData  = new classGetData('photoalbum');
+		$result = $getData->getDataByOffsetWithOutRow('id_FA',SHOWFA_BY_DEFAULT,$offset);
+		unset($getData);
 		$i      = 1;
 		while ($row = $result->fetch()) {			
 			$faList[$i]['id']   = $row['id_FA'];
@@ -76,8 +80,10 @@ class FA {
 	}
 
 	public static function getFAOne($id) {
-		$result = Auxiliary::getSQLAux("SELECT * FROM photoInAlbum".Auxiliary::formSqlAux("id_album",$id));
-		$i      = 1;
+		$getData = new classGetData('photoInAlbum');
+		$result  = $getData->getDataFromTableByNameWithOutRow ($id,"id_album");
+		unset($getData);
+		$i       = 1;
 		while ($row = $result->fetch()) {			
 			$faOne[$i]['id']        = $row['id_foto'];
 			$faOne[$i]['subscribe'] = $row['subscribe'];
