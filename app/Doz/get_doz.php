@@ -1,6 +1,6 @@
 <?php
 $response = [];
-$result = Auxiliary::getSQL("SELECT * FROM msgs_relax ORDER BY countrl  DESC LIMIT 20");
+$result = Auxiliary::getSQLAux("SELECT * FROM msgs_relax ORDER BY countrl  DESC LIMIT 20");
 if ($result) {
 	while ($row = $result->fetch()) {
 		$new_item = array(

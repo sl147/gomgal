@@ -3,7 +3,7 @@ $response = [];
 if (isset($_POST['cat'])) {
 	$cat    = $_POST['cat'];
 	$s      = "SELECT * FROM msgs WHERE category='".$cat."' ORDER BY id DESC LIMIT 13";
-	$result = Auxiliary::getSQL($s);
+	$result = Auxiliary::getSQLAux($s);
 	if ($result) {
 			$new_item = array(
 				'id'    => $s,

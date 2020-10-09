@@ -10,7 +10,7 @@ class Comment {
 		$offset  = ($page - 1) * self::SHOWCOMMENTS_BY_DEFAULT;
 		$comList = $getData->getDataByOffset ('id_com',self::SHOWCOMMENTS_BY_DEFAULT,$offset);
 		unset($getData);
-		return $comList;
+		return $comList ?? [];
 	}
 
 	public static function getCommentsById($id) {
@@ -18,7 +18,7 @@ class Comment {
 		$getData = new classGetData('Comment');
 		$comList = $getData->getDataFromTableByName($id,'id_cl');
 		unset($getData);
-		return $comList;
+		return $comList ?? [];
 	}	
 
 	public static function insComment($id_cl,$txt_com,$nik_com,$email_com,$ip_com) {

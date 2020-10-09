@@ -1,7 +1,7 @@
 <?php
 $response = [];
 $result   = News::getNewsById($id);
-//$result = Auxiliary::getSQL("SELECT * FROM msgs ORDER BY id  DESC LIMIT 10");
+//$result = Auxiliary::getSQLAux("SELECT * FROM msgs ORDER BY id  DESC LIMIT 10");
 if ($result) {
 	while ($row = $result->fetch()) {
 		$new_item = array(

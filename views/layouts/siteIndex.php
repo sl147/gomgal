@@ -40,12 +40,12 @@
 					<?php include 'views/layouts/rightSide.php';?>
 				</div>
 			</div>
-			<div class="showSmall">
+<!-- 			<div class="showSmall">
 				<div class='col-lg-3 col-md-3 col-sm-12 col-xs-12'>
 
 					<?php include $siteSmall;?>
 				</div>
-			</div>	
+			</div>	 -->
 		</div>
 		<?php include 'views/layouts/footer.php';?>		
 

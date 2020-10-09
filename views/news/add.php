@@ -9,7 +9,7 @@
 	<label>Preview новини:</label>
 		<textarea type = "text" name = "prew" rows ='2' cols = '95' maxlength="200" required></textarea><br><br>
     <label>Топ новина</label>
-    	<input class="checkboxTop" name="top" type="checkbox"><br>
+    	<input class="checkboxTop" name="top" type="checkbox"><br><br>
 	<label>категорія:</label>
 		<select id = 'cat' name = 'category' required>
 	    <?

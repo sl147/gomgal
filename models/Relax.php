@@ -13,7 +13,6 @@ class Relax {
 	private static function getMsgs($cat,$sql) {
 		$cat    = Auxiliary::getIntval($cat);
 		$db     = Db::getConnection();
-		$list   = [];
 		$result = $db -> query($sql);
 		while ($row = $result->fetch()) {			
 			$list[] = $row;
@@ -22,11 +21,10 @@ class Relax {
 			$list[0]['id']  = '';
 			$list[0]['msg'] = '';
 		}
-		return $list;
+		return $list ?? [];
 	}
 
 	public static function getRelaxRandom($cat) {
-		$cat = Auxiliary::getIntval($cat);
 		$arr = self::getRelaxMsg($cat);
 		if (count($arr) > 0) {
 			$j   = rand (0,count($arr)-1);
@@ -42,27 +40,25 @@ class Relax {
 	}
 
 	public static function getRelax() {
-		$sql    = "SELECT * FROM catrelax";
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux("SELECT * FROM catrelax");
 		$i      = 1;
 		while ($row = $result->fetch()) {			
 			$relaxList[$i]['id']   = $row['idrl'];
 			$relaxList[$i]['name'] = $row['namerl'];
 			$i++;
 		}
-		return $relaxList;
+		return $relaxList ?? [];
 	}
 
 	public static function getAnList() {
-		$sql    = "SELECT * FROM catan ORDER BY namerl";
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux("SELECT * FROM catan ORDER BY namerl");
 		$i      = 1;
 		while ($row = $result->fetch()) {			
 			$relaxList[$i]['id']   = $row['idrl'];
 			$relaxList[$i]['name'] = $row['namerl'];
 			$i++;
 		}
-		return $relaxList;
+		return $relaxList ?? [];
 	}
 
 	public static function getRelaxMsg($cat) {
@@ -72,8 +68,7 @@ class Relax {
 
 	public static function getLikeVue($id,$count) {
 		$db     = self::getDBVue();	
-		$sql    = "UPDATE msgs_relax SET countrl='".$count."' WHERE id='".$id."'";
-		$result = $db -> query($sql);
+		$result = $db -> query("UPDATE msgs_relax SET countrl='".$count."' WHERE id='".$id."'");
 
 		return true;
 	}
@@ -96,7 +91,7 @@ class Relax {
 		    $relaxList[$i]['sql'] = $sql;		
 			$i++;
 		}
-			return $relaxList;
+		return $relaxList ?? [];
 	}
 
 	public static function getAnThemaVue($teman = 1,$page = 1, $SHOWRELAX = 1) {
@@ -108,7 +103,7 @@ class Relax {
 		while ($row = $result->fetch()) {
 			$relaxList[]=$row;
 		}
-		return $relaxList;
+		return $relaxList ?? [];
 	}
 
 	public static function addNewAn($teman, $msg) {
@@ -137,18 +132,14 @@ class Relax {
 	}
 
 	public static function updateRelax($id, $msg, $cat) {
-		$id     = Auxiliary::getIntval($id);
-		$sql    = "UPDATE msgs_relax SET msg = :msg, category = :cat WHERE id=$id";
-		$result = Auxiliary::getPrepareSQL($sql);
+		$result = Auxiliary::getPrepareSQL("UPDATE msgs_relax SET msg = :msg, category = :cat".Auxiliary::formSqlAux("id",$id));
 		Auxiliary::bindParam($result,':msg', $msg);
 		Auxiliary::bindParam($result,':cat', $cat);
 		return $result -> execute();			
 	}
 
 		public static function updateCountRelax($id, $count) {
-		$id     = Auxiliary::getIntval($id);
-		$sql    = "UPDATE msgs_relax SET countrl = :count WHERE id=$id";
-		$result = Auxiliary::getPrepareSQL($sql);
+		$result = Auxiliary::getPrepareSQL("UPDATE msgs_relax SET countrl = :count".Auxiliary::formSqlAux("id",$id));
 		Auxiliary::bindParam($result,':count', $count);
 		return $result -> execute();			
 	}

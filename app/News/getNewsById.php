@@ -3,7 +3,7 @@ $response = [];
 if (isset($_POST['id'])) {
 	$id    = $_POST['id'];
 	$s      = "SELECT * FROM msgs WHERE id=".$id;
-	$result = Auxiliary::getSQL($s);
+	$result = Auxiliary::getSQLAux($s);
 	if ($result) {
 		while ($row = $result->fetch()) {
 			$new_item = array(

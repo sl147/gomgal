@@ -1,13 +1,10 @@
 <?php
 require_once ('../models/Auxiliary.php');
 
-$vote = array();
-//$pr   = array();
+$vote = [];
 $MK   = new Auxiliary();
-
 $vote = $MK->getVoteVueAd();
-//$pr   = $MK->getTxtVoteVue($vote['id']);
-$data = array();
+$data = [];
 
 foreach ($vote as $item) {
   	$new_item = array(

@@ -35,22 +35,18 @@ class FA {
 
 	public static function getFAName($name) {
 		$sql    = "SELECT * FROM photoalbum WHERE name_FA='".$name."' LIMIT 1";
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux($sql);
 		return $result->fetch();
 	}
 
 	public static function getFAId($id) {
-		$id     = Auxiliary::getIntval($id);
-		$FA     = [];
-		$sql    = "SELECT * FROM photoalbum WHERE id_FA='".$id."' LIMIT 1";
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux("SELECT * FROM photoalbum".Auxiliary::formSqlAux("id_FA",$id)." LIMIT 1");
 		return $result->fetch();
 	}
 
 	public static function getFA() {
 		$sql    = "SELECT * FROM photoalbum, photoInAlbum WHERE photoInAlbum.id_album = photoalbum.id_FA";
-		$result = Auxiliary::getSQL($sql);
-		$faList =[];
+		$result = Auxiliary::getSQLAux($sql);
 		$i      = 1;
 		while ($row = $result->fetch()) {			
 			$faList[$i]['id']   = $row['id_FA'];
@@ -59,35 +55,29 @@ class FA {
 			$faList[$i]['fns']  ='/album/'.$row['id_FA'].'/'.$row["fotoName"];			
 			$i++;
 		}
-		return $faList;
+		return $faList ?? [];
 	}
 
 	public static function getFAAll($page = 1) {
 		$page   = Auxiliary::getIntval($page);
 		$offset = (intval($page) - 1) * SHOWFA_BY_DEFAULT;
 		$sql    = "SELECT * FROM photoalbum ORDER BY id_FA DESC LIMIT ".SHOWFA_BY_DEFAULT." OFFSET $offset";
-		$result = Auxiliary::getSQL($sql);
-		$faList =[];
+		$result = Auxiliary::getSQLAux($sql);
 		$i      = 1;
 		while ($row = $result->fetch()) {			
 			$faList[$i]['id']   = $row['id_FA'];
 			$faList[$i]['name'] = $row['name_FA'];
 			$foto = self::getFAOne($row['id_FA']);
 			$faList[$i]['foto'] = $foto[1]["fotoName"];
-			//$faList[$i]['fns']  ='/album/'.$row['id_FA'].'/'.$row["fotoName"];
-			//$faList[$i]['fns']  ='/album/'.$row['id_FA'].'/'.$foto[1]["fotoName"];
 			$faList[$i]['fns']  =$foto[1]["fotoNameS"];
 			$i++;
 		}
-		return $faList;
+		return $faList ?? [];
 	}
 
 	public static function getFAOne($id) {
-		$id     = Auxiliary::getIntval($id);
-		$sql    = "SELECT * FROM photoInAlbum WHERE id_album=".$id;
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux("SELECT * FROM photoInAlbum".Auxiliary::formSqlAux("id_album",$id));
 		$i      = 1;
-		$faOne  = [];
 		while ($row = $result->fetch()) {			
 			$faOne[$i]['id']        = $row['id_foto'];
 			$faOne[$i]['subscribe'] = $row['subscribe'];
@@ -95,30 +85,26 @@ class FA {
 			$faOne[$i]['fotoNameS'] = '../album/'.$id.'/'.$row['fotoNameS'];
 			$i++;
 		}
-		return $faOne;
+		return $faOne ?? [];
 	}
 	
 	public static function getFAVue() {
 		$db     = self::getDBVue();
-		$sql    = "SELECT * FROM photoalbum ORDER BY id_FA DESC";
-		$result = $db -> query($sql);
+		$result = $db -> query("SELECT * FROM photoalbum ORDER BY id_FA DESC");
 		$i      = 1;
-		$faList = [];
 		while ($row = $result->fetch()) {			
 			$faList[$i]['id']   = $row['id_FA'];
 			$faList[$i]['name'] = $row['name_FA'];
 			$i++;
 		}
-		return $faList;
+		return $faList ?? [];
 	}
 
 	public static function getFAOneVue($id) {
-		//$id     = Auxiliary::getIntval($id);
 		$db     = self::getDBVue();
 		$sql    = "SELECT * FROM photoInAlbum WHERE id_album=".$id;
 		$result = $db -> query($sql);
 		$i      = 1;
-		$faOne  = [];
 		while ($row = $result->fetch()) {			
 			$faOne[$i]['id']        = $row['id_foto'];
 			$faOne[$i]['subscribe'] = $row['subscribe'];
@@ -126,7 +112,7 @@ class FA {
 			$faOne[$i]['isFile']    = file_exists ($faOne[$i]['fotoName']);
 			$i++;
 		}
-		return $faOne;
+		return $faOne ?? [];
 	}
 
 	public static function updateFAVue ($id,$subscribe) {

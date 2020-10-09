@@ -13,64 +13,59 @@ class Poster
 	}
 
 	public static function getPosters20() {
-		$list   = [];
 		$sql    = "SELECT id_poster,title_p FROM poster WHERE active='0' ORDER BY id_poster DESC LIMIT 20";
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux($sql);
 		while ($row = $result->fetch()) {
 			$list[]=$row;
 		}
-		return $list;
+		return $list ?? [];
 	}
 
 	public static function getAllPostersImpotCat($cat) {
 		$cat    = Auxiliary::getIntval($cat);
-		$list   = [];
 		$sql    = "SELECT * FROM poster WHERE (cat_p = $cat) AND (impot=1) ORDER BY id_poster DESC";
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux($sql);
 		while ($row = $result->fetch()) {
 			$list[]=$row;			
 		}
-		return $list;
+		return $list ?? [];
 	}
 
 	public static function getAllPostersImpot() {
-		$list   = [];
 		$sql    = "SELECT * FROM poster WHERE impot=1 ORDER BY id_poster DESC";
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux($sql);
 		while ($row = $result->fetch()) {
 			$list[]=$row;			
 		}
-		return $list;
+		return $list ?? [];
 	}
 
 	public static function getAllPostersAllCat($cat, $page = 1) {
 		$cat    = Auxiliary::getIntval($cat);
 		$page   = Auxiliary::getIntval($page);
-		$list   = [];
 		$offset = (intval($page) - 1) * SHOWPOSTER_BY_DEFAULT;
 		$sql    = "SELECT * FROM poster WHERE (cat_p = $cat) AND ((NOT impot=1) OR (impot IS NULL)) ORDER BY id_poster DESC LIMIT ".SHOWPOSTER_BY_DEFAULT." OFFSET $offset";
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux($sql);
 		while ($row = $result->fetch()) {
 			$list[]=$row;			
 		}
-		return $list;
+		return $list ?? [];
 	}
 
 	public static function getPostersAll() {
 		$db     = self::getDBVue();
 		$sql    = "SELECT * FROM poster WHERE ((impot=0) OR (impot IS NULL))";
 		$result = $db -> query($sql);
-		$i=1;
+		$i      = 1;
 		while ($row = $result->fetch()) {
 			$postList[$i]['id']      = $row['id_poster'];
 			$postList[$i]['title_p'] = $row['title_p'];
 			$i++;			
 		}
-		return $postList;
+		return $postList ?? [];
 	}
 
 	public static function getAllPostersVue($page = 1) {
-		$postList = [];
 		$offset   = ($page - 1) * self::SHOWPOSTER_BY_VUE;
 		$db       = self::getDBVue();
 		$sql      = "SELECT * FROM poster ORDER BY id_poster DESC LIMIT ".self::SHOWPOSTER_BY_VUE." OFFSET $offset";
@@ -85,42 +80,39 @@ class Poster
 			$postList[$i]['count_p']  = $row['count_p'];
 			$i++;			
 		}
-		return $postList;
+		return $postList ?? [];
 	}
 
 	public static function getAllPostersAll($page = 1) {
 		$page     = Auxiliary::getIntval($page);
-		$list = [];
 		$offset   = ($page - 1) * SHOWPOSTER_BY_DEFAULT;
 		$sql      = "SELECT * FROM poster WHERE ((impot=0) OR (impot IS NULL)) ORDER BY id_poster DESC LIMIT ".SHOWPOSTER_BY_DEFAULT." OFFSET $offset";
 		//$sql      = "SELECT * FROM poster ORDER BY id_poster DESC LIMIT ".SHOWPOSTER_BY_DEFAULT." OFFSET $offset";
-		$result  = Auxiliary::getSQL($sql);
+		$result  = Auxiliary::getSQLAux($sql);
 		while ($row = $result->fetch()) {
 			$list[]=$row;	
 		}
-		return $list;
+		return $list ?? [];
 	}
 
 	public static function getFindPosters($txt,$page = 1) {
 		$page     = Auxiliary::getIntval($page);
-		$list = [];
 		$offset   = ($page - 1) * SHOWPOSTER_BY_DEFAULT;
 		$sql      = "SELECT * FROM poster WHERE (active= 0) and (impot='0') and (LOCATE('".$txt."',msg_p)) ORDER BY id_poster DESC LIMIT ".SHOWPOSTER_BY_DEFAULT." OFFSET $offset";
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux($sql);
 		while ($row = $result->fetch()) {
 			$list[] = $row;		
 		}
-		return $list;
+		return $list ?? [];
 	}
 
 	public static function getFindPostersImpot($txt) {
-		$list = [];
 		$sql  = "SELECT * FROM poster WHERE (active= 0) and (impot='1') and (LOCATE('".$txt."',msg_p)) ORDER BY id_poster DESC";
-		$res = Auxiliary::getSQL($sql);
+		$res = Auxiliary::getSQLAux($sql);
 		while ($row = $res->fetch()) {
 			$list[] = $row;			
 		}
-		return $list;
+		return $list ?? [];
 	}
 
 	public static function getFormat($i) {
@@ -128,8 +120,7 @@ class Poster
 	}
 
 	public static function getPostersVerify() {
-		$sql    = "SELECT * FROM catagory";
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux("SELECT * FROM catagory");
 		while ($row = $result->fetch()) {
 			$id_cat                 = $row['id_cat'];
             $count_buy    [$id_cat] = 0;
@@ -138,8 +129,8 @@ class Poster
             $count_change [$id_cat] = 0;
             $count_job    [$id_cat] = 0;
 		}
-		$sql    = "SELECT * FROM poster";
-		$result = Auxiliary::getSQL($sql);
+
+		$result = Auxiliary::getSQLAux("SELECT * FROM poster");
 		while ($row = $result->fetch()) {
 		    $type_p = intval($row['type_p']);
 		    $cat_p  = intval($row['cat_p']);
@@ -163,8 +154,8 @@ class Poster
 				}
 			}
 		}
-		$sql    = "SELECT * FROM catagory";
-		$result = Auxiliary::getSQL($sql);
+
+		$result = Auxiliary::getSQLAux("SELECT * FROM catagory");
 		while ($row = $result->fetch()) {
 			$id_cat = $row['id_cat'];
             $buy    = $count_buy   [$id_cat];
@@ -182,7 +173,7 @@ class Poster
 		$getData = new classGetData('catagory');
 		$catList = $getData->getDataFromTableOrder('cat_cat','');
 		unset($getData);
-		return $catList;
+		return $catList ?? [];
 	}
 
 	public static function getPostersCat() {
@@ -192,8 +183,7 @@ class Poster
 		$count_change_all = 0;
 		$count_job_all    = 0;
 		$count_all_all    = 0;
-		$sql    = "SELECT * FROM catagory ORDER BY cat_cat";
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux("SELECT * FROM catagory ORDER BY cat_cat");
 		$i      = 1;
 		while ($row = $result->fetch()) {
 			$catList[$i]['id']           = $row['id_cat'];
@@ -241,22 +231,18 @@ class Poster
 	}
 
 	public static function plusId($id) {
-		$id  = Auxiliary::getIntval($id);
-		$sql = "UPDATE poster SET count_p = count_p+1 WHERE id_poster=$id";
-		return Auxiliary::getSQL($sql);
+		return Auxiliary::getSQLAux("UPDATE poster SET count_p = count_p+1".Auxiliary::formSqlAux("id_poster",$id));
 	}
 
 	public static function getFindTotalPoster($txt) {
 		$sql    = "SELECT count(*) as count FROM poster WHERE LOCATE('".$txt."',msg_p)";
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux($sql);
 		$result -> setFetchMode(PDO::FETCH_ASSOC);
 		return $result->fetch()['count'];
 	}
 
 	public static function updateFoto ($id,$foto) {
-		$id     = Auxiliary::getIntval($id);
-		$sql    = "UPDATE poster SET foto_p1=:foto WHERE id_poster=$id";
-		$result = Auxiliary::getPrepareSQL($sql);
+		$result = Auxiliary::getPrepareSQL("UPDATE poster SET foto_p1=:foto".Auxiliary::formSqlAux("id_poster",$id));
 		$result -> bindParam(':foto', $foto, PDO::PARAM_STR);			
 		return $result -> execute();			
 	}
@@ -273,9 +259,8 @@ class Poster
 	}
 
 	public static function getTypePost($type) {
-		$type = Auxiliary::getIntval($type);
 		$tPos = self::getAllTypePost();
-		return $tPos[$type];
+		return $tPos[Auxiliary::getIntval($type)];
 	}
 
 	public static function incrType ($cat,$type) {

@@ -1,7 +1,7 @@
 <?php
 $response = [];
 if (isset($_POST['id'])) {
-	$result = Auxiliary::getSQL("SELECT * FROM poster WHERE id_poster=".$_POST['id']);
+	$result = Auxiliary::getSQLAux("SELECT * FROM poster WHERE id_poster=".$_POST['id']);
 	if ($result) {
 		while ($row = $result->fetch()) {
 			$new_item = array(

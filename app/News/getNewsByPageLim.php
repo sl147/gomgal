@@ -5,7 +5,7 @@ if (isset($_GET['page'])) {
 	$limit  = $_GET['limit'];
 	$offset   = ($page - 1) * $limit;
 	$sql      = "SELECT * FROM msgs ORDER BY id DESC LIMIT ".$limit." OFFSET ".$offset;
-	$result = Auxiliary::getSQL($sql);
+	$result = Auxiliary::getSQLAux($sql);
 	if ($result) {
 
 		while ($row = $result->fetch()) {

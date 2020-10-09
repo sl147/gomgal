@@ -26,7 +26,7 @@ class User
 	public static function createUser($login,$password,$name,$surname,$email) {
 		$sql    = "INSERT INTO friends (user_login,user_password,name,surname,email)
 		 VALUES(:login,:password,:name,:surname,:email)";
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux($sql);
 		$result -> bindParam(':login',    $login,    PDO::PARAM_STR);
 		$result -> bindParam(':password', $password, PDO::PARAM_STR);
 		$result -> bindParam(':name',     $name,     PDO::PARAM_STR);
@@ -38,7 +38,7 @@ class User
 
 	public static function changeUser($login,$name,$surname,$email) {
 		$sql    = "UPDATE  friends SET email=:email, name=:name, surname=:surname WHERE user_login='".$login."'";
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux($sql);
 		$result -> bindParam(':name',     $name,     PDO::PARAM_STR);
 		$result -> bindParam(':surname',  $surname,  PDO::PARAM_STR);
 		$result -> bindParam(':email',    $email,    PDO::PARAM_STR);
@@ -49,7 +49,7 @@ class User
 	public static function chekUserData ($login,$password) {
 		$password = md5(md5(trim($password)));
 		$sql      = "SELECT * FROM friends  WHERE user_login = '".$login."' AND user_password = '".$password."'";
-		$result   = Auxiliary::getSQL($sql);
+		$result   = Auxiliary::getSQLAux($sql);
 		$user     = $result-> fetch();
 		return ($user) ? $user['id'] : false;
 	}
@@ -85,7 +85,6 @@ class User
 		require_once ('../models/Auxiliary.php');
 		$MK     = new Auxiliary();
 		$page   = $MK ->getIntval($page);
-		$list   = [];
 		$offset = ($page - 1) * self::SHOWCOMMENT_BY_DEFAULT;
 		$sql    = "SELECT * FROM ComCl ORDER BY id DESC LIMIT ".self::SHOWCOMMENT_BY_DEFAULT." OFFSET $offset";
 		$result = $MK ->getSQLVue($sql);
@@ -93,7 +92,7 @@ class User
 			$list[] = $row;
 		}
 		unset($MK);
-		return $list;
+		return $list ?? [];
 	}
 }
 ?>

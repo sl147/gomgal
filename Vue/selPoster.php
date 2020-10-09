@@ -1,7 +1,7 @@
 <?php
 require_once ('../models/Poster.php');
 
-$page  = intval($_GET['page']);
+$page  = intval($_GET['page']) ?? 1;
 $MK    = new Poster();
 
 $posts = $MK->getAllPostersVue($page);

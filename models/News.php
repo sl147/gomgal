@@ -41,18 +41,14 @@ class News
 	}
 
 	public static function getCatNews() {
-		$result = Auxiliary::getSQL("SELECT * FROM catmsgs");
-		$i      = 1;
-		while ($row = $result->fetch()) {			
-			$catList[$i]['id']   = $row['idcm'];
-			$catList[$i]['name'] = $row['namecm'];
-			$i++;
-		}
+		$getData = new classGetData('catmsgs');
+		$catList = $getData->getData2El('idcm','namecm');
+		unset($getData);
 		return $catList;
 	}
 
 	public static function getNews() {
-		$result = Auxiliary::getSQL("SELECT * FROM msgs ORDER BY id  DESC LIMIT 25");
+		$result = Auxiliary::getSQLAux("SELECT * FROM msgs ORDER BY id  DESC LIMIT 25");
 		$i      = 1;
 		while ($row = $result->fetch()) {
 			$NewsList[$i]['id']        = $row['id'];
@@ -69,7 +65,7 @@ class News
 
 	public static function getNewsTop() {
 		$sql     = "SELECT * FROM msgs WHERE top=1 ORDER BY id  DESC LIMIT 1";
-		$result  = Auxiliary::getSQL($sql);
+		$result  = Auxiliary::getSQLAux($sql);
 		$topNews = $result->fetch();
 		$topNews['width']  = 0;
 		$topNews['height'] = 0;
@@ -86,7 +82,7 @@ class News
 		$month  = Auxiliary::getIntval($month);
 		$year   = Auxiliary::getIntval($year);
 		$sql    = "SELECT count(*) as count FROM msgs WHERE ((category=$cat) or (cat2=$cat)) and (month(datetime) = '".$month."') and (year(datetime) = '".$year."')";
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux($sql);
 		$result -> setFetchMode(PDO::FETCH_ASSOC);
 		return $result->fetch()['count'];
 	}
@@ -95,7 +91,7 @@ class News
 		$month  = Auxiliary::getIntval($month);
 		$year   = Auxiliary::getIntval($year);
 		$sql    = "SELECT count(*) as count FROM msgs WHERE month(datetime) = '".$month."' and year(datetime) = '".$year."'";
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux($sql);
 		$result -> setFetchMode(PDO::FETCH_ASSOC);
 		return $result->fetch()['count'];
 	}
@@ -109,8 +105,7 @@ class News
 	private function getDBVue ($sql) {
 		return $this->dbVue() -> query($sql);
 	}*/
-		private static function db()
-	{
+		private static function db() {
 		$params = include ('../config/db_params.php');
 		$dsn    = "mysql:host={$params['host']};dbname={$params['dbname']}";		
 		$db     = new PDO($dsn,$params['user'],$params['password'], [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
@@ -118,16 +113,6 @@ class News
 	}
 
 	public static function getAllCommentsVue($page = 1) {
-		//$offset   = ($page - 1) * self::SHOWNEWS_BY_DEFAULT;
-/*		require_once ('../classes/classGetData.php');
-		$getData  = new classGetData('Comment');
-		$result = $getData->getDataByOffsetVue('id_com',self::SHOWNEWS_BY_DEFAULT,$offset);
-		unset($getData);*/
-/*
-		$sql = "SELECT * FROM Comment ORDER BY id_com DESC LIMIT ".self::SHOWNEWS_BY_DEFAULT." OFFSET $offset";
-		$result = self::dbVue1() -> query($sql);
-		$CommList = [];*/
-
 			$CommList = [];
 			$offset   = ($page - 1) * self::SHOWNEWS_BY_DEFAULT;
 			$db       = self::getDBVue();
@@ -149,11 +134,6 @@ class News
 	public static function getComsByIdVue($id, $page) {
 		$getData = new classGetData('Comment');
 		$list = $getData->getDataFromTableByNameVue($id,'id_com');
-		/*$db     = self::getDBVue();
-		$sql    = "SELECT * FROM Comment WHERE id_com=".$id;
-		$result = $db -> query($sql);
-		return $result->fetch();*/
-
 		unset($getData);
 		return $list;
 	}
@@ -163,7 +143,7 @@ class News
 		$year  = Auxiliary::getIntval($year);
 		$id    = Auxiliary::getIntval($id);
 		$sql   = "SELECT count(*) as count FROM msgs WHERE (month(datetime) = '".$month."') and (year(datetime) = '".$year."')";
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux($sql);
 		$result -> setFetchMode(PDO::FETCH_ASSOC);
 		return $result->fetch()['count'];
 	}
@@ -175,7 +155,7 @@ class News
 		$NewsList = [];
 		$offset   = ($page - 1) * SHOWNEWS_BY_DEFAULT;
 		$sql      = "SELECT * FROM msgs WHERE month(datetime) = '".$month."' and year(datetime) = '".$year."' ORDER BY countmsgs DESC LIMIT ".SHOWNEWS_BY_DEFAULT." OFFSET $offset";
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux($sql);
 		$i= 0;
 		while ($row = $result->fetch()) {
 			$NewsList[$i]['id']        = $row['id'];
@@ -200,10 +180,9 @@ class News
 		$year   = Auxiliary::getIntval($year);
 		$cat    = Auxiliary::getIntval($cat);
 		$page   = Auxiliary::getIntval($page);
-		$NewsList = [];
 		$offset   = ($page - 1) * SHOWNEWS_BY_DEFAULT;
 		$sql      = "SELECT * FROM msgs WHERE ((category=$cat) or (cat2=$cat)) and (month(datetime) = '".$month."') and (year(datetime) = '".$year."') ORDER BY countmsgs DESC LIMIT ".SHOWNEWS_BY_DEFAULT." OFFSET $offset";
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux($sql);
 		$i = 0;
 		while ($row = $result->fetch()) {
 			$NewsList[]             = $row;
@@ -213,11 +192,17 @@ class News
 			$NewsList[$i]['foto']   = "NewsFoto/".$row['foto'];			
 			$i++;
 		}
-		return $NewsList;
+		return $NewsList ?? [];
 	}
 
 	public static function getAllNewsVue($page = 1) {
+		//require_once ('/classes/traitformSql.php');
+		require_once ('../classes/traitFormSql.php');
+		require_once ('../classes/classGetDB.php');
 		require_once ('../classes/classGetData.php');
+
+		//use classes\getDataFromTableOrderPageVue;
+		//use classes\classGetData;
 		$getData  = new classGetData('msgs');
 		$NewsList = $getData->getDataFromTableOrderPageVue(self::SHOWNEWS_BY_DEFAULT,$page,'id');
 		unset($getData);
@@ -228,10 +213,9 @@ class News
 		$month    = Auxiliary::getIntval($month);
 		$year     = Auxiliary::getIntval($year);
 		$page     = Auxiliary::getIntval($page);
-		$NewsList = [];
 		$offset   = ($page - 1) * SHOWNEWS_BY_DEFAULT;
 		$sql      = "SELECT * FROM msgs WHERE (month(datetime) = '".$month."') and (year(datetime) = '".$year."') ORDER BY countmsgs DESC LIMIT ".SHOWNEWS_BY_DEFAULT." OFFSET $offset";
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux($sql);
 		$i        = 0;
 		while ($row = $result->fetch()) {
 			$NewsList[]             = $row;
@@ -242,39 +226,33 @@ class News
 			$NewsList[$i]['foto']   = "NewsFoto/".$row['foto'];			
 			$i++;
 		}
-		return $NewsList;
+		return $NewsList ?? [];
 	}
 
 	public static function getNewsById($id) {
-		$news   = [];
-		$id     = Auxiliary::getIntval($id);
-		$sql    = "SELECT * FROM msgs WHERE id=".$id;
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux("SELECT * FROM msgs".Auxiliary::formSqlAux("id",$id));
 		$news   = $result->fetch();
 		$news['photo']  = "/NewsFoto/".$news['foto'];
 		$news['video']  = "//www.youtube.com/v/".$news['videoYT']."?hl=uk_UA&amp;version=3";
-		return $news;
+		return $news ?? [];
 	}
 
 	public static function newsOther($id,$cat1,$cat2) {
 		$id    = Auxiliary::getIntval($id);
 		$cat1  = Auxiliary::getIntval($cat1);
 		$cat2  = Auxiliary::getIntval($cat2);
-		$News  = [];
 		$sql   = "SELECT * FROM msgs  WHERE cat2='".$cat2."' && category='".$cat1."' && id<'".$id."' ORDER BY id  DESC LIMIT 4";
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux($sql);
 		while ($row = $result->fetch()) {
 			$News[]  = $row;
 		}
-		return $News;
+		return $News ?? [];
 	}
 
 	public static function updateCountById($id,$count) {
-		$id     = Auxiliary::getIntval($id);
 		$count  = Auxiliary::getIntval($count);
 		$count +=1;
-		$sql    = "UPDATE msgs SET countmsgs=:count WHERE id=$id";
-		$result = Auxiliary::getPrepareSQL($sql);
+		$result = Auxiliary::getPrepareSQL("UPDATE msgs SET countmsgs=:count".Auxiliary::formSqlAux("id",$id));
 		Auxiliary::bindParam($result,':count',   $count);
 		return $result -> execute();			
 	}

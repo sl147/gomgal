@@ -2,70 +2,78 @@
 /**
 * 
 */
+declare(strict_types = 1);
+
 class Auxiliary {
-
-	public function getDBVue(){
+	public function getDBVue()
+	{
 		require_once ('../components/Db.php');
-		$base   = new Db();
-		return $base ->getConnectionVue();
-		//$db     = $base ->getConnectionVue();
-		//unset($base);
-		//return $db;
+		$db   = new Db();
+		return $db ->getConnectionVue();
 	}
 
-	public static function getSQL($sql) {
-		$db = Db::getConnection();
-		return $db -> query($sql);
+	public static function getSQLAux($sql)
+	{
+		return Db::getConnection() -> query($sql);
 	}
 
-	public static function getSQLVue($sql) {
+	public static function getSQLAuxVue($sql)
+	{
 		$db  = self::getDBVue();
 		return $db -> query($sql);
 	}
 
-	public static function getPrepareSQL($sql) {
+	public static function getPrepareSQL($sql)
+	{
 		$db = Db::getConnection();
 		return $db -> prepare($sql);
 	}
 
-	public static function getPrepareSQLVue($sql) {
+	public static function getPrepareSQLVue($sql)
+	{
 		$db  = self::getDBVue();
 		return $db -> prepare($sql);
 	}
 
-	public static function getIntval ($i) {
-		$i = intval($i);
-        return ($i > 0) ? $i : 1;
+	public static function getIntval ($i) : int
+	{
+        return intval($i) ?? 1;
 	}
 
-	public static function getCount($table) {
+	public static function getCount($table)
+	{
 		$sql    = "SELECT count(*) as count FROM ".$table;
-		$result = self::getSQL($sql);
+		$result = self::getSQLAux($sql);
 		$result -> setFetchMode(PDO::FETCH_ASSOC);
 		return $result->fetch()['count'];
 	}
 
-	public static function getCountAtr($table, $atr, $value) {
-		$value  = self::getIntval($value);
-		$sql    = "SELECT count(*) as count FROM ".$table." WHERE ".$atr."=$value";
-		$result = self::getSQL($sql);
+	public static function formSqlAux($atr,$value)
+	{
+		return " WHERE ".$atr." = ".self::getIntval($value);
+	}
+
+	public static function getCountAtr($table, $atr, $value)
+	{
+		$sql    = "SELECT count(*) as count FROM ".$table.self::formSqlAux($atr,$value);
+		$result = self::getSQLAux($sql);
 		$result -> setFetchMode(PDO::FETCH_ASSOC);
 		return $result->fetch()['count'];
 	}
 
-	public static function updateVue2El ($id, $name, $tab, $nameEl, $nameId) {
-		$id     = self::getIntval($id);
-		$sql    = "UPDATE ".$tab." SET ".$nameEl."=:name WHERE ".$nameId."=$id";
+	public static function updateVue2El ($id, $name, $tab, $nameEl, $nameId)
+	{
+		$sql    = "UPDATE ".$tab." SET ".$nameEl."=:name".self::formSqlAux($nameId,$id);
 		$result = self::getPrepareSQLVue($sql);
 		$result -> bindParam(':name', $name, PDO::PARAM_STR);
 		
 		return $result -> execute();			
 	}
 
-		public static function delVue2El($id, $tab, $nameId) {
-		$id     = self::getIntval($id);
-		$sql    = "DELETE FROM ".$tab." WHERE ".$nameId." = ".$id;
-		$result = self::getSQLVue($sql);
+	public static function delVue2El($id, $tab, $nameId)
+	{
+		$sql    = "DELETE FROM ".$tab.self::formSqlAux($nameId,$id);
+		$result = self::getSQLAuxVue($sql);
 		if ($tab == "poster") {
 			$res = self::delFilePoster($id);
 		}
@@ -91,22 +99,16 @@ class Auxiliary {
 	}
 
 	public static function addVote($id) {
-		$id  = self::getIntval($id);
-		$sql = "UPDATE vote SET countrl = countrl + 1 WHERE id ='".$id."'";
-		
-		return self::getSQLVue($sql);		
+		return self::getSQLAuxVue("UPDATE vote SET countrl = countrl + 1".self::formSqlAux("id",$id));		
 	}
 
 	public static function addVue($tab, $arr, $count) {	
-		$db     = self::getDBVue();
-		$sql = "INSERT INTO ".$tab." ("+$arr[1]+") VALUES("+$arr[2]+")";
-		
-		return self::getSQLVue($sql);	
+		$db     = self::getDBVue();		
+		return self::getSQLAuxVue("INSERT INTO ".$tab." ("+$arr[1]+") VALUES("+$arr[2]+")");	
 	}
 
 	public static function getVoteVueAd() {
-		$sql    = "SELECT * FROM catVote";
-		$result = self::getSQLVue($sql);
+		$result = self::getSQLAuxVue("SELECT * FROM catVote");
 		$i      = 1;
 		while ($row = $result->fetch()) {
 			$voteList[$i]['id']   = $row['idrl'];
@@ -117,8 +119,7 @@ class Auxiliary {
 	}
 
 	public static function getVoteVue() {
-		$sql    = "SELECT * FROM catVote WHERE active=1 LIMIT 1";
-		$result = self::getSQLVue($sql);
+		$result = self::getSQLAuxVue("SELECT * FROM catVote WHERE active=1 LIMIT 1");
 		while ($row = $result->fetch()) {
 			$voteList['id']   = $row['idrl'];
 			$voteList['name'] = $row['namerl'];
@@ -127,26 +128,20 @@ class Auxiliary {
 	}
 
 	public static function getTxtVoteVue($id) {
-		$id      = self::getIntval($id);
-		$voteTxt = [];
-		$sql     = "SELECT * FROM vote WHERE category=".$id." ORDER BY countrl DESC";
-		$result  = self::getSQLVue($sql);
+		$result  = self::getSQLAuxVue("SELECT * FROM vote".self::formSqlAux("category",$id)." ORDER BY countrl DESC");
 		while ($row = $result->fetch()) {
 			$voteTxt[]=$row;
 		}
-		return $voteTxt;
+		return $voteTxt ?? [];
 	}
 
 	public static function activated($id) {
-		$id     = self::getIntval($id);
-	    $sql    = "UPDATE catVote SET active=0 WHERE active=1";
-		$result = self::getSQL($sql);
-		$sql    = "UPDATE catVote SET active=1 WHERE idrl=$id";
-		$result = self::getSQL($sql);			
+		self::getSQLAux("UPDATE catVote SET active=0".self::formSqlAux("active",1));
+		self::getSQLAux("UPDATE catVote SET active=1".self::formSqlAux("idrl",$id));			
 	}
 
 	public static function getAllVote() {
-		$result = self::getSQL("SELECT * FROM catVote");
+		$result = self::getSQLAux("SELECT * FROM catVote");
 		$i      = 1;
 		while ($row = $result->fetch()) {
 			$voteList[$i]['id']     = $row['idrl'];;
@@ -154,12 +149,11 @@ class Auxiliary {
 			$voteList[$i]['active'] = $row['active'];
 			$i++;
 		}
-		return $voteList;
+		return $voteList ?? [];
 	}
 
 	public static function getVote() {
-		$sql    = "SELECT * FROM catVote WHERE active=1 LIMIT 1";
-		$result = self::getSQL($sql);
+		$result = self::getSQLAux("SELECT * FROM catVote".self::formSqlAux("active",1)." LIMIT 1");
 		while ($row = $result->fetch()) {
 			$voteList['id']   = $row['idrl'];
 			$voteList['name'] = $row['namerl'];
@@ -168,20 +162,15 @@ class Auxiliary {
 	}
 
 	public static function getTxtVote($id) {
-		$id      = self::getIntval($id);
-		$voteTxt = [];
-		$sql     = "SELECT * FROM vote WHERE category=".$id." ORDER BY countrl DESC";
-		$result  = self::getSQL($sql);
+		$result  = self::getSQLAux("SELECT * FROM vote".self::formSqlAux("category",$id)." ORDER BY countrl DESC");
 		while ($row = $result->fetch()) {
 			$voteTxt[]=$row;
 		}
-		return $voteTxt;
+		return $voteTxt ?? [];
 	}
 
 	public static function updateVoteVue ($id,$name) {
-		$id     = self::getIntval($id);
-		$sql    = "UPDATE catVote SET namerl=:name WHERE idrl=$id";
-		$result = self::getPrepareSQLVue($sql);
+		$result = self::getPrepareSQLVue("UPDATE catVote SET namerl=:name".self::formSqlAux("idrl",$id));
 		$result -> bindParam(':name', $name, PDO::PARAM_STR);
 		
 		return $result -> execute();		
@@ -193,14 +182,14 @@ class Auxiliary {
 
 	public static function getPost() {
 		$arr          = Poster::getPosters20();
-		//var_export($arr);
 		$j            = rand (0,count($arr)-1);
 		$pst['id']    = $arr[$j]['id_poster'];
 		$pst['title'] = $arr[$j]['title_p'];
 		return $pst;
 	}
 
-	public static function filterINT($type, $field) {
+	public static function filterINT($type, $field)
+	{
 		switch($type)
 		{
 			case 'get':
@@ -217,7 +206,8 @@ class Auxiliary {
 		return $output;
 	}
 
-	public static function filterTXT($type, $field) {
+	public static function filterTXT($type, $field)
+	{
 		switch($type)
 		{
 			case 'get':
@@ -299,16 +289,20 @@ class Auxiliary {
 		return 	(file_exists($file)) ? true : false;
 	}
 
+	private static function getPathFile($file,$folder,$delim=""){
+		return "./".$folder."/".$delim.$file;
+	}
+
 	public static function delFile($file,$folder) {
-		$fdel  = "./".$folder."/".$file;
-		$fdelS = "./".$folder."/s_".$file;
+		$fdel  = self::getPathFile($file,$folder);
+		$fdelS = self::getPathFile($file,$folder,"s");
 		if (self:: isFile($fdel))  unlink($fdel);
 		if (self:: isFile($fdelS)) unlink($fdelS);
 	}
 
 	public static function delFileVue($file,$folder) {
-		$fdel  = "../".$folder."/".$file;
-		$fdelS = "../".$folder."/s_".$file;
+		$fdel  = self::getPathFile($file,$folder);
+		$fdelS = self::getPathFile($file,$folder,"s");
 		if (self:: isFile($fdel))  unlink($fdel);
 		if (self:: isFile($fdelS)) unlink($fdelS);
 	}
@@ -319,15 +313,13 @@ class Auxiliary {
 	}
 
 	public static function getPosterById($id) {
-		$id     = self::getIntval($id);
-		$sql    = "SELECT * FROM poster WHERE id_poster = ".$id;
-		$result = self::getSQLVue($sql);
+		$result = self::getSQLAuxVue("SELECT * FROM poster".self::formSqlAux("id_poster",$id));
 		return $result->fetch();
 	}
 	public static function changePhoto($nameFile,$pathdir) {
 		include_once 'components/classSimpleImage.php';
         $fns    = $pathdir."/".$nameFile;
-        $fnSmal = $pathdir."/"."s".'_'.$nameFile;				
+        $fnSmal = $pathdir."/"."s".'_'.$nameFile;
         $image  = new SimpleImage();
         $image->load($fns);
         $image->resizeToWidth(100);
@@ -347,11 +339,13 @@ class Auxiliary {
     }
 
 	public static function sel2El($tab,$name,$id,$idVal,$isId) {
-/*		$sql = "SELECT * FROM ".$tab." ORDER BY ".$name;
-		if ($idVal) {
-			$sql .= " WHERE ".$id."=".$idVal;
-		}*/
+		require_once ('../classes/traitFormSql.php');
+		require_once ('../classes/classGetDB.php');
 		require_once ('../classes/classGetData.php');
+
+		//use classes\classGetData;
+		//use classes\getData2ElVue;
+
 		$getData  = new classGetData($tab);
 		$NewsList = $getData->getData2ElVue($id,$name,$idVal);
 		unset($getData);
@@ -359,29 +353,22 @@ class Auxiliary {
 	}
 
 	public static function getMTags() {
-		$list = [];
-		$sql     = "SELECT * FROM meta_tags";
-		$result  = self::getSQL($sql);
+		$result  = self::getSQLAux("SELECT * FROM meta_tags");
 		while ($row = $result->fetch()) {
 			$list[]=$row;
 		}
-		return $list;
+		return $list ?? [];
 	}
 
 	public static function getMTagsByUrl($url) {
-		$sql     = "SELECT * FROM meta_tags WHERE url_name = '".$url."'";
-		$result  = self::getSQL($sql);
+		$result  = self::getSQLAux("SELECT * FROM meta_tags WHERE url_name = '".$url."'");
 		return $result->fetch();
 
 	}
 
 	public static function getMTagsByID($id) {
-		$id      = self::getIntval($id);
-		$list    = [];
-		$sql     = "SELECT * FROM meta_tags WHERE id = $id";
-		$result  = self::getSQL($sql);
+		$result  = self::getSQLAux("SELECT * FROM meta_tags".self::formSqlAux("id",$id));
 		return $result->fetch();
-
 	}
 
 	private static function saveMT($url_name,$title,$descr,$keywords,$sql,$follow) {

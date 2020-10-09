@@ -1,6 +1,6 @@
 <?php
 $response = [];
-$result = Auxiliary::getSQL("SELECT id_poster,title_p FROM poster WHERE active='0' ORDER BY id_poster DESC LIMIT 20");
+$result = Auxiliary::getSQLAux("SELECT id_poster,title_p FROM poster WHERE active='0' ORDER BY id_poster DESC LIMIT 20");
 if ($result) {
 	while ($row = $result->fetch()) {
 		$new_item = array(

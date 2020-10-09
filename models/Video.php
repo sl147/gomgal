@@ -13,21 +13,19 @@ class Video
 	}
 
 	public static function getVideo() {
-		$list   = [];
 		$sql    = "SELECT * FROM progrnk ORDER BY prid  DESC LIMIT ".self::SHOWVIDEO_BY_DEFAULT;
-		$result = Auxiliary::getSQL($sql);
+		$result = Auxiliary::getSQLAux($sql);
 		$i      = 0;
 		while ($row = $result->fetch()) {			
 			$list[] = $row;
 			$list[$i]['value']  = "//www.youtube.com/v/".$row['pridYT']."?hl=uk_UA&amp;version=3";			
 			$i++;
 		}
-		return $list;
+		return $list ?? [];
 	}
 
 	public static function getVideoVue($page=1) {
 		$offset = ($page - 1) * self::SHOWVIDEO_BY_DEFAULT;
-		$list   = [];
 		$sql    = "SELECT * FROM progrnk ORDER BY prid DESC LIMIT ".self::SHOWVIDEO_BY_DEFAULT." OFFSET $offset";
 		$result = self::reqAux()->getSQLVue($sql);
 		$i      = 0;
@@ -38,7 +36,7 @@ class Video
 			$i++;
 		}
 		unset($MK);
-		return $list;
+		return $list ?? [];
 	}
 
 	public static function updateVideoVue ($id,$idYT,$title) {

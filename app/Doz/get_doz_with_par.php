@@ -2,7 +2,7 @@
 $response = [];
 if (isset($_POST['cat'])) {
 	$cat    = $_POST['cat'];
-	$result = Auxiliary::getSQL("SELECT * FROM msgs_relax WHERE category=".$cat." ORDER BY countrl  DESC LIMIT 20");
+	$result = Auxiliary::getSQLAux("SELECT * FROM msgs_relax WHERE category=".$cat." ORDER BY countrl  DESC LIMIT 20");
 	if ($result) {
 		while ($row = $result->fetch()) {
 			$new_item = array(
