@@ -2,7 +2,8 @@
 /**
 * 
 */
-declare(strict_types = 1);
+//namespace models;
+//declare(strict_types = 1);
 
 class Auxiliary {
 	public function getDBVue()

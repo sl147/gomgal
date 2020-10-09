@@ -3,7 +3,10 @@
 * 
 */
 class ContaktController {
-	
+	/*use models\filterTXT;
+	use models\sendMail;
+	use models\saveComent;*/
+
 	public function actionIndex() {
 
 		if(isset($_POST['submit'])) {
