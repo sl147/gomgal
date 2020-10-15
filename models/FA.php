@@ -2,37 +2,39 @@
 /**
 * 
 */
-class FA {
-
-	private function getDBVue(){
+//use \classes\traitAuxiliary as traitAuxiliary;
+class FA  extends classGetDB
+{
+	use traitAuxiliary;
+	
+	private function getDBVueFa(){
 		require_once ('../models/Auxiliary.php');
 		$aux = new Auxiliary();
 		return $aux->getDBVue();
 	}
 
-	public static function createFA($name,$msgs,$log) {
-		$sql    = "INSERT INTO photoalbum (name_FA,msgs_FA,log_FA)
+	public function createFA($name,$msgs,$log) {
+		$sql = "INSERT INTO photoalbum (name_FA,msgs_FA,log_FA);
 		 VALUES(:name,:msgs,:log)";
-		$result = Auxiliary::getPrepareSQL($sql);
+		$result = $this->getDB($sql);
 		$result -> bindParam(':name', $name, PDO::PARAM_STR);
 		$result -> bindParam(':msgs', $msgs, PDO::PARAM_STR);
 		$result -> bindParam(':log',  $log,  PDO::PARAM_STR);
-		
 		return $result -> execute();		
 	}	
 
-	public static function savePhoto($id,$subscribe,$fotoName,$fotoNameS) {
+	public function savePhoto($id,$subscribe,$fotoName,$fotoNameS) {
 		$sql    = "INSERT INTO photoInAlbum (id_album,subscribe,fotoName,fotoNameS)
 		 VALUES(:id_album,:subscribe,:fotoName,:fotoNameS)";
-		$result = Auxiliary::getPrepareSQL($sql);
+		$result = $this->getDB($sql);
 		$result -> bindParam(':id_album',  $id,  PDO::PARAM_STR);
 		$result -> bindParam(':subscribe', $subscribe, PDO::PARAM_STR);
 		$result -> bindParam(':fotoName',  $fotoName,  PDO::PARAM_STR);
 		$result -> bindParam(':fotoNameS', $fotoNameS, PDO::PARAM_STR);
-		
 		return $result -> execute();		
 	}
 
+<<<<<<< master
 	public static function getFAName($name) {
 		$getData  = new classGetData('photoalbum');
 		$NewsList = $getData->getDataFromTableByNameFetch($name,'name_FA');
@@ -51,6 +53,22 @@ class FA {
 		echo "here getFA";
 		$sql    = "SELECT * FROM photoalbum, photoInAlbum WHERE photoInAlbum.id_album = photoalbum.id_FA";
 		$result = Auxiliary::getSQLAux($sql);
+=======
+	public function getFAName($name)
+	{
+		$result = $this->getDB("SELECT * FROM photoalbum".$this->formSql("name_FA",$name)." LIMIT 1");
+		return $result->fetch();
+	}
+
+	public function getFAId($id)
+	{
+		$result = $this->getDB("SELECT * FROM photoalbum".$this->formSql("id_FA",$id)." LIMIT 1");
+		return $result->fetch();
+	}
+
+	public function getFA() {
+		$result = $this->getDB("SELECT * FROM photoalbum, photoInAlbum WHERE photoInAlbum.id_album = photoalbum.id_FA");
+>>>>>>> local
 		$i      = 1;
 		while ($row = $result->fetch()) {			
 			$faList[$i]['id']   = $row['id_FA'];
@@ -62,11 +80,19 @@ class FA {
 		return $faList ?? [];
 	}*/
 
+<<<<<<< master
 	public static function getFAAll($page = 1) {
 		$offset = (Auxiliary::getIntval($page) - 1) * SHOWFA_BY_DEFAULT;
 		$getData  = new classGetData('photoalbum');
 		$result = $getData->getDataByOffsetWithOutRow('id_FA',SHOWFA_BY_DEFAULT,$offset);
 		unset($getData);
+=======
+	public function getFAAll($page = 1)
+	{
+		$page   = $this->getIntval($page);		
+		$offset = (intval($page) - 1) * SHOWFA_BY_DEFAULT;
+		$result = $this->getDB("SELECT * FROM photoalbum ORDER BY id_FA DESC LIMIT ".SHOWFA_BY_DEFAULT." OFFSET $offset");
+>>>>>>> local
 		$i      = 1;
 		while ($row = $result->fetch()) {			
 			$faList[$i]['id']   = $row['id_FA'];
@@ -79,11 +105,18 @@ class FA {
 		return $faList ?? [];
 	}
 
+<<<<<<< master
 	public static function getFAOne($id) {
 		$getData = new classGetData('photoInAlbum');
 		$result  = $getData->getDataFromTableByNameWithOutRow ($id,"id_album");
 		unset($getData);
 		$i       = 1;
+=======
+	public function getFAOne($id)
+	{
+		$result = $this->getDB("SELECT * FROM photoInAlbum".$this->formSql("id_album",$id));
+		$i      = 1;
+>>>>>>> local
 		while ($row = $result->fetch()) {			
 			$faOne[$i]['id']        = $row['id_foto'];
 			$faOne[$i]['subscribe'] = $row['subscribe'];
@@ -91,11 +124,13 @@ class FA {
 			$faOne[$i]['fotoNameS'] = '../album/'.$id.'/'.$row['fotoNameS'];
 			$i++;
 		}
+
 		return $faOne ?? [];
 	}
 	
-	public static function getFAVue() {
-		$db     = self::getDBVue();
+	public function getFAVue()
+	{
+		$db     = self::getDBVueFa();
 		$result = $db -> query("SELECT * FROM photoalbum ORDER BY id_FA DESC");
 		$i      = 1;
 		while ($row = $result->fetch()) {			
@@ -106,8 +141,9 @@ class FA {
 		return $faList ?? [];
 	}
 
-	public static function getFAOneVue($id) {
-		$db     = self::getDBVue();
+	public function getFAOneVue($id)
+	{
+		$db     = self::getDBVueFa();
 		$sql    = "SELECT * FROM photoInAlbum WHERE id_album=".$id;
 		$result = $db -> query($sql);
 		$i      = 1;
@@ -121,9 +157,10 @@ class FA {
 		return $faOne ?? [];
 	}
 
-	public static function updateFAVue ($id,$subscribe) {
+	public function updateFAVue ($id,$subscribe)
+	{
 		if(intval($id)) {
-			$db     = self::getDBVue();
+			$db     = self::getDBVueFa();
 			$sql    = "UPDATE photoInAlbum SET subscribe=:subscribe WHERE id_foto=$id";
 			$result = $db -> prepare($sql);
 			$result -> bindParam(':subscribe', $subscribe, PDO::PARAM_STR);

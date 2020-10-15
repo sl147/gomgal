@@ -13,9 +13,10 @@ class Video
 	}
 
 	public static function getVideo() {
-		$sql    = "SELECT * FROM progrnk ORDER BY prid  DESC LIMIT ".self::SHOWVIDEO_BY_DEFAULT;
-		$result = Auxiliary::getSQLAux($sql);
-		$i      = 0;
+		$getData = new classGetData('progrnk');
+		$result  = $getData->getDataFromTableOrderWithOutRow('prid',self::SHOWVIDEO_BY_DEFAULT);
+		unset($getData);
+		$i       = 0;
 		while ($row = $result->fetch()) {			
 			$list[] = $row;
 			$list[$i]['value']  = "//www.youtube.com/v/".$row['pridYT']."?hl=uk_UA&amp;version=3";			

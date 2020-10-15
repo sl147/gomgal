@@ -13,10 +13,12 @@
 	</thead>
 	<tbody>
 		<?php
-			 if ($page == 1) {
-				$r = Poster::showPosterAll($posterImpotant);
+			$p = new Poster();
+			if ($page == 1) {
+				$r = $p->showPosterAll($posterImpotant);
 			}
-			$r = Poster::showPosterAll($posterAll);
+			$r = $p->showPosterAll($posterAll);
+			unset($p);
 		?>
 	</tbody>
 </table>

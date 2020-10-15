@@ -1,6 +1,7 @@
 <?php
 $response = [];
-$result = Auxiliary::getSQLAux("SELECT * FROM msgs ORDER BY id  DESC LIMIT 20");
+$getData  = new classGetData('msgs');
+$result   = $getData->getDataFromTableOrderWithOutRow('id',20);
 if ($result) {
 	while ($row = $result->fetch()) {
 		$new_item = array(

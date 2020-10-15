@@ -3,7 +3,8 @@ $response = [];
 if (isset($_POST['id'])) {
 	$id    = $_POST['id'];
     $count = $_POST['count'];
-    $res   = Relax::updateCountRelax($id, $count);
+    $r     = new Relax();
+    $res   = $r->updateCountRelax($id, $count);
     if ($res) {
         $response["success"] = 1;
         $response["message"] = "successfully updated. id=".$id."  count=".$count;

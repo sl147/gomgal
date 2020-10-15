@@ -1,3 +1,5 @@
 <div class='bord1'>
-	<?=Relax::getRelaxRandom($type)?>
+	<?$r = new Relax();?>
+	<?=$r->getRelaxRandom($type)?>
+	<?unset($r);?>
 </div>

@@ -1,10 +1,12 @@
 <nav class="main_menu clearfix">
 	<div class="btn-group btn-group-justified" role="group" aria-label="...">
 		<?php
-			Poster::showLineMenuPoster("posterFull","всі","всі безкоштовні оголошення");
-			Poster::showLineMenuPoster("posterCat","по категоріям","оголошення по категоріям");
-			Poster::showLineMenuPoster("posterFind","пошук","пошук безкоштовних оголошень");
-			Poster::showLineMenuPoster("posterAdd","додати","додати своє безкоштовне оголошення");
+			$p = new Poster();
+			$p->showLineMenuPoster("posterFull","всі","всі безкоштовні оголошення");
+			$p->showLineMenuPoster("posterCat","по категоріям","оголошення по категоріям");
+			$p->showLineMenuPoster("posterFind","пошук","пошук безкоштовних оголошень");
+			$p->showLineMenuPoster("posterAdd","додати","додати своє безкоштовне оголошення");
+			unset($p);
 		?>
 	</div>
 </nav>

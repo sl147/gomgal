@@ -1,5 +1,5 @@
 <?php
-require_once ('../models/Relax.php');
+require_once ('../models/RelaxVue.php');
 
 $cat       = $_GET['cat'];
 $page      = $_GET['page'];
@@ -7,7 +7,7 @@ $SHOWRELAX = $_GET['SHOWRELAX'];
 
 $data = [];
 $pr   = [];
-$MK   = new Relax();
+$MK   = new RelaxVue();
 
 $pr   = $MK->getAnThemaVue($cat,$page,$SHOWRELAX);
 

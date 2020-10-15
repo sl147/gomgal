@@ -5,11 +5,11 @@
 //namespace classes;
 
 //use classes\classGetDB;
-//use classes\traitFormSql;
+//use classes\traitAuxiliary;
 
 class classGetData extends classGetDB
 {
-	use traitFormSql;
+	use traitAuxiliary;
 	
 	public function __construct($table) {
 		$this->table = $table;
@@ -43,25 +43,29 @@ class classGetData extends classGetDB
  *
  *  @return масив даних
  */
-	public function getDataFromTable () {
-		return $this->getRow($this->getDB("SELECT * FROM ".$this->table));	
+	public function getDataFromTable ($var = 1) {
+		return ($var == 1) ? $this->getRow($this->getDB("SELECT * FROM ".$this->table)) :
+		                                   $this->getDB("SELECT * FROM ".$this->table) ;
 	}
 
 /** Отримуєм записи з таблиці $this->table по елементу $elName
  *
  *  @return масив даних
  */
-	public function getDataFromTableByName ($elValue,$elName) {
-		//return $this->getRow($this->getDB("SELECT * FROM ".$this->table." WHERE ".$elName."= '$elValue'"));	
+	public function getDataFromTableByName ($elValue,$elName) {	
 		return $this->getRow($this->getDB("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue)));
 	}
 
+<<<<<<< master
 /** Отримуєм записи з таблиці $this->table по елементу $elName
  *
  *  @return масив даних
  */
 	public function getDataFromTableByNameWithOutRow ($elValue,$elName) {
 		//return $this->getRow($this->getDB("SELECT * FROM ".$this->table." WHERE ".$elName."= '$elValue'"));	
+=======
+	public function getDataFromTableByNameWithOutRow ($elValue,$elName) {	
+>>>>>>> local
 		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue));
 	}
 
@@ -93,6 +97,12 @@ class classGetData extends classGetDB
 		return $this->getRow( $this->getDBVue("SELECT * FROM ".$this->table." ORDER BY ".$nameOrder." ".$desk." LIMIT ".$SHOW_BY_DEFAULT." OFFSET ".$offset) );
 	}
 
+	public function getDataFromTableOrderPageVueWithoutGetRow($SHOW_BY_DEFAULT,$page,$nameOrder, $desk = 'DESC')
+	{
+		$offset = ($page - 1) * $SHOW_BY_DEFAULT;
+		return $this->getDBVue("SELECT * FROM ".$this->table." ORDER BY ".$nameOrder." ".$desk." LIMIT ".$SHOW_BY_DEFAULT." OFFSET ".$offset);
+	}
+
 /** Отримуєм всі дані з таблиці $this->table відсортованих по $nameOrder по $desk
  *
  *  @return масив даних
@@ -100,6 +110,11 @@ class classGetData extends classGetDB
 	public function getDataFromTableOrder($nameOrder, $desk = 'DESC')
 	{
 		return $this->getRow( $this->getDB("SELECT * FROM ".$this->table." ORDER BY ".$nameOrder." ".$desk) );
+	}
+
+	public function getDataFromTableOrderWithOutRow($nameOrder, $limit,$desk = 'DESC')
+	{
+		return $this->getDB("SELECT * FROM ".$this->table." ORDER BY ".$nameOrder." ".$desk." LIMIT ".$limit);
 	}
 
 /** Отримуєм дані з таблиці $this->table для 2 елементів з Vue
@@ -113,7 +128,7 @@ class classGetData extends classGetDB
 
 	public function getMetaTable() {
 		$sql = "SHOW COLUMNS FROM ".$this->table;
-		$res = Auxiliary::getSQLAux($sql);
+		$res = $this->getDB($sql);
 		while ($row = $res->fetch()) {
 			$columns[] = $row['Field'];
 		}
@@ -160,7 +175,6 @@ class classGetData extends classGetDB
  */
 	public function deleteDataFromTable($id,$nameid='id')
 	{
-		//return (intval($id)) ? $this->getDB("DELETE FROM ".$this->table." WHERE ".$nameid."=".$id) : false;
 		return (intval($id)) ? $this->getDB("DELETE FROM ".$this->table.$this->formSql($nameid,$id)) : false;
 	}
 }

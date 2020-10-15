@@ -8,11 +8,11 @@ var vue_tovList = new Vue({
 		page:'',
 		cat:'',
 		SHOWRELAX:'',
-		relaxes: {}
+		relaxes: []
 	},
 	methods: {
 		edCount(g,val) {
-			const req = this.like + g.id+"&countrl="+g.countrl+"&val="+val
+			let req = this.like + g.id+"&countrl="+g.countrl+"&val="+val
 			this.$http.get(req).then(function (response){
 				this.getRelaxes()
 			},function (error){
@@ -20,7 +20,7 @@ var vue_tovList = new Vue({
 			})	
 		},	
 		getRelaxes() {
-			const req = this.selRelax+this.cat+'&page='+this.page+'&SHOWRELAX='+this.SHOWRELAX
+			let req = this.selRelax+this.cat+'&page='+this.page+'&SHOWRELAX='+this.SHOWRELAX
 			this.$http.get(req).then(function (response) {
 				this.relaxes = JSON.parse(response.data)				
 			},function (error){

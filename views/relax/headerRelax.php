@@ -12,13 +12,15 @@
 						по темам<span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu">
-						<?php foreach (Relax::getAnList() as $item) :?>
+						<?$r = new Relax();?>
+						<?php foreach ($r->getAnList() as $item) :?>
 							<li>
 								<a href="/relaxFullAnCat/<?=$item ['id']?>" title="<?$item['name']?>">
 									<?=$item['name']?>
 								</a>
 							</li>
-						<?php endforeach; ?>
+						<?php endforeach; unset($r);?>
+
 					</ul>			
 				</div>
 

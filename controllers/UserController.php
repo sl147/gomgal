@@ -2,20 +2,23 @@
 
 class UserController
 {
+	use traitAuxiliary;
+
 	const SHOWCOMMENT_BY_DEFAULT = 25;
 	
 	public function actionIndex() {
 		if(isset($_POST['submit'])) {
-	        $login    = Auxiliary::filterTXT('post', 'login');;
-	        $password = Auxiliary::filterTXT('post', 'password');
+			$userCl   = new User();
+	        $login    = $this->filterTXT('post', 'login');;
+	        $password = $this->filterTXT('post', 'password');
 	        $errors   = false;
-			$userId   = User::chekUserData($login,$password);
+			$userId   = $userCl->chekUserData($login,$password);
 			if ($userId == false) {
 				$errors []= "не вірний логін або пароль";
 			}
 			else {
-				$user = User::getUserByLogin($login);
-				$res  = User::setcookie($login,$user['name'],$user['admin']);
+				$user = $userCl->getUserByLogin($login);
+				$res  = $userCl->setcookie($login,$user['name'],$user['admin']);
 				if ($user['admin'] == 1) {
 					header("Location:/newsEdit"); exit();
 				}
@@ -33,18 +36,21 @@ class UserController
 
 	public function actionAuthor() {
 		if(isset($_POST['submit'])) {
-			$login    = Auxiliary::filterTXT('post', 'login');
-			$password = md5(md5(trim(Auxiliary::filterTXT('post', 'password'))));
-			$name     = Auxiliary::filterTXT('post', 'name');
-			$surname  = Auxiliary::filterTXT('post', 'surname');
-			$email    = Auxiliary::filterEmail('post', 'email');
-			$result   = User::createUser($login,$password,$name,$surname,$email);
+			$aux = new Auxiliary();
+			$userCl = new User();
+			$login    = $this->filterTXT('post', 'login');
+			$password = md5(md5(trim($this->filterTXT('post', 'password'))));
+			$name     = $this->filterTXT('post', 'name');
+			$surname  = $this->filterTXT('post', 'surname');
+			$email    = $this->filterEmail('post', 'email');
+			$result   = $userCl->createUser($login,$password,$name,$surname,$email);
 			$subject  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
 			$to       = "sl147@ukr.net";
 			$massage  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
-			$res      = Auxiliary::sendMail($subject,$to,$massage);
-			$res      = User::setcookie($login,$name,0);
-					
+			$res      = $aux->sendMail($subject,$to,$massage);
+			$res      = $userCl->setcookie($login,$name,0);
+			unset($userCl);
+			unset($aux);		
 			header("Location: /"); exit();
 		}
 
@@ -62,21 +68,24 @@ class UserController
 	}
 
 	public function actionChangeData() {
-		$userCurrent = User::userCurr();
+		$userCl = new User();
+		$aux = new Auxiliary();
+		$userCurrent = $userCl->userCurr();
 		if ($userCurrent) {
 			if(isset($_POST['submit'])) {
 				$login    = $userCurrent['user_login'];
-				$password = md5(md5(trim(Auxiliary::filterTXT('post', 'password'))));
-				$name     = Auxiliary::filterTXT('post', 'name');
-				$surname  = Auxiliary::filterTXT('post', 'surname');
-				$email    = Auxiliary::filterEmail('post', 'email');
-				$result   = User::changeUser($login,$name,$surname,$email);
+				$password = md5(md5(trim($this->filterTXT('post', 'password'))));
+				$name     = $this->filterTXT('post', 'name');
+				$surname  = $this->filterTXT('post', 'surname');
+				$email    = $this->filterEmail('post', 'email');
+				$result   = $userCl->changeUser($login,$name,$surname,$email);
 				$subject  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
 				$to       = "sl147@ukr.net";
 				$massage  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
-				$res      = Auxiliary::sendMail($subject,$to,$massage);
-				$res      = User::setcookie($login,$name,0);
-						
+				$res      = $aux->sendMail($subject,$to,$massage);
+				$res      = $userCl->setcookie($login,$name,0);
+				unset($userCl);
+				unset($aux);
 				header("Location: /"); exit();
 			}
 
@@ -91,7 +100,7 @@ class UserController
 	}
 
 	public function actionUserComment($page = 1) {
-		$page       = Auxiliary::getIntval($page);		
+		$page       = $this->getIntval($page);		
 		$title      = "перегляд новин клієнтів";
 		$total      = Auxiliary::getCount('ComCl');
 		$comms      = User::getUsersComments($page);
@@ -101,11 +110,10 @@ class UserController
 		return true;
 	}
 
-	public function actionUserWishes($page = 1) {
-		$page       = Auxiliary::getIntval($page);		
+	public function actionUserWishes($page = 1) {	
 		$title      = "перегляд побажань клієнтів";
 		$total      = Auxiliary::getCount('wishCl');
-		$comms      = User::getUsersWishes($page);
+		$comms      = User::getUsersWishes($this->getIntval($page));
 
 		require_once ('views/user/userWishes.php');
 		return true;

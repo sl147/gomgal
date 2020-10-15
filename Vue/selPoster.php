@@ -1,8 +1,8 @@
 <?php
-require_once ('../models/Poster.php');
+require_once ('../models/PosterVue.php');
 
 $page  = intval($_GET['page']) ?? 1;
-$MK    = new Poster();
+$MK    = new PosterVue();
 
 $posts = $MK->getAllPostersVue($page);
 $data = [];

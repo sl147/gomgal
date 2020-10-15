@@ -2,125 +2,84 @@
 /**
 * 
 */
-class Poster
+class Poster  extends classGetDB
 {
+	use traitAuxiliary;
+
 	const SHOWPOSTER_BY_VUE = 6;
 
-	private function getDBVue(){
-		require_once ('../models/Auxiliary.php');
-		$aux = new Auxiliary();
-		return $aux->getDBVue();
-	}
-
-	public static function getPosters20() {
-		$sql    = "SELECT id_poster,title_p FROM poster WHERE active='0' ORDER BY id_poster DESC LIMIT 20";
-		$result = Auxiliary::getSQLAux($sql);
+	public function getPosters20() {
+		$result = $this->getDB("SELECT id_poster,title_p FROM poster WHERE active='0' ORDER BY id_poster DESC LIMIT 20");
 		while ($row = $result->fetch()) {
 			$list[]=$row;
 		}
 		return $list ?? [];
 	}
 
-	public static function getAllPostersImpotCat($cat) {
-		$cat    = Auxiliary::getIntval($cat);
-		$sql    = "SELECT * FROM poster WHERE (cat_p = $cat) AND (impot=1) ORDER BY id_poster DESC";
-		$result = Auxiliary::getSQLAux($sql);
+	public  function getAllPostersImpotCat($cat) {
+		$cat    = $this->getIntval($cat);
+		$result = $this->getDB("SELECT * FROM poster WHERE (cat_p = $cat) AND (impot=1) ORDER BY id_poster DESC");
 		while ($row = $result->fetch()) {
 			$list[]=$row;			
 		}
 		return $list ?? [];
 	}
 
-	public static function getAllPostersImpot() {
-		$sql    = "SELECT * FROM poster WHERE impot=1 ORDER BY id_poster DESC";
-		$result = Auxiliary::getSQLAux($sql);
+	public function getAllPostersImpot() {
+		$result = $this->getDB("SELECT * FROM poster WHERE impot=1 ORDER BY id_poster DESC");
 		while ($row = $result->fetch()) {
 			$list[]=$row;			
 		}
 		return $list ?? [];
 	}
 
-	public static function getAllPostersAllCat($cat, $page = 1) {
-		$cat    = Auxiliary::getIntval($cat);
-		$page   = Auxiliary::getIntval($page);
-		$offset = (intval($page) - 1) * SHOWPOSTER_BY_DEFAULT;
+	public  function getAllPostersAllCat($cat, $page = 1) {
+		$cat    = $this->getIntval($cat);
+		$offset = ($this->getIntval($page) - 1) * SHOWPOSTER_BY_DEFAULT;
 		$sql    = "SELECT * FROM poster WHERE (cat_p = $cat) AND ((NOT impot=1) OR (impot IS NULL)) ORDER BY id_poster DESC LIMIT ".SHOWPOSTER_BY_DEFAULT." OFFSET $offset";
-		$result = Auxiliary::getSQLAux($sql);
+		$result = $this->getDB($sql);
 		while ($row = $result->fetch()) {
 			$list[]=$row;			
 		}
 		return $list ?? [];
 	}
 
-	public static function getPostersAll() {
-		$db     = self::getDBVue();
-		$sql    = "SELECT * FROM poster WHERE ((impot=0) OR (impot IS NULL))";
-		$result = $db -> query($sql);
-		$i      = 1;
-		while ($row = $result->fetch()) {
-			$postList[$i]['id']      = $row['id_poster'];
-			$postList[$i]['title_p'] = $row['title_p'];
-			$i++;			
-		}
-		return $postList ?? [];
-	}
-
-	public static function getAllPostersVue($page = 1) {
-		$offset   = ($page - 1) * self::SHOWPOSTER_BY_VUE;
-		$db       = self::getDBVue();
-		$sql      = "SELECT * FROM poster ORDER BY id_poster DESC LIMIT ".self::SHOWPOSTER_BY_VUE." OFFSET $offset";
-		$result   = $db -> query($sql);
-		$i=1;
-		while ($row = $result->fetch()) {
-			$postList[$i]['id']       = $row['id_poster'];
-			$postList[$i]['title_p']  = $row['title_p'];
-			$postList[$i]['type_p']   = $row['type_p'];
-			$postList[$i]['date_p']   = $row['date_p'];
-			$postList[$i]['foto_p1']  = $row['foto_p1'];
-			$postList[$i]['count_p']  = $row['count_p'];
-			$i++;			
-		}
-		return $postList ?? [];
-	}
-
-	public static function getAllPostersAll($page = 1) {
-		$page     = Auxiliary::getIntval($page);
-		$offset   = ($page - 1) * SHOWPOSTER_BY_DEFAULT;
-		$sql      = "SELECT * FROM poster WHERE ((impot=0) OR (impot IS NULL)) ORDER BY id_poster DESC LIMIT ".SHOWPOSTER_BY_DEFAULT." OFFSET $offset";
+	public function getAllPostersAll($page = 1) {
+		$offset = ($this->getIntval($page) - 1) * SHOWPOSTER_BY_DEFAULT;
+		$sql    = "SELECT * FROM poster WHERE ((impot=0) OR (impot IS NULL)) ORDER BY id_poster DESC LIMIT ".SHOWPOSTER_BY_DEFAULT." OFFSET $offset";
 		//$sql      = "SELECT * FROM poster ORDER BY id_poster DESC LIMIT ".SHOWPOSTER_BY_DEFAULT." OFFSET $offset";
-		$result  = Auxiliary::getSQLAux($sql);
+		$result = $this->getDB($sql);
 		while ($row = $result->fetch()) {
 			$list[]=$row;	
 		}
 		return $list ?? [];
 	}
 
-	public static function getFindPosters($txt,$page = 1) {
-		$page     = Auxiliary::getIntval($page);
-		$offset   = ($page - 1) * SHOWPOSTER_BY_DEFAULT;
+	public  function getFindPosters($txt,$page = 1) {
+		$offset   = ($this->getIntval($page) - 1) * SHOWPOSTER_BY_DEFAULT;
 		$sql      = "SELECT * FROM poster WHERE (active= 0) and (impot='0') and (LOCATE('".$txt."',msg_p)) ORDER BY id_poster DESC LIMIT ".SHOWPOSTER_BY_DEFAULT." OFFSET $offset";
-		$result = Auxiliary::getSQLAux($sql);
+		$result = $this->getDB($sql);
 		while ($row = $result->fetch()) {
 			$list[] = $row;		
 		}
 		return $list ?? [];
 	}
 
-	public static function getFindPostersImpot($txt) {
+	public  function getFindPostersImpot($txt) {
 		$sql  = "SELECT * FROM poster WHERE (active= 0) and (impot='1') and (LOCATE('".$txt."',msg_p)) ORDER BY id_poster DESC";
-		$res = Auxiliary::getSQLAux($sql);
+		$res = $this->getDB($sql);
 		while ($row = $res->fetch()) {
 			$list[] = $row;			
 		}
 		return $list ?? [];
 	}
 
-	public static function getFormat($i) {
+	public  function getFormat($i) {
 		return ($i) ? $i : '-';
 	}
 
-	public static function getPostersVerify() {
-		$result = Auxiliary::getSQLAux("SELECT * FROM catagory");
+	public  function getPostersVerify() {
+		$result = $this->getDB("SELECT * FROM catagory");
 		while ($row = $result->fetch()) {
 			$id_cat                 = $row['id_cat'];
             $count_buy    [$id_cat] = 0;
@@ -130,10 +89,10 @@ class Poster
             $count_job    [$id_cat] = 0;
 		}
 
-		$result = Auxiliary::getSQLAux("SELECT * FROM poster");
+		$result = $this->getDB("SELECT * FROM poster");
 		while ($row = $result->fetch()) {
-		    $type_p = intval($row['type_p']);
-		    $cat_p  = intval($row['cat_p']);
+		    $type_p = $this->getIntval($row['type_p']);
+		    $cat_p  = $this->getIntval($row['cat_p']);
 		    if ($type_p && $cat_p) {
 	   			switch ($type_p) {
 				    case 1:
@@ -155,7 +114,7 @@ class Poster
 			}
 		}
 
-		$result = Auxiliary::getSQLAux("SELECT * FROM catagory");
+		$result = $this->getDB("SELECT * FROM catagory");
 		while ($row = $result->fetch()) {
 			$id_cat = $row['id_cat'];
             $buy    = $count_buy   [$id_cat];
@@ -165,25 +124,25 @@ class Poster
             $job    = $count_job   [$id_cat];
 
 			$sql1   = "UPDATE catagory SET count_buy='".$buy."', count_sell='".$sell."', count_other='".$other."', count_change='".$change."', count_job='".$job."' WHERE id_cat='".$id_cat."'";
-			$result1 = $db -> query($sql1);
+			$result1 = $this->getDB($sql1);
 		}
 	}
 
-	public static function getPostersCatEd() {
+	public  function getPostersCatEd() {
 		$getData = new classGetData('catagory');
 		$catList = $getData->getDataFromTableOrder('cat_cat','');
 		unset($getData);
 		return $catList ?? [];
 	}
 
-	public static function getPostersCat() {
+	public function getPostersCat() {
 		$count_sell_all   = 0;
 		$count_buy_all    = 0;
 		$count_other_all  = 0;
 		$count_change_all = 0;
 		$count_job_all    = 0;
 		$count_all_all    = 0;
-		$result = Auxiliary::getSQLAux("SELECT * FROM catagory ORDER BY cat_cat");
+		$result = $this->getDB("SELECT * FROM catagory ORDER BY cat_cat");
 		$i      = 1;
 		while ($row = $result->fetch()) {
 			$catList[$i]['id']           = $row['id_cat'];
@@ -215,57 +174,58 @@ class Poster
 		return $catList;
 	}
 
-	public static function getPosterByRand($rand) {
+	public  function getPosterByRand($rand) {
 		$getData = new classGetData('poster');
 		$elem    = $getData->getDataFromTableByNameFetch ($rand,'rand_p');
 		unset($getData);
 		return $elem;
 	}
 
-	public static function getPosterById($id) {
-		$id      = Auxiliary::getIntval($id);
+	public  function getPosterById($id) {
 		$getData = new classGetData('poster');
-		$elem    = $getData->getDataFromTableByNameFetch ($id,'id_poster');
+		$elem    = $getData->getDataFromTableByNameFetch ($this->getIntval($id),'id_poster');
 		unset($getData);
 		return $elem;
 	}
 
-	public static function plusId($id) {
-		return Auxiliary::getSQLAux("UPDATE poster SET count_p = count_p+1".Auxiliary::formSqlAux("id_poster",$id));
+	public  function plusId($id)
+	{
+		return $this->getDB("UPDATE poster SET count_p = count_p+1".$this->formSql("id_poster",$id));
 	}
 
-	public static function getFindTotalPoster($txt) {
+	public  function getFindTotalPoster($txt) {
 		$sql    = "SELECT count(*) as count FROM poster WHERE LOCATE('".$txt."',msg_p)";
-		$result = Auxiliary::getSQLAux($sql);
+		$result = $this->getDB($sql);
 		$result -> setFetchMode(PDO::FETCH_ASSOC);
 		return $result->fetch()['count'];
 	}
 
-	public static function updateFoto ($id,$foto) {
+	public  function updateFoto ($id,$foto)
+	{
 		$result = Auxiliary::getPrepareSQL("UPDATE poster SET foto_p1=:foto".Auxiliary::formSqlAux("id_poster",$id));
 		$result -> bindParam(':foto', $foto, PDO::PARAM_STR);			
 		return $result -> execute();			
 	}
 
-	public static function getPostersByCat($cat) {
-		$cat     = Auxiliary::getIntval($cat);
+	public  function getPostersByCat($cat) {
+		$cat     = $this->getIntval($cat);
 		$getData = new classGetData('catagory');
 		$list    = $getData->getDataFromTableByNameFetch($cat,'id_cat');
 		return $list;
 	}
 
-	public static function getAllTypePost() {
+	public function getAllTypePost() {
 		return ["вибрати тип","куплю","продам","оренда","обмін","послуги"];
 	}
 
-	public static function getTypePost($type) {
+	public  function getTypePost($type) {
 		$tPos = self::getAllTypePost();
 		return $tPos[Auxiliary::getIntval($type)];
 	}
 
-	public static function incrType ($cat,$type) {
-		$cat          = Auxiliary::getIntval($cat);
-		$type         = Auxiliary::getIntval($type);
+	public  function incrType ($cat,$type) {
+		$cat          = $this->getIntval($cat);
+		$type         = $this->getIntval($type);
 		$db           = Db::getConnection();
 		$row          = self::getPostersByCat($cat);
 		$count_buy    = $row['count_buy'];
@@ -302,72 +262,75 @@ class Poster
 		return $result -> execute();
 	}
 
-	public static function createPoster($nik,$type,$cat,$email,$msg,$foto,$rand,$cl_ip,$title) {
+	public function createPoster($nik,$type,$cat,$email,$msg,$foto,$rand,$cl_ip,$title) {
 		$sql    = "INSERT INTO poster (name_p,type_p,cat_p,email_p,msg_p,foto_p1,rand_p,cl_ip,title_p)
 		 VALUES(:nik,:type,:cat,:email,:msg,:foto,:rand,:cl_ip,:title)";
-		$result = Auxiliary::getPrepareSQL($sql);
-		Auxiliary::bindParam($result,':nik',  $nik);
-		Auxiliary::bindParam($result,':type', $type);
-		Auxiliary::bindParam($result,':email',$email);
-		Auxiliary::bindParam($result,':cat',  $cat);
-		Auxiliary::bindParam($result,':title',$title);
-		Auxiliary::bindParam($result,':rand', $rand);
-		Auxiliary::bindParam($result,':msg',  $msg);
-		Auxiliary::bindParam($result,':cl_ip',$cl_ip);		
-		Auxiliary::bindParam($result,':foto', $foto);
+
+		$result = $this->getPrepareSQL($sql);
+        $result -> bindParam(':nik',   $nik,   PDO::PARAM_STR);
+        $result -> bindParam(':type',  $type,  PDO::PARAM_STR);
+        $result -> bindParam(':email', $email, PDO::PARAM_STR);
+        $result -> bindParam(':cat',   $cat,   PDO::PARAM_STR);
+        $result -> bindParam(':title', $title, PDO::PARAM_STR);
+        $result -> bindParam(':rand',  $rand,  PDO::PARAM_STR);
+        $result -> bindParam(':msg',   $msg,   PDO::PARAM_STR);
+        $result -> bindParam(':cl_ip', $cl_ip, PDO::PARAM_STR);
+        $result -> bindParam(':foto',  $foto,  PDO::PARAM_STR);
 		
 		return $result -> execute();		
 	}
 
-	public static function changePoster($id,$title,$cat,$type,$name,$email,$impot,$msg,$foto) {	
-		$id  = Auxiliary::getIntval($id);
-		$cat = Auxiliary::getIntval($cat);
+	public function changePoster($id,$title,$cat,$type,$name,$email,$impot,$msg,$foto) {	
+		$id  = $this->getIntval($id);
+		$cat = $this->getIntval($cat);
 		$sql = "UPDATE  poster SET name_p=:name, email_p=:email, type_p=:type, cat_p=:cat, title_p=:title, impot=:impot, msg_p=:msg, foto_p1=:foto WHERE id_poster=$id";
-		$result = Auxiliary::getPrepareSQL($sql);
-		Auxiliary::bindParam($result,':name', $name);
-		Auxiliary::bindParam($result,':type', $type);
-		Auxiliary::bindParam($result,':email',$email);
-		Auxiliary::bindParam($result,':cat',  $cat);
-		Auxiliary::bindParam($result,':title',$title);
-		Auxiliary::bindParam($result,':impot',$impot);
-		Auxiliary::bindParam($result,':msg',  $msg);
-		Auxiliary::bindParam($result,':foto', $foto);
+
+		$result = $this->getPrepareSQL($sql);
+        $result -> bindParam(':name',  $name,  PDO::PARAM_STR);
+        $result -> bindParam(':type',  $type,  PDO::PARAM_STR);
+        $result -> bindParam(':email', $email, PDO::PARAM_STR);
+        $result -> bindParam(':cat',   $cat,   PDO::PARAM_STR);
+        $result -> bindParam(':title', $title, PDO::PARAM_STR);
+        $result -> bindParam(':impot', $impot, PDO::PARAM_STR);
+        $result -> bindParam(':msg',   $msg,   PDO::PARAM_STR);
+        $result -> bindParam(':foto',  $foto,  PDO::PARAM_STR);
 
 		return $result -> execute();		
 	}
 
-	public static function editFoto ($id,$title,$cat,$type,$name,$email,$impot,$msg,$foto) {
-		$id  = Auxiliary::getIntval($id);
-		$cat = Auxiliary::getIntval($cat);
+	public  function editFoto ($id,$title,$cat,$type,$name,$email,$impot,$msg,$foto) {
+		$id  = $this->getIntval($id);
+		$cat = $this->getIntval($cat);
 		$sql = "UPDATE poster SET name_p=:name, email_p=:email, type_p=:type, cat_p=:cat, title_p=:title, impot=:impot, msg_p=:msg, foto_p1=:foto WHERE id_poster=$id";
-		$result = Auxiliary::getPrepareSQL($sql);
-		Auxiliary::bindParam($result,':name', $name);
-		Auxiliary::bindParam($result,':type', $type);
-		Auxiliary::bindParam($result,':email',$email);
-		Auxiliary::bindParam($result,':cat',  $cat);
-		Auxiliary::bindParam($result,':title',$title);
-		Auxiliary::bindParam($result,':impot',$impot);
-		Auxiliary::bindParam($result,':msg',  $msg);
-		Auxiliary::bindParam($result,':foto', $foto);
+
+		$result = $this->getPrepareSQL($sql);
+        $result -> bindParam(':name',  $name,  PDO::PARAM_STR);
+        $result -> bindParam(':type',  $type,  PDO::PARAM_STR);
+        $result -> bindParam(':email', $email, PDO::PARAM_STR);
+        $result -> bindParam(':cat',   $cat,   PDO::PARAM_STR);
+        $result -> bindParam(':title', $title, PDO::PARAM_STR);
+        $result -> bindParam(':impot', $impot, PDO::PARAM_STR);
+        $result -> bindParam(':msg',   $msg,   PDO::PARAM_STR);
+        $result -> bindParam(':foto',  $foto,  PDO::PARAM_STR);
 		
 		return $result -> execute();			
 	}
 
-	public static function showLineMenuPoster($http,$alt,$title) {
+	public  function showLineMenuPoster($http,$alt,$title) {
 		include ('views/poster/showLineMenuPoster.php');
 	}
 
-	public static function showNoPhoto($title) {
+	public  function showNoPhoto($title) {
 		include ('views/poster/showNoPhoto.php');
 	}
 
-	public static function showPosterAll($posterItem) {
+	public  function showPosterAll($posterItem) {
 		foreach ($posterItem as $item) {			
 			include ('views/poster/showPosterAll.php');
 		}
 	}
 
-	public static function showPhoto($list) {
+	public  function showPhoto($list) {
 		$file = 'posterFoto/'.$list["foto_p1"];
 		include ('views/poster/showPhoto.php');
 	}

@@ -1,12 +1,13 @@
 <tr class='text-center'>
-	<?=Poster::showPhoto($item)?>
+	<?$p = new Poster();?>
+	<?= $p->showPhoto($item)?>
 	<td width='40%'>
 		<a href ='/posterOne/<?=$item["id_poster"]?>'>
 			<?=$item["title_p"]?>
 		</a>
 	</td>
 	<td>
-		<?=Poster::getTypePost($item['type_p'])?>
+		<?= $p->getTypePost($item['type_p']);unset($p)?>
 	</td>
 	<td class="pNews10">
 		<?=$item["date_p"]?>

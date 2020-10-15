@@ -2,7 +2,7 @@
 /**
 * 
 */
-class User
+class User extends classGetDB
 {	
 	const SHOWCOMMENT_BY_DEFAULT = 25;
 	const SHOWUSERS_BY_DEFAULT = 25;
@@ -23,10 +23,10 @@ class User
 		return self::getData('wishCl','id_com',$page);
 	}
 
-	public static function createUser($login,$password,$name,$surname,$email) {
+	public function createUser($login,$password,$name,$surname,$email) {
 		$sql    = "INSERT INTO friends (user_login,user_password,name,surname,email)
 		 VALUES(:login,:password,:name,:surname,:email)";
-		$result = Auxiliary::getSQLAux($sql);
+		$result = $this->getPrepareSQL($sql);
 		$result -> bindParam(':login',    $login,    PDO::PARAM_STR);
 		$result -> bindParam(':password', $password, PDO::PARAM_STR);
 		$result -> bindParam(':name',     $name,     PDO::PARAM_STR);
@@ -36,9 +36,9 @@ class User
 		return $result -> execute();		
 	}
 
-	public static function changeUser($login,$name,$surname,$email) {
+	public function changeUser($login,$name,$surname,$email) {
 		$sql    = "UPDATE  friends SET email=:email, name=:name, surname=:surname WHERE user_login='".$login."'";
-		$result = Auxiliary::getSQLAux($sql);
+		$result = $this->getPrepareSQL($sql);
 		$result -> bindParam(':name',     $name,     PDO::PARAM_STR);
 		$result -> bindParam(':surname',  $surname,  PDO::PARAM_STR);
 		$result -> bindParam(':email',    $email,    PDO::PARAM_STR);
@@ -46,10 +46,10 @@ class User
 		return $result -> execute();		
 	}
 
-	public static function chekUserData ($login,$password) {
+	public function chekUserData ($login,$password) {
 		$password = md5(md5(trim($password)));
 		$sql      = "SELECT * FROM friends  WHERE user_login = '".$login."' AND user_password = '".$password."'";
-		$result   = Auxiliary::getSQLAux($sql);
+		$result   = $this->getDB ($sql);
 		$user     = $result-> fetch();
 		return ($user) ? $user['id'] : false;
 	}

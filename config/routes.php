@@ -37,7 +37,7 @@ return array(
 'newsCommentEdit/page-([0-9]+)' => 'news/newsCommentEdit/$1',
 'newsCommentEdit' => 'news/newsCommentEdit',
 'newsEditComOne/([0-9]+)/page-([0-9]+)' => 'news/newsEditComOne/$1/$2',
-'news/([0-9]+)' => 'site/viewnews/$1',
+//'news/([0-9]+)' => 'site/viewnews/$1',
 'newsEditOne/([0-9]+)/page-([0-9]+)' => 'news/newsEditOne/$1/$2',
 'newsEditID/' => 'news/newsEditID',
 'newsEdit/page-([0-9]+)' => 'news/newsEdit/$1',

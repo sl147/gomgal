@@ -8,12 +8,14 @@
 			<label>категорія:</label>
 			<select id = 'cat' name = 'category'>
 		    <?
+			    $r = new Relax();
 			    array_unshift($tPos, []);
 				$tPos[0]['id'] = $comms['category'];
-				$tPos[0]['name']    = relax::getRelaxId($comms['category'])['namerl'];
+				$tPos[0]['name']    = $r->getRelaxId($comms['category'])['namerl'];
 			    foreach ($tPos as $pos) {
 			    	echo"<option value = '".$pos['id']."'>".$pos['name']."</option>";
 			    }
+			    unset($r);
 			?>
 		    </select><br><br>
 

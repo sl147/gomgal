@@ -1,9 +1,9 @@
 <?php
-require_once ('../models/News.php');
+require_once ('../models/NewsVue.php');
 
 $page  = $_GET['page'];
 $posts = [];
-$MK    = new News();
+$MK    = new NewsVue();
 
 $posts = $MK->getAllNewsVue($page);
 $data  = [];

@@ -103,10 +103,10 @@ class Auxiliary {
 		return self::getSQLAuxVue("UPDATE vote SET countrl = countrl + 1".self::formSqlAux("id",$id));		
 	}
 
-	public static function addVue($tab, $arr, $count) {	
+/*	public static function addVue($tab, $arr, $count) {	
 		$db     = self::getDBVue();		
 		return self::getSQLAuxVue("INSERT INTO ".$tab." ("+$arr[1]+") VALUES("+$arr[2]+")");	
-	}
+	}*/
 
 	public static function getVoteVueAd() {
 		$result = self::getSQLAuxVue("SELECT * FROM catVote");
@@ -182,7 +182,9 @@ class Auxiliary {
 	}
 
 	public static function getPost() {
-		$arr          = Poster::getPosters20();
+		$poster       = new Poster();
+		$arr          = $poster->getPosters20();
+		unset($poster);
 		$j            = rand (0,count($arr)-1);
 		$pst['id']    = $arr[$j]['id_poster'];
 		$pst['title'] = $arr[$j]['title_p'];
@@ -340,7 +342,7 @@ class Auxiliary {
     }
 
 	public static function sel2El($tab,$name,$id,$idVal,$isId) {
-		require_once ('../classes/traitFormSql.php');
+		require_once ('../classes/traitAuxiliary.php');
 		require_once ('../classes/classGetDB.php');
 		require_once ('../classes/classGetData.php');
 
