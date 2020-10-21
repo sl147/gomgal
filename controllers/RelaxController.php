@@ -1,13 +1,19 @@
 <?php
 
+/**
+ * 
+ */
+
 class RelaxController
 {	
 	use traitAuxiliary;
 
 	public function actionIndex($cat, $page = 1)
 	{
-		$page   = $this->getIntval($page);	
-		$table  = array(
+		$cat   = $this->getIntval($cat);
+		$page  = $this->getIntval($page);
+		$cat   = ($cat > 5) ? $cat = 1 : $cat;
+		$table = array(
 			'cat'   => $cat,
 			'page'  => $page,
 		'SHOWRELAX' => SHOWRELAX_BY_DEFAULT
@@ -15,9 +21,16 @@ class RelaxController
 		$json       = json_encode($table);
 		$total      = Auxiliary::getCountAtr('msgs_relax', 'category',$cat);
 		$pagination = new Pagination($total, $page, SHOWRELAX_BY_DEFAULT, 'page-');
-		$siteFile   = 'views/relax/index.php';
-		$metaTags   = '';
-		require_once ('views/layouts/siteIndex.php');
+		$relax      = new Relax();
+		$arr = $relax->getRelax();
+		foreach ($arr as $a) {
+			if ($a['id'] == $cat) {
+				$b = $this->rus2translit( $a['name'] );
+				$c = new $b();
+				break;
+			}
+		}
+		$c->draw($json,$total,$pagination,$cat);
 		return true;
 	}
 

@@ -3,14 +3,16 @@
 class FAController
 {
 
+	use traitAuxiliary;
+
 	public function actionCreate()
 	{
 
         if(isset($_POST['submit'])) {
         	$aux    = new Auxiliary();
 			$fa     = new FA();
-	        $name_FA = $aux->filterTXT('post', 'name_FA');
-	        $msgs_FA = $aux->filterTXT('post', 'msgs_FA');
+	        $name_FA = $this->filterTXT('post', 'name_FA');
+	        $msgs_FA = $this->filterTXT('post', 'msgs_FA');
 	        $log_FA  = 1;
 	        $result  = $fa->createFA($name_FA,$msgs_FA,$log_FA);
             $idAlbum = $fa->getFAName($name_FA);
@@ -35,8 +37,8 @@ class FAController
         if(isset($_POST['submit'])) {
         	$aux    = new Auxiliary();
 			$fa     = new FA();	
-	        $subscribe = $aux->filterTXT('post', 'subscribe');
-	        $fotoName  = $aux->rus2translit($_FILES['photo']['name']);
+	        $subscribe = $this->filterTXT('post', 'subscribe');
+	        $fotoName  = $this->rus2translit($_FILES['photo']['name']);
 			$fotoNameS = "s".$fotoName;
 			$pathdir   = 'album/'.$id;
 			move_uploaded_file ($_FILES['photo'] ['tmp_name'],$pathdir.'/'.$fotoName);
@@ -53,7 +55,7 @@ class FAController
 	{
 		$aux    = new Auxiliary();
 		$fa     = new FA();	
-		$page       = $aux->getIntval($page);
+		$page       = $this->getIntval($page);
 		$total      = $aux->getCount('photoalbum');
 		$faList     = $fa->getFAAll($page);
 		$pagination = new Pagination($total, $page, SHOWFA_BY_DEFAULT, 'page-');
@@ -67,15 +69,14 @@ class FAController
 		return true;
 	}
 
-	public function actionLookOne($id) {
-		$aux    = new Auxiliary();
+	public function actionLookOne($id)
+	{
 		$fa     = new FA();		
-		$id     = $aux->getIntval($id);
+		$id     = $this->getIntval($id);
 		$faList = $fa->getFAOne($id);
 		$nameFA = $fa->getFAId($id);
 		$metaTags = 'FA';
 		$siteFile = 'views/FA/lookOne.php';
-		unset($aux);
 		unset($fa);
 		require_once ('views/layouts/siteIndex.php');
 		return true;
@@ -83,9 +84,8 @@ class FAController
 
 	public function actionEditOne($id)
 	{		
-		$aux    = new Auxiliary();
 		$fa     = new FA();	
-		$id = $aux->getIntval($id);
+		$id = $this->getIntval($id);
 		$table  = array(
 			'id'   => $id
 			);
@@ -95,7 +95,6 @@ class FAController
 			$subscr = $_POST['subscr'];
 			$file   = $_POST['file'];
 		}
-		unset($aux);
 		unset($fa);			
 		require_once ('views/FA/editOne.php');
 		return true;

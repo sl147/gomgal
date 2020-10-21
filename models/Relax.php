@@ -6,7 +6,6 @@
 * 
 */
 
-
 class Relax extends classGetDB
 {	
 

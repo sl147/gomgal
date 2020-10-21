@@ -34,7 +34,6 @@ class FA  extends classGetDB
 		return $result -> execute();		
 	}
 
-<<<<<<< master
 	public static function getFAName($name) {
 		$getData  = new classGetData('photoalbum');
 		$NewsList = $getData->getDataFromTableByNameFetch($name,'name_FA');
@@ -80,19 +79,11 @@ class FA  extends classGetDB
 		return $faList ?? [];
 	}*/
 
-<<<<<<< master
 	public static function getFAAll($page = 1) {
 		$offset = (Auxiliary::getIntval($page) - 1) * SHOWFA_BY_DEFAULT;
 		$getData  = new classGetData('photoalbum');
 		$result = $getData->getDataByOffsetWithOutRow('id_FA',SHOWFA_BY_DEFAULT,$offset);
 		unset($getData);
-=======
-	public function getFAAll($page = 1)
-	{
-		$page   = $this->getIntval($page);		
-		$offset = (intval($page) - 1) * SHOWFA_BY_DEFAULT;
-		$result = $this->getDB("SELECT * FROM photoalbum ORDER BY id_FA DESC LIMIT ".SHOWFA_BY_DEFAULT." OFFSET $offset");
->>>>>>> local
 		$i      = 1;
 		while ($row = $result->fetch()) {			
 			$faList[$i]['id']   = $row['id_FA'];
@@ -105,18 +96,11 @@ class FA  extends classGetDB
 		return $faList ?? [];
 	}
 
-<<<<<<< master
 	public static function getFAOne($id) {
 		$getData = new classGetData('photoInAlbum');
 		$result  = $getData->getDataFromTableByNameWithOutRow ($id,"id_album");
 		unset($getData);
 		$i       = 1;
-=======
-	public function getFAOne($id)
-	{
-		$result = $this->getDB("SELECT * FROM photoInAlbum".$this->formSql("id_album",$id));
-		$i      = 1;
->>>>>>> local
 		while ($row = $result->fetch()) {			
 			$faOne[$i]['id']        = $row['id_foto'];
 			$faOne[$i]['subscribe'] = $row['subscribe'];
@@ -169,4 +153,3 @@ class FA  extends classGetDB
 		}
 	}
 }
-?>

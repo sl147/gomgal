@@ -34,7 +34,8 @@ class News
 		return $fotoSize;
 	}
 
-	public static function getCatNews() {
+	public static function getCatNews() : array
+	{
 		$getData = new classGetData('catmsgs');
 		$catList = $getData->getData2El('idcm','namecm');
 		unset($getData);
@@ -74,7 +75,8 @@ class News
 		return $topNews;
 	}
 
-	public function getTotalNewsCat($cat, $month, $year) {
+	public function getTotalNewsCat(int $cat, int $month, int $year) : int
+	{
 		$cat    = $this->getIntval($cat);
 		$month  = $this->getIntval($month);
 		$year   = $this->getIntval($year);

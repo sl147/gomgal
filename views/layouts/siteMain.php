@@ -25,11 +25,11 @@
 		include 'views/layouts/headerMenu.php';
 		?>
 
-		<div class='showLarge col-lg-3 col-md-3 col-sm-12 col-xs-12'>
+		<div class=' col-lg-3 col-md-3 col-sm-12 col-xs-12'>
 			<?php include 'views/layouts/leftSide.php';?>
 		</div>
 		<div class="showNews">
-			<div class="">
+			<div class="showLarge">
 				<div class='col-lg-7 col-md-7 col-sm-12 col-xs-12'>
 					<div>
 						<?php include $siteFile;?>

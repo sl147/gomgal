@@ -99,16 +99,13 @@ class Auxiliary {
 		return $result -> execute();		
 	}
 
-	public static function addVote($id) {
+	public static function addVote($id)
+	{
 		return self::getSQLAuxVue("UPDATE vote SET countrl = countrl + 1".self::formSqlAux("id",$id));		
 	}
 
-/*	public static function addVue($tab, $arr, $count) {	
-		$db     = self::getDBVue();		
-		return self::getSQLAuxVue("INSERT INTO ".$tab." ("+$arr[1]+") VALUES("+$arr[2]+")");	
-	}*/
-
-	public static function getVoteVueAd() {
+	public static function getVoteVueAd()
+	{
 		$result = self::getSQLAuxVue("SELECT * FROM catVote");
 		$i      = 1;
 		while ($row = $result->fetch()) {
@@ -119,7 +116,8 @@ class Auxiliary {
 		return $voteList;
 	}
 
-	public static function getVoteVue() {
+	public static function getVoteVue()
+	{
 		$result = self::getSQLAuxVue("SELECT * FROM catVote WHERE active=1 LIMIT 1");
 		while ($row = $result->fetch()) {
 			$voteList['id']   = $row['idrl'];
@@ -128,7 +126,8 @@ class Auxiliary {
 		return $voteList;
 	}
 
-	public static function getTxtVoteVue($id) {
+	public static function getTxtVoteVue($id)
+	{
 		$result  = self::getSQLAuxVue("SELECT * FROM vote".self::formSqlAux("category",$id)." ORDER BY countrl DESC");
 		while ($row = $result->fetch()) {
 			$voteTxt[]=$row;
@@ -136,12 +135,14 @@ class Auxiliary {
 		return $voteTxt ?? [];
 	}
 
-	public static function activated($id) {
+	public static function activated($id)
+	{
 		self::getSQLAux("UPDATE catVote SET active=0".self::formSqlAux("active",1));
 		self::getSQLAux("UPDATE catVote SET active=1".self::formSqlAux("idrl",$id));			
 	}
 
-	public static function getAllVote() {
+	public static function getAllVote()
+	{
 		$result = self::getSQLAux("SELECT * FROM catVote");
 		$i      = 1;
 		while ($row = $result->fetch()) {
@@ -153,7 +154,8 @@ class Auxiliary {
 		return $voteList ?? [];
 	}
 
-	public static function getVote() {
+	public static function getVote()
+	{
 		$result = self::getSQLAux("SELECT * FROM catVote".self::formSqlAux("active",1)." LIMIT 1");
 		while ($row = $result->fetch()) {
 			$voteList['id']   = $row['idrl'];
@@ -162,7 +164,8 @@ class Auxiliary {
 		return $voteList;
 	}
 
-	public static function getTxtVote($id) {
+	public static function getTxtVote($id)
+	{
 		$result  = self::getSQLAux("SELECT * FROM vote".self::formSqlAux("category",$id)." ORDER BY countrl DESC");
 		while ($row = $result->fetch()) {
 			$voteTxt[]=$row;
@@ -170,118 +173,21 @@ class Auxiliary {
 		return $voteTxt ?? [];
 	}
 
-	public static function updateVoteVue ($id,$name) {
+	public static function updateVoteVue ($id,$name)
+	{
 		$result = self::getPrepareSQLVue("UPDATE catVote SET namerl=:name".self::formSqlAux("idrl",$id));
 		$result -> bindParam(':name', $name, PDO::PARAM_STR);
 		
 		return $result -> execute();		
 	}
 
-	public static function getMonth() {
+	public static function getMonth()
+	{
 		return ["січень","лютий","березень","квітень","травень","червень","липень","серпень","вересень","жовтень","листопад","грудень"];
 	}
 
-	public static function getPost() {
-		$poster       = new Poster();
-		$arr          = $poster->getPosters20();
-		unset($poster);
-		$j            = rand (0,count($arr)-1);
-		$pst['id']    = $arr[$j]['id_poster'];
-		$pst['title'] = $arr[$j]['title_p'];
-		return $pst;
-	}
-
-	public static function filterINT($type, $field)
+	public static function makeDir($path)
 	{
-		switch($type)
-		{
-			case 'get':
-			$ouput = filter_input(INPUT_GET, $field, FILTER_VALIDATE_INT);
-			break;
-
-			case 'post':
-			$output = filter_input(INPUT_POST, $field, FILTER_VALIDATE_INT); 
-			break;
-
-			default:
-			break;
-		}
-		return $output;
-	}
-
-	public static function filterTXT($type, $field)
-	{
-		switch($type)
-		{
-			case 'get':
-			$ouput = filter_input(INPUT_GET, $field, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-			break;
-
-			case 'post':
-			$output = filter_input(INPUT_POST, $field, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES); 
-			break;
-
-			default:
-			break;
-		}
-
-		return $output;
-	}
-
-	public static function filterEmail($type, $field) {
-		switch($type)
-		{
-			case 'get':
-			$ouput = filter_input(INPUT_GET, $field, FILTER_VALIDATE_EMAIL);
-			break;
-
-			case 'post':
-			$output = filter_input(INPUT_POST, $field, FILTER_VALIDATE_EMAIL); 
-			break;
-
-			default:
-			break;
-		}
-		return $output;
-	}
-	
-	public static function rus2translit($string) {
-    $converter = array(
-        'а' => 'a',   'б' => 'b',   'в' => 'v',
-        'г' => 'g',   'д' => 'd',   'е' => 'e',
-        'ё' => 'e',   'ж' => 'zh',  'з' => 'z',
-        'и' => 'i',   'й' => 'y',   'к' => 'k',
-        'л' => 'l',   'м' => 'm',   'н' => 'n',
-        'о' => 'o',   'п' => 'p',   'р' => 'r',
-        'с' => 's',   'т' => 't',   'у' => 'u',
-        'ф' => 'f',   'х' => 'h',   'ц' => 'c',
-        'ч' => 'ch',  'ш' => 'sh',  'щ' => 'sch',
-        'ь' => "",  'ы' => 'y',   'ъ' => "",
-        'э' => 'e',   'ю' => 'yu',  'я' => 'ya',
- 
-        'А' => 'A',   'Б' => 'B',   'В' => 'V',
-        'Г' => 'G',   'Д' => 'D',   'Е' => 'E',
-        'Ё' => 'E',   'Ж' => 'Zh',  'З' => 'Z',
-        'И' => 'I',   'Й' => 'Y',   'К' => 'K',
-        'Л' => 'L',   'М' => 'M',   'Н' => 'N',
-        'О' => 'O',   'П' => 'P',   'Р' => 'R',
-        'С' => 'S',   'Т' => 'T',   'У' => 'U',
-        'Ф' => 'F',   'Х' => 'H',   'Ц' => 'C',
-        'Ч' => 'Ch',  'Ш' => 'Sh',  'Щ' => 'Sch',
-        'Ь' => "",  'Ы' => 'Y',   'Ъ' => "",
-        'Э' => 'E',   'Ю' => 'Yu',  'Я' => 'Ya',
-        ' ' => '_',   'і' => 'i',  'І' => 'I',
-    );
-    return strtr($string, $converter);		
-	}
-
-	public static function sendMail($subject,$to,$massage) {
-		$from    = "info@gomgal.lviv.ua";
-		$headers = "From: $from\r\nReplay-To: $from\r\nContent-Type: text/plain; charset=utf-8\r\n ";
-		return mail($to,$subject,$massage,$headers);
-	}	
-
-	public static function makeDir($path) {
 		if (!file_exists($path)) {
 			return (!mkdir($path,0755, true)) ? false : true;	
 		}
@@ -345,9 +251,6 @@ class Auxiliary {
 		require_once ('../classes/traitAuxiliary.php');
 		require_once ('../classes/classGetDB.php');
 		require_once ('../classes/classGetData.php');
-
-		//use classes\classGetData;
-		//use classes\getData2ElVue;
 
 		$getData  = new classGetData($tab);
 		$NewsList = $getData->getData2ElVue($id,$name,$idVal);
@@ -440,7 +343,13 @@ class Auxiliary {
 	}
 
 	public static function showReklRand() {
-		$post=Auxiliary::getPost();
+		$poster       = new Poster();
+		$arr          = $poster->getPosters20();
+		unset($poster);
+		$j            = rand (0,count($arr)-1);
+		$pst['id']    = $arr[$j]['id_poster'];
+		$pst['title'] = $arr[$j]['title_p'];
+		$post         = $pst;
 		include ('views/layouts/showReklRand.php');
 	}
 
@@ -460,7 +369,8 @@ class Auxiliary {
 		include ('views/layouts/showFacebook.php');
 	}
 
-	public static function showMeta($metaTags, $news = 1) {
+	public static function showMeta($metaTags, $news = 1)
+	{
 		if ($metaTags == "") {
 			$meta['title']    = "Гомін Галичични";
 			$meta['keywords'] = 'Дрогобич';
@@ -483,11 +393,13 @@ class Auxiliary {
 		include ('views/layouts/showMeta.php');
 	}
 
-	public static function up() {
+	public static function up()
+	{
 		echo '<div id="topcontrol" style="position: fixed; z-index: 100500; bottom: 155px; right: 5px; cursor: pointer; opacity: 1;" title="вверх"><img src="/image/r7.png"></div>';
 	}
 
-	public static function getSpam() {
+	public static function getSpam()
+	{
 		$getData  = new classGetData("spamTab");
 		$spamList = $getData->getDataFromTable();
 		unset($getData);

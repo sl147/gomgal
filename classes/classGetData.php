@@ -56,16 +56,12 @@ class classGetData extends classGetDB
 		return $this->getRow($this->getDB("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue)));
 	}
 
-<<<<<<< master
+
 /** Отримуєм записи з таблиці $this->table по елементу $elName
  *
  *  @return масив даних
  */
 	public function getDataFromTableByNameWithOutRow ($elValue,$elName) {
-		//return $this->getRow($this->getDB("SELECT * FROM ".$this->table." WHERE ".$elName."= '$elValue'"));	
-=======
-	public function getDataFromTableByNameWithOutRow ($elValue,$elName) {	
->>>>>>> local
 		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue));
 	}
 

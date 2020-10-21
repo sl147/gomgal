@@ -174,7 +174,8 @@ class Poster  extends classGetDB
 		return $catList;
 	}
 
-	public  function getPosterByRand($rand) {
+	public  function getPosterByRand($rand)
+	{
 		$getData = new classGetData('poster');
 		$elem    = $getData->getDataFromTableByNameFetch ($rand,'rand_p');
 		unset($getData);

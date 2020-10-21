@@ -36,7 +36,6 @@ class UserController
 
 	public function actionAuthor() {
 		if(isset($_POST['submit'])) {
-			$aux = new Auxiliary();
 			$userCl = new User();
 			$login    = $this->filterTXT('post', 'login');
 			$password = md5(md5(trim($this->filterTXT('post', 'password'))));
@@ -47,10 +46,9 @@ class UserController
 			$subject  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
 			$to       = "sl147@ukr.net";
 			$massage  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
-			$res      = $aux->sendMail($subject,$to,$massage);
+			$res      = $this->sendMail($subject,$to,$massage);
 			$res      = $userCl->setcookie($login,$name,0);
-			unset($userCl);
-			unset($aux);		
+			unset($userCl);		
 			header("Location: /"); exit();
 		}
 
@@ -69,7 +67,6 @@ class UserController
 
 	public function actionChangeData() {
 		$userCl = new User();
-		$aux = new Auxiliary();
 		$userCurrent = $userCl->userCurr();
 		if ($userCurrent) {
 			if(isset($_POST['submit'])) {
@@ -82,10 +79,9 @@ class UserController
 				$subject  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
 				$to       = "sl147@ukr.net";
 				$massage  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
-				$res      = $aux->sendMail($subject,$to,$massage);
+				$res      = $this->sendMail($subject,$to,$massage);
 				$res      = $userCl->setcookie($login,$name,0);
 				unset($userCl);
-				unset($aux);
 				header("Location: /"); exit();
 			}
 
@@ -119,5 +115,4 @@ class UserController
 		return true;
 	}
 
-}	
-?>
+}

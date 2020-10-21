@@ -2,6 +2,8 @@
 
 class AdminController {
 
+	use traitAuxiliary;
+
 	public function actionIndex($page = 1) {
 
 		require_once ('views/admin/main.php');
@@ -18,7 +20,7 @@ class AdminController {
 
 	public function actionVoteActive() {
 		if(isset($_POST['submit'])) {
-			$id  = Auxiliary::filterTXT('post','id');
+			$id  = $this->filterTXT('post','id');
 			$res = Auxiliary::activated($id);
 		}
 		$allVotes = Auxiliary::getAllVote();

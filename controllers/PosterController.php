@@ -164,7 +164,7 @@ class PosterController
 	        if ($type == 0) {$type = $type_p;}
 
 	        if (!empty($_FILES['file']['tmp_name'])) {
-	            $fotoL    = $aux->rus2translit($_FILES['file']['name']);
+	            $fotoL    = $this->rus2translit($_FILES['file']['name']);
 	            $pathdir  = ROOT."/posterFoto";
 	            $res      = $aux->savePhoto($fotoL,$pathdir);
 	            $res      = $poster->changePoster($idm,$title_p,$cat,$type,$name,$email,$impot,$msg,$fotoL);

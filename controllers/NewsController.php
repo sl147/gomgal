@@ -5,18 +5,21 @@ class NewsController
 	use traitAuxiliary;
 	
 	const SHOWPOSTER_BY_DEFAULT = 25;
-	
+	public $newsClass;
+	public function __construct()
+	{
+		$this->newsClass = new News();
+	}
+
 	public function actionIndex($cat, $page = 1) {
-		$news       = new News();
 		$page       = $this->getIntval($page);
 		$month      = date('n');
 		$year       = date('Y');
-		$topNews    = $news->getNewsTop();
-		$total      = $news->getTotalNewsCat($cat, $month, $year);
-		$allNewscat = $news->getLatestNewsCat($cat, $month, $year, $page);		
+		$topNews    = $this->newsClass->getNewsTop();
+		$total      = $this->newsClass->getTotalNewsCat($cat, $month, $year);
+		$allNewscat = $this->newsClass->getLatestNewsCat($cat, $month, $year, $page);		
 		$pagination = new Pagination($total, $page, SHOWNEWS_BY_DEFAULT, 'page-');
 		$metaTags   = 'news';
-		unset($news);
 		$siteFile   = 'views/news/index.php';
 		require_once ('views/layouts/siteIndex.php');
 		unset($pagination);
@@ -39,26 +42,24 @@ class NewsController
 	}
 
 	public function actionFullnew($id)	{
-		$aux  = new Auxiliary();
 		$com  = new Comment();
-		$newsClass = new News();
 		$id   = $this->getIntval($id);
 		if(isset($_POST['submit']))	{
 			$id_cl     = $id;
-			$txt_com   = $aux->filterTXT('post','txt_com');
-			$nik_com   = $aux->filterTXT('post','nik_com');
-			$email_com = $aux->filterTXT('post','email_com');
+			$txt_com   = $this->filterTXT('post','txt_com');
+			$nik_com   = $this->filterTXT('post','nik_com');
+			$email_com = $this->filterTXT('post','email_com');
 			$ip_com    = $_SERVER['REMOTE_ADDR'];
 			$res       = $com->insComment($id_cl,$txt_com,$nik_com,$email_com,$ip_com);
 			if ($email_com) {
 				$subject = 'Дякуєм за Ваш коментар';
 				$massage = "Дякуєм за Ваш коментар. Завжди раді зустрічі з Вами на нашому сайті www.gomgal.lviv.ua";
-				$mail    = $aux->sendMail($subject,$email_com,$massage);
+				$mail    = $this->sendMail($subject,$email_com,$massage);
 			}
 			$subject = "Новий коментар до id=".$id." ip=".$ip_com;"Новий коментар  www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id;
 			$to      = "sl147@ukr.net";
 			$massage = "Новий коментар www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."  до id=".$id." ip=".$ip_com."  з HTTP_REFERER ".$_SERVER['HTTP_REFERER']."\r\n"."  з REMOTE_ADDR ".$_SERVER['REMOTE_ADDR'];
-			$mail  = $aux->sendMail($subject,$to,$massage);
+			$mail  = $this->sendMail($subject,$to,$massage);
 		} 
 		//newt_init();
  //newt_get_screen_size ($cols, $rows);
@@ -80,52 +81,46 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 } else {
     echo '<script type="text/javascript">window.location = "' . $_SERVER['PHP_SELF'] . '?width="+screen.width+"&height="+screen.height;</script>';
 }*/
-		$news      = $newsClass->getNewsById($id);
-		$newsCount = $newsClass->updateCountById($id,$news['countmsgs']);	
-		$newsOther = $newsClass->newsOther($id,$news['category'],$news['cat2']);
+		$news      = $this->newsClass->getNewsById($id);
+		$newsCount = $this->newsClass->updateCountById($id,$news['countmsgs']);	
+		$newsOther = $this->newsClass->newsOther($id,$news['category'],$news['cat2']);
 		$comm      = $com->getCommentsById($id);
 		$metaTags  = 'newsOne';
 		$siteFile  = 'views/news/fullNew.php';
 		$siteSmall  = 'views/news/fullNew.php';
-		unset($aux);
 		unset($com);
-		unset($newsClass);
 		require_once ('views/layouts/siteIndex.php');
 		return true;
 	}
 
 	public function actionnewsPrint($id) {
-		$newsClass = new News();
 		$id   = $this->getIntval($id);
-		$news = $newsClass->getNewsById($id);
-		unset($newsClass);
+		$news = $this->newsClass->getNewsById($id);
 		require_once ('views/news/newsPrint.php');
 		return true;
 	}
 
 	public function actionNewsAdd() {
 		$aux  = new Auxiliary();
-		$news = new News();
-		$tPos = $news->getCatNews();
+		$tPos = $this->newsClass->getCatNews();
 		if(isset($_POST['submit'])) {
-			$title   = $aux->filterTXT('post', 'title');
-			$prew    = $aux->filterTXT('post', 'prew');
+			$title   = $this->filterTXT('post', 'title');
+			$prew    = $this->filterTXT('post', 'prew');
 			$top     = isset($_POST['top']) ? 1 : 0;
-			$cat     = $aux->filterTXT('post', 'category');
-			$cat2    = $aux->filterTXT('post', 'category2');
-			$msg     = $aux->filterTXT('post', 'msg');
-			$sourse  = $aux->filterTXT('post', 'sourse');
-			$videoYT = $aux->filterTXT('post', 'videoYT');
+			$cat     = $this->filterTXT('post', 'category');
+			$cat2    = $this->filterTXT('post', 'category2');
+			$msg     = $this->filterTXT('post', 'msg');
+			$sourse  = $this->filterTXT('post', 'sourse');
+			$videoYT = $this->filterTXT('post', 'videoYT');
 			$foto    = "";
 			if (!empty($_FILES['file']['tmp_name'])) {
-				$foto = $aux->rus2translit($_FILES['file']['name']);
+				$foto = $this->rus2translit($_FILES['file']['name']);
 				$pathdir = ROOT."/NewsFoto";				
 	            $res  = $aux->savePhoto($foto, $pathdir);
 			}
-			$res = $news->createNews($title,$prew,$cat,$cat2,$sourse,$msg,$foto,$top,$videoYT);
+			$res = $this->newsClass->createNews($title,$prew,$cat,$cat2,$sourse,$msg,$foto,$top,$videoYT);
 		}
 		unset($aux);
-		unset($news);
 		require_once ('views/news/add.php');
 		return true;
 	}
@@ -194,14 +189,13 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 
 	public function actionNewsEditOne($id, $page = 1) {
 		$aux   = new Auxiliary();
-		$news  = new News();
 		$page  = $this->getIntval($page);
 		$id    = $this->getIntval($id);
 		$title = "редагування новин";
 		if ($aux->getCountAtr('msgs', 'id', $id)) {
 			$isId    = true;
-			$allNews = $news->getNewsById($id,$page);
-			$tPos    = $news->getCatNews();
+			$allNews = $this->newsClass->getNewsById($id,$page);
+			$tPos    = $this->newsClass->getCatNews();
 			$tPos2   = $tPos;
 			
 			$type1   = $allNews['category'];
@@ -216,30 +210,30 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 			array_unshift($tPos2, $cat2);
 
 			if(isset($_POST['submit'])) {
-				$title   = $aux->filterTXT('post', 'title');
-				$prew    = $aux->filterTXT('post', 'prew');
+				$title   = $this->filterTXT('post', 'title');
+				$prew    = $this->filterTXT('post', 'prew');
 				$top     = isset($_POST['top']) ? 1 : 0;
-				$cat     = $aux->filterTXT('post', 'category');
-				$cat2    = $aux->filterTXT('post', 'category2');
-				$msg     = $aux->filterTXT('post', 'msg');
-				$sourse  = $aux->filterTXT('post', 'sourse');
-				$videoYT = $aux->filterTXT('post', 'videoYT');
-				$FotoDel = $aux->filterTXT('post', 'FotoDel');
+				$cat     = $this->filterTXT('post', 'category');
+				$cat2    = $this->filterTXT('post', 'category2');
+				$msg     = $this->filterTXT('post', 'msg');
+				$sourse  = $this->filterTXT('post', 'sourse');
+				$videoYT = $this->filterTXT('post', 'videoYT');
+				$FotoDel = $this->filterTXT('post', 'FotoDel');
 		        $cat     = ($cat   == 0) ? $type1 : $cat;
 		        $cat2    = ($cat2  == 0) ? $type2 : $cat2;
 		        if (!empty($_FILES['file']['tmp_name'])) {
-		            $fotoL    = $aux->rus2translit($_FILES['file']['name']);
+		            $fotoL    = $this->rus2translit($_FILES['file']['name']);
 		            $pathdir  = ROOT."/NewsFoto";
 		            $res      = $aux->savePhoto($fotoL,$pathdir);
-		            $res      = $news->updateNews($id,$title,$prew,$cat,$cat2,$sourse,$msg,$fotoL,$top,$videoYT);
+		            $res      = $this->newsClass->updateNews($id,$title,$prew,$cat,$cat2,$sourse,$msg,$fotoL,$top,$videoYT);
 		        }
 		        else {
 		            if ($FotoDel) {
-		                    $res = $news->updateNews($id,$title,$prew,$cat,$cat2,$sourse,$msg,"",$top,$videoYT);
+		                    $res = $this->newsClass->updateNews($id,$title,$prew,$cat,$cat2,$sourse,$msg,"",$top,$videoYT);
 		                    $res = $aux->delFile($allNews['foto'],"NewsFoto");
 		            }
 		            else {
-		                    $res = $news->updateNewsWithoutPhoto($id,$title,$prew,$cat,$cat2,$sourse,$msg,$top,$videoYT);
+		                    $res = $this->newsClass->updateNewsWithoutPhoto($id,$title,$prew,$cat,$cat2,$sourse,$msg,$top,$videoYT);
 		            }
 		        }
 				header("Location: /newsEdit");
@@ -249,17 +243,13 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 			$isId    = false;
 		}
 		unset($aux);
-		unset($news);
 		require_once ('views/news/newsEditOne.php');
 		return true;
 	}
 
 	public function actionNewsEditID() {
 		if(isset($_POST['submit'])) {
-			$aux   = new Auxiliary();
-			$id = $aux->filterINT('post', 'id');
-			unset($aux);
-			header("Location: /newsEditOne/".$id);
+			header("Location: /newsEditOne/".$this->filterINT('post', 'id'));
 		}
 		
 		require_once ('views/news/newsEditID.php');

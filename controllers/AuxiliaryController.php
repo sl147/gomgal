@@ -4,6 +4,8 @@
 */
 class AuxiliaryController {
 
+	use traitAuxiliary;
+
 	private function json($txt,$title) {
 		$table  = array(
 			'table' => $txt
@@ -25,11 +27,11 @@ class AuxiliaryController {
 	public function actionMetaTagsNew() {
 		$title = "Додавання нового метатегу";
 		if(isset($_POST['submit'])) {
-			$url_name = Auxiliary::filterTXT('post', 'url_name');
-			$title    = Auxiliary::filterTXT('post', 'title');
-			$descr    = Auxiliary::filterTXT('post', 'descr');
-			$keywords = Auxiliary::filterTXT('post', 'keywords');
-			$follow   = Auxiliary::filterTXT('post', 'follow');
+			$url_name = $this->filterTXT('post', 'url_name');
+			$title    = $this->filterTXT('post', 'title');
+			$descr    = $this->filterTXT('post', 'descr');
+			$keywords = $this->filterTXT('post', 'keywords');
+			$follow   = $this->filterTXT('post', 'follow');
 
 			$result   = Auxiliary::saveMTags($url_name,$title,$descr,$keywords,$follow);
 			header("Location: /metaTags");
@@ -39,13 +41,13 @@ class AuxiliaryController {
 	}
 
 	public function actionMetaTagsOne($id) {
-		$id = Auxiliary::getIntval($id);
+		$id = $this->getIntval($id);
 		if(isset($_POST['submit'])) {
-			$url_name = Auxiliary::filterTXT('post', 'url_name');
-			$title    = Auxiliary::filterTXT('post', 'title');
-			$descr    = Auxiliary::filterTXT('post', 'descr');
-			$keywords = Auxiliary::filterTXT('post', 'keywords');
-			$follow   = Auxiliary::filterTXT('post', 'follow');
+			$url_name = $this->filterTXT('post', 'url_name');
+			$title    = $this->filterTXT('post', 'title');
+			$descr    = $this->filterTXT('post', 'descr');
+			$keywords = $this->filterTXT('post', 'keywords');
+			$follow   = $this->filterTXT('post', 'follow');
 
 			$res      = Auxiliary::editMetaTags($id,$url_name,$title,$descr,$keywords,$follow);
 			header("Location: /metaTags");

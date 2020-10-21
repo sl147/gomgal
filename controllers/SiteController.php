@@ -22,7 +22,7 @@ class SiteController
 		$siteFile   = 'views/site/index.php';
 		$siteSmall  = 'views/layouts/leftSide.php';
 		$metaTags   = '';
-		require_once ('views/layouts/siteIndex.php');
+		require_once ('views/layouts/siteMain.php');
 		unset($pagination);
 		return true;
 	}

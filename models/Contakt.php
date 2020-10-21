@@ -2,7 +2,7 @@
 /**
 * Клас для коментарів
 */
-namespace models;
+//namespace models;
 
 class Contakt {
 
@@ -24,11 +24,11 @@ class Contakt {
 		if (self::isSpam($nik,$ip,$email,$txt)) return;
 		$sql    = "INSERT INTO wishCl (nik_com,ip_com,email_com,txt_com)
 		 VALUES(:nik,:ip,:email,:txt)";
-		$result = \Auxiliary::getPrepareSQL($sql);
-		\Auxiliary::bindParam($result,':nik',   $nik);
-		\Auxiliary::bindParam($result,':ip',   $ip);
-		\Auxiliary::bindParam($result,':email',   $email);
-		\Auxiliary::bindParam($result,':txt',   $txt);
+		$result = Auxiliary::getPrepareSQL($sql);
+		Auxiliary::bindParam($result,':nik',   $nik);
+		Auxiliary::bindParam($result,':ip',   $ip);
+		Auxiliary::bindParam($result,':email',   $email);
+		Auxiliary::bindParam($result,':txt',   $txt);
 		
 		return $result -> execute();		
 	}
