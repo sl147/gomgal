@@ -48,7 +48,10 @@ font-size: 12px;
 	}
 	.reklPicture {
 		padding: 10px 180px; 
-	}	
+	}
+	.news_msg {
+  padding: 0px;
+}	
 }
 
 /* Small Devices, Tablets */
