@@ -18,15 +18,16 @@ class classGetDB
 		return $db->getConnectionVue() -> query($sql);
 	}
 
-	public static function getPrepareSQL($sql)
+	public function getPrepareSQL($sql)
 	{
-		$db = Db::getConnection();
-		return $db -> prepare($sql);
+		$db   = new Db();
+		return $db->getConnection() ->  prepare($sql);
 	}
 
 	public static function getPrepareSQLVue($sql)
 	{
-		$db  = self::getDBVue();
+		require_once ('../components/Db.php');
+		$db   = new Db();
 		return $db -> prepare($sql);
 	}
 }

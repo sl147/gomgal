@@ -29,7 +29,8 @@ class Comment extends classGetDB
 	{
 		$sql    = "INSERT INTO Comment (id_cl,txt_com,nik_com,email_com,ip_com)
 		 VALUES(:id_cl,:txt_com,:nik_com,:email_com,:ip_com)";
-		$result = $this->getPrepareSQL($sql);
+		$getDB  = new classGetDB();
+		$result = $getDB->getPrepareSQL($sql);
 		$result -> bindParam(':id_cl',     $id_cl,     PDO::PARAM_STR);
 		$result -> bindParam(':txt_com',   $txt_com,   PDO::PARAM_STR);
 		$result -> bindParam(':nik_com',   $nik_com,   PDO::PARAM_STR);

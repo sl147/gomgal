@@ -53,6 +53,13 @@ font-size: 12px;
 
 /* Small Devices, Tablets */
 @media only screen and (max-width : 768px) {
+	.hamburgerAdmin{
+ visibility: visible;
+ z-index: 100;
+}
+.menuMain {
+  visibility: hidden;
+}
 	.top_links {
 		background-color: #585d61;
 		display: none;

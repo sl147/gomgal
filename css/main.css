@@ -115,7 +115,10 @@ text-transform: uppercase;
   padding: 0 15px 0;
 }
 .hamburgerAdmin{
-  display: none;
+  visibility: hidden;
+}
+.menuMain {
+  visibility: visible;
 }
 .leftR {
 width: 100%;
