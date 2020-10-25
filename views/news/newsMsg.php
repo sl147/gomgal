@@ -1,12 +1,21 @@
+<div class="showLarge">
 <h1 class='text-center'>
 	<?=$news['title']?>
 </h1>
+</div>
+
+<div class="showSmall">
+<h4 class='text-center'>
+	<?=$news['title']?>
+</h4>
+</div>
+
 <p class="pNews10">
 	<?=$news['datetime']?>
 </p>
 <?php if ($news['foto']) :?>
 	<a class="fancybox" data-fancybox-group="group" href="<?=$news['photo']?>">
-		<img class='imgNews' width="200" height="auto" src="<?=$news['photo']?>" alt="<?=$news['title']?>" />
+		<img class='imgNews' src="<?=$news['photo']?>" alt="<?=$news['title']?>" />
 	</a>
 <?php endif; ?>
 

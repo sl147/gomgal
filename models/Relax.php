@@ -63,6 +63,7 @@ class Relax extends classGetDB
 			$j   = rand (0,count($arr)-1);
 			return $arr[$j]['msg'];
 		}
+		return ""; 
 	}
 
 	public function addNewAn($teman, $msg)

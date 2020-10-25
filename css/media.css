@@ -32,6 +32,9 @@ font-size: 12px;
 		display: block;	
 	}
 
+.imgNews {
+	display: none;
+
 	.showRekl {
     display: block;  
   }

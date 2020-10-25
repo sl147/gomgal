@@ -28,6 +28,10 @@ ul {
 [v-cloak] {
   display: none;
 }
+
+.form-group-input{
+width: 123%;
+}
 #topcontrol {
 visibility: hidden;
 }
@@ -60,6 +64,10 @@ visibility: hidden;
 }
 .showRekl {
     display: none;  
+  }
+
+.showSmall {
+    display: none; 
   }
 
 .adecor {
@@ -125,7 +133,6 @@ text-align:left;
 line-height:  90%;
 margin:5px;
 padding: 5px;
-height:100px;
 }
 .transbox {
     width: 150px;
@@ -290,7 +297,7 @@ margin-right: 18px;
  }
  #auth3 label {
   display: block;
-  width:9em;
+  width:30%;
   float: left;
   color: grey;
  }
@@ -346,6 +353,8 @@ object-fit: cover;
   float: left;
   padding-right: 20px;
   padding-bottom: 5px;
+  width: 30%;
+  height: auto;
 }
 .sourse {
 padding: 0 35px;
