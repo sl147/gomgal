@@ -34,7 +34,16 @@ font-size: 12px;
 
 .imgNews {
 	display: none;
-
+}
+.velocityProduct {
+	background-image: none;
+	height: 22%;
+	width: auto;
+}
+.lastNews{
+	width: 100%;
+	margin-left: 0px;
+}
 	.showRekl {
     display: block;  
   }
