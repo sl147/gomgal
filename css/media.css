@@ -58,7 +58,8 @@ font-size: 12px;
  z-index: 100;
 }
 .menuMain {
-  visibility: hidden;
+  /*visibility: hidden;*/
+  display: none;;
 }
 	.top_links {
 		background-color: #585d61;
