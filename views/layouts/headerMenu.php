@@ -1,6 +1,5 @@
 <!-- <?
 $content="<div class='text-center'>";
-echo "content:".$content."<br>";
 $content .="
 <a href='/' title='Головна' class='hamburgerMenu text-menu btn btn-info'>Головна</a>
 <a href='/basket' title='Перейти до кошика' class='hamburgerMenu text-menu btn btn-info'>Кошик</a>
@@ -9,7 +8,6 @@ $content .="
 </div>    
 ";
 $nm = "меню";
-echo "content:".$content;
 ?>
 <div class="col-lg-2 col-md-3 col-sm-0 col-xs-0">
 	<div class='hamburgerAdmin'>
@@ -21,9 +19,10 @@ echo "content:".$content;
 		</div>
 	</div>	
 </div> -->
+<div id='id_main_menu'>
 <nav class="main_menu clearfix">
-	<div class='menuMain'>
-	<div class="btn-group btn-group-justified" role="group" aria-label="...">
+	
+	<div class="menuMain btn-group btn-group-justified" role="group" aria-label="...">
 		<?php
 		$n = new News();
 		$r = new Relax();
@@ -40,5 +39,7 @@ echo "content:".$content;
 			Auxiliary::showMainElMenu("userLogin","вхід","ВХІД");  
 		?> 
 	</div>
-	</div>		
+	
 </nav>
+</div>
+<div id='id_place_menu'></div>

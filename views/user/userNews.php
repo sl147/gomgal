@@ -2,6 +2,7 @@
 <div class="row">
 	<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12"></div>
 	<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+		<?php if (count($comms) > 0) :?>
 		<h2 class="text-center">
 			<?= $title?>			
 		</h2>
@@ -51,6 +52,9 @@
 				<?php endforeach; ?>					
 			</tbody>
 		</table>
+		<?php else :?>
+			<h2 class="text-center">Коментарів немає</h2>
+	<?php endif; ?>
 	</div>
 </div>
 <?php if ($total > SHOWCOMMENT_BY_DEFAULT) :?>
