@@ -93,14 +93,16 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 		return true;
 	}
 
-	public function actionnewsPrint($id) {
+	public function actionnewsPrint($id)
+	{
 		$id   = $this->getIntval($id);
 		$news = $this->newsClass->getNewsById($id);
 		require_once ('views/news/newsPrint.php');
 		return true;
 	}
 
-	public function actionNewsAdd() {
+	public function actionNewsAdd()
+	{
 		$aux  = new Auxiliary();
 		$tPos = $this->newsClass->getCatNews();
 		if(isset($_POST['submit'])) {
@@ -125,14 +127,18 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 		return true;
 	}
 
-	public function actionNewsCommentEdit($page = 1) {
+	public function actionNewsCommentEdit($page = 1)
+	{
 		$com   = new Comment();
 		$aux   = new Auxiliary();
 		$page  = $this->getIntval($page);
 		$table = array(
 			'page' => $page
 			);
-		$json  = json_encode($table);		
+		$json  = json_encode($table);
+		if(isset($_POST['submit'])) {
+			$res = $com->delComment($this->filterTXT('post', 'id'));
+		}		
 		$title = "перегляд коментарів клієнтів";
 		$total = $aux->getCount('Comment');
 		$comms = $com->getComments($page);
@@ -161,7 +167,8 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 		return true;
 	}*/
 
-	public function actionNewsEdit($page = 1) {
+	public function actionNewsEdit($page = 1)
+	{
 		$aux   = new Auxiliary();
 		$page  = $this->getIntval($page);
 		$total = $aux->getCount('msgs');

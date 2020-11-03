@@ -38,5 +38,11 @@ class Comment extends classGetDB
 		$result -> bindParam(':ip_com',    $ip_com,    PDO::PARAM_STR);		
 		return $result -> execute();		
 	}
+
+	public function delComment($id)
+	{
+		$getData = new classGetData('Comment');
+		return $getData->deleteDataFromTable($id,$nameid='id_com');
+	}
 }
 ?>

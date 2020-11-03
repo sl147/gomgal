@@ -26,9 +26,14 @@
 						<td class="text-center"><?=$item['email_com']?></td>
 						<td class="text-left"><?=$item['ip_com']?></td>
 						<td>
-							<button type='button' title='видалити запис' class='btn btn-default btn-lg'>
+							
+							<form method="post">
+							   <input autofocus type="hidden" name="id" value="<?=$item['id_com']?>">
+							   <button type='submit' name="submit" title='видалити запис' class='btn btn-default btn-lg'>
 								<i class="fa fa-trash fa-fw"></i>
-							</button>
+								</button>
+							 </form>
+							
 						</td>	
 					</tr>
 				<?php endforeach; ?>					
