@@ -1,5 +1,7 @@
+<div class="showLarge">
 <nav class="main_menu clearfix">
 	<div class="btn-group btn-group-justified" role="group" aria-label="...">
+		
 		<?php
 			$p = new Poster();
 			$p->showLineMenuPoster("posterFull","всі","всі безкоштовні оголошення");
@@ -8,5 +10,6 @@
 			$p->showLineMenuPoster("posterAdd","додати","додати своє безкоштовне оголошення");
 			unset($p);
 		?>
+		</div>
 	</div>
 </nav>

@@ -394,6 +394,7 @@ height: auto;
 .posterTXT {
   color: grey;
   font-size:12px;
+  text-align: justify;
 }
 
  #auth

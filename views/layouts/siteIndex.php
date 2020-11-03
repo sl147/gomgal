@@ -35,7 +35,6 @@
 						<?php include $siteFile;?>
 					</div>
 				</div>
-
 				<div class='showLarge col-lg-2 col-md-2 col-sm-12 col-xs-12'>
 					<?php include 'views/layouts/rightSide.php';?>
 				</div>
@@ -47,8 +46,12 @@
 				</div>
 			</div>	 -->
 		</div>
-		<?php include 'views/layouts/footer.php';?>		
-
+			
+<!--<script type="text/javascript">
+	$('.rightSide').remove();
+	alert('empty');
+</script> -->
+		<?php include 'views/layouts/footer.php';?>	
 		<script src="/libs/fancybox/jquery.fancybox.pack.js"></script>
 		<script src="/js/bootstrap.min.js"></script>
 		<script src="/js/vue.min.js"></script>
