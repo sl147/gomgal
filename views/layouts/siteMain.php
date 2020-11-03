@@ -28,10 +28,6 @@
 		<div class='col-lg-3 col-md-3 col-sm-12 col-xs-12'>
 			<?php include 'views/layouts/leftSide.php';?>
 		</div>
-<<<<<<< HEAD
-=======
-
->>>>>>> userNews
 			<div class="showLarge">
 				<div class='col-lg-7 col-md-7 col-sm-12 col-xs-12'>
 					<div>
@@ -49,10 +45,6 @@
 					<?php include $siteSmall;?>
 				</div>
 			</div>	 -->
-<<<<<<< HEAD
-=======
-
->>>>>>> userNews
 		<?php include 'views/layouts/footer.php';?>		
 
 		<script src="/libs/fancybox/jquery.fancybox.pack.js"></script>
