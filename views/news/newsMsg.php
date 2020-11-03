@@ -1,13 +1,13 @@
 <div class="showLarge">
-<h1 class='text-center'>
-	<?=$news['title']?>
-</h1>
+	<h1 class='text-center'>
+		<?=$news['title']?>
+	</h1>
 </div>
 
 <div class="showSmall">
-<h4 class='text-center'>
-	<?=$news['title']?>
-</h4>
+	<h4 class='text-center'>
+		<?=$news['title']?>
+	</h4>
 </div>
 
 <p class="pNews10">
