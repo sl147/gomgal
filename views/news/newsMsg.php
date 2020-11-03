@@ -37,10 +37,12 @@
 	<p>
 		джерело: <?=$news['sourse']?>
 	</p>
-	<a href='/newsPrint/<?=$news["id"]?>' target='_blank'>
-		<img style="float: left;" alt='версія для друку' title='версія для друку' src='../image/print.jpg'>
-		<div style="float: right;">
-			версія<br>для друку
-		</div>
-	</a>
+	<div class="showLarge">
+		<a href='/newsPrint/<?=$news["id"]?>' target='_blank'>
+			<img style="float: left;" alt='версія для друку' title='версія для друку' src='../image/print.jpg'>
+			<div style="float: right;">
+				версія<br>для друку
+			</div>
+		</a>
+	</div>
 </div><br><br><br>
