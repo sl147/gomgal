@@ -1,7 +1,7 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="col-lg-2 col-md-2 col-sm-12 col-xs-0"></div>
-		<div class="col-lg-8 col-md-8 col-sm-12 col-xs-0">
+		<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
 			<div class="btn-group btn-group-justified">
 				<a href="/relaxALL" class="btn btn-danger">
 					всі
@@ -25,7 +25,8 @@
 				</div>
 
 				<a href="/ralaxAddAn" class="btn btn-success">
-					додати анекдот
+					<div class="showLarge">додати анекдот</div>
+					<div class="showSmall">додати</div>
 				</a>
 			</div>
 		</div>	

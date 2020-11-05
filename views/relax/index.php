@@ -6,21 +6,21 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-1 col-md-1 col-sm-1 col-xs-0"></div>
-				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
 					Оцініть
 				</div>
 				<div class="col-lg-1 col-md-1 col-sm-1 col-xs-0"></div>
-				<div class="col-lg-1 col-md-1 col-sm-1 col-xs-0">
+				<div class="col-lg-1 col-md-1 col-sm-1 col-xs-3">
 					<button @click="edCount(item,1)" type="button" data-toggle="dropdown" class="btn btn-delta11">
 						<i class="fa fa-plus fa-fw"></i>
 					</button>
 				</div>
-				<div class="col-lg-1 col-md-1 col-sm-1 col-xs-0">
+				<div class="col-lg-1 col-md-1 col-sm-1 col-xs-3">
 					<button @click="edCount(item,-1)" type="button" data-toggle="dropdown" class="btn btn-delta11">
 						<i class="fa fa-minus fa-fw"></i>
 					</button>
 				</div>
-				<div class="col-lg-1 col-md-1 col-sm-1 col-xs-0">
+				<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
 					<span class='badge'>
 						{{item.countrl}}
 					</span>
