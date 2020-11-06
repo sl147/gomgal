@@ -1,6 +1,6 @@
 <?php include 'views/relax/headerRelax.php';?>
 <div class="col-lg-1 col-md-1 col-sm-1 col-xs-0"></div>
-<div class="col-lg-10 col-md-10 col-sm-2 col-xs-2">
+<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
 	<h4 class="text-center">
 		Додати анекдот
 	</h4>			
@@ -12,7 +12,7 @@
 			<?php endforeach ;?>
 		</select><br><br>	      	
 		<label>Текст анекдоту:</label>
-		<textarea class="textWidth" name = "msg" rows ='19'></textarea><br>
+		<textarea class="textWidth" name = "msg" rows ='10'></textarea><br>
 		<button name="submit" type="submit" class="btn-block btn btn-info btn-lg">
 			Додати анекдот
 		</button>

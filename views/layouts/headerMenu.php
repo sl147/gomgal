@@ -9,7 +9,7 @@ $nm = "меню";
 <div class='showSmall'>		
 		<div class='text-left'>
 			<a style="margin-top:0px;" href="#" tabindex="0" data-trigger="focus" class="btn btn-lg" data-container="body" role="button" data-toggle="popover" 
-			data-placement="bottom" data-html="true" title = "<?=$nm?>" data-content="<?=$content?>">
+			data-placement="right" data-html="true" title = "<?=$nm?>" data-content="<?=$content?>">
 			<i class="fa fa-bars fa-fw"></i>
 			</a>
 		</div>		

@@ -20,10 +20,12 @@
 	<body>
 		<script src="/js/jquery-1.11.3.min.js"></script>
 		<script src="/js/myjs.js"></script>
-		<?php
-		include 'views/layouts/headerLine.php';
-		include 'views/layouts/headerMenu.php';
-		?>
+		<div class="showLarge">
+			<?php
+				include 'views/layouts/headerLine.php';
+				include 'views/layouts/headerMenu.php';
+			?>	
+		</div>
 
 		<div class='col-lg-3 col-md-3 col-sm-12 col-xs-12'>
 			<?php include 'views/layouts/leftSide.php';?>

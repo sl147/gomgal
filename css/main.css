@@ -165,13 +165,15 @@ border-radius: 10px;
 .lastNews {
 background-color:#FF1493;
 color: #FFFF00;
-width: 60%;
-margin-left:45px;
+/*width: 60%;
+margin-left:45px;*/
 font-size: 20px;
 border-radius: 20px;
 padding-bottom: 5px;
 font: bold italic 130% serif;
+margin-top: 6px;
 }
+
 .fb {
 margin-left: 2px; 
 }
