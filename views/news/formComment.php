@@ -3,11 +3,11 @@
 		<legend class="text-center">
 			Додати коментар
 		</legend>
-		<div class="form-group form-group-input">
+		<div class="form-group">
 			<label>Ім'я</label>
 			<input name="nik_com" type="text"><br>
 		</div>
-		<div class="form-group form-group-input">
+		<div class="form-group">
 			<label>E-mail<br>(не обов'язково)</label>
 			<input name="email_com" type="email"><br>
 		</div>

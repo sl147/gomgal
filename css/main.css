@@ -65,7 +65,9 @@ visibility: hidden;
 .showRekl {
     display: none;  
   }
-
+.popover-text {
+  font-size: 20px;
+}
 .showSmall {
     display: none; 
   }

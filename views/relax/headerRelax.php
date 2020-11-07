@@ -1,7 +1,9 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="col-lg-1 col-md-1 col-sm-0 col-xs-0"></div>
+
 		<?php include 'views/layouts/hamburgerMenu.php';?>
+
 		<div class="col-lg-8 col-md-8 col-sm-10 col-xs-10">
 			<div class="btn-group btn-group-justified">
 				<a href="/relaxALL" class="btn btn-danger">всі</a>
@@ -10,8 +12,8 @@
 						по темам<span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu">
-						<?$r = new Relax();?>
-						<?php foreach ($r->getAnList() as $item) :?>
+						<?$r = new Relax();
+						foreach ($r->getAnList() as $item) :?>
 							<li>
 								<a href="/relaxFullAnCat/<?=$item ['id']?>" title="<?$item['name']?>">
 									<?=$item['name']?>

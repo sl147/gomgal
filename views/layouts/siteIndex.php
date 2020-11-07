@@ -25,31 +25,19 @@
 				include 'views/layouts/headerLine.php';
 				include 'views/layouts/headerMenu.php';
 			?>	
-		</div>
-		
+		</div>		
+		<div class="container-fluid">
+				<div class='showLarge col-lg-3 col-md-3 col-sm-12 col-xs-12'>
+					<?php include 'views/layouts/leftSide.php';?>
+				</div>
 
-		<div class='showLarge col-lg-3 col-md-3 col-sm-12 col-xs-12'>
-			<?php include 'views/layouts/leftSide.php';?>
-		</div>
-
-			<div class="">
 				<div class='col-lg-7 col-md-7 col-sm-12 col-xs-12'>
-					<div>
-						<?php include $siteFile;?>
-					</div>
+					<div><?php include $siteFile;?></div>
 				</div>
 				<div class='showLarge col-lg-2 col-md-2 col-sm-12 col-xs-12'>
 					<?php include 'views/layouts/rightSide.php';?>
 				</div>
-			</div>
-<!-- 			<div class="showSmall">
-				<div class='col-lg-3 col-md-3 col-sm-12 col-xs-12'>
-
-					<?php include $siteSmall;?>
-				</div>
-			</div>	 -->
-	
-			
+		</div>
 <!--<script type="text/javascript">
 	$('.rightSide').remove();
 	alert('empty');
