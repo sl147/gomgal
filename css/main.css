@@ -230,7 +230,8 @@ margin-right: 18px;
   color: grey;
 }
 .txtArWidth {
-  width: 90%;
+  width: 100%;
+  white-space: pre-wrap, !important;
 }
 
 .btnwidth {
@@ -270,7 +271,7 @@ margin-right: 18px;
 }
 
 #auth1 {
-   width: 90%;
+   width: 100%;
    padding: 10px;
    margin: 10px auto;
    font-size: 16px;
@@ -356,6 +357,8 @@ object-fit: cover;
 .news_msg {
   text-indent: 5%;
   padding: 10px;
+  white-space: pre-line;
+  display: inline-block;
 }
 .imgNews {
   float: left;

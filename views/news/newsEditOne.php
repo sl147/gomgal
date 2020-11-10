@@ -1,5 +1,7 @@
 <?php include 'views/layouts/headerAdmin.php';?>
 <script src="/ckeditor/ckeditor.js"></script>
+<!-- <script src="/ckeditor5-build-classic/ckeditor.js"></script> -->
+<!-- <script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script> -->
 <h2 class="text-center"><?= $title?></h2>
 <div class="row">
 	<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
@@ -32,8 +34,8 @@
 			    }
 			?>
 			</select><br><br>
-			<label>Текст новини:</label><br><br>
-			<textarea class="txtArWidth" name = "msg" rows ='8'  maxlength="3000" required>
+			<label>Текст новини:</label>			
+			<textarea id="editor" class="txtArWidth" name = "msg" rows ='8'  maxlength="3000" required>
 				<?= $allNews['msg']?>
 			</textarea><br><br>
 			<label>Джерело:</label>
@@ -63,6 +65,32 @@
 	</div>			
 </div>		
 <?php include 'views/layouts/footerAdmin.php';?>
-<script type='text/javascript'>
+<!-- <script type='text/javascript'>
 	CKEDITOR.replace('msg');
+</script> -->
+<!-- <script>
+        ClassicEditor
+            .create( document.querySelector( '#editor' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script> -->
+
+<!--     <script type="text/javascript">
+    	DecoupledEditor
+    .create( document.querySelector( '#editor' ) )
+    .then( editor => {
+        const toolbarContainer = document.querySelector( '#toolbar-container' );
+
+        toolbarContainer.appendChild( editor.ui.view.toolbar.element );
+    } )
+    .catch( error => {
+        console.error( error );
+    } );
+    </script> -->
+    <script>
+function test()
+{
+$("editor").value += "123\r\n";
+}
 </script>
