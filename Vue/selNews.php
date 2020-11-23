@@ -1,5 +1,5 @@
 <?php
-require_once ('../models/NewsVue.php');
+	require_once ('../models/NewsVue.php');
 
 $page  = $_GET['page'];
 $posts = [];

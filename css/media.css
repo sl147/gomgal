@@ -3,9 +3,7 @@
 /* Large Devices, Wide Screens */
 @media only screen and (max-width : 1200px) {
 
-.bordLeft {
-height:120px;
-}
+
 .reklPicture {
 padding: 10px 30px; 
 }
@@ -61,8 +59,7 @@ font-size: 12px;
 	#vote {
 		width: 100%;
 	}
-	.
-	main_menu{
+	.main_menu{
 		display: none;
 		position: absolute;
 		width: 100%;
@@ -71,20 +68,20 @@ font-size: 12px;
 		padding: 10px 180px; 
 	}
 	.news_msg {
-  padding: 0px;
-}	
+	  padding: 0px;
+	}
 }
 
 /* Small Devices, Tablets */
 @media only screen and (max-width : 768px) {
 	.hamburgerAdmin{
- visibility: visible;
- z-index: 100;
-}
-.menuMain {
-  /*visibility: hidden;*/
-  display: none;;
-}
+		 visibility: visible;
+		 z-index: 100;
+		}
+	.menuMain {
+	  /*visibility: hidden;*/
+	  display: none;;
+	}
 	.top_links {
 		background-color: #585d61;
 		display: none;
