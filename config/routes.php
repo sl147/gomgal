@@ -73,6 +73,7 @@ return array(
 'spam' => 'admin/spam',
 'videoChange/page-([0-9]+)' => 'video/changeVideo/$1',
 'videoChange' => 'video/changeVideo',
+'video/page-([0-9]+)' => 'video/index/$1',
 'video' => 'video/index',
 'voteActive' => 'admin/voteActive',
 'voteEdit' => 'admin/voteEdit',

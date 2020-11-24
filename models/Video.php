@@ -2,19 +2,22 @@
 /**
 * 
 */
-class Video
+class Video extends classGetDB
 {	
 
-	const SHOWVIDEO_BY_DEFAULT = 20;
+	use traitAuxiliary;
+
+	const SHOWVIDEO_BY_DEFAULT = 6;
 
 	private static function reqAux() {
 		require_once ('../models/Auxiliary.php');
 		return new Auxiliary();
 	}
 
-	public static function getVideo() {
+	public  function getVideo($page) {
 		$getData = new classGetData('progrnk');
-		$result  = $getData->getDataFromTableOrderWithOutRow('prid',self::SHOWVIDEO_BY_DEFAULT);
+		$offset  = ($this->getIntval($page) - 1) * self::SHOWVIDEO_BY_DEFAULT;
+		$result = $getData->getDataByOffsetWithOutRow ('prid',self::SHOWVIDEO_BY_DEFAULT,$offset);
 		unset($getData);
 		$i       = 0;
 		while ($row = $result->fetch()) {			

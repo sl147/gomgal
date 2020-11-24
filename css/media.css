@@ -70,6 +70,9 @@ font-size: 12px;
 	.news_msg {
 	  padding: 0px;
 	}
+	.videoRow {
+	  height: 28%;
+	}
 }
 
 /* Small Devices, Tablets */

@@ -3,6 +3,7 @@
 		$content ="<div class='text-center' >
 		    <a href='/' title='ГОЛОВНА' class='text-menu btn btn-info'>ГОЛОВНА</a>
 		    <a href='/relax/1' title='ДОЗВІЛЛЯ' class='text-menu btn btn-info'>ДОЗВІЛЛЯ</a>
+		    <a href='/video' title='відео' class='text-menu btn btn-info'>відео</a>
 		    <a href='/contakt' title='контакти' class='text-menu btn btn-info'>контакти</a>
 		</div>";
 		$nm = "меню";

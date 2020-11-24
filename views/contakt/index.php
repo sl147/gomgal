@@ -1,8 +1,18 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-lg-1 col-md-1 col-sm-0 col-xs-0"></div>
-		<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 textColor">			
-			<h1 class="text-center">контакти</h1>
+		<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 textColor">
+			<div class="container-fluid">
+				<div class="row">
+					<?php include 'views/layouts/hamburgerMenu.php';?>						
+						<div class="col-lg-8 col-md-8 col-sm-10 col-xs-10">	
+							<div class="btn-group btn-group-justified">		
+								<h1 class="text-center">контакти</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="showLarge">
 				<p>Газета виходить з 26 липня 2002 року.</p>
 				<p>Засновник  <b>ПП "Інфо-Промінь"</b></p>
