@@ -6,11 +6,11 @@
 	<thead>
 		<tr class='success' style='color: grey; font-size:12px; font-weight:bold;'>
 			<th class="text-center">категорія</th>
-			<th class="text-center">купівля</th>
-			<th class="text-center">продаж</th>
-			<th class="text-center">оренда</th>
-			<th class="text-center">обмін</th>
-			<th class="text-center">послуги</th>
+			<th class="text-center showLarge">купівля</th>
+			<th class="text-center showLarge">продаж</th>
+			<th class="text-center showLarge">оренда</th>
+			<th class="text-center showLarge">обмін</th>
+			<th class="text-center showLarge">послуги</th>
 			<th class="text-center">всього</th>
 		</tr>
 	</thead>

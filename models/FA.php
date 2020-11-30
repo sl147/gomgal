@@ -80,7 +80,7 @@ class FA  extends classGetDB
 	}*/
 
 	public static function getFAAll($page = 1) {
-		$offset = (Auxiliary::getIntval($page) - 1) * SHOWFA_BY_DEFAULT;
+		$offset = ($this->getIntval($page) - 1) * SHOWFA_BY_DEFAULT;
 		$getData  = new classGetData('photoalbum');
 		$result = $getData->getDataByOffsetWithOutRow('id_FA',SHOWFA_BY_DEFAULT,$offset);
 		unset($getData);

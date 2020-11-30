@@ -14,10 +14,10 @@
 	<td>
 		<?= $pp->getTypePost($item['type_p']);unset($pp)?>
 	</td>
-	<td class="pNews10">
+	<td class="pNews10 showLarge">
 		<?=$item["date_p"]?>
 	</td>
-	<td>
+	<td class="showLarge">
 		<b><?=$item["count_p"]?></b>
 	</td>
 </tr>

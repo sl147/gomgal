@@ -4,7 +4,8 @@ class PosterController
 {
 	use traitAuxiliary;
 
-	public function actionIndex() {
+	public function actionIndex()
+	{
 		$poster    = new Poster();
 		$posterCat = $poster->getPostersCat();
 		unset($poster);
@@ -35,7 +36,9 @@ class PosterController
 		return true;
 	}
 
-	public function actionPosterCatFull($cat, $page = 1) {
+	public function actionPosterCatFull($cat, $page = 1)
+	{
+		$cat = $this->getIntval($cat);
 		$poster    = new Poster();
 		$aux    = new Auxiliary();
 		$posterImpotant = $poster->getAllPostersImpotCat($cat);
@@ -51,7 +54,8 @@ class PosterController
 		return true;
 	}
 
-	public function actionPosterFull($page = 1)	{
+	public function actionPosterFull($page = 1)
+	{
 		$poster    = new Poster();
 		$aux    = new Auxiliary();
 		$posterImpotant = $poster->getAllPostersImpot();
@@ -67,7 +71,8 @@ class PosterController
 		return true;
 	}
 
-	public function actionPosterOne($id = 1) {
+	public function actionPosterOne($id = 1)
+	{
 		$poster    = new Poster();
 		$id        = $this->getIntval($id);
 		$posterOne = $poster->getPosterById($id);
@@ -117,7 +122,8 @@ class PosterController
 		return true;
 	}
 
-	public function actionPosterEdit($page = 1) {
+	public function actionPosterEdit($page = 1)
+	{
 		$aux    = new Auxiliary();
 		$page  = $this->getIntval($page);
 		$table = array(
@@ -133,7 +139,8 @@ class PosterController
 		return true;
 	}
 
-	public function actionPosterEditOne($id, $page = 1) {
+	public function actionPosterEditOne($id, $page = 1)
+	{
 		$poster    = new Poster();
 		$aux    = new Auxiliary();
 		$id          = $this->getIntval($id);
@@ -188,8 +195,8 @@ class PosterController
 
 	public function actionPosterVerify()
 	{
-		$poster    = new Poster();		
-		$t  = $poster->getPostersVerify();
+		$poster = new Poster();		
+		$t      = $poster->getPostersVerify();
 		unset($poster);
 		require_once ('views/poster/posterVerify.php');
 		return true;

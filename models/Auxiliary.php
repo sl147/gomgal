@@ -5,7 +5,11 @@
 //namespace models;
 //declare(strict_types = 1);
 
-class Auxiliary {
+class Auxiliary
+{
+
+	use traitAuxiliary;
+
 	public function getDBVue()
 	{
 		require_once ('../components/Db.php');
@@ -36,10 +40,10 @@ class Auxiliary {
 		return $db -> prepare($sql);
 	}
 
-	public static function getIntval ($i) : int
+/*	public static function getIntval ($i) : int
 	{
         return intval($i) ?? 1;
-	}
+	}*/
 
 	public static function getCount($table)
 	{
@@ -51,7 +55,7 @@ class Auxiliary {
 
 	public static function formSqlAux($atr,$value)
 	{
-		return " WHERE ".$atr." = ".self::getIntval($value);
+		return " WHERE ".$atr." = ".$value;
 	}
 
 	public static function getCountAtr($table, $atr, $value)
@@ -378,7 +382,7 @@ class Auxiliary {
 		}
 		elseif ($metaTags == "poster") {
 			$meta['title']    = $news["title_p"];
-			$meta['keywords'] = 'оголошення Трускавець Дрогобич';
+			$meta['keywords'] = 'безкоштовні безплатні оголошення Трускавець Дрогобич';
 			$meta['descr']    = $news["msg_p"];
 		}
 		elseif ($metaTags == "newsOne") {

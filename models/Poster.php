@@ -221,7 +221,7 @@ class Poster  extends classGetDB
 
 	public  function getTypePost($type) {
 		$tPos = self::getAllTypePost();
-		return $tPos[Auxiliary::getIntval($type)];
+		return $tPos[$this->getIntval($type)];
 	}
 
 	public  function incrType ($cat,$type) {

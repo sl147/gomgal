@@ -150,8 +150,8 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 	}
 
 /*	public function actionNewsEditComOne($id, $page = 1) {
-		$id      = Auxiliary::getIntval($id);
-		$page    = Auxiliary::getIntval($page);
+		$id      = $this->getIntval($id);
+		$page    = $this->getIntval($page);
 		$title   = "редагування коментарів";
 		$allNews = NewsVue::getComsByIdVue($id,$page);
 		if(isset($_POST['submit'])) {
