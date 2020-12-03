@@ -4,10 +4,10 @@
 <table class='table table-hover table-responsive'> 
 	<thead>
 		<tr class='success' style='color: grey; font-size:12px; font-weight:bold;'>
-			<th></th>
-			<th class='text-center'>фото</th>
-			<th class='text-center'>Оголошення</th>
-			<th class='text-center'>Тип</th>
+			<th class='text-center showLarge'></th>
+			<th class='text-center showLarge'>фото</th>
+			<th class='text-center showLarge'>Оголошення</th>
+			<th class='text-center showLarge'>Тип</th>
 			<th class='text-center showLarge'>дата</th>
 			<th class='text-center showLarge'>переглядів</th>
 		</tr>

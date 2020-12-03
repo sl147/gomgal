@@ -1,11 +1,8 @@
 <tr class='text-center'>
 	<?$pp = new Poster();?>
-	<div class="showLarge">
-		<td>
+		<td class="showLarge">
 			<?= $pp->showPhoto($item)?>	
-		</td>
-	</div>
-	
+		</td>	
 	<td width='40%'>
 		<a href ='/posterOne/<?=$item["id_poster"]?>'>
 			<?=$item["title_p"]?>
