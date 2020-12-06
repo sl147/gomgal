@@ -4,6 +4,7 @@
 		    <a href='/' title='ГОЛОВНА' class='text-menu btn btn-info'>ГОЛОВНА</a>
 		    <a href='/relax/1' title='ДОЗВІЛЛЯ' class='text-menu btn btn-info'>ДОЗВІЛЛЯ</a>
 		    <a href='/posterCat' title='оголошення' class='text-menu btn btn-info'>оголошення</a>
+		    <a href='/FAlook' title='перегляд фотоальбомів Галичини' class='text-menu btn btn-info'>ФОТОАЛЬБОМИ</a>
 		    <a href='/video' title='відео' class='text-menu btn btn-info'>відео</a>
 		    <a href='/contakt' title='контакти' class='text-menu btn btn-info'>контакти</a>
 		</div>";
