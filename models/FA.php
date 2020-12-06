@@ -79,7 +79,7 @@ class FA  extends classGetDB
 		return $faList ?? [];
 	}*/
 
-	public static function getFAAll($page = 1) {
+	public function getFAAll($page = 1) {
 		$offset = ($this->getIntval($page) - 1) * SHOWFA_BY_DEFAULT;
 		$getData  = new classGetData('photoalbum');
 		$result = $getData->getDataByOffsetWithOutRow('id_FA',SHOWFA_BY_DEFAULT,$offset);
