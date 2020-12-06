@@ -1,3 +1,11 @@
+<script src="/js/jquery.lazyload.min.js"></script>
+<script type="text/javascript">
+  $(function() {
+    $("img.fotoLook").lazyload({
+      effect: "fadeIn"
+    });
+  });
+</script>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-lg-1 col-md-1 col-sm-0 col-xs-0"></div>

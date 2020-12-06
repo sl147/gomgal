@@ -1,3 +1,23 @@
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+<script type=text/javascript>
+            function setScreenHWCookie() {
+            	Cookies.set('sw', window.innerWidth)
+            	Cookies.set('sh', window.innerHeight)
+                /*$.cookie('sw',screen.width);
+                $.cookie('sh',screen.height);*/
+                //alert('cookie width='+ Cookies.get('sw'))
+                return true;
+            }
+            setScreenHWCookie();
+</script>
+<script src="/js/jquery.lazyload.min.js"></script>
+<script type="text/javascript">
+  $(function() {
+    $("img.imgLazy").lazyload({
+      effect: "fadeIn"
+    });
+  });
+</script>
 <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
 <div class='lastNews showNews text-center'>
 	останні новини
@@ -15,7 +35,7 @@
 		<div class='col-lg-0 col-md-0 col-sm-6 col-xs-6'>
 			<a href="https://www.artargus.in.ua/insurance" target='_blank'>
 				<img class='insImgSize' height="50" width="auto" src="../image/autosmall.png" alt="калькулятор автоцивілки">
-			</a>			
+			</a>		
 		</div>
 				
 	</div>		
@@ -27,7 +47,7 @@
 			<?php if ($item['fotoF']) :?>
 				<?php if (Auxiliary::isFile($item["foto"])) :?>
 					<a class='media-left media-top' href='/Fullnew/<?=$item["id"]?>'>
-						<img alt='фото новини' width='60' height='60' src='<?="/".$item["foto"]?>' title='<?=$item["title"]?>'>
+						<img class="imgLazy" alt='фото новини' width='60' height='60' src='<?="/".$item["foto"]?>' title='<?=$item["title"]?>'>
 					</a>
 				<?php endif; ?>
 			<?php endif; ?>

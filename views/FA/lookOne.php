@@ -1,3 +1,11 @@
+<script src="/js/jquery.lazyload.min.js"></script>
+<script type="text/javascript">
+  $(function() {
+    $("img.fotoLook").lazyload({
+      effect: "fadeIn"
+    });
+  });
+</script>
 <h2 class='text-center'>
 	<?=$nameFA['name_FA']?>	
 </h2>

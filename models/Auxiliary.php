@@ -409,5 +409,6 @@ class Auxiliary
 		unset($getData);
 		return $spamList;		
 	}
+
 }
 ?>
