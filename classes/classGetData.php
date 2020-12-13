@@ -73,6 +73,14 @@ class classGetData extends classGetDB
 		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue))->fetch();	
 	}
 
+/** Отримуєм записи з таблиці $this->table по елементу $elName->fetch()
+ *
+ *  @return елемент даних
+ */
+	public function getDataFromTableByNameFetch2WHERE ($elValue1,$elName1,$elValue2,$elName2) {
+		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql2($elName1,$elValue1,$elName2,$elValue2))->fetch();	
+	}
+
 /** Отримуєм записи з таблиці $this->table по елементу $elName
  *
  *  @return елемент даних
