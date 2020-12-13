@@ -12,6 +12,11 @@ trait traitAuxiliary
 		return " WHERE ".$atr." = '".$value."'";
 	}
 
+	public function formSql2($atr1,$value1,$atr2,$value2)
+	{
+		return " WHERE (".$atr1." = '".$value1."') AND (".$atr2." = '".$value2."')";
+	}
+
 	public function getIntval ($i) : int
 	{
         return intval($i) ?? 1;

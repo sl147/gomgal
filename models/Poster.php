@@ -18,7 +18,7 @@ class Poster  extends classGetDB
 
 	public  function getAllPostersImpotCat($cat) {
 		$cat    = $this->getIntval($cat);
-		$result = $this->getDB("SELECT * FROM poster WHERE (cat_p = $cat) AND (impot=1) ORDER BY id_poster DESC");
+		$result = $this->getDB("SELECT * FROM poster WHERE (cat_p = $cat) AND (impot=1) AND (active=0) ORDER BY id_poster DESC");
 		while ($row = $result->fetch()) {
 			$list[]=$row;			
 		}
@@ -26,7 +26,7 @@ class Poster  extends classGetDB
 	}
 
 	public function getAllPostersImpot() {
-		$result = $this->getDB("SELECT * FROM poster WHERE impot=1 ORDER BY id_poster DESC");
+		$result = $this->getDB("SELECT * FROM poster WHERE (impot=1) AND (active=0) ORDER BY id_poster DESC");
 		while ($row = $result->fetch()) {
 			$list[]=$row;			
 		}
@@ -36,7 +36,7 @@ class Poster  extends classGetDB
 	public  function getAllPostersAllCat($cat, $page = 1) {
 		$cat    = $this->getIntval($cat);
 		$offset = ($this->getIntval($page) - 1) * SHOWPOSTER_BY_DEFAULT;
-		$sql    = "SELECT * FROM poster WHERE (cat_p = $cat) AND ((NOT impot=1) OR (impot IS NULL)) ORDER BY id_poster DESC LIMIT ".SHOWPOSTER_BY_DEFAULT." OFFSET $offset";
+		$sql    = "SELECT * FROM poster WHERE (cat_p = $cat) AND (active=0) AND ((NOT impot=1) OR (impot IS NULL)) ORDER BY id_poster DESC LIMIT ".SHOWPOSTER_BY_DEFAULT." OFFSET $offset";
 		$result = $this->getDB($sql);
 		while ($row = $result->fetch()) {
 			$list[]=$row;			
@@ -177,14 +177,14 @@ class Poster  extends classGetDB
 	public  function getPosterByRand($rand)
 	{
 		$getData = new classGetData('poster');
-		$elem    = $getData->getDataFromTableByNameFetch ($rand,'rand_p');
+		$elem    = $getData->getDataFromTableByNameFetch2WHERE ($rand,'rand_p',0,'active');
 		unset($getData);
 		return $elem;
 	}
 
 	public  function getPosterById($id) {
 		$getData = new classGetData('poster');
-		$elem    = $getData->getDataFromTableByNameFetch ($this->getIntval($id),'id_poster');
+		$elem    = $getData->getDataFromTableByNameFetch2WHERE ($this->getIntval($id),'id_poster',0,'active');
 		unset($getData);
 		return $elem;
 	}
@@ -195,7 +195,7 @@ class Poster  extends classGetDB
 	}
 
 	public  function getFindTotalPoster($txt) {
-		$sql    = "SELECT count(*) as count FROM poster WHERE LOCATE('".$txt."',msg_p)";
+		$sql    = "SELECT count(*) as count FROM poster WHERE (LOCATE('".$txt."',msg_p)) AND (active=0)";
 		$result = $this->getDB($sql);
 		$result -> setFetchMode(PDO::FETCH_ASSOC);
 		return $result->fetch()['count'];
