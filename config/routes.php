@@ -23,7 +23,7 @@ return array(
 'FAlook' => 'FA/look',
 'FA/upload/([0-9]+)' => 'FA/upload/$1',
 'Fullnew/([0-9]+)' => 'news/fullnew/$1',
-'indexVote' => 'admin/vote',
+'indexVote' => 'Vote/vote',
 'index' => 'site/index',
 'main/page-([0-9]+)' => 'site/index/$1',
 'main' => 'site/index',

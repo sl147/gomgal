@@ -120,25 +120,6 @@ class Auxiliary
 		return $voteList;
 	}
 
-	public static function getVoteVue()
-	{
-		$result = self::getSQLAuxVue("SELECT * FROM catVote WHERE active=1 LIMIT 1");
-		while ($row = $result->fetch()) {
-			$voteList['id']   = $row['idrl'];
-			$voteList['name'] = $row['namerl'];
-		}
-		return $voteList;
-	}
-
-	public static function getTxtVoteVue($id)
-	{
-		$result  = self::getSQLAuxVue("SELECT * FROM vote".self::formSqlAux("category",$id)." ORDER BY countrl DESC");
-		while ($row = $result->fetch()) {
-			$voteTxt[]=$row;
-		}
-		return $voteTxt ?? [];
-	}
-
 	public static function activated($id)
 	{
 		self::getSQLAux("UPDATE catVote SET active=0".self::formSqlAux("active",1));
@@ -156,25 +137,6 @@ class Auxiliary
 			$i++;
 		}
 		return $voteList ?? [];
-	}
-
-	public static function getVote()
-	{
-		$result = self::getSQLAux("SELECT * FROM catVote".self::formSqlAux("active",1)." LIMIT 1");
-		while ($row = $result->fetch()) {
-			$voteList['id']   = $row['idrl'];
-			$voteList['name'] = $row['namerl'];
-		}
-		return $voteList;
-	}
-
-	public static function getTxtVote($id)
-	{
-		$result  = self::getSQLAux("SELECT * FROM vote".self::formSqlAux("category",$id)." ORDER BY countrl DESC");
-		while ($row = $result->fetch()) {
-			$voteTxt[]=$row;
-		}
-		return $voteTxt ?? [];
 	}
 
 	public static function updateVoteVue ($id,$name)

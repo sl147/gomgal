@@ -19,12 +19,13 @@
 		</div>	
 	</div>
 	<div v-else>
-		<div class='vote' v-for="vote in votes">
+		<div class='' v-for="vote in votes">
 		<input type="radio" v-bind:value="vote.id" v-model="voteid">
 			{{vote.msg}}
-		<br><br>
+	
 	</div>
-	<button @click="addItem()" style='width: 130%' class='btn btn-delta11 btn-block'>
+		<br><br>
+	<button @click="addItem()" class='btn btn-delta11 btn-block'>
 		Проголосувати
 	</button>		
 	</div>

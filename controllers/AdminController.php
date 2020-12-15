@@ -10,14 +10,6 @@ class AdminController {
 		return true;
 	}
 
-	public function actionVote() {
-		$vote    = Auxiliary::getVote();
-		$txtVote = Auxiliary::getTxtVote($vote['id']);
-
-		require_once ('views/vote/showVote.php');
-		return true;
-	}
-
 	public function actionVoteActive() {
 		if(isset($_POST['submit'])) {
 			$id  = $this->filterTXT('post','id');
