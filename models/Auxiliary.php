@@ -103,11 +103,6 @@ class Auxiliary
 		return $result -> execute();		
 	}
 
-	public static function addVote($id)
-	{
-		return self::getSQLAuxVue("UPDATE vote SET countrl = countrl + 1".self::formSqlAux("id",$id));		
-	}
-
 	public static function getVoteVueAd()
 	{
 		$result = self::getSQLAuxVue("SELECT * FROM catVote");

@@ -1,8 +1,6 @@
 <?
-require_once ('../models/Auxiliary.php');
+require_once ('../models/Vote.php');
 
-$voteid = trim(strip_tags($_GET['voteid']));
-
-$MK   = new Auxiliary();
-$pr   = $MK->addVote($voteid);
+$MK   = new Vote();
+$pr   = $MK->addVote(trim(strip_tags($_GET['voteid'])));
 ?>

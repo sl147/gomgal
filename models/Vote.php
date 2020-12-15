@@ -11,7 +11,7 @@ class Vote
 		$db   = new Db();
 		return $db ->getConnectionVue();
 	}
-	
+
 	public static function getSQLVote($sql)
 	{
 		return Db::getConnection() -> query($sql);
@@ -64,6 +64,11 @@ class Vote
 			$voteTxt[]=$row;
 		}
 		return $voteTxt ?? [];
+	}
+
+	public static function addVote($id)
+	{
+		return self::getSQLVoteVue("UPDATE vote SET countrl = countrl + 1".self::formSqlVote("id",$id));		
 	}
 }
 ?>

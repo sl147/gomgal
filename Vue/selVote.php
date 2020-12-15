@@ -1,8 +1,6 @@
 <?php
 require_once ('../models/Vote.php');
 
-$vote       = [];
-$listVote   = [];
 $data       = [];
 $MK         = new Vote();
 $vote       = $MK->getVoteVue();
