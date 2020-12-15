@@ -18,7 +18,7 @@ class PosterController
 	public function actionPosterFind($page = 1)
 	{		
 		if(isset($_POST['submit'])) {
-			$poster = new Poster();
+			$poster         = new Poster();
 			$findTXT        = trim(strip_tags($this->filterTXT('post', 'name_f')));
 			$posterImpotant = $poster->getFindPostersImpot($findTXT);
 			$posterAll      = $poster->getFindPosters($findTXT,$page);

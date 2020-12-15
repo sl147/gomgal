@@ -57,7 +57,7 @@ class Poster  extends classGetDB
 
 	public  function getFindPosters($txt,$page = 1) {
 		$offset   = ($this->getIntval($page) - 1) * SHOWPOSTER_BY_DEFAULT;
-		$sql      = "SELECT * FROM poster WHERE (active= 0) and (impot='0') and (LOCATE('".$txt."',msg_p)) ORDER BY id_poster DESC LIMIT ".SHOWPOSTER_BY_DEFAULT." OFFSET $offset";
+		$sql      = "SELECT * FROM poster WHERE (active= 0) and ((impot=0) OR (impot IS NULL)) and (LOCATE('".$txt."',msg_p)) ORDER BY id_poster DESC LIMIT ".SHOWPOSTER_BY_DEFAULT." OFFSET $offset";
 		$result = $this->getDB($sql);
 		while ($row = $result->fetch()) {
 			$list[] = $row;		
