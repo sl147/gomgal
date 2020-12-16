@@ -12,11 +12,10 @@ var vue_tovList = new Vue({
 	methods: {
 		addItem() {
 			let req = this.add+this.voteid
-			console.log("req="+req)
 			this.$http.get(req).then(function (response){     
 				this.getVotes()
 				this.voteid = ""
-				this.show = true
+				this.show   = true
 			},function (error){
 				console.log(error);
 			})

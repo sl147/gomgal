@@ -325,19 +325,16 @@ font-size: 12px;
 width: 100%;
 margin: 0 auto;
 }
- #vote1{
-  width: 130%;
-  font-size: 12px
- }
+
  .vote {
   color:blue;
   font-size:12px;
-  width: 118%;
+  width: 100%;
 }
 
  .voteBorder {
   border: 1px solid blue;
-  height:295px;
+  height:190px;
   background-color:#F6F6F6;
   border-radius: 10px;
  }
@@ -349,15 +346,6 @@ margin: 0 auto;
   object-fit: cover;
   transition: all 0.5s;
  }
-/* .line-row img {
-margin:10px;
-border: 1px solid #fff;
-box-shadow: 0 0 5px rgba(0,0,0,.19);
-transition: all 0.5s;
-width: 100%;
-height: auto;
-object-fit: cover;
-}*/
 
 .news_msg {
   text-indent: 5%;
