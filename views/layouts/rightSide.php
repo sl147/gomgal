@@ -1,4 +1,5 @@
 <aside>
+<?=Auxiliary::showKurs()?>
 <?=Auxiliary::showReklamaArg('https://www.artargus.in.ua/insurance','velocityProduct','калькулятор автоцивілки','розрахунок вартості страхування автоцивілки')?>
 <?=Auxiliary::showReklamaArg('http://drohobych-rada.gov.ua/webcams/','webCamera','вебкамери Дрогобича','вебкамери в Дрогобичі')?>
 <?=Auxiliary::showRelaxRandom(1)?>

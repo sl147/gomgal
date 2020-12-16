@@ -237,6 +237,15 @@ class Auxiliary
 		include ('views/layouts/showReklRand.php');
 	}
 
+	public static function showKurs() {
+		$ch = curl_init('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5');
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$json = curl_exec($ch);
+		curl_close($ch);
+		$result = json_decode($json, true);
+		include ('views/layouts/showKurs.php');
+	}
+
 	public static function showVote() {
 		include ('views/layouts/showVote.php');
 	}

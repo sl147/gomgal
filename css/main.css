@@ -326,6 +326,12 @@ width: 100%;
 margin: 0 auto;
 }
 
+.showKursValut{
+  font-size: 12px;
+  width: 100%;
+  color: blue;
+}
+
  .vote {
   color:blue;
   font-size:12px;
@@ -334,7 +340,7 @@ margin: 0 auto;
 
  .voteBorder {
   border: 1px solid blue;
-  height:190px;
+  height:222px;
   background-color:#F6F6F6;
   border-radius: 10px;
  }
