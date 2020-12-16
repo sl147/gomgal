@@ -50,6 +50,14 @@ class AuxiliaryVue
 		return $result -> execute();			
 	}
 
+	public static function addVue2El($name, $tab, $nameEl) {
+		$sql    = "INSERT INTO ".$tab." (".$nameEl.") VALUES(:name)";
+		$result = self::getPrepareSQLVue($sql);
+		$result -> bindParam(':name', $name, PDO::PARAM_STR);
+		
+		return $result -> execute();		
+	}
+	
 	public static function addElVote($name,$cat) {
 		//$cat    = self::getIntval($cat);
 		$sql    = "INSERT INTO vote (msg,category) VALUES(:name, :cat)";

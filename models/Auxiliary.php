@@ -42,14 +42,6 @@ class Auxiliary
 		return $result->fetch()['count'];
 	}
 
-	public static function addVue2El($name, $tab, $nameEl) {
-		$sql    = "INSERT INTO ".$tab." (".$nameEl.") VALUES(:name)";
-		$result = self::getPrepareSQLVue($sql);
-		$result -> bindParam(':name', $name, PDO::PARAM_STR);
-		
-		return $result -> execute();		
-	}
-
 	public static function getVoteVueAd()
 	{
 		$result = self::getSQLAuxVue("SELECT * FROM catVote");
