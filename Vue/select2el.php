@@ -1,5 +1,5 @@
 <?php
-require_once ('../models/Auxiliary.php');
+require_once ('../models/AuxiliaryVue.php');
 
 $data = [];
 $tab  = trim(strip_tags($_GET['tab']));
@@ -8,7 +8,7 @@ $id   = trim(strip_tags($_GET['id']));
 $idVal= trim(strip_tags($_GET['idVal']));
 $isId = trim(strip_tags($_GET['isId']));
 
-$MK   = new Auxiliary();
+$MK   = new AuxiliaryVue();
 $pr   = $MK->sel2El($tab,$name,$id,$idVal,$isId);
 
 foreach ($pr as $item) {

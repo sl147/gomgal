@@ -1,10 +1,10 @@
 <?php
-require_once ('../models/Auxiliary.php');
+require_once ('../models/Vote.php');
 
 $data = array();
 $pr   = array();
 
-$MK   = new Auxiliary();
+$MK   = new Vote();
 
 $pr   = $MK->getTxtVoteVue($_GET['id']);
 

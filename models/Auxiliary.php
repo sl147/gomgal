@@ -10,22 +10,9 @@ class Auxiliary
 
 	use traitAuxiliary;
 
-	public function getDBVue()
-	{
-		require_once ('../components/Db.php');
-		$db   = new Db();
-		return $db ->getConnectionVue();
-	}
-
 	public static function getSQLAux($sql)
 	{
 		return Db::getConnection() -> query($sql);
-	}
-
-	public static function getSQLAuxVue($sql)
-	{
-		$db  = self::getDBVue();
-		return $db -> query($sql);
 	}
 
 	public static function getPrepareSQL($sql)
@@ -33,17 +20,6 @@ class Auxiliary
 		$db = Db::getConnection();
 		return $db -> prepare($sql);
 	}
-
-	public static function getPrepareSQLVue($sql)
-	{
-		$db  = self::getDBVue();
-		return $db -> prepare($sql);
-	}
-
-/*	public static function getIntval ($i) : int
-	{
-        return intval($i) ?? 1;
-	}*/
 
 	public static function getCount($table)
 	{
@@ -66,39 +42,10 @@ class Auxiliary
 		return $result->fetch()['count'];
 	}
 
-	public static function updateVue2El ($id, $name, $tab, $nameEl, $nameId)
-	{
-		$sql    = "UPDATE ".$tab." SET ".$nameEl."=:name".self::formSqlAux($nameId,$id);
-		$result = self::getPrepareSQLVue($sql);
-		$result -> bindParam(':name', $name, PDO::PARAM_STR);
-		
-		return $result -> execute();			
-	}
-
-	public static function delVue2El($id, $tab, $nameId)
-	{
-		$sql    = "DELETE FROM ".$tab.self::formSqlAux($nameId,$id);
-		$result = self::getSQLAuxVue($sql);
-		if ($tab == "poster") {
-			$res = self::delFilePoster($id);
-		}
-		//видалення файлу фото
-	}
-
 	public static function addVue2El($name, $tab, $nameEl) {
 		$sql    = "INSERT INTO ".$tab." (".$nameEl.") VALUES(:name)";
 		$result = self::getPrepareSQLVue($sql);
 		$result -> bindParam(':name', $name, PDO::PARAM_STR);
-		
-		return $result -> execute();		
-	}
-
-	public static function addElVote($name,$cat) {
-		$cat    = self::getIntval($cat);
-		$sql    = "INSERT INTO vote (msg,category) VALUES(:name, :cat)";
-		$result = self::getPrepareSQLVue($sql);
-		$result -> bindParam(':name', $name, PDO::PARAM_STR);
-		$result -> bindParam(':cat',  $cat,  PDO::PARAM_STR);
 		
 		return $result -> execute();		
 	}
@@ -177,11 +124,6 @@ class Auxiliary
 		if (self:: isFile($fdelS)) unlink($fdelS);
 	}
 
-	private static function delFilePoster($id) {
-		$poster = self::getPosterById($id);
-		$res    = self::delFileVue($poster["foto_p1"],"posterFoto");	
-	}
-
 	public static function getPosterById($id) {
 		$result = self::getSQLAuxVue("SELECT * FROM poster".self::formSqlAux("id_poster",$id));
 		return $result->fetch();
@@ -207,17 +149,6 @@ class Auxiliary
         move_uploaded_file ($_FILES['file'] ['tmp_name'],$pathdir."/".$nameFile); 
         $res = self::changePhoto($nameFile,$pathdir);             
     }
-
-	public static function sel2El($tab,$name,$id,$idVal,$isId) {
-		require_once ('../classes/traitAuxiliary.php');
-		require_once ('../classes/classGetDB.php');
-		require_once ('../classes/classGetData.php');
-
-		$getData  = new classGetData($tab);
-		$NewsList = $getData->getData2ElVue($id,$name,$idVal);
-		unset($getData);
-		return $NewsList;
-	}
 
 	public static function getMTags() {
 		$result  = self::getSQLAux("SELECT * FROM meta_tags");
