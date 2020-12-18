@@ -200,7 +200,7 @@ class News
 		$cat1  = $this->getIntval($cat1);
 		$cat2  = $this->getIntval($cat2);
 		$getData = new classGetDB();
-		$sql   = "SELECT * FROM msgs  WHERE cat2='".$cat2."' && category='".$cat1."' && id<'".$id."' ORDER BY id  DESC LIMIT 4";
+		$sql   = "SELECT * FROM msgs  WHERE cat2='".$cat2."' && category='".$cat1."' && id<'".$id."' ORDER BY id  DESC LIMIT 8";
 		$result = $getData->getDB($sql);
 		unset($getData);
 		while ($row = $result->fetch()) {

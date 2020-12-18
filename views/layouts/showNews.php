@@ -47,7 +47,7 @@
 			<?php if ($item['fotoF']) :?>
 				<?php if (Auxiliary::isFile($item["foto"])) :?>
 					<a class='media-left media-top' href='/Fullnew/<?=$item["id"]?>'>
-						<img class="imgLazy" alt='фото новини' width='60' height='60' src='<?="/".$item["foto"]?>' title='<?=$item["title"]?>'>
+						<img class="imgLazy" alt='фото новини' width='60' src='<?="/".$item["foto"]?>' title='<?=$item["title"]?>'>
 					</a>
 				<?php endif; ?>
 			<?php endif; ?>
