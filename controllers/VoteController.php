@@ -17,9 +17,9 @@ class VoteController
 	public function actionVoteActive() {
 		if(isset($_POST['submit'])) {
 			$id  = $this->filterTXT('post','id');
-			$res = Auxiliary::activated($id);
+			$res = Vote::activated($id);
 		}
-		$allVotes = Auxiliary::getAllVote();
+		$allVotes = Vote::getAllVote();
 		require_once ('views/vote/voteActive.php');
 		return true;
 	}
