@@ -42,45 +42,6 @@ class Auxiliary
 		return $result->fetch()['count'];
 	}
 
-	public static function getVoteVueAd()
-	{
-		$result = self::getSQLAuxVue("SELECT * FROM catVote");
-		$i      = 1;
-		while ($row = $result->fetch()) {
-			$voteList[$i]['id']   = $row['idrl'];
-			$voteList[$i]['name'] = $row['namerl'];
-			$i++;
-		}
-		return $voteList;
-	}
-
-	public static function activated($id)
-	{
-		self::getSQLAux("UPDATE catVote SET active=0".self::formSqlAux("active",1));
-		self::getSQLAux("UPDATE catVote SET active=1".self::formSqlAux("idrl",$id));			
-	}
-
-	public static function getAllVote()
-	{
-		$result = self::getSQLAux("SELECT * FROM catVote");
-		$i      = 1;
-		while ($row = $result->fetch()) {
-			$voteList[$i]['id']     = $row['idrl'];;
-			$voteList[$i]['title']  = $row['namerl'];
-			$voteList[$i]['active'] = $row['active'];
-			$i++;
-		}
-		return $voteList ?? [];
-	}
-
-	public static function updateVoteVue ($id,$name)
-	{
-		$result = self::getPrepareSQLVue("UPDATE catVote SET namerl=:name".self::formSqlAux("idrl",$id));
-		$result -> bindParam(':name', $name, PDO::PARAM_STR);
-		
-		return $result -> execute();		
-	}
-
 	public static function getMonth()
 	{
 		return ["січень","лютий","березень","квітень","травень","червень","липень","серпень","вересень","жовтень","листопад","грудень"];
@@ -244,10 +205,6 @@ class Auxiliary
 		curl_close($ch);
 		$result = json_decode($json, true);
 		include ('views/layouts/showKurs.php');
-	}
-
-	public static function showVote() {
-		include ('views/layouts/showVote.php');
 	}
 
 	public static function showNews() {
