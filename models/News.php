@@ -2,7 +2,7 @@
 /**
 * Клас для новин
 */
-class News
+class News extends classGetDB
 {
 	use traitAuxiliary;
 	const SHOWNEWS_BY_DEFAULT = 25;	
@@ -39,7 +39,7 @@ class News
 		$getData = new classGetData('catmsgs');
 		$catList = $getData->getData2El('idcm','namecm');
 		unset($getData);
-		return $catList;
+		return $catList ?? [];
 	}
 
 	public static function getNews() {
@@ -57,13 +57,11 @@ class News
 			$NewsList[$i]['foto']      = "NewsFoto/".$row['foto'];
 			$i++;
 		}
-		return $NewsList;
+		return $NewsList ?? [];
 	}
 
-	public static function getNewsTop() {
-		$getData = new classGetDB();
-		$result  = $getData->getDB("SELECT * FROM msgs WHERE top=1 ORDER BY id  DESC LIMIT 1");
-		unset($getData);
+	public function getNewsTop() {
+		$result  = $this->getDB("SELECT * FROM msgs WHERE top=1 ORDER BY id  DESC LIMIT 1");
 		$topNews = $result->fetch();
 		$topNews['width']  = 0;
 		$topNews['height'] = 0;
@@ -72,7 +70,7 @@ class News
 		$topNews['height'] = $size['height'];
 		$topNews['foto']  = "NewsFoto/".$topNews['foto'];
 
-		return $topNews;
+		return $topNews ?? [];
 	}
 
 	public function getTotalNewsCat(int $cat, int $month, int $year) : int
@@ -80,10 +78,8 @@ class News
 		$cat    = $this->getIntval($cat);
 		$month  = $this->getIntval($month);
 		$year   = $this->getIntval($year);
-		$getData = new classGetDB();
 		$sql    = "SELECT count(*) as count FROM msgs WHERE ((category=$cat) or (cat2=$cat)) and (month(datetime) = '".$month."') and (year(datetime) = '".$year."')";
-		$result = $getData->getDB($sql);
-		unset($getData);
+		$result = $this->getDB($sql);
 		$result -> setFetchMode(PDO::FETCH_ASSOC);
 		return $result->fetch()['count'];
 	}
@@ -91,10 +87,8 @@ class News
 	public function getTotalNewsArchive($month, $year) {
 		$month  = $this->getIntval($month);
 		$year   = $this->getIntval($year);
-		$getData = new classGetDB();
 		$sql    = "SELECT count(*) as count FROM msgs WHERE month(datetime) = '".$month."' and year(datetime) = '".$year."'";
-		$result = $getData->getDB($sql);
-		unset($getData);
+		$result = $this->getDB($sql);
 		$result -> setFetchMode(PDO::FETCH_ASSOC);
 		return $result->fetch()['count'];
 	}
@@ -103,10 +97,8 @@ class News
 		$month = $this->getIntval($month);
 		$year  = $this->getIntval($year);
 		$id    = $this->getIntval($id);
-		$getData = new classGetDB();
 		$sql   = "SELECT count(*) as count FROM msgs WHERE (month(datetime) = '".$month."') and (year(datetime) = '".$year."')";
-		$result = $getData->getDB($sql);
-		unset($getData);
+		$result = $this->getDB($sql);
 		$result -> setFetchMode(PDO::FETCH_ASSOC);
 		return $result->fetch()['count'];
 	}
@@ -115,11 +107,9 @@ class News
 		$month    = $this->getIntval($month);
 		$year     = $this->getIntval($year);
 		$page     = $this->getIntval($page);
-		$getData = new classGetDB();
 		$offset   = ($page - 1) * SHOWNEWS_BY_DEFAULT;
 		$sql      = "SELECT * FROM msgs WHERE month(datetime) = '".$month."' and year(datetime) = '".$year."' ORDER BY countmsgs DESC LIMIT ".SHOWNEWS_BY_DEFAULT." OFFSET $offset";
-		$result = $getData->getDB($sql);
-		unset($getData);
+		$result = $this->getDB($sql);
 		$i= 0;
 		while ($row = $result->fetch()) {
 			$NewsList[$i]['id']        = $row['id'];
@@ -136,7 +126,7 @@ class News
 			$NewsList[$i]['foto']   = "NewsFoto/".$row['foto'];			
 			$i++;
 		}
-		return $NewsList;
+		return $NewsList ?? [];
 	}
 
 	public function getLatestNewsCat($cat, $month, $year, $page = 1) {
@@ -144,12 +134,10 @@ class News
 		$year   = $this->getIntval($year);
 		$cat    = $this->getIntval($cat);
 		$page   = $this->getIntval($page);
-		$getData = new classGetDB();
-		$offset   = ($page - 1) * SHOWNEWS_BY_DEFAULT;
-		$sql      = "SELECT * FROM msgs WHERE ((category=$cat) or (cat2=$cat)) and (month(datetime) = '".$month."') and (year(datetime) = '".$year."') ORDER BY countmsgs DESC LIMIT ".SHOWNEWS_BY_DEFAULT." OFFSET $offset";
-		$result = $getData->getDB($sql);
-		unset($getData);
-		$i = 0;
+		$offset = ($page - 1) * SHOWNEWS_BY_DEFAULT;
+		$sql    = "SELECT * FROM msgs WHERE ((category=$cat) or (cat2=$cat)) and (month(datetime) = '".$month."') and (year(datetime) = '".$year."') ORDER BY countmsgs DESC LIMIT ".SHOWNEWS_BY_DEFAULT." OFFSET $offset";
+		$result = $this->getDB($sql);
+		$i      = 0;
 		while ($row = $result->fetch()) {
 			$NewsList[]             = $row;
 			$size = self::makePhotoSize($row['foto']);
@@ -166,11 +154,9 @@ class News
 		$month    = $this->getIntval($month);
 		$year     = $this->getIntval($year);
 		$page     = $this->getIntval($page);
-		$getData = new classGetDB();
 		$offset   = ($page - 1) * SHOWNEWS_BY_DEFAULT;
 		$sql      = "SELECT * FROM msgs WHERE (month(datetime) = '".$month."') and (year(datetime) = '".$year."') ORDER BY countmsgs DESC LIMIT ".SHOWNEWS_BY_DEFAULT." OFFSET $offset";
-		$result = $getData->getDB($sql);
-		unset($getData);
+		$result   = $this->getDB($sql);
 		$i        = 0;
 		while ($row = $result->fetch()) {
 			$NewsList[]             = $row;
@@ -199,10 +185,8 @@ class News
 		$id    = $this->getIntval($id);
 		$cat1  = $this->getIntval($cat1);
 		$cat2  = $this->getIntval($cat2);
-		$getData = new classGetDB();
 		$sql   = "SELECT * FROM msgs  WHERE cat2='".$cat2."' && category='".$cat1."' && id<'".$id."' ORDER BY id  DESC LIMIT 4";
-		$result = $getData->getDB($sql);
-		unset($getData);
+		$result = $this->getDB($sql);
 		while ($row = $result->fetch()) {
 			$News[]  = $row;
 		}
@@ -211,11 +195,8 @@ class News
 
 	public function updateCountById($id,$count)
 	{
-		$count  = $this->getIntval($count);
-		$count +=1;
-		$result = Auxiliary::getPrepareSQL("UPDATE msgs SET countmsgs=:count".Auxiliary::formSqlAux("id",$id));
-		Auxiliary::bindParam($result,':count',   $count);
-		return $result -> execute();			
+		$count = $this->getIntval($count);
+		return $this->getDB("UPDATE msgs SET countmsgs=$count+1".$this->formSql("id",$id));		
 	}
 
 	public static function createNews($title,$prew,$cat,$cat2,$sourse,$msg,$foto,$top,$videoYT)

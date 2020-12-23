@@ -3,12 +3,12 @@
 * Клас для коментарів
 */
 
-class Comment extends classGetDB
+class Comment
 {
 
 	use traitAuxiliary;
-
 	const SHOWCOMMENTS_BY_DEFAULT = 25;
+	
 	public static function getComments($page) {
 		$getData = new classGetData('Comment');
 		$offset  = ($page - 1) * self::SHOWCOMMENTS_BY_DEFAULT;
@@ -35,7 +35,8 @@ class Comment extends classGetDB
 		$result -> bindParam(':txt_com',   $txt_com,   PDO::PARAM_STR);
 		$result -> bindParam(':nik_com',   $nik_com,   PDO::PARAM_STR);
 		$result -> bindParam(':email_com', $email_com, PDO::PARAM_STR);
-		$result -> bindParam(':ip_com',    $ip_com,    PDO::PARAM_STR);		
+		$result -> bindParam(':ip_com',    $ip_com,    PDO::PARAM_STR);
+		unset($getDB);		
 		return $result -> execute();		
 	}
 

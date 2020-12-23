@@ -6,15 +6,10 @@
 class FA  extends classGetDB
 {
 	use traitAuxiliary;
-	
-	private function getDBVueFa(){
-		require_once ('../models/Auxiliary.php');
-		$aux = new Auxiliary();
-		return $aux->getDBVue();
-	}
 
-	public function createFA($name,$msgs,$log) {
-		$sql = "INSERT INTO photoalbum (name_FA,msgs_FA,log_FA);
+	public function createFA($name,$msgs,$log)
+	{
+		$sql = "INSERT INTO photoalbum (name_FA,msgs_FA,log_FA)
 		 VALUES(:name,:msgs,:log)";
 		$result = $this->getDB($sql);
 		$result -> bindParam(':name', $name, PDO::PARAM_STR);
@@ -23,7 +18,8 @@ class FA  extends classGetDB
 		return $result -> execute();		
 	}	
 
-	public function savePhoto($id,$subscribe,$fotoName,$fotoNameS) {
+	public function savePhoto($id,$subscribe,$fotoName,$fotoNameS)
+	{
 		$sql    = "INSERT INTO photoInAlbum (id_album,subscribe,fotoName,fotoNameS)
 		 VALUES(:id_album,:subscribe,:fotoName,:fotoNameS)";
 		$result = $this->getDB($sql);
@@ -34,62 +30,29 @@ class FA  extends classGetDB
 		return $result -> execute();		
 	}
 
-	public static function getFAName($name) {
+	public static function getFAName($name)
+	{
 		$getData  = new classGetData('photoalbum');
 		$NewsList = $getData->getDataFromTableByNameFetch($name,'name_FA');
 		unset($getData);
 		return $NewsList;
 	}
 
-	public static function getFAId($id) {
+	public function getFAId($id)
+	{
 		$getData  = new classGetData('photoalbum');
 		$NewsList = $getData->getDataFromTableByNameFetch($id,'id_FA');
 		unset($getData);
 		return $NewsList;
 	}
 
-/*	public static function getFA() {
-		echo "here getFA";
-		$sql    = "SELECT * FROM photoalbum, photoInAlbum WHERE photoInAlbum.id_album = photoalbum.id_FA";
-		$result = Auxiliary::getSQLAux($sql);
-=======
-	public function getFAName($name)
-	{
-		$result = $this->getDB("SELECT * FROM photoalbum".$this->formSql("name_FA",$name)." LIMIT 1");
-		return $result->fetch();
-	}
-
-	public function getFAId($id)
-	{
-		$result = $this->getDB("SELECT * FROM photoalbum".$this->formSql("id_FA",$id)." LIMIT 1");
-		return $result->fetch();
-	}
-
-	public function getFA() {
-		$result = $this->getDB("SELECT * FROM photoalbum, photoInAlbum WHERE photoInAlbum.id_album = photoalbum.id_FA");
->>>>>>> local
-		$i      = 1;
-		while ($row = $result->fetch()) {			
-			$faList[$i]['id']   = $row['id_FA'];
-			$faList[$i]['name'] = $row['name_FA'];
-			$faList[$i]['foto'] = $row["fotoName"];
-			$faList[$i]['fns']  ='/album/'.$row['id_FA'].'/'.$row["fotoName"];			
-			$i++;
-		}
-		return $faList ?? [];
-	}*/
-
-<<<<<<< HEAD
 	public function getFAAll($page = 1)
 	{
-=======
-	public function getFAAll($page = 1) {
->>>>>>> menu
-		$offset = ($this->getIntval($page) - 1) * SHOWFA_BY_DEFAULT;
-		$getData  = new classGetData('photoalbum');
-		$result = $getData->getDataByOffsetWithOutRow('id_FA',SHOWFA_BY_DEFAULT,$offset);
+		$offset  = ($this->getIntval($page) - 1) * SHOWFA_BY_DEFAULT;
+		$getData = new classGetData('photoalbum');
+		$result  = $getData->getDataByOffsetWithOutRow('id_FA',SHOWFA_BY_DEFAULT,$offset);
 		unset($getData);
-		$i      = 1;
+		$i       = 1;
 		while ($row = $result->fetch()) {			
 			$faList[$i]['id']   = $row['id_FA'];
 			$faList[$i]['name'] = $row['name_FA'];
@@ -101,7 +64,8 @@ class FA  extends classGetDB
 		return $faList ?? [];
 	}
 
-	public static function getFAOne($id) {
+	public function getFAOne($id)
+	{
 		$getData = new classGetData('photoInAlbum');
 		$result  = $getData->getDataFromTableByNameWithOutRow ($id,"id_album");
 		unset($getData);
@@ -117,6 +81,15 @@ class FA  extends classGetDB
 		return $faOne ?? [];
 	}
 	
+/* для редагування фотоальбомів. Наразі не задіяно
+
+	private function getDBVueFa()
+	{
+		require_once ('../models/Auxiliary.php');
+		$aux = new Auxiliary();
+		return $aux->getDBVue();
+	}
+
 	public function getFAVue()
 	{
 		$db     = self::getDBVueFa();
@@ -156,5 +129,5 @@ class FA  extends classGetDB
 			
 			return $result -> execute();
 		}
-	}
+	}*/
 }
