@@ -40,7 +40,6 @@
 				
 	</div>		
 </div>
-
 <div class='leftR'>
 	<?php foreach (News::getNews() as $item) :?>
 		<div class='bordLeft media'>

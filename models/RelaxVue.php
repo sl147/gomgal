@@ -6,6 +6,7 @@ class RelaxVue
 	public function __construct()
 	{
 		require_once ('../classes/classGetDB.php');
+		$this->classGetDB = new classGetDB();
 	}
 
 	public function getRelaxVue($cat = 1, $page = 1, $SHOWRELAX = 1)
@@ -17,10 +18,7 @@ class RelaxVue
 		else {
 			$sql = "SELECT * FROM msgs_relax WHERE category=$cat ORDER BY countrl DESC LIMIT ".$SHOWRELAX." OFFSET $offset";
 		}
-
-		$classGetDB = new classGetDB();
-		$result     = $classGetDB->getDBVue($sql);
-		unset($getData);
+		$result  = $this->classGetDB->getDBVue($sql);
 
 		$i = 0;
 		while ($row = $result->fetch()) {
@@ -35,21 +33,14 @@ class RelaxVue
 
 	public  function getLikeVue($id,$count)
 	{
-		$sql        = "UPDATE msgs_relax SET countrl='".$count."' WHERE id='".$id."'"; 
-		$classGetDB = new classGetDB();
-		$result     = $classGetDB->getDBVue($sql);
-		unset($getData);
-		return $result;
+		return $this->classGetDB->getDBVue("UPDATE msgs_relax SET countrl='".$count."' WHERE id='".$id."'");
 	}
 
 	public function getAnThemaVue($teman = 1,$page = 1, $SHOWRELAX = 1)
 	{
 		$offset     = ($page - 1) * $SHOWRELAX;
-		$sql        = "SELECT * FROM msgs_relax WHERE teman=$teman ORDER BY countrl DESC LIMIT ".$SHOWRELAX." OFFSET $offset";
-		$classGetDB = new classGetDB();
-		$result     = $classGetDB->getDBVue($sql);
-		unset($getData);
-
+		$sql        = "SELECT * FROM msgs_relax  WHERE teman=$teman ORDER BY countrl DESC LIMIT ".$SHOWRELAX." OFFSET $offset";
+		$result     = $this->classGetDB->getDBVue($sql);
 		while ($row = $result->fetch()) {
 			$relaxList[] = $row;
 		}

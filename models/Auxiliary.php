@@ -207,6 +207,14 @@ class Auxiliary
 		include ('views/layouts/showKurs.php');
 	}
 
+	public static function showWeatherPol() {
+		include ('views/layouts/showWeatherPol.php');
+	}
+
+	public static function showWeather() {
+		include ('views/layouts/showWeather.php');
+	}
+
 	public static function showNews() {
 		include ('views/layouts/showNews.php');
 	}
