@@ -5,6 +5,39 @@ class FAController
 
 	use traitAuxiliary;
 
+	public function __construct()
+	{
+		$this->FAClass = new FA();
+	}
+
+	public function actionLook($page = 1)
+	{
+		$aux    = new Auxiliary();
+		$page       = $this->getIntval($page);
+		$total      = $aux->getCount('photoalbum');
+		$faList     = $this->FAClass->getFAAll($page);
+		$pagination = new Pagination($total, $page, SHOWFA_BY_DEFAULT, 'page-');
+		$metaTags   = 'FA';
+		$siteFile   = 'views/FA/look.php';
+		unset($aux);
+		
+		require_once ('views/layouts/siteIndex.php');
+		unset($pagination);
+		return true;
+	}
+
+	public function actionLookOne($id)
+	{	
+		$id     = $this->getIntval($id);
+		$faList = $this->FAClass->getFAOne($id);
+		$nameFA = $this->FAClass->getFAId($id);
+		$metaTags = 'FA';
+		$siteFile = 'views/FA/lookOne.php';
+
+		require_once ('views/layouts/siteIndex.php');
+		return true;
+	}
+
 	public function actionCreate()
 	{
 
@@ -49,37 +82,6 @@ class FAController
         }
 		require_once ('views/FA/upload.php');
 		return true;	
-	}
-
-	public function actionLook($page = 1)
-	{
-		$aux    = new Auxiliary();
-		$fa     = new FA();	
-		$page       = $this->getIntval($page);
-		$total      = $aux->getCount('photoalbum');
-		$faList     = $fa->getFAAll($page);
-		$pagination = new Pagination($total, $page, SHOWFA_BY_DEFAULT, 'page-');
-		$metaTags   = 'FA';
-		$siteFile   = 'views/FA/look.php';
-		unset($aux);
-		unset($fa);
-		
-		require_once ('views/layouts/siteIndex.php');
-		unset($pagination);
-		return true;
-	}
-
-	public function actionLookOne($id)
-	{
-		$fa     = new FA();		
-		$id     = $this->getIntval($id);
-		$faList = $fa->getFAOne($id);
-		$nameFA = $fa->getFAId($id);
-		$metaTags = 'FA';
-		$siteFile = 'views/FA/lookOne.php';
-		unset($fa);
-		require_once ('views/layouts/siteIndex.php');
-		return true;
 	}
 
 	public function actionEditOne($id)

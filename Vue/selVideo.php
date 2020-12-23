@@ -1,7 +1,7 @@
 <?php
 require_once ('../models/Video.php');
 $page = $_GET['page'];
-$data = array();
+$data = [];
 $MK   = new Video();
 $pr   = $MK->getVideoVue($page);
 	

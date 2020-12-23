@@ -53,12 +53,12 @@ class NewsController
 			$res       = $com->insComment($id_cl,$txt_com,$nik_com,$email_com,$ip_com);
 			if ($email_com) {
 				$subject = 'Дякуєм за Ваш коментар';
-				$massage = "Дякуєм за Ваш коментар. Завжди раді зустрічі з Вами на нашому сайті www.gomgal.lviv.ua";
-				$mail    = $this->sendMail($subject,$email_com,$massage);
+				$massage = "Дякуєм за Ваш коментар. Завжди раді зустрічі з Вами на нашому сайті https://www.gomgal.lviv.ua/";
+				$mail    = $this->sendMailToClient($subject,$email_com,$massage);
 			}
-			$subject = "Новий коментар до id=".$id." ip=".$ip_com;"Новий коментар  www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id;
+			$subject = "Новий коментар до id=".$id." ip=".$ip_com;"Новий коментар  https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id;
 			$to      = "sl147@ukr.net";
-			$massage = "Новий коментар www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."  до id=".$id." ip=".$ip_com."  з HTTP_REFERER ".$_SERVER['HTTP_REFERER']."\r\n"."  з REMOTE_ADDR ".$_SERVER['REMOTE_ADDR'];
+			$massage = "Новий коментар https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."  до id=".$id." ip=".$ip_com."  з HTTP_REFERER ".$_SERVER['HTTP_REFERER']."\r\n"."  з REMOTE_ADDR ".$_SERVER['REMOTE_ADDR'];
 			$mail  = $this->sendMail($subject,$to,$massage);
 		} 
 		//newt_init();

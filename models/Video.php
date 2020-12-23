@@ -10,8 +10,8 @@ class Video extends classGetDB
 	const SHOWVIDEO_BY_DEFAULT = 6;
 
 	private static function reqAux() {
-		require_once ('../models/Auxiliary.php');
-		return new Auxiliary();
+		require_once ('../models/AuxiliaryVue.php');
+		return new AuxiliaryVue();
 	}
 
 	public  function getVideo($page) {
@@ -22,7 +22,7 @@ class Video extends classGetDB
 		$i       = 0;
 		while ($row = $result->fetch()) {			
 			$list[] = $row;
-			$list[$i]['value']  = "//www.youtube.com/v/".$row['pridYT']."?hl=uk_UA&amp;version=3";			
+			$list[$i]['value']  = "//www.youtube.com/v/".$row['pridYT']."?hl=uk_UA&amp;version=3";
 			$i++;
 		}
 		return $list ?? [];
@@ -31,7 +31,7 @@ class Video extends classGetDB
 	public static function getVideoVue($page=1) {
 		$offset = ($page - 1) * self::SHOWVIDEO_BY_DEFAULT;
 		$sql    = "SELECT * FROM progrnk ORDER BY prid DESC LIMIT ".self::SHOWVIDEO_BY_DEFAULT." OFFSET $offset";
-		$result = self::reqAux()->getSQLVue($sql);
+		$result = self::reqAux()->getSQLAuxVue($sql);
 		$i      = 0;
 		while ($row = $result->fetch()) {
 			  $list[$i]['id']  = $row['prid'];

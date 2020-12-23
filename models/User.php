@@ -12,7 +12,7 @@ class User extends classGetDB
 		$offset  = ($page - 1) * self::SHOWCOMMENT_BY_DEFAULT;
 		$comList = $getData->getDataByOffset ($nameID,self::SHOWCOMMENT_BY_DEFAULT,$offset);
 		unset($getData);
-		return $comList;
+		return $comList ?? [];
 	}
 
 	public static function getUsersComments($page) {
@@ -58,7 +58,7 @@ class User extends classGetDB
 		$getData = new classGetData('friends');
 		$result  = $getData->getDataFromTableByNameFetch ($login,'user_login');
 		unset($getData);
-		return $result;
+		return $result ?? [];
 	}
 
 	public static function setcookie ($login,$name,$admin) {

@@ -44,10 +44,8 @@ class Poster  extends classGetDB
 		return $list ?? [];
 	}
 
-	public function getAllPostersAll($page = 1) {
-		$offset = ($this->getIntval($page) - 1) * SHOWPOSTER_BY_DEFAULT;
-		$sql    = "SELECT * FROM poster WHERE ((impot=0) OR (impot IS NULL))AND (active = 0)  ORDER BY id_poster DESC LIMIT ".SHOWPOSTER_BY_DEFAULT." OFFSET $offset";
-		//$sql      = "SELECT * FROM poster ORDER BY id_poster DESC LIMIT ".SHOWPOSTER_BY_DEFAULT." OFFSET $offset";
+	private function getListArr($sql)
+	{
 		$result = $this->getDB($sql);
 		while ($row = $result->fetch()) {
 			$list[]=$row;	
@@ -55,23 +53,23 @@ class Poster  extends classGetDB
 		return $list ?? [];
 	}
 
+	public function getAllPostersAll($page = 1)
+	{
+		$offset = ($this->getIntval($page) - 1) * SHOWPOSTER_BY_DEFAULT;
+		$sql    = "SELECT * FROM poster WHERE ((impot=0) OR (impot IS NULL))AND (active = 0)  ORDER BY id_poster DESC LIMIT ".SHOWPOSTER_BY_DEFAULT." OFFSET $offset";
+
+		return $this->getListArr($sql);
+	}
+
 	public  function getFindPosters($txt,$page = 1) {
 		$offset   = ($this->getIntval($page) - 1) * SHOWPOSTER_BY_DEFAULT;
 		$sql      = "SELECT * FROM poster WHERE (active= 0) and ((impot=0) OR (impot IS NULL)) and (LOCATE('".$txt."',msg_p)) ORDER BY id_poster DESC LIMIT ".SHOWPOSTER_BY_DEFAULT." OFFSET $offset";
-		$result = $this->getDB($sql);
-		while ($row = $result->fetch()) {
-			$list[] = $row;		
-		}
-		return $list ?? [];
+		return $this->getListArr($sql);
 	}
 
 	public  function getFindPostersImpot($txt) {
 		$sql  = "SELECT * FROM poster WHERE (active= 0) and (impot='1') and (LOCATE('".$txt."',msg_p)) ORDER BY id_poster DESC";
-		$res = $this->getDB($sql);
-		while ($row = $res->fetch()) {
-			$list[] = $row;			
-		}
-		return $list ?? [];
+		return $this->getListArr($sql);
 	}
 
 	public  function getFormat($i) {
@@ -182,11 +180,12 @@ class Poster  extends classGetDB
 		return $elem;
 	}
 
-	public  function getPosterById($id) {
+	public  function getPosterById($id)
+	{
 		$getData = new classGetData('poster');
 		$elem    = $getData->getDataFromTableByNameFetch2WHERE ($this->getIntval($id),'id_poster',0,'active');
 		unset($getData);
-		return $elem;
+		return $elem ?? [];
 	}
 
 	public  function plusId($id)
@@ -212,7 +211,7 @@ class Poster  extends classGetDB
 		$cat     = $this->getIntval($cat);
 		$getData = new classGetData('catagory');
 		$list    = $getData->getDataFromTableByNameFetch($cat,'id_cat');
-		return $list;
+		return $list ?? [];
 	}
 
 	public function getAllTypePost() {
@@ -281,7 +280,8 @@ class Poster  extends classGetDB
 		return $result -> execute();		
 	}
 
-	public function changePoster($id,$title,$cat,$type,$name,$email,$impot,$msg,$foto) {	
+	public function changePoster($id,$title,$cat,$type,$name,$email,$impot,$msg,$foto)
+	{	
 		$id  = $this->getIntval($id);
 		$cat = $this->getIntval($cat);
 		$sql = "UPDATE  poster SET name_p=:name, email_p=:email, type_p=:type, cat_p=:cat, title_p=:title, impot=:impot, msg_p=:msg, foto_p1=:foto WHERE id_poster=$id";
@@ -299,7 +299,8 @@ class Poster  extends classGetDB
 		return $result -> execute();		
 	}
 
-	public  function editFoto ($id,$title,$cat,$type,$name,$email,$impot,$msg,$foto) {
+	public function editFoto ($id,$title,$cat,$type,$name,$email,$impot,$msg,$foto)
+	{
 		$id  = $this->getIntval($id);
 		$cat = $this->getIntval($cat);
 		$sql = "UPDATE poster SET name_p=:name, email_p=:email, type_p=:type, cat_p=:cat, title_p=:title, impot=:impot, msg_p=:msg, foto_p1=:foto WHERE id_poster=$id";
@@ -317,21 +318,25 @@ class Poster  extends classGetDB
 		return $result -> execute();			
 	}
 
-	public  function showLineMenuPoster($http,$alt,$title) {
+	public function showLineMenuPoster($http,$alt,$title)
+	{
 		include ('views/poster/showLineMenuPoster.php');
 	}
 
-	public  function showNoPhoto($title) {
+	public  function showNoPhoto($title)
+	{
 		include ('views/poster/showNoPhoto.php');
 	}
 
-	public  function showPosterAll($posterItem) {
+	public  function showPosterAll($posterItem)
+	{
 		foreach ($posterItem as $item) {			
 			include ('views/poster/showPosterAll.php');
 		}
 	}
 
-	public  function showPhoto($list) {
+	public  function showPhoto($list)
+	{
 		$file = 'posterFoto/'.$list["foto_p1"];
 		include ('views/poster/showPhoto.php');
 	}
