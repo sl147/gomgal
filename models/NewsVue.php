@@ -18,8 +18,8 @@ class NewsVue
     const SHOWNEWS_BY_DEFAULT = 25;
 		
 	public function __construct() {
-		require_once ('../classes/traitAuxiliary.php');
-		require_once ('../classes/classGetDB.php');
+		//require_once ('../classes/traitAuxiliary.php');
+		//require_once ('../classes/classGetDB.php');
 		require_once ('../classes/classGetData.php');
 	}
 
@@ -38,22 +38,22 @@ class NewsVue
 			$list[$i]['ip_com']    = $row['ip_com'];			
 			$i++;
 		}
-		return $list;
+		return $list ?? [];
 	}
 
-	public function getComsByIdVue($id, $page) {
+/*	public function getComsByIdVue($id, $page) {
 
 		$getData = new classGetData('Comment');
 		$list = $getData->getDataFromTableByNameVue($id,'id_com');
 		unset($getData);
 		return $list;
-	}
+	}*/
 
 	public function getAllNewsVue($page = 1) {
 
 		$getData  = new classGetData('msgs');
 		$list = $getData->getDataFromTableOrderPageVue(self::SHOWNEWS_BY_DEFAULT,$page,'id');
 		unset($getData);
-		return $list;
+		return $list ?? [];
 	}
 }
