@@ -1,12 +1,11 @@
 <?php
-	require_once ('../models/NewsVue.php');
-
-$page  = $_GET['page'];
-$posts = [];
-$MK    = new NewsVue();
-
-$posts = $MK->getAllNewsVue($page);
+require_once ('../models/NewsVue.php');
 $data  = [];
+$posts = [];
+$page  = $_GET['page'];
+$MK    = new NewsVue();
+$posts = $MK->getAllNewsVue($page);
+
 foreach ($posts as $item) {
   	$new_item = array(
 		'id'    => $item['id'],

@@ -1,10 +1,12 @@
 <?php
+require_once ('../classes/traitAuxiliary.php');
 require_once ('../models/Video.php');
 $page = $_GET['page'];
-$data = [];
+
 $MK   = new Video();
 $pr   = $MK->getVideoVue($page);
-	
+$data = [];
+
 foreach ($pr as $item) {
   	$new_item = array(
 		'id'    => $item["id"],
@@ -13,5 +15,5 @@ foreach ($pr as $item) {
 	);
 	array_push($data, $new_item);
 }
-	echo json_encode($data);
+echo json_encode($data);
 ?>

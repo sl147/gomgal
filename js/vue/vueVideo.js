@@ -15,7 +15,7 @@ var vue_tovList = new Vue({
 	},
 	methods: {
 		add() {
-			var req = this.addF+this.newidYT+"&title="+this.newTitle
+			let req = this.addF+this.newidYT+"&title="+this.newTitle
 			this.$http.get(req).then(function (response){     
 				this.getVideos()
 				this.show = !this.show
@@ -27,8 +27,7 @@ var vue_tovList = new Vue({
 		},		
 		edit(g){
 			console.log("send id="+g.id+"  title-"+g.title)
-			var req = this.editF + g.id+"&idYT="+g.idYT+"&title="+g.title
-			console.log("req="+req)
+			let req = this.editF + g.id+"&idYT="+g.idYT+"&title="+g.title
 			this.$http.get(req).then(function (response){
 			},function (error){
 				console.log(error)
@@ -46,25 +45,20 @@ var vue_tovList = new Vue({
 			}     
 		},	
 		getVideos() {
-			//var req = this.select+this.cat+'&page='+this.page
-			var req = this.select+this.page
-			console.log("req - "+req)
+			let req = this.select+this.page
 			this.$http.get(req).then(function (response) {
 				this.videos = JSON.parse(response.data)
-				for (var bas of this.videos) {
-					//console.log("id - "+bas.id+"   idYT - "+bas.idYT+"   title - "+bas.title)
-				}				
+/*				for (var bas of this.videos) {
+					console.log("id - "+bas.id+"   idYT - "+bas.idYT+"   title - "+bas.title)
+				}*/				
 			},function (error){
 				console.log(error);
 			})
 		}
 	},
 	created: function() {
-		var get   = window.table
-		//this.cat  = get["cat"]
+		let get   = window.table
 		this.page = get["page"]
-		//console.log("cat-"+this.cat+"   page="+this.page)
-		console.log("page="+this.page)
 		this.getVideos()
 	}
 })

@@ -28,7 +28,7 @@ class classGetDB
 	{
 		require_once ('../components/Db.php');
 		$db   = new Db();
-		return $db -> prepare($sql);
+		return $db->getConnectionVue() ->  prepare($sql);
 	}
 }
 ?>
