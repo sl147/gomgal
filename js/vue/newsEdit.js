@@ -20,7 +20,6 @@ let vue_app = new Vue({
 	methods: {
 		add2el() {
 			let req = this.add+this.newname+"&tab="+this.tbl+"&nameEl="+this.nameElement
-			console.log('reqAdd - '+req)
 			this.$http.get(req).then(function (response){     
 				this.getAll()
 				this.show = !this.show
@@ -41,9 +40,7 @@ let vue_app = new Vue({
 			}     
 		},		
 		edit2el(g){
-			console.log("send id="+g.id+"  name-"+g.name)
 			let req = this.edit + g.id+"&name="+g.name+"&tab="+this.tbl+"&nameEl="+this.nameElement+"&nameId="+this.nameId
-			console.log("req="+req)
 			this.$http.get(req).then(function (response){
 			},function (error){
 				console.log(error)
@@ -51,18 +48,13 @@ let vue_app = new Vue({
 		},		
 		getAll() {
 			let req = this.select+this.page
-			console.log("reqsel - "+req)
 			this.$http.get(req).then(function (response) {
-				console.log("here")
-				this.elements = JSON.parse(response.data)				
-					for (let bas of this.elements) {
-						console.log("page="+bas.page+"   title - "+bas.title+"   id - "+bas.id)
-					}			
+				this.elements = JSON.parse(response.data)		
 			},function (error){
 				console.log(error)
 			})
 		},
-		getGroupItem(elm) {  //for views/vote/voteshow
+		getGroupItem(elm) {
 			this.show = !this.show
 			
 			for (let gr of this.elements) {
@@ -72,18 +64,13 @@ let vue_app = new Vue({
 	            else {
 	            	gr.isPlus = false
 	            }
-	            console.log("name - "+gr.name+"   isPlus - "+gr.isPlus+"   id - "+gr.id)
 			}
-			//console.log("name - "+elm.name+"name - "+elm.name)
 			let req = this.selectElm+elm.id
 			this.$http.get(req).then(function (response){
 				if (JSON.parse(response.data).length > 0) {
 					let resp = JSON.parse(response.data)
 					if (!(resp.name == "empty")) {
 						this.items = resp
-						for (let item of this.items) {
-				            console.log("  msg="+item.msg+"  countrl="+item.countrl)
-				        }
 			        }
 			        else {
 				    	this.items = []
@@ -98,13 +85,6 @@ let vue_app = new Vue({
 	created: function() {
 		let get          = window.table
 		this.page         = get["page"]
-/*		this.nameElement = get["name"]
-		this.nameId      = get["id"]
-		this.isId        = get["isId"]
-		this.idVal       = get["idVal"]*/
-		//this.idVal       = Val		
-		//console.log('112  isId - '+this.isId+'   idVal - '+this.idVal+'   coun - '+coun+'  table - '+this.tbl+'    nameElement - '+this.nameElement+'    nameId - '+this.nameId)
-		console.log('page='+this.page)
 		this.getAll()
 	}	
   })

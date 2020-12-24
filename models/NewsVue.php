@@ -1,13 +1,4 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-//namespace models;
-
 /**
  * Description of ewsVue
  *
@@ -18,9 +9,8 @@ class NewsVue
     const SHOWNEWS_BY_DEFAULT = 25;
 		
 	public function __construct() {
-		//require_once ('../classes/traitAuxiliary.php');
-		//require_once ('../classes/classGetDB.php');
-		require_once ('../classes/classGetData.php');
+		require_once ('../classes/traitAuxiliary.php');
+		require_once ('../classes/classGetDB.php');
 	}
 
 	public function getAllCommentsVue($page = 1) {
@@ -50,7 +40,7 @@ class NewsVue
 	}*/
 
 	public function getAllNewsVue($page = 1) {
-
+		require_once ('../classes/classGetData.php');
 		$getData  = new classGetData('msgs');
 		$list = $getData->getDataFromTableOrderPageVue(self::SHOWNEWS_BY_DEFAULT,$page,'id');
 		unset($getData);

@@ -1,4 +1,5 @@
 <?php
+require_once ('../classes/traitAuxiliary.php');
 require_once ('../models/Video.php');
 
 $id    = trim(strip_tags($_GET['id']));
