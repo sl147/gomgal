@@ -1,7 +1,9 @@
 <?php
 $response = [];
 if (isset($_POST['id'])) {
-	$result = Auxiliary::getSQLAux("SELECT * FROM poster WHERE id_poster=".$_POST['id']);
+	$getDB  = new classGetDB();
+	$result = $getDB->getDB("SELECT * FROM poster WHERE id_poster=".$_POST['id']);
+	unset($getDB);
 	if ($result) {
 		while ($row = $result->fetch()) {
 			$new_item = array(
@@ -13,15 +15,14 @@ if (isset($_POST['id'])) {
 			);
 			array_push($response, $new_item);
 		}
-		echo json_encode($response);
 	}
 	else {
 		$new_item = array(
 				'id'    => "no POST id",
 				'foto'  => "foto",
 			);
-array_push($response, $new_item);
-echo json_encode($response);
+		array_push($response, $new_item);		
 	}
+	echo json_encode($response);
 }
 ?>

@@ -2,8 +2,10 @@
 $response = [];
 if (isset($_POST['cat'])) {
 	$cat    = $_POST['cat'];
-	$s      = "SELECT * FROM msgs WHERE category='".$cat."' ORDER BY id DESC LIMIT 13";
-	$result = Auxiliary::getSQLAux($s);
+	$sql    = "SELECT * FROM msgs WHERE category='".$cat."' ORDER BY id DESC LIMIT 13";
+	$getDB  = new classGetDB();
+	$result = $getDB->getDB($sql);
+	unset($getDB);
 	if ($result) {
 			$new_item = array(
 				'id'    => $s,
@@ -12,9 +14,7 @@ if (isset($_POST['cat'])) {
 				'msg'   => "msg",
 				'foto'  => "foto",
 			);
-
 			array_push($response, $new_item);
-
 		while ($row = $result->fetch()) {
 			$new_item = array(
 			  'id'    => $row["id"],
@@ -26,20 +26,5 @@ if (isset($_POST['cat'])) {
 		}
 		echo json_encode($response);
 	}
-/*	else {
-		$response["success"] = 0;
-	    $response["message"] = "No product found";
-
-	    echo json_encode($response);
-
-	    			$new_item = array(
-				'id'    => $row["id"],
-			    'top'   => $row["top"],
-			  'title'   => $row["title"],
-			    'msg'   => $row["msg"],
-			   'foto'   => $row["foto"],
-			);
-
-	}*/
 }
 ?>

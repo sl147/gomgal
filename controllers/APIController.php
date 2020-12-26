@@ -34,29 +34,28 @@ class APIController {
 
 	public function actionNewsByPageLim($page=1, $limit=10) {
 		$response = [];
-	//$page   = $_GET['page'];
-	//$limit  = $_GET['limit'];
-	$offset   = ($page - 1) * $limit;
-	$sql      = "SELECT * FROM msgs ORDER BY id DESC LIMIT ".$limit." OFFSET ".$offset;
-	$result = Auxiliary::getSQLAux($sql);
-	if ($result) {
-
-		while ($row = $result->fetch()) {
-			$new_item = array(
-			  'id'    => $row["id"],
-			  'title' => $row["title"],
-			  'msg'   => $row["msg"],
-			 'foto'   => $row["foto"],
-			);
-			array_push($response, $new_item);
+		$offset   = ($page - 1) * $limit;
+		$sql      = "SELECT * FROM msgs ORDER BY id DESC LIMIT ".$limit." OFFSET ".$offset;
+		$getDB  = new classGetDB();
+		$result = $getDB->getDB($sql);
+		unset($getDB);
+		if ($result) {
+			while ($row = $result->fetch()) {
+				$new_item = array(
+				  'id'    => $row["id"],
+				  'title' => $row["title"],
+				  'msg'   => $row["msg"],
+				 'foto'   => $row["foto"],
+				);
+				array_push($response, $new_item);
+			}
+			echo json_encode($response);
 		}
+		else {
+		$response["success"] = "01";
+		$response["message"] = "No saving";
 		echo json_encode($response);
-	}
-	else {
-	$response["success"] = "01";
-	$response["message"] = "No saving";
-	echo json_encode($response);
-	}
+		}
 //		require_once ('app/News/getNewsByPageLim.php');
 			return true;
 	}
