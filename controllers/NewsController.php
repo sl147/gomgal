@@ -199,7 +199,7 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 		$page  = $this->getIntval($page);
 		$id    = $this->getIntval($id);
 		$title = "редагування новин";
-		if ($aux->getCountAtr('msgs', 'id', $id)) {
+		if ($this->getCountAtr('msgs', 'id', $id)>0) {
 			$isId    = true;
 			$allNews = $this->newsClass->getNewsById($id,$page);
 			$tPos    = $this->newsClass->getCatNews();

@@ -19,7 +19,7 @@ class RelaxController
 		'SHOWRELAX' => SHOWRELAX_BY_DEFAULT
 		);
 		$json       = json_encode($table);
-		$total      = Auxiliary::getCountAtr('msgs_relax', 'category',$cat);
+		$total      = $this->getCountAtr('msgs_relax', 'category',$cat);
 		$pagination = new Pagination($total, $page, SHOWRELAX_BY_DEFAULT, 'page-');
 		$relax      = new Relax();
 		$arr = $relax->getRelax();
@@ -61,7 +61,7 @@ class RelaxController
 		'SHOWRELAX' => SHOWRELAX_BY_DEFAULT
 		);
 		$json       = json_encode($table);
-		$total      = Auxiliary::getCountAtr('msgs_relax', 'teman',$teman);
+		$total      = $this->getCountAtr('msgs_relax', 'teman',$teman);
 		$pagination = new Pagination($total, $page, SHOWRELAX_BY_DEFAULT, 'page-');
 		$siteFile   = 'views/relax/anThema.php';
 		$metaTags   = '';

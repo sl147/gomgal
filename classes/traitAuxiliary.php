@@ -20,6 +20,17 @@ trait traitAuxiliary
         return intval($i) ?? 1;
 	}
 
+	public function getCountAtr($table, $atr, $value)
+	{
+		$sql    = "SELECT count(*) as count FROM ".$table.self::formSql($atr,$value);
+		$getDB  = new classGetDB();
+		$result = $getDB->getDB($sql);
+		unset($getDB);
+		$result -> setFetchMode(PDO::FETCH_ASSOC);
+
+		return $result->fetch()['count'];
+	}
+
 	private function mailing ($to,$subject,$massage)
 	{
 		$from    = "info@gomgal.lviv.ua";
