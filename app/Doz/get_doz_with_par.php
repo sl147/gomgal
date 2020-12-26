@@ -2,7 +2,9 @@
 $response = [];
 if (isset($_POST['cat'])) {
 	$cat    = $_POST['cat'];
-	$result = Auxiliary::getSQLAux("SELECT * FROM msgs_relax WHERE category=".$cat." ORDER BY countrl  DESC LIMIT 20");
+	$getDB  = new classGetDB();
+	$result = $getDB->getDB("SELECT * FROM msgs_relax WHERE category=".$cat." ORDER BY countrl  DESC LIMIT 20");
+	unset($getDB);
 	if ($result) {
 		while ($row = $result->fetch()) {
 			$new_item = array(
@@ -11,14 +13,12 @@ if (isset($_POST['cat'])) {
 			'countrl'   => $row["countrl"],
 			);
 			array_push($response, $new_item);
-		}
-		echo json_encode($response);
+		}		
 	}
 	else {
 		$response["success"] = 0;
 	    $response["message"] = "No product found";
-
-	    echo json_encode($response);
 	}
+	echo json_encode($response);
 }
 ?>

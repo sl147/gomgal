@@ -10,15 +10,12 @@ class Auxiliary
 
 	use traitAuxiliary;
 
-	public static function getSQLAux($sql)
-	{
-		return Db::getConnection() -> query($sql);
-	}
-
 	public static function getCount($table)
 	{
 		$sql    = "SELECT count(*) as count FROM ".$table;
-		$result = self::getSQLAux($sql);
+		$getDB  = new classGetDB();
+		$result = $getDB->getDB($sql);
+		unset($getDB);
 		$result -> setFetchMode(PDO::FETCH_ASSOC);
 		return $result->fetch()['count'];
 	}
@@ -31,8 +28,11 @@ class Auxiliary
 	public static function getCountAtr($table, $atr, $value)
 	{
 		$sql    = "SELECT count(*) as count FROM ".$table.self::formSqlAux($atr,$value);
-		$result = self::getSQLAux($sql);
+		$getDB  = new classGetDB();
+		$result = $getDB->getDB($sql);
+		unset($getDB);
 		$result -> setFetchMode(PDO::FETCH_ASSOC);
+		echo "count=".$result->fetch()['count'];
 		return $result->fetch()['count'];
 	}
 
@@ -98,7 +98,9 @@ class Auxiliary
     }
 
 	public static function getMTags() {
-		$result  = self::getSQLAux("SELECT * FROM meta_tags");
+		$getDB  = new classGetDB();
+		$result = $getDB->getDB("SELECT * FROM meta_tags");
+		unset($getDB);
 		while ($row = $result->fetch()) {
 			$list[]=$row;
 		}
@@ -106,18 +108,23 @@ class Auxiliary
 	}
 
 	public static function getMTagsByUrl($url) {
-		$result  = self::getSQLAux("SELECT * FROM meta_tags WHERE url_name = '".$url."'");
+		$getDB  = new classGetDB();
+		$result = $getDB->getDB("SELECT * FROM meta_tags WHERE url_name = '".$url."'");
+		unset($getDB);
 		return $result->fetch();
 
 	}
 
 	public static function getMTagsByID($id) {
-		$result  = self::getSQLAux("SELECT * FROM meta_tags".self::formSqlAux("id",$id));
+		$getDB  = new classGetDB();
+		$result = $getDB->getDB("SELECT * FROM meta_tags".self::formSqlAux("id",$id));
+		unset($getDB);
 		return $result->fetch();
 	}
 
 	private static function saveMT($url_name,$title,$descr,$keywords,$sql,$follow) {
-		$result = Db::getConnection() -> prepare($sql);
+		$getDB  = new classGetDB();
+		$result = $getDB->getPrepareSQL($sql);
 		$result -> bindParam(':url_name', $url_name, PDO::PARAM_STR);
 		$result -> bindParam(':title',   $title,     PDO::PARAM_STR);
 		$result -> bindParam(':descr',   $descr,     PDO::PARAM_STR);
