@@ -199,64 +199,64 @@ class News extends classGetDB
 		return $this->getDB("UPDATE msgs SET countmsgs=$count+1".$this->formSql("id",$id));		
 	}
 
-	public static function createNews($title,$prew,$cat,$cat2,$sourse,$msg,$foto,$top,$videoYT)
+	public function createNews($title,$prew,$cat,$cat2,$sourse,$msg,$foto,$top,$videoYT)
 	{
 		$sql    = "INSERT INTO msgs (title,prew,category,cat2,sourse,msg,foto,top,videoYT)
 		 VALUES(:title,:prew,:cat,:cat2,:sourse,:msg,:foto,:top,:videoYT)";
-		$result = Auxiliary::getPrepareSQL($sql);
-		Auxiliary::bindParam($result,':title',   $title);
-		Auxiliary::bindParam($result,':prew',    $prew);
-		Auxiliary::bindParam($result,':cat',     $cat);
-		Auxiliary::bindParam($result,':cat2',    $cat2);
-		Auxiliary::bindParam($result,':sourse',  $sourse);
-		Auxiliary::bindParam($result,':top',     $top);
-		Auxiliary::bindParam($result,':msg',     $msg);
-		Auxiliary::bindParam($result,':foto',    $foto);
-		Auxiliary::bindParam($result,':videoYT', $videoYT);
+		$result = $this->getPrepareSQL($sql);
+		$result -> bindParam(':title',   $title,   PDO::PARAM_STR);
+		$result -> bindParam(':prew',    $prew,    PDO::PARAM_STR);
+		$result -> bindParam(':cat',     $cat,     PDO::PARAM_STR);
+		$result -> bindParam(':cat2',    $cat2,    PDO::PARAM_STR);
+		$result -> bindParam(':sourse',  $sourse,  PDO::PARAM_STR);
+		$result -> bindParam(':top',     $top,     PDO::PARAM_STR);
+		$result -> bindParam(':msg',     $msg,     PDO::PARAM_STR);
+		$result -> bindParam(':foto',    $foto,    PDO::PARAM_STR);
+		$result -> bindParam(':videoYT', $videoYT, PDO::PARAM_STR);
 		
 		return $result -> execute();		
 	}
 
-	public static function updateNews($id,$title,$prew,$category,$cat2,$sourse,$msg,$foto,$top,$videoYT)
+	public function updateNews($id,$title,$prew,$category,$cat2,$sourse,$msg,$foto,$top,$videoYT)
 	{
 		$sql    = "UPDATE msgs SET title=:title,prew=:prew,category=:category,cat2=:cat2,sourse=:sourse,msg=:msg,foto=:foto,top=:top,videoYT=:videoYT WHERE id=$id";
-		$result = Auxiliary::getPrepareSQL($sql);
-		Auxiliary::bindParam($result,':title',   $title);
-		Auxiliary::bindParam($result,':prew',    $prew);
-		Auxiliary::bindParam($result,':category',$category);
-		Auxiliary::bindParam($result,':cat2',    $cat2);
-		Auxiliary::bindParam($result,':sourse',  $sourse);
-		Auxiliary::bindParam($result,':top',     $top);
-		Auxiliary::bindParam($result,':msg',     $msg);
-		Auxiliary::bindParam($result,':foto',    $foto);
-		Auxiliary::bindParam($result,':videoYT', $videoYT);
+		$result = $this->getPrepareSQL($sql);
+		$result -> bindParam(':title',   $title,   PDO::PARAM_STR);
+		$result -> bindParam(':prew',    $prew,    PDO::PARAM_STR);
+		$result -> bindParam(':cat',     $cat,     PDO::PARAM_STR);
+		$result -> bindParam(':cat2',    $cat2,    PDO::PARAM_STR);
+		$result -> bindParam(':sourse',  $sourse,  PDO::PARAM_STR);
+		$result -> bindParam(':top',     $top,     PDO::PARAM_STR);
+		$result -> bindParam(':msg',     $msg,     PDO::PARAM_STR);
+		$result -> bindParam(':foto',    $foto,    PDO::PARAM_STR);
+		$result -> bindParam(':videoYT', $videoYT, PDO::PARAM_STR);
 		
 		return $result -> execute();		
 	}
 
-	public static function updateNewsWithoutPhoto($id,$title,$prew,$category,$cat2,$sourse,$msg,$top,$videoYT)
+	public function updateNewsWithoutPhoto($id,$title,$prew,$category,$cat2,$sourse,$msg,$top,$videoYT)
 	{
 		$sql    = "UPDATE msgs SET title=:title,prew=:prew,category=:category,cat2=:cat2,sourse=:sourse,msg=:msg,top=:top,videoYT=:videoYT WHERE id=$id";
-		$result = Auxiliary::getPrepareSQL($sql);
-		Auxiliary::bindParam($result,':title',   $title);
-		Auxiliary::bindParam($result,':prew',    $prew);
-		Auxiliary::bindParam($result,':category',$category);
-		Auxiliary::bindParam($result,':cat2',    $cat2);
-		Auxiliary::bindParam($result,':sourse',  $sourse);
-		Auxiliary::bindParam($result,':top',     $top);
-		Auxiliary::bindParam($result,':msg',     $msg);
-		Auxiliary::bindParam($result,':videoYT', $videoYT);
+		$result = $this->getPrepareSQL($sql);
+		$result -> bindParam(':title',   $title,   PDO::PARAM_STR);
+		$result -> bindParam(':prew',    $prew,    PDO::PARAM_STR);
+		$result -> bindParam(':cat',     $cat,     PDO::PARAM_STR);
+		$result -> bindParam(':cat2',    $cat2,    PDO::PARAM_STR);
+		$result -> bindParam(':sourse',  $sourse,  PDO::PARAM_STR);
+		$result -> bindParam(':top',     $top,     PDO::PARAM_STR);
+		$result -> bindParam(':msg',     $msg,     PDO::PARAM_STR);
+		$result -> bindParam(':videoYT', $videoYT, PDO::PARAM_STR);
 		
 		return $result -> execute();		
 	}
 
-	public static function updateComm($id,$nik,$txt,$email)
+	public function updateComm($id,$nik,$txt,$email)
 	{
 		$sql    = "UPDATE Comment SET nik_com=:nik, email_com=:email, txt_com=:txt WHERE id_com=$id";
-		$result = Auxiliary::getPrepareSQL($sql);
-		Auxiliary::bindParam($result,':nik',   $nik);
-		Auxiliary::bindParam($result,':email', $email);
-		Auxiliary::bindParam($result,':txt',   $txt);
+		$result = $this->getPrepareSQL($sql);
+		$result -> bindParam(':nik',   $nik,   PDO::PARAM_STR);
+		$result -> bindParam(':email', $email, PDO::PARAM_STR);
+		$result -> bindParam(':txt',   $txt,   PDO::PARAM_STR);
 
 		return $result -> execute();			
 	}

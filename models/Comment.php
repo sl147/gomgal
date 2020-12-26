@@ -28,14 +28,14 @@ class Comment
 	public static function insComment($id_cl,$txt_com,$nik_com,$email_com,$ip_com)
 	{
 		$sql    = "INSERT INTO Comment (id_cl,txt_com,nik_com,email_com,ip_com)
-		 VALUES(:id_cl,:txt_com,:nik_com,:email_com,:ip_com)";
+		 VALUES(:id_cl,:txt,:nik,:email,:ip)";
 		$getDB  = new classGetDB();
 		$result = $getDB->getPrepareSQL($sql);
-		$result -> bindParam(':id_cl',     $id_cl,     PDO::PARAM_STR);
-		$result -> bindParam(':txt_com',   $txt_com,   PDO::PARAM_STR);
-		$result -> bindParam(':nik_com',   $nik_com,   PDO::PARAM_STR);
-		$result -> bindParam(':email_com', $email_com, PDO::PARAM_STR);
-		$result -> bindParam(':ip_com',    $ip_com,    PDO::PARAM_STR);
+		$result -> bindParam(':id_cl',     $id_cl, PDO::PARAM_STR);
+		$result -> bindParam(':txt',   $txt_com,   PDO::PARAM_STR);
+		$result -> bindParam(':nik',   $nik_com,   PDO::PARAM_STR);
+		$result -> bindParam(':email', $email_com, PDO::PARAM_STR);
+		$result -> bindParam(':ip',    $ip_com,    PDO::PARAM_STR);
 		unset($getDB);		
 		return $result -> execute();		
 	}
