@@ -38,14 +38,12 @@ class PosterController
 
 	public function actionPosterCatFull($cat, $page = 1)
 	{
-		$cat = $this->getIntval($cat);
-		$poster    = new Poster();
-		$aux    = new Auxiliary();
+		$cat            = $this->getIntval($cat);
+		$poster         = new Poster();
 		$posterImpotant = $poster->getAllPostersImpotCat($cat);
 		$posterAll      = $poster->getAllPostersAllCat($cat,$page);
-		$total          = $aux->getCountAtr('poster', 'cat_p',$cat);
+		$total          = $this->getCountAtr('poster', 'cat_p',$cat);
 		unset($poster);
-		unset($aux);
 		$pagination     = new Pagination($total, $this->getIntval($page), SHOWPOSTER_BY_DEFAULT, 'page-');
 		$siteFile       = 'views/poster/catAll.php';
 		$metaTags       = '';

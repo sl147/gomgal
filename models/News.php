@@ -199,14 +199,14 @@ class News extends classGetDB
 		return $this->getDB("UPDATE msgs SET countmsgs=$count+1".$this->formSql("id",$id));		
 	}
 
-	public function createNews($title,$prew,$cat,$cat2,$sourse,$msg,$foto,$top,$videoYT)
+	public function createNews($title,$prew,$category,$cat2,$sourse,$msg,$foto,$top,$videoYT)
 	{
 		$sql    = "INSERT INTO msgs (title,prew,category,cat2,sourse,msg,foto,top,videoYT)
-		 VALUES(:title,:prew,:cat,:cat2,:sourse,:msg,:foto,:top,:videoYT)";
+		 VALUES(:title,:prew,:category,:cat2,:sourse,:msg,:foto,:top,:videoYT)";
 		$result = $this->getPrepareSQL($sql);
 		$result -> bindParam(':title',   $title,   PDO::PARAM_STR);
 		$result -> bindParam(':prew',    $prew,    PDO::PARAM_STR);
-		$result -> bindParam(':cat',     $cat,     PDO::PARAM_STR);
+		$result -> bindParam(':category',$category,PDO::PARAM_STR);
 		$result -> bindParam(':cat2',    $cat2,    PDO::PARAM_STR);
 		$result -> bindParam(':sourse',  $sourse,  PDO::PARAM_STR);
 		$result -> bindParam(':top',     $top,     PDO::PARAM_STR);
@@ -223,7 +223,7 @@ class News extends classGetDB
 		$result = $this->getPrepareSQL($sql);
 		$result -> bindParam(':title',   $title,   PDO::PARAM_STR);
 		$result -> bindParam(':prew',    $prew,    PDO::PARAM_STR);
-		$result -> bindParam(':cat',     $cat,     PDO::PARAM_STR);
+		$result -> bindParam(':category',$category,PDO::PARAM_STR);
 		$result -> bindParam(':cat2',    $cat2,    PDO::PARAM_STR);
 		$result -> bindParam(':sourse',  $sourse,  PDO::PARAM_STR);
 		$result -> bindParam(':top',     $top,     PDO::PARAM_STR);
@@ -240,7 +240,7 @@ class News extends classGetDB
 		$result = $this->getPrepareSQL($sql);
 		$result -> bindParam(':title',   $title,   PDO::PARAM_STR);
 		$result -> bindParam(':prew',    $prew,    PDO::PARAM_STR);
-		$result -> bindParam(':cat',     $cat,     PDO::PARAM_STR);
+		$result -> bindParam(':category',$category,PDO::PARAM_STR);
 		$result -> bindParam(':cat2',    $cat2,    PDO::PARAM_STR);
 		$result -> bindParam(':sourse',  $sourse,  PDO::PARAM_STR);
 		$result -> bindParam(':top',     $top,     PDO::PARAM_STR);

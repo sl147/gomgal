@@ -20,22 +20,6 @@ class Auxiliary
 		return $result->fetch()['count'];
 	}
 
-	public static function formSqlAux($atr,$value)
-	{
-		return " WHERE ".$atr." = ".$value;
-	}
-
-	public static function getCountAtr($table, $atr, $value)
-	{
-		$sql    = "SELECT count(*) as count FROM ".$table.self::formSqlAux($atr,$value);
-		$getDB  = new classGetDB();
-		$result = $getDB->getDB($sql);
-		unset($getDB);
-		$result -> setFetchMode(PDO::FETCH_ASSOC);
-		echo "count=".$result->fetch()['count'];
-		return $result->fetch()['count'];
-	}
-
 	public static function getMonth()
 	{
 		return ["січень","лютий","березень","квітень","травень","червень","липень","серпень","вересень","жовтень","листопад","грудень"];
@@ -72,7 +56,7 @@ class Auxiliary
 	}
 
 	public static function getPosterById($id) {
-		$result = self::getSQLAuxVue("SELECT * FROM poster".self::formSqlAux("id_poster",$id));
+		$result = self::getSQLAuxVue("SELECT * FROM poster WHERE id_poster=".$id);
 		return $result->fetch();
 	}
 	public static function changePhoto($nameFile,$pathdir) {
@@ -117,7 +101,7 @@ class Auxiliary
 
 	public static function getMTagsByID($id) {
 		$getDB  = new classGetDB();
-		$result = $getDB->getDB("SELECT * FROM meta_tags".self::formSqlAux("id",$id));
+		$result = $getDB->getDB("SELECT * FROM meta_tags WHERE id=".$id);
 		unset($getDB);
 		return $result->fetch();
 	}
