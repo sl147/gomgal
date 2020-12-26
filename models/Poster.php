@@ -200,9 +200,9 @@ class Poster  extends classGetDB
 		return $result->fetch()['count'];
 	}
 
-	public  function updateFoto ($id,$foto)
+	public function updateFoto ($id,$foto)
 	{
-		$result = Auxiliary::getPrepareSQL("UPDATE poster SET foto_p1=:foto".Auxiliary::formSqlAux("id_poster",$id));
+		$result = $this->:getPrepareSQL("UPDATE poster SET foto_p1=:foto".Auxiliary::formSqlAux("id_poster",$id));
 		$result -> bindParam(':foto', $foto, PDO::PARAM_STR);			
 		return $result -> execute();			
 	}

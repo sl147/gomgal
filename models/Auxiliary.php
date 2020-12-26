@@ -15,12 +15,6 @@ class Auxiliary
 		return Db::getConnection() -> query($sql);
 	}
 
-	public static function getPrepareSQL($sql)
-	{
-		$db = Db::getConnection();
-		return $db -> prepare($sql);
-	}
-
 	public static function getCount($table)
 	{
 		$sql    = "SELECT count(*) as count FROM ".$table;
