@@ -33,15 +33,18 @@ class Auxiliary
 		return true;				
 	}
 
-	public static function isFile($file) {
+	public static function isFile($file)
+	{
 		return 	(file_exists($file)) ? true : false;
 	}
 
-	private static function getPathFile($file,$folder,$delim=""){
+	private static function getPathFile($file,$folder,$delim="")
+	{
 		return "./".$folder."/".$delim.$file;
 	}
 
-	public static function delFile($file,$folder) {
+	public static function delFile($file,$folder)
+	{
 		$fdel  = self::getPathFile($file,$folder);
 		$fdelS = self::getPathFile($file,$folder,"s");
 		if (self:: isFile($fdel))  unlink($fdel);
