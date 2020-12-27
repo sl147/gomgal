@@ -98,7 +98,7 @@ class UserController
 	public function actionUserComment($page = 1) {
 		$page       = $this->getIntval($page);		
 		$title      = "перегляд новин клієнтів";
-		$total      = Auxiliary::getCount('ComCl');
+		$total      = $this->getCount('ComCl');
 		$comms      = User::getUsersComments($page);
 		$pagination = new Pagination($total, $page, SHOWCOMMENT_BY_DEFAULT, 'page-');
 		
@@ -108,7 +108,7 @@ class UserController
 
 	public function actionUserWishes($page = 1) {	
 		$title      = "перегляд побажань клієнтів";
-		$total      = Auxiliary::getCount('wishCl');
+		$total      = $this->getCount('wishCl');
 		$comms      = User::getUsersWishes($this->getIntval($page));
 
 		require_once ('views/user/userWishes.php');

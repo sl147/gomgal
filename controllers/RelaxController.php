@@ -43,7 +43,7 @@ class RelaxController
 		'SHOWRELAX' => SHOWRELAX_BY_DEFAULT
 		);
 		$json       = json_encode($table);
-		$total      = Auxiliary::getCount('msgs_relax');
+		$total      = $this->getCount('msgs_relax');
 		$pagination = new Pagination($total, $page, SHOWRELAX_BY_DEFAULT, 'page-');
 		$siteFile   = 'views/relax/index.php';
 		$metaTags   = '';

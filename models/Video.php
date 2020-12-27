@@ -2,18 +2,15 @@
 /**
 * 
 */
-class Video
+class Video extends classGetDB
 {	
 
 	use traitAuxiliary;
 
 	const SHOWVIDEO_BY_DEFAULT = 6;
 
-	public function __construct() {
-		require_once ('../classes/classGetDB.php');
-	}
-
-	public  function getVideo($page) {
+	public  function getVideo($page)
+	{
 		$getData = new classGetData('progrnk');
 		$offset  = ($this->getIntval($page) - 1) * self::SHOWVIDEO_BY_DEFAULT;
 		$result  = $getData->getDataByOffsetWithOutRow ('prid',self::SHOWVIDEO_BY_DEFAULT,$offset);
@@ -27,7 +24,8 @@ class Video
 		return $list ?? [];
 	}
 
-	public static function getVideoVue($page=1) {
+	public static function getVideoVue($page=1)
+	{
 		$getDB  = new classGetDB();
 		$offset = ($page - 1) * self::SHOWVIDEO_BY_DEFAULT;
 		$sql    = "SELECT * FROM progrnk ORDER BY prid DESC LIMIT ".self::SHOWVIDEO_BY_DEFAULT." OFFSET $offset";
@@ -43,7 +41,8 @@ class Video
 		return $list ?? [];
 	}
 
-	public static function updateVideoVue ($id,$idYT,$title) {
+	public static function updateVideoVue ($id,$idYT,$title)
+	{
 		$getDB  = new classGetDB();
 		$sql    = "UPDATE progrnk SET pridYT=:idYT, prhar=:title WHERE prid=$id";
 		$result = $getDB->getPrepareSQLVue($sql);
@@ -53,7 +52,8 @@ class Video
 		return $result -> execute();
 	}
 
-	public static function addVideoVue ($idYT,$title) {
+	public static function addVideoVue ($idYT,$title)
+	{
 		$getDB  = new classGetDB();
 		$sql    = "INSERT INTO progrnk (pridYT,prhar)
 		                VALUES(:idYT,:title)";

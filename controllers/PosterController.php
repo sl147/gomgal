@@ -54,14 +54,12 @@ class PosterController
 
 	public function actionPosterFull($page = 1)
 	{
-		$poster    = new Poster();
-		$aux    = new Auxiliary();
+		$poster         = new Poster();
 		$posterImpotant = $poster->getAllPostersImpot();
 		$posterAll      = $poster->getAllPostersAll($this->getIntval($page));
-		$total          = $aux->getCount('poster');
+		$total          = $this->getCount('poster');
 		$pagination     = new Pagination($total, $this->getIntval($page), SHOWPOSTER_BY_DEFAULT, 'page-');
 		unset($poster);
-		unset($aux);
 		$siteFile       = 'views/poster/catAll.php';
 		$metaTags       = '';
 		require_once ('views/layouts/siteIndex.php');
@@ -122,15 +120,13 @@ class PosterController
 
 	public function actionPosterEdit($page = 1)
 	{
-		$aux    = new Auxiliary();
 		$page  = $this->getIntval($page);
 		$table = array(
 			'page' => $page
 			);
 		$json  = json_encode($table);		
 		$title = "редагування оголошень";
-		$total = $aux->getCount('poster');
-		unset($aux);
+		$total = $this->getCount('poster');
 		$pagination = new Pagination($total, $page, SHOWPOSTER_BY_DEFAULT, 'page-');
 		require_once ('views/poster/posterEdit.php');
 		unset($pagination);

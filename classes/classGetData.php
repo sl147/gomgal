@@ -11,11 +11,13 @@ class classGetData extends classGetDB
 {
 	use traitAuxiliary;
 	
-	public function __construct($table) {
+	public function __construct($table)
+	{
 		$this->table = $table;
 	}
 
-	private function getRow ($result) {
+	private function getRow ($result)
+	{
 		while ($row = $result->fetch()) {			
 			$list[] = $row;
 		}
@@ -25,11 +27,11 @@ class classGetData extends classGetDB
 	private function formSql2El($id,$name,$idVal)
 	{
 		$sql = "SELECT * FROM ".$this->table." ORDER BY ".$name;
-		//return ($idVal) ? $sql . " WHERE ".$id."=".$idVal : $sql;
 		return ($idVal) ? $sql . $this->formSql($id,$idVal) : $sql;
 	}
 
-	private function getRow2El ($result,$id,$name) {
+	private function getRow2El ($result,$id,$name)
+	{
 		$i  = 0;
 		while ($row = $result->fetch()) {
 			$list[$i]['id']   = $row[$id];
@@ -43,7 +45,8 @@ class classGetData extends classGetDB
  *
  *  @return масив даних
  */
-	public function getDataFromTable ($var = 1) {
+	public function getDataFromTable ($var = 1)
+	{
 		return ($var == 1) ? $this->getRow($this->getDB("SELECT * FROM ".$this->table)) :
 		                                   $this->getDB("SELECT * FROM ".$this->table) ;
 	}
@@ -52,7 +55,8 @@ class classGetData extends classGetDB
  *
  *  @return масив даних
  */
-	public function getDataFromTableByName ($elValue,$elName) {	
+	public function getDataFromTableByName ($elValue,$elName)
+	{	
 		return $this->getRow($this->getDB("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue)));
 	}
 
@@ -61,7 +65,8 @@ class classGetData extends classGetDB
  *
  *  @return масив даних
  */
-	public function getDataFromTableByNameWithOutRow ($elValue,$elName) {
+	public function getDataFromTableByNameWithOutRow ($elValue,$elName)
+	{
 		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue));
 	}
 
@@ -69,7 +74,8 @@ class classGetData extends classGetDB
  *
  *  @return елемент даних
  */
-	public function getDataFromTableByNameFetch ($elValue,$elName) {
+	public function getDataFromTableByNameFetch ($elValue,$elName)
+	{
 		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue))->fetch();	
 	}
 
@@ -77,7 +83,8 @@ class classGetData extends classGetDB
  *
  *  @return елемент даних
  */
-	public function getDataFromTableByNameFetch2WHERE ($elValue1,$elName1,$elValue2,$elName2) {
+	public function getDataFromTableByNameFetch2WHERE ($elValue1,$elName1,$elValue2,$elName2)
+	{
 		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql2($elName1,$elValue1,$elName2,$elValue2))->fetch();	
 	}
 
@@ -85,9 +92,8 @@ class classGetData extends classGetDB
  *
  *  @return елемент даних
  */
-	public function getDataFromTableByNameVue ($elValue,$elName) {
-		//require_once ('../classes/classGetDB.php');
-		//return $this->getDBVue("SELECT * FROM ".$this->table." WHERE ".$elName."= '$elValue'")->fetch();
+	public function getDataFromTableByNameVue ($elValue,$elName)
+	{
 		return $this->getDBVue("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue))->fetch();	
 	}
 
@@ -125,12 +131,14 @@ class classGetData extends classGetDB
  *
  *  @return масив даних
  */
-	public function getData2ElVue($id,$name,$idVal=0) {
-		$sql = $this-> formSql2El($id,$name,$idVal);
+	public function getData2ElVue($id,$name,$idVal=0)
+	{
+		$sql = $this->formSql2El($id,$name,$idVal);
 		return $this->getRow2EL( $this->getDBVue($sql),$id,$name);
 	}
 
-	public function getMetaTable() {
+	public function getMetaTable()
+	{
 		$sql = "SHOW COLUMNS FROM ".$this->table;
 		$res = $this->getDB($sql);
 		while ($row = $res->fetch()) {
@@ -144,7 +152,8 @@ class classGetData extends classGetDB
  *
  *  @return масив даних
  */
-	public function getData2El($id,$name,$idVal=0) {
+	public function getData2El($id,$name,$idVal=0)
+	{
 		$sql = $this-> formSql2El($id,$name,$idVal);
 		return $this->getRow2EL( $this->getDB($sql),$id,$name);
 	}
@@ -153,7 +162,8 @@ class classGetData extends classGetDB
  *
  *  @return масив даних
  */
-	public function getDataByOffsetVue ($id,$show,$offset) {
+	public function getDataByOffsetVue ($id,$show,$offset)
+	{
 		return $this->getDBVue("SELECT * FROM ".$this->table." ORDER BY ".$id." DESC LIMIT ".$show." OFFSET $offset");	
 	}
 
@@ -161,7 +171,8 @@ class classGetData extends classGetDB
  *
  *  @return масив даних
  */
-	public function getDataByOffset ($id,$show,$offset) {
+	public function getDataByOffset ($id,$show,$offset)
+	{
 		return $this->getRow($this->getDB("SELECT * FROM ".$this->table." ORDER BY ".$id." DESC LIMIT ".$show." OFFSET $offset"));	
 	}
 
@@ -169,7 +180,8 @@ class classGetData extends classGetDB
  *
  *  @return масив даних
  */
-	public function getDataByOffsetWithOutRow ($id,$show,$offset) {
+	public function getDataByOffsetWithOutRow ($id,$show,$offset)
+	{
 		return $this->getDB("SELECT * FROM ".$this->table." ORDER BY ".$id." DESC LIMIT ".$show." OFFSET $offset");	
 	}
 
