@@ -36,14 +36,9 @@ class AuxiliaryVue
 		return $NewsList;
 	}
 
-	public static function formSqlAux($atr,$value)
-	{
-		return " WHERE ".$atr." = ".$value;
-	}
-
 	public static function updateVue2El ($id, $name, $tab, $nameEl, $nameId)
 	{
-		$sql    = "UPDATE ".$tab." SET ".$nameEl."=:name".self::formSqlAux($nameId,$id);
+		$sql    = "UPDATE ".$tab." SET ".$nameEl."=:name WHERE ".$nameId.' = '.$id;
 		$result = self::getPrepareSQLVue($sql);
 		$result -> bindParam(':name', $name, PDO::PARAM_STR);
 		
@@ -65,7 +60,7 @@ class AuxiliaryVue
 
 	public static function delVue2El($id, $tab, $nameId)
 	{
-		$sql    = "DELETE FROM ".$tab.self::formSqlAux($nameId,$id);
+		$sql    = "DELETE FROM ".$tab.' WHERE '.$nameId.' = '.$id;
 		$result = self::getSQLAuxVue($sql);
 		if ($tab == "poster") {
 			$res = self::delFilePoster($id);

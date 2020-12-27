@@ -6,23 +6,19 @@ class VideoController
 {
 	use traitAuxiliary;
 
-/*	public $aux;
-
 	public function __construct()
 	{
-		$this->$aux = new Auxiliary();
-	}*/
+		$this->total = $this->getCount('progrnk');
+	}
 
 	public function actionIndex($page = 1)
 	{
-	
 		$page       = $this->getIntval($page);
 		$video      = new Video();
 		$videoList  = $video->getVideo($page);
 		$siteFile   = 'views/video/index.php';
 		$metaTags   = 'відео Галичини';
-		$total      = Auxiliary::getCount('progrnk');
-		$pagination = new Pagination($total, $page, Video::SHOWVIDEO_BY_DEFAULT, 'page-');
+		$pagination = new Pagination($this->total, $page, Video::SHOWVIDEO_BY_DEFAULT, 'page-');
 		unset($video);
 		require_once ('views/layouts/siteIndex.php');
 		return true;
@@ -34,9 +30,8 @@ class VideoController
 		$table = array(
 			'page' => $page,
 			);			
-		$json  = json_encode($table);
-		$total = Auxiliary::getCount('progrnk');		
-		$pagination = new Pagination($total, $page, Video::SHOWVIDEO_BY_DEFAULT, 'page-');
+		$json  = json_encode($table);		
+		$pagination = new Pagination($this->total, $page, Video::SHOWVIDEO_BY_DEFAULT, 'page-');
 		require_once ('views/video/changeVideo.php');
 		return true;
 	}

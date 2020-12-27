@@ -12,14 +12,12 @@ class FAController
 
 	public function actionLook($page = 1)
 	{
-		$aux    = new Auxiliary();
 		$page       = $this->getIntval($page);
-		$total      = $aux->getCount('photoalbum');
+		$total      = $this->getCount('photoalbum');
 		$faList     = $this->FAClass->getFAAll($page);
 		$pagination = new Pagination($total, $page, SHOWFA_BY_DEFAULT, 'page-');
 		$metaTags   = 'FA';
 		$siteFile   = 'views/FA/look.php';
-		unset($aux);
 		
 		require_once ('views/layouts/siteIndex.php');
 		unset($pagination);

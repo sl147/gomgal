@@ -130,7 +130,6 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 	public function actionNewsCommentEdit($page = 1)
 	{
 		$com   = new Comment();
-		$aux   = new Auxiliary();
 		$page  = $this->getIntval($page);
 		$table = array(
 			'page' => $page
@@ -140,7 +139,7 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 			$res = $com->delComment($this->filterTXT('post', 'id'));
 		}		
 		$title = "перегляд коментарів клієнтів";
-		$total = $aux->getCount('Comment');
+		$total = $this->getCount('Comment');
 		$comms = $com->getComments($page);
 		$pagination = new Pagination($total, $page, self::SHOWPOSTER_BY_DEFAULT, 'page-');
 		unset($com);
@@ -169,16 +168,14 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 
 	public function actionNewsEdit($page = 1)
 	{
-		$aux   = new Auxiliary();
 		$page  = $this->getIntval($page);
-		$total = $aux->getCount('msgs');
+		$total = $this->getCount('msgs');
 		$table = array(
 			'page' => $page
 			);
 		$json  = json_encode($table);		
 		$title = "редагування новин";		
 		$pagination = new Pagination($total, $page, self::SHOWPOSTER_BY_DEFAULT, 'page-');
-		unset($aux);
 		require_once ('views/news/newsEdit.php');
 		unset($pagination);
 		return true;

@@ -10,16 +10,6 @@ class Auxiliary
 
 	use traitAuxiliary;
 
-	public static function getCount($table)
-	{
-		$sql    = "SELECT count(*) as count FROM ".$table;
-		$getDB  = new classGetDB();
-		$result = $getDB->getDB($sql);
-		unset($getDB);
-		$result -> setFetchMode(PDO::FETCH_ASSOC);
-		return $result->fetch()['count'];
-	}
-
 	public static function getMonth()
 	{
 		return ["січень","лютий","березень","квітень","травень","червень","липень","серпень","вересень","жовтень","листопад","грудень"];

@@ -62,7 +62,7 @@
 				</tr>					
 			</tbody>				
 		</table>
-		<?php if ($total > Video::SHOWVIDEO_BY_DEFAULT) :?>
+		<?php if ($this->total > Video::SHOWVIDEO_BY_DEFAULT) :?>
 			<div class="text-center"><? echo $pagination->get(); ?></div>
 		<?endif ;?>
 	</div>
