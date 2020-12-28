@@ -22,9 +22,8 @@ trait traitAuxiliary
 
 	public function getCount($table)
 	{
-		$sql    = "SELECT count(*) as count FROM ".$table;
 		$getDB  = new classGetDB();
-		$result = $getDB->getDB($sql);
+		$result = $getDB->getDB("SELECT count(*) as count FROM ".$table);
 		unset($getDB);
 		$result -> setFetchMode(PDO::FETCH_ASSOC);
 		return $result->fetch()['count'];
@@ -32,9 +31,8 @@ trait traitAuxiliary
 
 	public function getCountAtr($table, $atr, $value)
 	{
-		$sql    = "SELECT count(*) as count FROM ".$table.self::formSql($atr,$value);
 		$getDB  = new classGetDB();
-		$result = $getDB->getDB($sql);
+		$result = $getDB->getDB("SELECT count(*) as count FROM ".$table.self::formSql($atr,$value));
 		unset($getDB);
 		$result -> setFetchMode(PDO::FETCH_ASSOC);
 
