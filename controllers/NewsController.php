@@ -12,6 +12,7 @@ class NewsController
 	}
 
 	public function actionIndex($cat, $page = 1) {
+		$mt         = new MetaTags();
 		$page       = $this->getIntval($page);
 		$month      = date('n');
 		$year       = date('Y');
@@ -19,7 +20,8 @@ class NewsController
 		$total      = $this->newsClass->getTotalNewsCat($cat, $month, $year);
 		$allNewscat = $this->newsClass->getLatestNewsCat($cat, $month, $year, $page);		
 		$pagination = new Pagination($total, $page, SHOWNEWS_BY_DEFAULT, 'page-');
-		$metaTags   = 'news';
+		$meta       = $mt->getMTagsByUrl('main');
+		$meta['title'] .= '|'.$this->newsClass->getCatEl($cat)['namecm'];
 		$siteFile   = 'views/news/index.php';
 		require_once ('views/layouts/siteIndex.php');
 		unset($pagination);
@@ -27,23 +29,23 @@ class NewsController
 	}
 
 	public function actionArchive($month, $year, $page = 1)	{
-		$news       = new News();
 		$page       = $this->getIntval($page);
-		$topNews    = $news->getNewsTop();
-		$total      = $news->getTotalNewsArchive($month, $year);
-		$allNewscat = $news->getLatestNewsArchive($month, $year, $page);		
+		$topNews    = $this->newsClass->getNewsTop();
+		$total      = $this->newsClass->getTotalNewsArchive($month, $year);
+		$allNewscat = $this->newsClass->getLatestNewsArchive($month, $year, $page);		
 		$pagination = new Pagination($total, $page, SHOWNEWS_BY_DEFAULT, 'page-');
 		$metaTags   = 'news';
 		$siteFile   = 'views/news/index.php';
-		unset($news);
 		require_once ('views/layouts/siteIndex.php');
 		unset($pagination);
 		return true;
 	}
 
 	public function actionFullnew($id)	{
+		$mt   = new MetaTags();
 		$com  = new Comment();
 		$id   = $this->getIntval($id);
+
 		if(isset($_POST['submit']))	{
 			$id_cl     = $id;
 			$txt_com   = $this->filterTXT('post','txt_com');
@@ -61,33 +63,25 @@ class NewsController
 			$massage = "Новий коментар https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."  до id=".$id." ip=".$ip_com."  з HTTP_REFERER ".$_SERVER['HTTP_REFERER']."\r\n"."  з REMOTE_ADDR ".$_SERVER['REMOTE_ADDR'];
 			$mail  = $this->sendMail($subject,$to,$massage);
 		} 
-		//newt_init();
- //newt_get_screen_size ($cols, $rows);
- //newt_finished();
-
- //echo "Размер вашего терминала: {$cols}x{$rows}\n";
-		//echo "width=".$_SESSION['screen_width']."  height=".$_SESSION['screen_height'];
-		$screenWidth='<script type="text/javascript">document.write(" screenclientWidth="+screen.width);</script>';
-		//$screenWidth='<script type="text/javascript">document.write("screenclientWidth="+document.body.clientWidth);</script>';
-		//echo $screenWidth;
-/*echo '<windowslocation = "' . $_SERVER['PHP_SELF'];
-session_start();
+/*session_start();
 if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
-    echo 'User resolution: ' . $_SESSION['screen_width'] . 'x' . $_SESSION['screen_height'];
+    echo '_SESSION resolution: ' . $_SESSION['screen_width'] . 'x' . $_SESSION['screen_height'];
 } else if(isset($_REQUEST['width']) AND isset($_REQUEST['height'])) {
     $_SESSION['screen_width'] = $_REQUEST['width'];
     $_SESSION['screen_height'] = $_REQUEST['height'];
-    header('Location: ' . $_SERVER['PHP_SELF']);
+    echo '_REQUEST resolution: ' . $_SESSION['screen_width'] . 'x' . $_SESSION['screen_height'];
+    //header('Location: ' . $_SERVER['PHP_SELF']);
 } else {
-    echo '<script type="text/javascript">window.location = "' . $_SERVER['PHP_SELF'] . '?width="+screen.width+"&height="+screen.height;</script>';
+    echo 'script  <script type="text/javascript">window.location = "' . $_SERVER['PHP_SELF'] . '?width="+screen.width+"&height="+screen.height;</script>';
 }*/
 		$news      = $this->newsClass->getNewsById($id);
 		$newsCount = $this->newsClass->updateCountById($id,$news['countmsgs']);	
 		$newsOther = $this->newsClass->newsOther($id,$news['category'],$news['cat2']);
 		$comm      = $com->getCommentsById($id);
-		$metaTags  = 'newsOne';
+		$meta      = $mt->getMTagsByUrl('fullnew');
+		$meta['title'] .= $news['title'];
 		$siteFile  = 'views/news/fullNew.php';
-		$siteSmall  = 'views/news/fullNew.php';
+		$siteSmall = 'views/news/fullNew.php';
 		unset($com);
 		require_once ('views/layouts/siteIndex.php');
 		return true;

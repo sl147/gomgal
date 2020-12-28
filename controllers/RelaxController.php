@@ -10,6 +10,7 @@ class RelaxController
 
 	public function actionIndex($cat, $page = 1)
 	{
+		$mt    = new MetaTags();
 		$cat   = $this->getIntval($cat);
 		$page  = $this->getIntval($page);
 		$cat   = ($cat > 5) ? $cat = 1 : $cat;
@@ -20,9 +21,10 @@ class RelaxController
 		);
 		$json       = json_encode($table);
 		$total      = $this->getCountAtr('msgs_relax', 'category',$cat);
+		$meta       = $mt->getMTagsByUrl('relax');
 		$pagination = new Pagination($total, $page, SHOWRELAX_BY_DEFAULT, 'page-');
 		$relax      = new Relax();
-		$arr = $relax->getRelax();
+		$arr        = $relax->getRelax();
 		foreach ($arr as $a) {
 			if ($a['id'] == $cat) {
 				$b = $this->rus2translit( $a['name'] );

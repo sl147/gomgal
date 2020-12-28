@@ -10,14 +10,14 @@
             }
             setScreenHWCookie();
 </script>
-<script src="/js/jquery.lazyload.min.js"></script>
+<!-- <script src="/js/jquery.lazyload.min.js"></script>
 <script type="text/javascript">
   $(function() {
     $("img.imgLazy").lazyload({
       effect: "fadeIn"
     });
   });
-</script>
+</script> -->
 <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
 <div class='lastNews showNews text-center'>
 	останні новини
@@ -46,7 +46,7 @@
 			<?php if ($item['fotoF']) :?>
 				<?php if (Auxiliary::isFile($item["foto"])) :?>
 					<a class='media-left media-top' href='/Fullnew/<?=$item["id"]?>'>
-						<img class="imgLazy" alt='фото новини' width='60' src='<?="/".$item["foto"]?>' title='<?=$item["title"]?>'>
+						<img class="imgLazy" alt='завантажується...' width='60' height='60' data-src='<?="/".$item["foto"]?>' title='<?=$item["title"]?>'>
 					</a>
 				<?php endif; ?>
 			<?php endif; ?>

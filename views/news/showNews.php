@@ -1,7 +1,7 @@
 <?php if ($arrNews['width']) :?>
 	<div class='news_Text'>
 		<a href='/Fullnew/<?=$arrNews["id"]?>'>
-			<img alt='<?=$arrNews["title"]?>' width='<?=$arrNews["width"]?>' height='<?=$arrNews["height"]?>' src='<?="/".$arrNews["foto"]?>' title='<?=$arrNews["title"]?>'>
+			<img class="imgLazy" alt='<?=$arrNews["title"]?>' width='<?=$arrNews["width"]?>' height='<?=$arrNews["height"]?>' data-src='<?="/".$arrNews["foto"]?>' title='<?=$arrNews["title"]?>'>
 		</a>
 	</div>
 <?php endif; ?>
