@@ -9,7 +9,7 @@
 	<?php News::showNews($item)?>
 <?php endforeach; ?>
 
-<?php if (count($allNews) > SHOWNEWS_BY_DEFAULT) :?>
+<?php if ($total > SHOWNEWS_BY_DEFAULT) :?>
 	<div class="text-center">
 		<? echo $pagination->get(); ?>
 	</div>
