@@ -41,6 +41,14 @@ class News extends classGetDB
 		unset($getData);
 		return $catList ?? [];
 	}
+	
+	public static function getCatEl($cat)
+	{
+		$getData = new classGetData('catmsgs');
+		$catList = $getData->getDataFromTableByNameFetch ($cat,'idcm');
+		unset($getData);
+		return $catList ?? [];
+	}
 
 	public static function getNews() {
 		$getData = new classGetData('msgs');

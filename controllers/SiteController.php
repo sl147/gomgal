@@ -5,7 +5,8 @@ class SiteController
 	use traitAuxiliary;
 
 	public function actionIndex($page = 1)	{
-		$news = new News();
+		$mt      = new MetaTags();
+		$news    = new News();
 		$page    = $this->getIntval($page);	
 		$month   = date('n');
 		$year    = date('Y');
@@ -21,7 +22,7 @@ class SiteController
 		$pagination = new Pagination($total, $page, SHOWNEWS_BY_DEFAULT, 'page-');
 		$siteFile   = 'views/site/index.php';
 		$siteSmall  = 'views/layouts/leftSide.php';
-		$metaTags   = '';
+		$meta       = $mt->getMTagsByUrl('main');
 		require_once ('views/layouts/siteMain.php');
 		unset($pagination);
 		return true;

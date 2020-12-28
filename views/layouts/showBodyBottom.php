@@ -7,4 +7,16 @@
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/vue.min.js"></script>
 	<script src="/js/vue-resource.min.js"></script>
+	<noscript>		
+		<style>
+			img[data-src] {
+				display: none !important;
+			}
+		</style>
+	</noscript>
+
+	<script>
+		let images = document.querySelectorAll("img");
+		lazyload(images);
+	</script>
 </body>
