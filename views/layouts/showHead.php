@@ -2,11 +2,11 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<?php if ($siteFile  == 'views/news/fullNew.php') :?>
-		<meta property="og:url" content="<?php echo $fb?>" />
-		<meta property="og:type"  content="article" />
-		<meta property="og:title" content="<?=$news['title']?>" />
+		<meta property="og:url"         content="<?php echo $fb?>" />
+		<meta property="og:type"        content="article" />
+		<meta property="og:title"       content="<?=$news['title']?>" />
 		<meta property="og:description" content="<?=$news['prew']?>" />
-		<meta property="og:image"content="<?=$news['photo']?>" />
+		<meta property="og:image"       content="<?=$news['photo']?>" />
 	<?php endif; ?>
 	
 	<?php include 'views/layouts/showMeta.php';?>
