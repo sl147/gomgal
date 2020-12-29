@@ -319,17 +319,17 @@ margin-right: 18px;
   width: 70%;
  }
  #auth3 label {
-  display: block;
-  width:30%;
-  float: left;
-  color: grey;
+    display: block;
+    width:30%;
+    float: left;
+    color: grey;
  }
 
 .text-menu { 
-text-transform: uppercase;
-font-size: 12px;
-width: 100%;
-margin: 0 auto;
+  text-transform: uppercase;
+  font-size: 12px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .showKursValut{
@@ -361,9 +361,6 @@ margin: 0 auto;
 
 .news_msg {
   text-indent: 5%;
-  padding: 10px;
-  white-space: pre-line;
-  display: inline-block;
 }
 .imgNews {
   float: left;
