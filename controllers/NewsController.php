@@ -80,6 +80,7 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 		$comm      = $com->getCommentsById($id);
 		$meta      = $mt->getMTagsByUrl('fullnew');
 		$meta['title'] .= $news['title'];
+		$fb = 'https://www.gomgal.lviv.ua/Fullnew/'.$id;
 		$siteFile  = 'views/news/fullNew.php';
 		$siteSmall = 'views/news/fullNew.php';
 		unset($com);
