@@ -35,7 +35,7 @@
 			?>
 			</select><br><br>
 			<label>Текст новини:</label>			
-			<textarea id="editor" class="txtArWidth" name = "msg" rows ='8'  maxlength="3000" required>
+			<textarea class="txtArWidth" name = "msg" rows ='8'  maxlength="3000" required>
 				<?= $allNews['msg']?>
 			</textarea><br><br>
 			<label>Джерело:</label>
@@ -65,9 +65,9 @@
 	</div>			
 </div>		
 <?php include 'views/layouts/footerAdmin.php';?>
-<!-- <script type='text/javascript'>
+<script type='text/javascript'>
 	CKEDITOR.replace('msg');
-</script> -->
+</script>
 <!-- <script>
         ClassicEditor
             .create( document.querySelector( '#editor' ) )
@@ -88,9 +88,9 @@
         console.error( error );
     } );
     </script> -->
-    <script>
+<!--     <script>
 function test()
 {
 $("editor").value += "123\r\n";
 }
-</script>
+</script> -->
