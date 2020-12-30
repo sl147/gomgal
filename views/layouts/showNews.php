@@ -45,6 +45,10 @@
 		<div class='bordLeft media'>
 			<?php if ($item['fotoF']) :?>
 				<?php if (Auxiliary::isFile($item["foto"])) :?>
+<?php $size = getimagesize ($item["foto"]);
+$or = $size[0] > $size[1] ? 1 : 2;
+echo "width=".$size[0]."  height=".$size[1]. "  or=".$or;
+	?>			
 					<a class='media-left media-top' href='/Fullnew/<?=$item["id"]?>'>
 						<img class="imgLazy" alt='завантажується...' width='60' height='60' data-src='<?="/".$item["foto"]?>' title='<?=$item["title"]?>'>
 					</a>
