@@ -38,10 +38,8 @@ class FAController
 
 	public function actionCreate()
 	{
-
         if(isset($_POST['submit'])) {
-        	$aux    = new Auxiliary();
-			$fa     = new FA();
+			$fa      = new FA();
 	        $name_FA = $this->filterTXT('post', 'name_FA');
 	        $msgs_FA = $this->filterTXT('post', 'msgs_FA');
 	        $log_FA  = 1;
@@ -49,14 +47,13 @@ class FAController
             $idAlbum = $fa->getFAName($name_FA);
 			$pathdir = "album/".$idAlbum['id_FA'];
 
-		    if ($aux->makeDir($pathdir)) {
+		    if ($this->makeDir($pathdir)) {
 				header("Location: /FA/upload/".$idAlbum['id_FA']); exit();
 		    } 
 		    else {
 				print "no dir".$pathdir." read";
  	            header ("Location: /FAcreate");
         	}
-        	unset($aux);
 			unset($fa);
 		}
 		require_once ('views/FA/create.php');

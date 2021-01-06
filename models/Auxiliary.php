@@ -15,14 +15,6 @@ class Auxiliary
 		return ["січень","лютий","березень","квітень","травень","червень","липень","серпень","вересень","жовтень","листопад","грудень"];
 	}
 
-	public static function makeDir($path)
-	{
-		if (!file_exists($path)) {
-			return (!mkdir($path,0755, true)) ? false : true;	
-		}
-		return true;				
-	}
-
 	public static function isFile($file)
 	{
 		return 	(file_exists($file)) ? true : false;
@@ -64,12 +56,12 @@ class Auxiliary
 	}
 
     public static function savePhotoS($nameFile,$pathdir) {      
-        $res = self::makeDir($pathdir);
+        $res = $this->makeDir($pathdir);
         $res = self::changePhoto($nameFile,$pathdir);    
     }
 
-    public static function savePhoto($nameFile, $pathdir) {
-        $res = self::makeDir($pathdir);
+    public function savePhoto($nameFile, $pathdir) {
+        $res = $this->makeDir($pathdir);
         move_uploaded_file ($_FILES['file'] ['tmp_name'],$pathdir."/".$nameFile); 
         $res = self::changePhoto($nameFile,$pathdir);             
     }

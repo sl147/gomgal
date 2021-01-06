@@ -188,5 +188,13 @@ trait traitAuxiliary
 	    );
 	    return strtr($string, $converter);		
 	}
+
+	public function makeDir($path)
+	{
+		if (!file_exists($path)) {
+			return (!mkdir($path,0755, true)) ? false : true;	
+		}
+		return true;				
+	}
 }
 ?>
