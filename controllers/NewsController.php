@@ -98,7 +98,6 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 
 	public function actionNewsAdd()
 	{
-		$aux  = new Auxiliary();
 		$tPos = $this->newsClass->getCatNews();
 		if(isset($_POST['submit'])) {
 			$title   = $this->filterTXT('post', 'title');
@@ -111,13 +110,12 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 			$videoYT = $this->filterTXT('post', 'videoYT');
 			$foto    = "";
 			if (!empty($_FILES['file']['tmp_name'])) {
-				$foto = $this->rus2translit($_FILES['file']['name']);
-				$pathdir = ROOT."/NewsFoto";				
-	            $res  = $aux->savePhoto($foto, $pathdir);
+				$foto    = $this->rus2translit($_FILES['file']['name']);				
+	            $foto    = $this->savePhoto($foto, ROOT."/NewsFoto",date('y'),date('m'));
 			}
 			$res = $this->newsClass->createNews($title,$prew,$cat,$cat2,$sourse,$msg,$foto,$top,$videoYT);
 		}
-		unset($aux);
+
 		require_once ('views/news/add.php');
 		return true;
 	}
@@ -186,8 +184,8 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 	        return null;
 	    }
 
-	public function actionNewsEditOne($id, $page = 1) {
-		$aux   = new Auxiliary();
+	public function actionNewsEditOne($id, $page = 1)
+	{
 		$page  = $this->getIntval($page);
 		$id    = $this->getIntval($id);
 		$title = "редагування новин";
@@ -196,7 +194,7 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 			$allNews = $this->newsClass->getNewsById($id,$page);
 			$tPos    = $this->newsClass->getCatNews();
 			$tPos2   = $tPos;
-			
+			$photo   = $allNews['foto'];
 			$type1   = $allNews['category'];
 			$type2   = $allNews['cat2'];			
 			$cat1['id'] = $type1;
@@ -221,15 +219,14 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 		        $cat     = ($cat   == 0) ? $type1 : $cat;
 		        $cat2    = ($cat2  == 0) ? $type2 : $cat2;
 		        if (!empty($_FILES['file']['tmp_name'])) {
-		            $fotoL    = $this->rus2translit($_FILES['file']['name']);
-		            $pathdir  = ROOT."/NewsFoto";
-		            $res      = $aux->savePhoto($fotoL,$pathdir);
-		            $res      = $this->newsClass->updateNews($id,$title,$prew,$cat,$cat2,$sourse,$msg,$fotoL,$top,$videoYT);
+		            $fotoL = $this->rus2translit($_FILES['file']['name']);
+		            $fotoL = $this->savePhoto($fotoL,ROOT."/NewsFoto",date("y",strtotime($allNews['datetime'])), date("m",strtotime($allNews['datetime'])));
+		            $res   = $this->newsClass->updateNews($id,$title,$prew,$cat,$cat2,$sourse,$msg,$fotoL,$top,$videoYT);
 		        }
 		        else {
 		            if ($FotoDel) {
 		                    $res = $this->newsClass->updateNews($id,$title,$prew,$cat,$cat2,$sourse,$msg,"",$top,$videoYT);
-		                    $res = $aux->delFile($allNews['foto'],"NewsFoto");
+		                    $res = $this->delFile($photo,"NewsFoto");
 		            }
 		            else {
 		                    $res = $this->newsClass->updateNewsWithoutPhoto($id,$title,$prew,$cat,$cat2,$sourse,$msg,$top,$videoYT);
@@ -241,12 +238,12 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 		else {
 			$isId    = false;
 		}
-		unset($aux);
 		require_once ('views/news/newsEditOne.php');
 		return true;
 	}
 
-	public function actionNewsEditID() {
+	public function actionNewsEditID()
+	{
 		if(isset($_POST['submit'])) {
 			header("Location: /newsEditOne/".$this->filterINT('post', 'id'));
 		}

@@ -242,7 +242,7 @@ margin-right: 18px;
 }
 .txtArWidth {
   width: 100%;
-  white-space: pre-wrap, !important;
+  /*white-space: pre-wrap, !important;*/
 }
 
 .btnwidth {

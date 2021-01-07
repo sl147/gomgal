@@ -196,5 +196,52 @@ trait traitAuxiliary
 		}
 		return true;				
 	}
+
+	private function changePhoto($nameFile,$pathdir)
+	{
+		include_once 'components/classSimpleImage.php';
+        $fns    = $pathdir."/".$nameFile;
+        $fnSmal = $pathdir."/"."s".'_'.$nameFile;
+        $image  = new SimpleImage();
+        $image->load($fns);
+        $image->resizeToWidth(100);
+        $image->resizeToHeight(100);
+        $image->save($fnSmal);
+        unset($image);  
+	}
+
+    public function savePhoto($nameFile, $pathdir,$year, $month)
+    {
+    	$pathdir .= '/'.$year.'/'.$month;
+        $res      = $this->makeDir($pathdir);
+        move_uploaded_file ($_FILES['file'] ['tmp_name'],$pathdir."/".$nameFile); 
+        $res = $this->changePhoto($nameFile,$pathdir);
+        return $year.'/'.$month.'/'.$nameFile;             
+    }
+
+    public static function savePhotoS($nameFile,$pathdir)
+    {      
+        $res = $this->makeDir($pathdir);
+        $res = $this->changePhoto($nameFile,$pathdir);    
+    }
+
+	private function getPathFile($file,$folder,$delim="")
+	{
+		return "./".$folder."/".$delim.$file;
+	}
+
+	public function delFile($file,$folder)
+	{
+		$fdel = $this->getPathFile($file,$folder);		
+		$str  = explode( '/', $file );
+		$file = '';
+		for ($i=0; $i < count($str)-1; $i++) { 
+			$file .= $str[$i].'/';
+		}
+		$file .= 's_'.$str[count($str)-1];
+		$fdelS = $this->getPathFile($file,$folder);
+		if (Auxiliary:: isFile($fdel))  unlink($fdel);
+		if (Auxiliary:: isFile($fdelS)) unlink($fdelS);
+	}
 }
 ?>
