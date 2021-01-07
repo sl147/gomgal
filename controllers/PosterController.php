@@ -172,7 +172,7 @@ class PosterController
 	        else {
 	            if ($FotoDel == 1) {
 	                    $result = $poster->changePoster($idm,$title_p,$cat,$type,$name,$email,$impot,$msg,"");
-	                    $res = $this->delFile($post['fotoN'],"posterFoto");
+	                    $res = $this->delFile($foto_name,"posterFoto");
 	            }
 	            else {
 	                    $result = $poster->changePoster($idm,$title_p,$cat,$type,$name,$email,$impot,$msg,$foto_name);
