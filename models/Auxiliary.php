@@ -15,14 +15,6 @@ class Auxiliary
 		return ["січень","лютий","березень","квітень","травень","червень","липень","серпень","вересень","жовтень","листопад","грудень"];
 	}
 
-	public static function makeDir($path)
-	{
-		if (!file_exists($path)) {
-			return (!mkdir($path,0755, true)) ? false : true;	
-		}
-		return true;				
-	}
-
 	public static function isFile($file)
 	{
 		return 	(file_exists($file)) ? true : false;
@@ -33,17 +25,15 @@ class Auxiliary
 		return "./".$folder."/".$delim.$file;
 	}
 
-	public static function delFile($file,$folder)
-	{
-		$fdel  = self::getPathFile($file,$folder);
-		$fdelS = self::getPathFile($file,$folder,"s");
-		if (self:: isFile($fdel))  unlink($fdel);
-		if (self:: isFile($fdelS)) unlink($fdelS);
-	}
-
 	public static function delFileVue($file,$folder) {
 		$fdel  = self::getPathFile($file,$folder);
-		$fdelS = self::getPathFile($file,$folder,"s");
+				$str  = explode( '/', $file );
+		$file = '';
+		for ($i=0; $i < count($str)-1; $i++) { 
+			$file .= $str[$i].'/';
+		}
+		$file .= 's_'.$str[count($str)-1];
+		$fdelS = self::getPathFile($file,$folder);
 		if (self:: isFile($fdel))  unlink($fdel);
 		if (self:: isFile($fdelS)) unlink($fdelS);
 	}
@@ -52,28 +42,8 @@ class Auxiliary
 		$result = self::getSQLAuxVue("SELECT * FROM poster WHERE id_poster=".$id);
 		return $result->fetch();
 	}
-	public static function changePhoto($nameFile,$pathdir) {
-		include_once 'components/classSimpleImage.php';
-        $fns    = $pathdir."/".$nameFile;
-        $fnSmal = $pathdir."/"."s".'_'.$nameFile;
-        $image  = new SimpleImage();
-        $image->load($fns);
-        $image->resizeToWidth(100);
-        $image->resizeToHeight(100);
-        $image->save($fnSmal);  
-	}
 
-    public static function savePhotoS($nameFile,$pathdir) {      
-        $res = self::makeDir($pathdir);
-        $res = self::changePhoto($nameFile,$pathdir);    
-    }
-
-    public static function savePhoto($nameFile, $pathdir) {
-        $res = self::makeDir($pathdir);
-        move_uploaded_file ($_FILES['file'] ['tmp_name'],$pathdir."/".$nameFile); 
-        $res = self::changePhoto($nameFile,$pathdir);             
-    }
-		public static function bindParam($res,$name,$value) {
+	public static function bindParam($res,$name,$value) {
 		return $res -> bindParam($name, $value,  PDO::PARAM_STR);	
 	}
 

@@ -84,7 +84,6 @@ class PosterController
 	public function actionAdd()
 	{
 		$poster  = new Poster();
-		$aux     = new Auxiliary();
 		$tPos    = $poster->getAllTypePost();
 		$count   = count($tPos)-1;
 		$catList = $poster->getPostersCat();
@@ -104,11 +103,11 @@ class PosterController
 			$id    = $poster->getPosterByRand($rand);			
 			$jpg   = explode('.', $_FILES['file'] ['name']);
 			$fotoN = $id['id_poster'].'.'.$jpg[count($jpg)-1];
+			
+			$fotoN = $this->savePhoto($fotoN, ROOT."/posterFoto",date('y'),date('m'));
 			$res   = $poster->updateFoto($id['id_poster'],$fotoN);
-			$res   = $aux->savePhoto($fotoN,'posterFoto');
 			$res   = $poster->incrType($cat,$type);
 			unset($poster);
-			unset($aux);
 			header("Location: /posterFull");
 		}
 
@@ -135,8 +134,7 @@ class PosterController
 
 	public function actionPosterEditOne($id, $page = 1)
 	{
-		$poster    = new Poster();
-		$aux    = new Auxiliary();
+		$poster      = new Poster();
 		$id          = $this->getIntval($id);
 		$page        = $this->getIntval($page);		
 		$title       = "редагування оголошення";
@@ -165,15 +163,16 @@ class PosterController
 	        if ($type == 0) {$type = $type_p;}
 
 	        if (!empty($_FILES['file']['tmp_name'])) {
-	            $fotoL    = $this->rus2translit($_FILES['file']['name']);
-	            $pathdir  = ROOT."/posterFoto";
-	            $res      = $aux->savePhoto($fotoL,$pathdir);
-	            $res      = $poster->changePoster($idm,$title_p,$cat,$type,$name,$email,$impot,$msg,$fotoL);
+	            $jpg   = explode('.', $_FILES['file'] ['name']);
+	            $fotoN = $id.'.'.$jpg[count($jpg)-1];
+				$fotoN = $this->savePhoto($fotoN,ROOT."/posterFoto",date("y",strtotime($post['date_p'])), date("m",strtotime($post['date_p'])));
+				echo "id=$id fotoN=$fotoN";
+				$res   = $poster->updateFoto($id,$fotoN);
 	        }
 	        else {
 	            if ($FotoDel == 1) {
 	                    $result = $poster->changePoster($idm,$title_p,$cat,$type,$name,$email,$impot,$msg,"");
-	                    $res = $aux->delFile($post['fotoN'],"posterFoto");
+	                    $res = $this->delFile($post['fotoN'],"posterFoto");
 	            }
 	            else {
 	                    $result = $poster->changePoster($idm,$title_p,$cat,$type,$name,$email,$impot,$msg,$foto_name);
@@ -181,7 +180,6 @@ class PosterController
 	        }
 			header ("Location: /posterEdit/page-".$page);
 		}
-		unset($aux);
 		unset($poster);
 		require_once ('views/poster/posterEditOne.php');
 		return true;

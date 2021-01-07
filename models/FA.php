@@ -18,7 +18,7 @@ class FA  extends classGetDB
 		return $result -> execute();		
 	}	
 
-	public function savePhoto($id,$subscribe,$fotoName,$fotoNameS)
+	public function insertPhoto($id,$subscribe,$fotoName,$fotoNameS)
 	{
 		$sql    = "INSERT INTO photoInAlbum (id_album,subscribe,fotoName,fotoNameS)
 		 VALUES(:id_album,:subscribe,:fotoName,:fotoNameS)";
