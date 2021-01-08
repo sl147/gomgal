@@ -144,9 +144,6 @@ class classGetData extends classGetDB
 		while ($row = $res->fetch()) {
 			$columns[] = $row['Field'];
 		}
-		echo '<pre>';
-		print_r($columns);
-		echo '</pre>';
 	}
 /** Отримуєм дані з таблиці $this->table для 2 елементів 
  *

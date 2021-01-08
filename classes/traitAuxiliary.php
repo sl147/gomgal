@@ -232,16 +232,26 @@ trait traitAuxiliary
 
 	public function delFile($file,$folder)
 	{
-		$fdel = $this->getPathFile($file,$folder);		
-		$str  = explode( '/', $file );
-		$file = '';
+		$fdel = $this->getPathFile($file,$folder);
+	
+		$str   = explode( '/', $file );
+		$fileS = '';
 		for ($i=0; $i < count($str)-1; $i++) { 
-			$file .= $str[$i].'/';
+			$fileS .= $str[$i].'/';
 		}
-		$file .= 's_'.$str[count($str)-1];
-		$fdelS = $this->getPathFile($file,$folder);
-		if (Auxiliary:: isFile($fdel))  unlink($fdel);
-		if (Auxiliary:: isFile($fdelS)) unlink($fdelS);
+		$fileS .= 's_'.basename($file);
+		$fdelS  = $this->getPathFile($fileS,$folder);
+
+		if (file_exists($fdel))  unlink($fdel);
+		if (file_exists($fdelS)) unlink($fdelS);
+	}
+
+	public function getSpam()
+	{
+		$getData  = new classGetData("spamTab");
+		$spamList = $getData->getDataFromTable();
+		unset($getData);
+		return $spamList;		
 	}
 }
 ?>

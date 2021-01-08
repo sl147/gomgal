@@ -15,35 +15,6 @@ class Auxiliary
 		return ["січень","лютий","березень","квітень","травень","червень","липень","серпень","вересень","жовтень","листопад","грудень"];
 	}
 
-	public static function isFile($file)
-	{
-		return 	(file_exists($file)) ? true : false;
-	}
-
-	private static function getPathFile($file,$folder,$delim="")
-	{
-		return "./".$folder."/".$delim.$file;
-	}
-
-	public static function delFileVue($file,$folder) {
-		$fdel  = self::getPathFile($file,$folder);
-				$str  = explode( '/', $file );
-		$file = '';
-		for ($i=0; $i < count($str)-1; $i++) { 
-			$file .= $str[$i].'/';
-		}
-		$file .= 's_'.$str[count($str)-1];
-		$fdelS = self::getPathFile($file,$folder);
-		if (self:: isFile($fdel))  unlink($fdel);
-		if (self:: isFile($fdelS)) unlink($fdelS);
-	}
-
-	public static function getPosterById($id) {
-		$result = self::getSQLAuxVue("SELECT * FROM poster WHERE id_poster=".$id);
-		return $result->fetch();
-	}
-
-
 	public static function bindParam($res,$name,$value)
 	{
 		return $res -> bindParam($name, $value,  PDO::PARAM_STR);	
@@ -133,14 +104,5 @@ class Auxiliary
 	{
 		echo '<div id="topcontrol" style="position: fixed; z-index: 100500; bottom: 155px; right: 5px; cursor: pointer; opacity: 1;" title="вверх"><img src="/image/r7.png"></div>';
 	}
-
-	public static function getSpam()
-	{
-		$getData  = new classGetData("spamTab");
-		$spamList = $getData->getDataFromTable();
-		unset($getData);
-		return $spamList;		
-	}
-
 }
 ?>

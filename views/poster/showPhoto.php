@@ -1,7 +1,7 @@
 <?php
 $p = new Poster();
  if ($list['foto_p1']) :
-	if (Auxiliary::isFile($file)) :?>
+	if (file_exists($file)) :?>
 		<td class="showLarge"><a class='fancybox' rel='group' href='/<?=$file?>'>
 			<img class='postfotosize' src='/<?=$file?>'>
 		</a></td>

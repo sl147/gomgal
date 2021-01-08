@@ -44,7 +44,7 @@
 	<?php foreach (News::getNews() as $item) :?>
 		<div class='bordLeft media'>
 			<?php if ($item['fotoF']) :?>
-				<?php if (Auxiliary::isFile($item["foto"])) :?>
+				<?php if (file_exists($item["foto"])) :?>
 <?php $size = getimagesize ($item["foto"]);
 $or = $size[0] > $size[1] ? 1 : 2;
 echo "width=".$size[0]."  height=".$size[1]. "  or=".$or;

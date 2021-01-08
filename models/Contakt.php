@@ -8,9 +8,10 @@ class Contakt {
 
 	//use models\getPrepareSQL;
 	//use models\bindParam;
+	use traitAuxiliary;
 
-	private static function isSpam($nik,$ip,$email,$txt) {
-		$tab = Auxiliary::getSpam();
+	private function isSpam($nik,$ip,$email,$txt) {
+		$tab = $this->getSpam();
 		foreach ($tab as $item) {
 			if (strpos($nik,   $item["name"]) !== false) return 1;
 			if (strpos($txt,   $item["name"]) !== false) return 1;
@@ -20,8 +21,8 @@ class Contakt {
 		return  0;
 	}
 
-	public static function saveComent($nik,$ip,$email,$txt)	{
-		if (self::isSpam($nik,$ip,$email,$txt)) return;
+	public function saveComent($nik,$ip,$email,$txt)	{
+		if ($this->isSpam($nik,$ip,$email,$txt)) return;
 		$sql    = "INSERT INTO wishCl (nik_com,ip_com,email_com,txt_com)
 		 VALUES(:nik_com,:ip_com,:email_com,:txt_com)";
 		$getDB  = new classGetDB();

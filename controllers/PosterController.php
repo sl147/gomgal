@@ -166,7 +166,6 @@ class PosterController
 	            $jpg   = explode('.', $_FILES['file'] ['name']);
 	            $fotoN = $id.'.'.$jpg[count($jpg)-1];
 				$fotoN = $this->savePhoto($fotoN,ROOT."/posterFoto",date("y",strtotime($post['date_p'])), date("m",strtotime($post['date_p'])));
-				echo "id=$id fotoN=$fotoN";
 				$res   = $poster->updateFoto($id,$fotoN);
 	        }
 	        else {

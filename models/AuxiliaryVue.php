@@ -54,8 +54,8 @@ class AuxiliaryVue
 	}
 
 	private static function delFilePoster($id) {
-		$poster = Auxiliary::getPosterById($id);
-		$res    = Auxiliary::delFileVue($poster["foto_p1"],"posterFoto");	
+		$poster = self::getPosterById($id);
+		$res    = self::delFileVue($poster["foto_p1"],"posterFoto");	
 	}
 
 	public static function delVue2El($id, $tab, $nameId)
@@ -65,7 +65,29 @@ class AuxiliaryVue
 		if ($tab == "poster") {
 			$res = self::delFilePoster($id);
 		}
-		//видалення файлу фото
+	}
+
+	private static function getPathFile($file,$folder,$delim="")
+	{
+		return "./".$folder."/".$delim.$file;
+	}
+
+	public static function delFileVue($file,$folder) {
+		$fdel  = self::getPathFile($file,$folder);
+				$str  = explode( '/', $file );
+		$file = '';
+		for ($i=0; $i < count($str)-1; $i++) { 
+			$file .= $str[$i].'/';
+		}
+		$file .= 's_'.$str[count($str)-1];
+		$fdelS = self::getPathFile($file,$folder);
+		if (file_exists($fdel))  unlink($fdel);
+		if (file_exists($fdelS)) unlink($fdelS);
+	}
+
+	public static function getPosterById($id) {
+		$result = self::getSQLAuxVue("SELECT * FROM poster WHERE id_poster=".$id);
+		return $result->fetch();
 	}
 }
 ?>
