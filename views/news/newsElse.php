@@ -16,7 +16,7 @@
 						<?php if ($item['foto']) :?>
 							<?php if (file_exists("NewsFoto/".$item['foto'])) :?>
 								<a style='text-decoration: none;' class='media-left media-top' href='/Fullnew/<?=$item["id"]?>'>
-									<img class="imgLazy" alt='фото новини' width='80' src='<?="/NewsFoto/".$item['foto']?>' title='<?=$item["title"]?>'>
+									<img class="imgLazy" alt='фото новини' width='80' height='auto' src='<?="/NewsFoto/".$item['foto']?>' title='<?=$item["title"]?>'>
 								</a>
 							<?php endif; ?>
 						<?php endif; ?>

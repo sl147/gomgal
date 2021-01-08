@@ -19,7 +19,7 @@
   });
 </script> -->
 <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-<div class='lastNews showNews text-center'>
+<div class='lastNews text-center'>
 	останні новини
 </div>
 </div>
@@ -45,12 +45,23 @@
 		<div class='bordLeft media'>
 			<?php if ($item['fotoF']) :?>
 				<?php if (file_exists($item["foto"])) :?>
-<?php $size = getimagesize ($item["foto"]);
-$or = $size[0] > $size[1] ? 1 : 2;
-echo "width=".$size[0]."  height=".$size[1]. "  or=".$or;
-	?>			
+<!-- 					<?php $size = getimagesize ($item["foto"]);
+						if ($size[0] == $size[1]) {
+							$w = 60;
+							$h = 60;
+						}
+						elseif($size[0] > $size[1]) {
+							$w = 80;
+							$h = 60;
+						}
+						else {
+							$w = 60;
+							$h = 80;
+						}
+					?> -->			
+
 					<a class='media-left media-top' href='/Fullnew/<?=$item["id"]?>'>
-						<img class="imgLazy" alt='завантажується...' width='60' height='60' data-src='<?="/".$item["foto"]?>' title='<?=$item["title"]?>'>
+						<img class="imgLazy" alt='завантажується...' width='60' height='auto' data-src='<?="/".$item["foto"]?>' title='<?=$item["title"]?>'>
 					</a>
 				<?php endif; ?>
 			<?php endif; ?>
@@ -63,7 +74,7 @@ echo "width=".$size[0]."  height=".$size[1]. "  or=".$or;
 					</b>
 				</a>
 			<?else :?>
-				<a class='media-body transbox' href='/Fullnew/<?=$item["id"]?>' title='<?=$item["title"]?>'>
+				<a class='media-body' href='/Fullnew/<?=$item["id"]?>' title='<?=$item["title"]?>'>
 					<?=$item["title"]?>						
 				</a>	
 			<?php endif; ?>
