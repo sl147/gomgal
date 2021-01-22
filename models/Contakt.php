@@ -11,14 +11,14 @@ class Contakt {
 	use traitAuxiliary;
 
 	private function isSpam($nik,$ip,$email,$txt) {
-		$tab = $this->getSpam();
-		foreach ($tab as $item) {
-			if (strpos($nik,   $item["name"]) !== false) return 1;
-			if (strpos($txt,   $item["name"]) !== false) return 1;
-			if (strpos($email, $item["name"]) !== false) return 1;
-			if (strpos($ip,    $item["name"]) !== false) return 1;
+		$spams = $this->getSpam();
+		foreach ($spams as $spam) {
+			if (strpos($nik,   $spam["name"]) !== false) return true;
+			if (strpos($txt,   $spam["name"]) !== false) return true;
+			if (strpos($email, $spam["name"]) !== false) return true;
+			if (strpos($ip,    $spam["name"]) !== false) return true;
 		}
-		return  0;
+		return  false;
 	}
 
 	public function saveComent($nik,$ip,$email,$txt)	{
