@@ -242,7 +242,7 @@ margin-right: 18px;
 }
 .txtArWidth {
   width: 100%;
-  /*white-space: pre-wrap, !important;*/
+  white-space: pre-wrap, !important;
 }
 
 .btnwidth {
@@ -361,6 +361,8 @@ margin-right: 18px;
 
 .news_msg {
   text-indent: 5%;
+  white-space:pre-line;
+  width: 100%;
 }
 .imgNews {
   float: left;

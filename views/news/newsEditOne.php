@@ -1,5 +1,6 @@
 <?php include 'views/layouts/headerAdmin.php';?>
-<!-- <script src="/ckeditor/ckeditor.js"></script> -->
+<script src="/ckeditor/ckeditor.js"></script>
+<!-- <script src="//cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script> -->
 <!-- <script src="/ckeditor5-build-classic/ckeditor.js"></script> -->
 <!-- <script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script> -->
 <h2 class="text-center"><?= $title?></h2>
@@ -65,9 +66,9 @@
 	</div>			
 </div>		
 <?php include 'views/layouts/footerAdmin.php';?>
-<!-- <script type='text/javascript'>
+<script type='text/javascript'>
 	CKEDITOR.replace('msg');
-</script> -->
+</script>
 <!-- <script>
         ClassicEditor
             .create( document.querySelector( '#editor' ) )
