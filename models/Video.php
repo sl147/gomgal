@@ -27,7 +27,7 @@ class Video extends classGetDB
 	public static function getVideoVue($page=1)
 	{
 		$getDB  = new classGetDB();
-		$offset = ($page - 1) * self::SHOWVIDEO_BY_DEFAULT;
+		$offset = (intval($page)  - 1) * self::SHOWVIDEO_BY_DEFAULT;
 		$sql    = "SELECT * FROM progrnk ORDER BY prid DESC LIMIT ".self::SHOWVIDEO_BY_DEFAULT." OFFSET $offset";
 		$result = $getDB->getDBVue($sql);
 		$i      = 0;

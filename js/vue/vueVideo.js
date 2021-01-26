@@ -6,7 +6,7 @@ var vue_tovList = new Vue({
 		select : '../Vue/selVideo.php?page=',
 		addF:    '/Vue/addVideo.php?idYT=',
 		editF: '../Vue/editVideo.php?id=',
-		delF:    '/Vue/delVue.php?id=',
+		delF:    '../Vue/delVue.php?id=',
 		page:'',
 		cat:'',
 		newidYT: '',
@@ -18,8 +18,8 @@ var vue_tovList = new Vue({
 			let req = this.addF+this.newidYT+"&title="+this.newTitle
 			this.$http.get(req).then(function (response){     
 				this.getVideos()
-				this.show = !this.show
-				this.newidYT = ""
+				this.show     = !this.show
+				this.newidYT  = ""
 				this.newTitle = ""
 			},function (error){
 				console.log(error)
@@ -34,9 +34,9 @@ var vue_tovList = new Vue({
 			})			
 		},		
 		del(g) {
-			var accepted = confirm('Ви дійсно хочете видалити цей запис?');
+			let accepted = confirm('Ви дійсно хочете видалити цей запис?');
 			if (accepted) {
-				var delt = this.delF + g.id+"&nameId=prid&nameTab=progrnk"
+				let delt = this.delF + g.id+"&nameId=prid&nameTab=progrnk"
 				this.$http.get(delt).then(function (response) {	          
 					this.videos.splice(this.videos.indexOf(g),1)
 				},function (error){
@@ -50,7 +50,7 @@ var vue_tovList = new Vue({
 				this.videos = JSON.parse(response.data)
 /*				for (var bas of this.videos) {
 					console.log("id - "+bas.id+"   idYT - "+bas.idYT+"   title - "+bas.title)
-				}*/				
+				}*/			
 			},function (error){
 				console.log(error);
 			})
@@ -59,6 +59,7 @@ var vue_tovList = new Vue({
 	created: function() {
 		let get   = window.table
 		this.page = get["page"]
+		console.log("page-"+this.page)
 		this.getVideos()
 	}
 })

@@ -25,7 +25,8 @@ class AuxiliaryVue
 		return $db -> prepare($sql);
 	}
 
-	public static function sel2El($tab,$name,$id,$idVal,$isId) {
+	public static function sel2El($tab,$name,$id,$idVal,$isId)
+	{
 		require_once ('../classes/traitAuxiliary.php');
 		require_once ('../classes/classGetDB.php');
 		require_once ('../classes/classGetData.php');
@@ -45,7 +46,8 @@ class AuxiliaryVue
 		return $result -> execute();			
 	}
 
-	public static function addVue2El($name, $tab, $nameEl) {
+	public static function addVue2El($name, $tab, $nameEl)
+	{
 		$sql    = "INSERT INTO ".$tab." (".$nameEl.") VALUES(:name)";
 		$result = self::getPrepareSQLVue($sql);
 		$result -> bindParam(':name', $name, PDO::PARAM_STR);
@@ -53,7 +55,8 @@ class AuxiliaryVue
 		return $result -> execute();		
 	}
 
-	private static function delFilePoster($id) {
+	private static function delFilePoster($id)
+	{
 		$poster = self::getPosterById($id);
 		$res    = self::delFileVue($poster["foto_p1"],"posterFoto");	
 	}
@@ -72,7 +75,8 @@ class AuxiliaryVue
 		return "./".$folder."/".$delim.$file;
 	}
 
-	public static function delFileVue($file,$folder) {
+	public static function delFileVue($file,$folder)
+	{
 		$fdel  = self::getPathFile($file,$folder);
 				$str  = explode( '/', $file );
 		$file = '';
@@ -85,7 +89,8 @@ class AuxiliaryVue
 		if (file_exists($fdelS)) unlink($fdelS);
 	}
 
-	public static function getPosterById($id) {
+	public static function getPosterById($id)
+	{
 		$result = self::getSQLAuxVue("SELECT * FROM poster WHERE id_poster=".$id);
 		return $result->fetch();
 	}
