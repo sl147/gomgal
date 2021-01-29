@@ -26,7 +26,8 @@
       <i class="fa fa-key fa-fw"></i>
     </span>
     <input class="btnwidth form-control" name="password" type="password" placeholder="Пароль" required>
-  </div><br>      
+  </div><br>
+  <input name="_token" type="hidden" value="<?= $token?>">     
   <button name="submit" type="submit" class="btnwidth btn btn-success btn-sm">
     увійти 
   </button>      

@@ -17,7 +17,7 @@ trait traitAuxiliary
 
 	public function getIntval ($i) : int
 	{
-        return intval($i) ?? 1;
+        return intval($i) ? intval($i) : 1;
 	}
 
 	public function getCount($table)
@@ -95,7 +95,6 @@ trait traitAuxiliary
 		) ;
 
         $massage .= "\r\n";
-
 		foreach ($indicesServer as $arg) {
 			$massage .= $arg.':';
 		    $massage .= (isset($_SERVER[$arg])) ? $_SERVER[$arg]."\r\n" : "--\r\n";
@@ -252,6 +251,24 @@ trait traitAuxiliary
 		$spamList = $getData->getDataFromTable();
 		unset($getData);
 		return $spamList;		
+	}
+
+	public function getToken($length = 32)
+	{
+		$chars = '1234567890qwertyuiopasdfghjklzxcvbnm';
+		$max = strlen($chars) - 1;
+		$token = '';
+		for ($i=0; $i < $length; $i++) { 
+			$token .= $chars[rand(0,$max)];
+		}
+		$token .= md5($token.session_name());
+		$_SESSION['token'] = $token;
+		return $token;
+	}
+
+	public function tokensMatch($token)
+	{
+		return isset($_SESSION['token']) ? hash_equals( $token, $_SESSION['token'] ) : false;
 	}
 }
 ?>

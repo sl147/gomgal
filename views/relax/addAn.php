@@ -13,6 +13,7 @@
 		</select><br><br>	      	
 		<label>Текст анекдоту:</label>
 		<textarea class="textWidth" name = "msg" rows ='10'></textarea><br>
+		<input name="_token" type="hidden" value="<?= $token?>">
 		<button name="submit" type="submit" class="btn-block btn btn-info btn-lg">
 			Додати анекдот
 		</button>

@@ -6,6 +6,7 @@ class NewsController
 	
 	const SHOWPOSTER_BY_DEFAULT = 25;
 	public $newsClass;
+
 	public function __construct()
 	{
 		$this->newsClass = new News();
@@ -46,22 +47,34 @@ class NewsController
 		$com  = new Comment();
 		$id   = $this->getIntval($id);
 
-		if(isset($_POST['submit']))	{
-			$id_cl     = $id;
-			$txt_com   = $this->filterTXT('post','txt_com');
-			$nik_com   = $this->filterTXT('post','nik_com');
-			$email_com = $this->filterTXT('post','email_com');
-			$ip_com    = $_SERVER['REMOTE_ADDR'];
-			$res       = $com->insComment($id_cl,$txt_com,$nik_com,$email_com,$ip_com);
-			if ($email_com) {
-				$subject = 'Дякуєм за Ваш коментар';
-				$massage = "Дякуєм за Ваш коментар. Завжди раді зустрічі з Вами на нашому сайті https://www.gomgal.lviv.ua/";
-				$mail    = $this->sendMailToClient($subject,$email_com,$massage);
+		if(isset($_POST['submit']))
+		{
+			if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token']))
+			{
+				$id_cl     = $id;
+				$txt_com   = $this->filterTXT('post','txt_com');
+				$nik_com   = $this->filterTXT('post','nik_com');
+				$email_com = $this->filterTXT('post','email_com');
+				$ip_com    = $_SERVER['REMOTE_ADDR'];
+				$res       = $com->insComment($id_cl,$txt_com,$nik_com,$email_com,$ip_com);
+				if ($email_com) {
+					$subject = 'Дякуєм за Ваш коментар';
+					$massage = "Дякуєм за Ваш коментар. Завжди раді зустрічі з Вами на нашому сайті https://www.gomgal.lviv.ua/";
+					$mail    = $this->sendMailToClient($subject,$email_com,$massage);
+				}
+				$subject = "Новий коментар до id=".$id." ip=".$ip_com;"Новий коментар  https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id;
+				$to      = "sl147@ukr.net";
+				$massage = "Новий коментар https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."  до id=".$id." ip=".$ip_com."  з HTTP_REFERER ".$_SERVER['HTTP_REFERER']."\r\n"."  з REMOTE_ADDR ".$_SERVER['REMOTE_ADDR'];
+				$mail  = $this->sendMail($subject,$to,$massage);
 			}
-			$subject = "Новий коментар до id=".$id." ip=".$ip_com;"Новий коментар  https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id;
-			$to      = "sl147@ukr.net";
-			$massage = "Новий коментар https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."  до id=".$id." ip=".$ip_com."  з HTTP_REFERER ".$_SERVER['HTTP_REFERER']."\r\n"."  з REMOTE_ADDR ".$_SERVER['REMOTE_ADDR'];
-			$mail  = $this->sendMail($subject,$to,$massage);
+			else
+			{
+				$subject = "haks зі сторінки fullnew";
+				$to      = "sl147@ukr.net";
+				$massage = "haks зі сторінки fullnew";
+				$mail    = $this->sendMail($subject,$to,$massage);
+			}
+
 		} 
 /*session_start();
 if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
@@ -74,6 +87,7 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 } else {
     echo 'script  <script type="text/javascript">window.location = "' . $_SERVER['PHP_SELF'] . '?width="+screen.width+"&height="+screen.height;</script>';
 }*/
+		$token     = $this->getToken();
 		$news      = $this->newsClass->getNewsById($id);
 		$newsCount = $this->newsClass->updateCountById($id,$news['countmsgs']);	
 		$newsOther = $this->newsClass->newsOther($id,$news['category'],$news['cat2']);
@@ -103,8 +117,8 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 			$title   = $this->filterTXT('post', 'title');
 			$prew    = $this->filterTXT('post', 'prew');
 			$top     = isset($_POST['top']) ? 1 : 0;
-			$cat     = $this->filterTXT('post', 'category');
-			$cat2    = $this->filterTXT('post', 'category2');
+			$cat     = $this->filterINT('post', 'category');
+			$cat2    = $this->filterINT('post', 'category2');
 			$msg     = $this->filterTXT('post', 'msg');
 			$sourse  = $this->filterTXT('post', 'sourse');
 			$videoYT = $this->filterTXT('post', 'videoYT');
@@ -210,8 +224,8 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 				$title   = $this->filterTXT('post', 'title');
 				$prew    = $this->filterTXT('post', 'prew');
 				$top     = isset($_POST['top']) ? 1 : 0;
-				$cat     = $this->filterTXT('post', 'category');
-				$cat2    = $this->filterTXT('post', 'category2');
+				$cat     = $this->filterINT('post', 'category');
+				$cat2    = $this->filterINT('post', 'category2');
 				$msg     = $this->filterTXT('post', 'msg');
 				$sourse  = $this->filterTXT('post', 'sourse');
 				$videoYT = $this->filterTXT('post', 'videoYT');

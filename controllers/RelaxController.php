@@ -75,14 +75,26 @@ class RelaxController
 	{
 		$show = false;
 		$relax = new Relax();
-		if(isset($_POST['submit'])) {
-			$teman = $this->filterTXT('post','teman');
-			$msg   = $this->filterTXT('post','msg');
-			$res   = $relax->addNewAn($teman, $msg);
-			$show  = true;
-
-			header("Location: /relaxALL");
+		if(isset($_POST['submit']))
+		{
+			if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token']))
+			{
+				$teman = $this->filterTXT('post','teman');
+				$msg   = $this->filterTXT('post','msg');
+				$res   = $relax->addNewAn($teman, $msg);
+				$show  = true;
+				header("Location: /relaxALL");		
+			}
+			else
+			{
+				$subject = "haks зі сторінки add an";
+				$to      = "sl147@ukr.net";
+				$massage = "haks зі сторінки add an";
+				$mail    = $this->sendMail($subject,$to,$massage);
+				header("Location: /ralaxAddAn");
+			}
 		}
+		$token     = $this->getToken();
 		$teman     = $relax->getAnList();
 		unset($relax);
 		$siteFile  = 'views/relax/addAn.php';
