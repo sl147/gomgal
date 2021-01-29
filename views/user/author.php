@@ -20,6 +20,7 @@
 		<label>E-mail</label>
 			<input name="email" type="email" placeholder="E-mail" class="authorRow"><br><br>
 
+		<input name="_token" type="hidden" value="<?= $token?>">
 		<div class="text-center">
 			<button name="submit" type="submit" class="btn btn-success">Зареєструвати</button>
 		</div>

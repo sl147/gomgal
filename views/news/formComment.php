@@ -16,6 +16,7 @@
 			<textarea id="comm" name = "txt_com" rows ='7' style="width: 100%;" maxlength="2000">
 			</textarea>
 		</div>
+		<input name="_token" type="hidden" value="<?= $token?>">
 		<button name="submit" type="submit" class="btn-block btn btn-info btn-lg">
 			Відправити
 		</button>

@@ -41,6 +41,7 @@
 				<input class="form-control" name="email_com" type="email"><br>
 				<label>Повідомлення</label>
 				<textarea class="form-control" name = "txt_com" rows =7 required></textarea><br><br>
+				<input name="_token" type="hidden" value="<?= $token?>">
 				<button name="submit" type="submit" class="btn-block btn btn-info btn-lg">
 					Відправити
 				</button>

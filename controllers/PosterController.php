@@ -17,20 +17,40 @@ class PosterController
 
 	public function actionPosterFind($page = 1)
 	{		
-		if(isset($_POST['submit'])) {
+		if(isset($_POST['submit']))
+		{
 			$poster         = new Poster();
-			$findTXT        = trim(strip_tags($this->filterTXT('post', 'name_f')));
-			$posterImpotant = $poster->getFindPostersImpot($findTXT);
-			$posterAll      = $poster->getFindPosters($findTXT,$page);
-			$total          = $poster->getFindTotalPoster($findTXT);
-			$pagination     = new Pagination($total, $this->getIntval($page) , SHOWPOSTER_BY_DEFAULT, 'page-');
-			unset($poster);
-			$siteFile       = 'views/poster/catAll.php';
+			$findTXT        = '';
+			$posterImpotant = [];
+			$posterAll      = [];
+			$total          = 0;
+			
+
+			if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token']))
+			{
+				$findTXT        = trim(strip_tags($this->filterTXT('post', 'name_f')));
+				$posterImpotant = $poster->getFindPostersImpot($findTXT);
+				$posterAll      = $poster->getFindPosters($findTXT,$page);
+				$total          = $poster->getFindTotalPoster($findTXT);
+				$pagination     = new Pagination($total, $this->getIntval($page) , SHOWPOSTER_BY_DEFAULT, 'page-');
+				$siteFile       = 'views/poster/catAll.php';							
+			}
+			else
+			{
+				$subject = "haks зі сторінки poster find";
+				$to      = "sl147@ukr.net";
+				$massage = "haks зі сторінки poster find";
+				$mail    = $this->sendMail($subject,$to,$massage);
+				$siteFile = 'views/poster/find.php';
+			}
+				
+			unset($poster);				
 		}
 		else {
 			$siteFile = 'views/poster/find.php';
 		}
 		$metaTags = '';
+		$token = $this->getToken();
 		require_once ('views/layouts/siteIndex.php');
 		unset($pagination);		
 		return true;

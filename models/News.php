@@ -214,8 +214,8 @@ class News extends classGetDB
 		$result = $this->getPrepareSQL($sql);
 		$result -> bindParam(':title',   $title,   PDO::PARAM_STR);
 		$result -> bindParam(':prew',    $prew,    PDO::PARAM_STR);
-		$result -> bindParam(':category',$category,PDO::PARAM_STR);
-		$result -> bindParam(':cat2',    $cat2,    PDO::PARAM_STR);
+		$result -> bindParam(':category',$category,PDO::PARAM_INT);
+		$result -> bindParam(':cat2',    $cat2,    PDO::PARAM_INT);
 		$result -> bindParam(':sourse',  $sourse,  PDO::PARAM_STR);
 		$result -> bindParam(':top',     $top,     PDO::PARAM_STR);
 		$result -> bindParam(':msg',     $msg,     PDO::PARAM_STR);
@@ -231,8 +231,8 @@ class News extends classGetDB
 		$result = $this->getPrepareSQL($sql);
 		$result -> bindParam(':title',   $title,   PDO::PARAM_STR);
 		$result -> bindParam(':prew',    $prew,    PDO::PARAM_STR);
-		$result -> bindParam(':category',$category,PDO::PARAM_STR);
-		$result -> bindParam(':cat2',    $cat2,    PDO::PARAM_STR);
+		$result -> bindParam(':category',$category,PDO::PARAM_INT );
+		$result -> bindParam(':cat2',    $cat2,    PDO::PARAM_INT );
 		$result -> bindParam(':sourse',  $sourse,  PDO::PARAM_STR);
 		$result -> bindParam(':top',     $top,     PDO::PARAM_STR);
 		$result -> bindParam(':msg',     $msg,     PDO::PARAM_STR);
@@ -248,8 +248,8 @@ class News extends classGetDB
 		$result = $this->getPrepareSQL($sql);
 		$result -> bindParam(':title',   $title,   PDO::PARAM_STR);
 		$result -> bindParam(':prew',    $prew,    PDO::PARAM_STR);
-		$result -> bindParam(':category',$category,PDO::PARAM_STR);
-		$result -> bindParam(':cat2',    $cat2,    PDO::PARAM_STR);
+		$result -> bindParam(':category',$category,PDO::PARAM_INT );
+		$result -> bindParam(':cat2',    $cat2,    PDO::PARAM_INT );
 		$result -> bindParam(':sourse',  $sourse,  PDO::PARAM_STR);
 		$result -> bindParam(':top',     $top,     PDO::PARAM_STR);
 		$result -> bindParam(':msg',     $msg,     PDO::PARAM_STR);

@@ -7,27 +7,38 @@ class UserController
 	const SHOWCOMMENT_BY_DEFAULT = 25;
 	
 	public function actionIndex() {
-		if(isset($_POST['submit'])) {
-			$userCl   = new User();
-	        $login    = $this->filterTXT('post', 'login');;
-	        $password = $this->filterTXT('post', 'password');
-	        $errors   = false;
-			$userId   = $userCl->chekUserData($login,$password);
-			if ($userId == false) {
-				$errors []= "не вірний логін або пароль";
+		if(isset($_POST['submit']))
+		{
+			if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token']))
+			{
+				$userCl   = new User();
+		        $login    = $this->filterTXT('post', 'login');;
+		        $password = $this->filterTXT('post', 'password');
+		        $errors   = false;
+				$userId   = $userCl->chekUserData($login,$password);
+				if ($userId == false) {
+					$errors []= "не вірний логін або пароль";
+				}
+				else {
+					$user = $userCl->getUserByLogin($login);
+					$res  = $userCl->setcookie($login,$user['name'],$user['admin']);
+					if ($user['admin'] == 1) {
+						header("Location:/newsEdit"); exit();
+					}
+					else { 
+						header("Location: /"); exit();			
+					}
+				}				
 			}
-			else {
-				$user = $userCl->getUserByLogin($login);
-				$res  = $userCl->setcookie($login,$user['name'],$user['admin']);
-				if ($user['admin'] == 1) {
-					header("Location:/newsEdit"); exit();
-				}
-				else { 
-					header("Location: /"); exit();			
-				}
+			else
+			{
+				$subject = "haks зі сторінки логування";
+				$to      = "sl147@ukr.net";
+				$massage = "haks зі сторінки логування";
+				$mail    = $this->sendMail($subject,$to,$massage);
 			}
 		}
-
+		$token = $this->getToken();
 		$siteFile = 'views/user/index.php';
 		$metaTags = '';
 		require_once ('views/layouts/siteIndex.php');
@@ -35,23 +46,34 @@ class UserController
 	}
 
 	public function actionAuthor() {
-		if(isset($_POST['submit'])) {
-			$userCl = new User();
-			$login    = $this->filterTXT('post', 'login');
-			$password = md5(md5(trim($this->filterTXT('post', 'password'))));
-			$name     = $this->filterTXT('post', 'name');
-			$surname  = $this->filterTXT('post', 'surname');
-			$email    = $this->filterEmail('post', 'email');
-			$result   = $userCl->createUser($login,$password,$name,$surname,$email);
-			$subject  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
-			$to       = "sl147@ukr.net";
-			$massage  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
-			$res      = $this->sendMail($subject,$to,$massage);
-			$res      = $userCl->setcookie($login,$name,0);
-			unset($userCl);		
+		if(isset($_POST['submit']))
+		{
+			if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token']))
+			{
+				$userCl   = new User();
+				$login    = $this->filterTXT('post', 'login');
+				$password = md5(md5(trim($this->filterTXT('post', 'password'))));
+				$name     = $this->filterTXT('post', 'name');
+				$surname  = $this->filterTXT('post', 'surname');
+				$email    = $this->filterEmail('post', 'email');
+				$result   = $userCl->createUser($login,$password,$name,$surname,$email);
+				$subject  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
+				$to       = "sl147@ukr.net";
+				$massage  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
+				$res      = $this->sendMail($subject,$to,$massage);
+				$res      = $userCl->setcookie($login,$name,0);
+				unset($userCl);				
+			}
+			else
+			{
+				$subject = "haks зі сторінки реєстрації";
+				$to      = "sl147@ukr.net";
+				$massage = "haks зі сторінки реєстрації";
+				$mail    = $this->sendMail($subject,$to,$massage);
+			}
 			header("Location: /"); exit();
 		}
-
+		$token    = $this->getToken();
 		$siteFile = 'views/user/author.php';
 		$metaTags = '';
 		require_once ('views/layouts/siteIndex.php');
@@ -66,25 +88,36 @@ class UserController
 	}
 
 	public function actionChangeData() {
-		$userCl = new User();
+		$userCl      = new User();
 		$userCurrent = $userCl->userCurr();
 		if ($userCurrent) {
-			if(isset($_POST['submit'])) {
-				$login    = $userCurrent['user_login'];
-				$password = md5(md5(trim($this->filterTXT('post', 'password'))));
-				$name     = $this->filterTXT('post', 'name');
-				$surname  = $this->filterTXT('post', 'surname');
-				$email    = $this->filterEmail('post', 'email');
-				$result   = $userCl->changeUser($login,$name,$surname,$email);
-				$subject  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
-				$to       = "sl147@ukr.net";
-				$massage  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
-				$res      = $this->sendMail($subject,$to,$massage);
-				$res      = $userCl->setcookie($login,$name,0);
-				unset($userCl);
+			if(isset($_POST['submit']))
+			{
+				if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token']))
+				{
+					$login    = $userCurrent['user_login'];
+					$password = md5(md5(trim($this->filterTXT('post', 'password'))));
+					$name     = $this->filterTXT('post', 'name');
+					$surname  = $this->filterTXT('post', 'surname');
+					$email    = $this->filterEmail('post', 'email');
+					$result   = $userCl->changeUser($login,$name,$surname,$email);
+					$subject  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
+					$to       = "sl147@ukr.net";
+					$massage  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
+					$res      = $this->sendMail($subject,$to,$massage);
+					$res      = $userCl->setcookie($login,$name,0);
+					unset($userCl);										
+				}
+				else
+				{
+					$subject = "haks зі сторінки редагування даних";
+					$to      = "sl147@ukr.net";
+					$massage = "haks зі сторінки редагування даних";
+					$mail    = $this->sendMail($subject,$to,$massage);
+				}
 				header("Location: /"); exit();
 			}
-
+			$token = $this->getToken();
 			$siteFile = 'views/user/changeData.php';
 			$metaTags = '';
 			require_once ('views/layouts/siteIndex.php');
