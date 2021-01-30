@@ -47,11 +47,29 @@ class User extends classGetDB
 	}
 
 	public function chekUserData ($login,$password) {
-		$password = md5(md5(trim($password)));
-		$sql      = "SELECT * FROM friends  WHERE user_login = '".$login."' AND user_password = '".$password."'";
-		$result   = $this->getDB ($sql);
-		$user     = $result-> fetch();
-		return ($user) ? $user['id'] : false;
+		$userCl      = new User();
+		$userCurrent = $userCl->getUserByLogin($login);
+		$id          = $userCurrent['id'];
+		if ($id < 10)
+		{
+			$password = md5(md5(trim($password)));
+			$sql      = "SELECT * FROM friends  WHERE user_login = '".$login."' AND user_password = '".$password."'";
+			$result   = $this->getDB ($sql);
+			$user     = $result-> fetch();
+			return $user['id'] ?? false;
+		}
+		else
+		{
+			$sql      = "SELECT * FROM friends  WHERE user_login = '".$login."'";
+			$result   = $this->getDB ($sql);
+			$user     = $result-> fetch();
+			if($user)
+			{
+				return (password_verify($password, $user['user_password'])) ? $user['id'] : false;			
+			}
+
+		}
+		return false;
 	}
 	
 	public static function getUserByLogin($login) {

@@ -261,7 +261,7 @@ trait traitAuxiliary
 		for ($i=0; $i < $length; $i++) { 
 			$token .= $chars[rand(0,$max)];
 		}
-		$token .= md5($token.session_name());
+		$token .= password_hash($token.session_name(), PASSWORD_DEFAULT);
 		$_SESSION['token'] = $token;
 		return $token;
 	}

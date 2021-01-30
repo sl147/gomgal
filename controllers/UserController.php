@@ -52,7 +52,8 @@ class UserController
 			{
 				$userCl   = new User();
 				$login    = $this->filterTXT('post', 'login');
-				$password = md5(md5(trim($this->filterTXT('post', 'password'))));
+				//$password = md5(md5(trim($this->filterTXT('post', 'password'))));
+				$password = password_hash(trim($this->filterTXT('post', 'password')), PASSWORD_DEFAULT);
 				$name     = $this->filterTXT('post', 'name');
 				$surname  = $this->filterTXT('post', 'surname');
 				$email    = $this->filterEmail('post', 'email');
@@ -90,13 +91,14 @@ class UserController
 	public function actionChangeData() {
 		$userCl      = new User();
 		$userCurrent = $userCl->userCurr();
+		$id          = $userCurrent['id'];
 		if ($userCurrent) {
 			if(isset($_POST['submit']))
 			{
 				if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token']))
 				{
 					$login    = $userCurrent['user_login'];
-					$password = md5(md5(trim($this->filterTXT('post', 'password'))));
+					$password = ($id < 10) ? md5(md5(trim($this->filterTXT('post', 'password')))) : password_hash(trim($this->filterTXT('post', 'password')),PASSWORD_DEFAULT);
 					$name     = $this->filterTXT('post', 'name');
 					$surname  = $this->filterTXT('post', 'surname');
 					$email    = $this->filterEmail('post', 'email');
