@@ -250,24 +250,6 @@ margin-right: 18px;
   font-size: 12px;
 }
 
-.showAlert {
-  position: fixed;
-  z-index: 1000;
-  width: 50%;
-  padding-top: 19%;
-  padding-left: 10%;
-  padding-right: 10%;
-}
-
-.showAlertAn {
-  position: fixed;
-  z-index: 1000;
-  width: 45%;
-  padding-bottom: 12%;
-  /*padding-left: 5%;
-  padding-right: 10%;*/
-}
-
 .textColor {
   color: grey;
 }
