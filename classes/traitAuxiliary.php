@@ -125,11 +125,11 @@ trait traitAuxiliary
 		switch($type)
 		{
 			case 'get':
-			$ouput = filter_input(INPUT_GET, $field, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+			$ouput = filter_input(INPUT_GET, $field, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 			break;
 
 			case 'post':
-			$output = filter_input(INPUT_POST, $field, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES); 
+			$output = filter_input(INPUT_POST, $field, FILTER_SANITIZE_FULL_SPECIAL_CHARS); 
 			break;
 
 			default:

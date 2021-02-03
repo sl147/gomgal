@@ -226,7 +226,8 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 				$top     = isset($_POST['top']) ? 1 : 0;
 				$cat     = $this->filterINT('post', 'category');
 				$cat2    = $this->filterINT('post', 'category2');
-				$msg     = $this->filterTXT('post', 'msg');
+				//$msg     = $this->filterTXT('post', 'msg');
+				$msg     = $_POST['msg'];//$this->filterTXT('post', 'msg');
 				$sourse  = $this->filterTXT('post', 'sourse');
 				$videoYT = $this->filterTXT('post', 'videoYT');
 				$FotoDel = $this->filterTXT('post', 'FotoDel');

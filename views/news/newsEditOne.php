@@ -1,5 +1,5 @@
 <?php include 'views/layouts/headerAdmin.php';?>
-<script src="/ckeditor/ckeditor.js"></script>
+<script src="/ckeditor1/ckeditor.js"></script>
 <!-- <script src="//cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script> -->
 <!-- <script src="/ckeditor5-build-classic/ckeditor.js"></script> -->
 <!-- <script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script> -->
@@ -35,8 +35,8 @@
 			    }
 			?>
 			</select><br><br>
-			<label>Текст новини:</label>			
-			<textarea class="txtArWidth" name = "msg" rows ='8'  maxlength="3000" required>
+			<label>Текст новини:</label><br><br>			
+			<textarea class="txtArWidth" name = "msg" rows ='8' required>
 				<?= $allNews['msg']?>
 			</textarea><br><br>
 			<label>Джерело:</label>
@@ -67,6 +67,25 @@
 </div>		
 <?php include 'views/layouts/footerAdmin.php';?>
 <script type='text/javascript'>
+	CKEDITOR.editorConfig = function( config ) {
+	config.toolbarGroups = [
+		{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+		{ name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+		{ name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+		{ name: 'forms', groups: [ 'forms' ] },
+		'/',
+		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+		{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
+		{ name: 'links', groups: [ 'links' ] },
+		{ name: 'insert', groups: [ 'insert' ] },
+		'/',
+		{ name: 'styles', groups: [ 'styles' ] },
+		{ name: 'colors', groups: [ 'colors' ] },
+		{ name: 'tools', groups: [ 'tools' ] },
+		{ name: 'others', groups: [ 'others' ] },
+		{ name: 'about', groups: [ 'about' ] }
+	];
+};
 	CKEDITOR.replace('msg');
 </script>
 <!-- <script>
