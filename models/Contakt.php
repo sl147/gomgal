@@ -26,7 +26,7 @@ class Contakt {
 			{
 				$subject = "Спам зі сторінки Контакти";
 				$to      = "sl147@ukr.net";
-				$massage = "Спам зі сторінки Контакти\r\n від: $nik_com\r\n email:$email\r\n$txt_com\r\n";
+				$massage = "Спам зі сторінки Контакти\r\n від: $nik\r\n email:$email\r\n$txt\r\n";
 				$mail    = $this->sendMail($subject,$to,$massage);
 				return;
 			}
