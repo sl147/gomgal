@@ -1,3 +1,7 @@
+<script>
+  console.log(Cookies.get());
+
+</script>
 <form id = "authlog" method="POST">
   <div class="input-group margin-bottom-sm">
     <span class="input-group-addon">

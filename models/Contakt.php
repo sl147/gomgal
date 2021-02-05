@@ -22,7 +22,15 @@ class Contakt {
 	}
 
 	public function saveComent($nik,$ip,$email,$txt)	{
-		if ($this->isSpam($nik,$ip,$email,$txt)) return;
+		if ($this->isSpam($nik,$ip,$email,$txt)) 
+			{
+				$subject = "Спам зі сторінки Контакти";
+				$to      = "sl147@ukr.net";
+				$massage = "Спам зі сторінки Контакти\r\n від: $nik_com\r\n email:$email\r\n$txt_com\r\n";
+				$mail    = $this->sendMail($subject,$to,$massage);
+				return;
+			}
+			
 		$sql    = "INSERT INTO wishCl (nik_com,ip_com,email_com,txt_com)
 		 VALUES(:nik_com,:ip_com,:email_com,:txt_com)";
 		$getDB  = new classGetDB();
