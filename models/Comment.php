@@ -25,8 +25,17 @@ class Comment
 		return $comList ?? [];
 	}	
 
-	public static function insComment($id_cl,$txt_com,$nik_com,$email_com,$ip_com)
+	public function insComment($id_cl,$txt_com,$nik_com,$email_com,$ip_com)
 	{
+		if ($this->isSpam($nik_com,$ip_com,$email_com,$txt_com)) 
+		{
+			$subject = "Спам зі сторінки новини коментар";
+			$to      = "sl147@ukr.net";
+			$massage = "Спам зі сторінки новини коментар\r\n від: $nik_com\r\n email:$email_com\r\ntxt_com:$txt_com\r\n";
+			$mail    = $this->sendMail($subject,$to,$massage);
+			return false;
+		}
+			
 		$sql    = "INSERT INTO Comment (id_cl,txt_com,nik_com,email_com,ip_com)
 		 VALUES(:id_cl,:txt,:nik,:email,:ip)";
 		$getDB  = new classGetDB();

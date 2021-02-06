@@ -10,17 +10,6 @@ class Contakt {
 	//use models\bindParam;
 	use traitAuxiliary;
 
-	private function isSpam($nik,$ip,$email,$txt) {
-		$spams = $this->getSpam();
-		foreach ($spams as $spam) {
-			if (strpos($nik,   $spam["name"]) !== false) return true;
-			if (strpos($txt,   $spam["name"]) !== false) return true;
-			if (strpos($email, $spam["name"]) !== false) return true;
-			if (strpos($ip,    $spam["name"]) !== false) return true;
-		}
-		return  false;
-	}
-
 	public function saveComent($nik,$ip,$email,$txt)	{
 		if ($this->isSpam($nik,$ip,$email,$txt)) 
 			{
