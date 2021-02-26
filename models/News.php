@@ -193,7 +193,7 @@ class News extends classGetDB
 		$id    = $this->getIntval($id);
 		$cat1  = $this->getIntval($cat1);
 		$cat2  = $this->getIntval($cat2);
-		$sql   = "SELECT * FROM msgs  WHERE cat2='".$cat2."' && category='".$cat1."' && id<'".$id."' ORDER BY id  DESC LIMIT 4";
+		$sql   = "SELECT * FROM msgs  WHERE cat2='".$cat2."' && category='".$cat1."' && id<'".$id."' ORDER BY id  DESC LIMIT 10";
 		$result = $this->getDB($sql);
 		while ($row = $result->fetch()) {
 			$News[]  = $row;

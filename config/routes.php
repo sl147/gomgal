@@ -24,6 +24,7 @@ return array(
 'FA/upload/([0-9]+)' => 'FA/upload/$1',
 'Fullnew/([0-9]+)' => 'news/fullnew/$1',
 'indexVote' => 'Vote/vote',
+'index/page-([0-9]+)' => 'site/index/$1',
 'index' => 'site/index',
 'main/page-([0-9]+)' => 'site/index/$1',
 'main' => 'site/index',

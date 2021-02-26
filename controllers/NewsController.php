@@ -73,7 +73,7 @@ class NewsController
 			{
 				$subject = "haks зі сторінки fullnew";
 				$to      = "sl147@ukr.net";
-				$massage = "haks зі сторінки fullnew";
+				$massage = "haks зі сторінки fullnew https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."\r\n".$this->filterTXT('post','txt_com')."\r\n".$this->filterTXT('post','nik_com')."\r\n".$this->filterTXT('post','email_com');
 				$mail    = $this->sendMail($subject,$to,$massage);
 			}
 
