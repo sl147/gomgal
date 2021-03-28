@@ -203,7 +203,6 @@ class News extends classGetDB
 
 	public function updateCountById($id,$count)
 	{
-		$count = $this->getIntval($count);
 		return $this->getDB("UPDATE msgs SET countmsgs=$count+1".$this->formSql("id",$id));		
 	}
 

@@ -14,6 +14,7 @@
 		</div>				
 	</div>
 </div>
+<?php echo "countmsgs=".$news['countmsgs'];?>
 <?php include_once 'views/news/newsMsg.php';?>
 <?php include_once 'views/news/socialMedia.php';?>
 <?php include_once 'views/news/newsElse.php';?>
