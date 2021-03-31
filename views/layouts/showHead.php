@@ -6,7 +6,7 @@
 		<meta property="og:type"        content="article" />
 		<meta property="og:title"       content="<?=$news['title']?>" />
 		<meta property="og:description" content="<?=$news['prew']?>" />
-		<meta property="og:image"       content="<?=$news['photo']?>" />
+		<meta property="og:image"       content="<?='https://www.gomgal.lviv.ua'.$news['photo']?>" />
 	<?php endif; ?>
 	
 	<?php include 'views/layouts/showMeta.php';?>

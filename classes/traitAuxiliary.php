@@ -96,6 +96,20 @@ trait traitAuxiliary
 
         $massage .= "\r\n";
 		foreach ($indicesServer as $arg) {
+			/*if ($arg == 'argv'){
+				foreach ($arg as $i) {
+					echo "        is argv:".$i."<br>";
+				}
+			}else{
+				if (isset($_SERVER[$arg])) {
+
+					echo "is arg:".$arg."<br>";
+				} else {
+					echo "no arg".$arg."<br>";
+				}				
+			}*/
+
+
 			$massage .= $arg.':';
 		    $massage .= (isset($_SERVER[$arg])) ? $_SERVER[$arg]."\r\n" : "--\r\n";
 		}
@@ -280,6 +294,47 @@ trait traitAuxiliary
 	public function tokensMatch($token)
 	{
 		return isset($_SESSION['token']) ? hash_equals( $token, $_SESSION['token'] ) : false;
+	}
+
+	public static function getIPData($ip)
+	{
+		$ch = curl_init('http://ipwhois.app/json/'.$ip);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$json = curl_exec($ch);
+		curl_close($ch);
+		//$ipwhois_result = json_decode($json, true);
+		return json_decode($json, true);
+	}
+
+	public static function saveIPData($ipwhois_result, $width,$htpreferer)
+	{
+		$country_code = $ipwhois_result['country_code'];
+		$city         = $ipwhois_result['city'];
+		$sql      = "SELECT * FROM usersIP  WHERE country_code = :country_code AND city = :city AND width = :width AND htpreferer = :htpreferer";
+		$result = Db::getConnection() -> prepare($sql);
+		$result -> bindParam(':country_code', $country_code, PDO::PARAM_STR);
+		$result -> bindParam(':city',         $city,         PDO::PARAM_STR);
+		$result -> bindParam(':width',        $width,        PDO::PARAM_STR);
+		$result -> bindParam(':htpreferer',   $htpreferer,   PDO::PARAM_STR);
+		$result -> execute();
+		$user = $result-> fetch();
+		if ($user) {
+			$count = $user['count'] + 1;
+			$sql = "UPDATE usersIP SET count=:count WHERE id=".$user["id"];
+			$result = Db::getConnection() -> prepare($sql);
+			$result -> bindParam(':count', $count, PDO::PARAM_STR);	
+		}
+		else {
+			$sql = "INSERT INTO usersIP (country_code,city,width,htpreferer)
+			 VALUES(:country_code,:city,:width,:htpreferer)";
+			$result = Db::getConnection() -> prepare($sql);
+			$result -> bindParam(':country_code', $country_code, PDO::PARAM_STR);
+			$result -> bindParam(':city',         $city,         PDO::PARAM_STR);
+			$result -> bindParam(':width',        $width,        PDO::PARAM_STR);
+			$result -> bindParam(':htpreferer',   $htpreferer,   PDO::PARAM_STR);
+		}
+
+		return $result -> execute();
 	}
 }
 ?>

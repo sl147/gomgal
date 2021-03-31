@@ -53,6 +53,7 @@
 </div>
 
 <?php include 'views/layouts/footerAdmin.php';?>
+
 <script>
 window.table = <?= $json ?>;
 window.coun  = <?= $countEl ?>;

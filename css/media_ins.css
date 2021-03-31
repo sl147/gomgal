@@ -1,0 +1,102 @@
+/*==========  Desktop First Method  ==========*/
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 1024px) {
+
+}
+@media only screen and (max-width : 992px) {
+.reklPicture {
+	display: none;
+}
+
+}
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+
+
+}
+
+@media only screen and (max-width : 736px) {
+.addSpace {
+  padding-bottom: 10px !important;
+}
+}
+
+@media only screen and (max-width : 667px) {
+
+}
+
+@media only screen and (max-width : 600px) {
+ .authCalc
+ {
+  margin: 0px;
+ }
+
+}
+
+@media only screen and (max-width : 568px) {
+.var {
+  font-size: 20px;
+}
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px) {
+.var {
+  font-size: 18px;
+}
+}
+
+@media only screen and (max-width : 414px) {
+
+}
+
+@media only screen and (max-width : 384px) {
+
+}
+
+@media only screen and (max-width : 375px) {
+
+
+}
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width : 320px) {
+
+
+}
+@media only screen and (max-width : 240px) {
+
+}
+
+/*==========  Mobile First Method  ==========*/
+
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px) {
+
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+
+}

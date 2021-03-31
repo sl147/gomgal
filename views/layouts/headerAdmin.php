@@ -113,6 +113,16 @@
 						<?php Auxiliary::showElementMenu("metaTags","редагування метатегів","редагування метатегів")?>
 					</ul>			
 				</div>
+				<div class="btn-group btn-group-justified">
+					<button type="button" data-toggle="dropdown" class="btn btn-delta11 dropdown-toggle">
+						Калькулятори<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<?php Auxiliary::showElementMenu("calctypes","типи калькуляторів","Типи калькуляторів")?>
+						<?php Auxiliary::showElementMenu("insuranceCommentEdit","редагування коментарів","Редагування коментарів")?>
+						<?php Auxiliary::showElementMenu("cEdit","редагування мір калькуляторів","Редагування мір калькуляторів")?>
+					</ul>			
+				</div>				
 			</div>			
 		</nav>
 <div class="container-fluid">

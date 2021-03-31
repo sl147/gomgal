@@ -94,6 +94,7 @@ var vue_app = new Vue({
 		},		
 	},
 	created: function() {
+		console.log('112')
 		const get        = window.table
 		this.tbl         = get["table"]
 		this.nameElement = get["name"]

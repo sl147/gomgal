@@ -87,7 +87,13 @@ class classGetData extends classGetDB
 	{
 		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql2($elName1,$elValue1,$elName2,$elValue2))->fetch();	
 	}
-
+/** Отримуєм один запис з таблиці $this->table по id
+ *
+ *  @return масив даних
+ */
+/*	public function getDataFromTableById($id) {
+		return (intval($id)) ? $this->getDB("SELECT * FROM ".$this->table." WHERE id=".$id)->fetch() : false;
+	}*/
 /** Отримуєм записи з таблиці $this->table по елементу $elName
  *
  *  @return елемент даних
@@ -189,6 +195,15 @@ class classGetData extends classGetDB
 	public function deleteDataFromTable($id,$nameid='id')
 	{
 		return (intval($id)) ? $this->getDB("DELETE FROM ".$this->table.$this->formSql($nameid,$id)) : false;
+	}
+
+/** Отримуєм всі дані з таблиці $this->table для запитів з Vue
+ *
+ *  @return масив даних
+ */
+	public function getDataFromTableVue()
+	{
+		return $this->getRow( $this->getDBVue("SELECT * FROM ".$this->table) );
 	}
 }
 ?>
