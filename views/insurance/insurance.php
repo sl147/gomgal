@@ -1,4 +1,4 @@
-<?php include 'views/Insurance/headerInsurance.php';?>
+<?php include 'views/insurance/headerInsurance.php';?>
 	<div id="sljarInsurance">
 		<!-- <img src="../image/1.jpg" class="bgFull"> -->
 		<div class="str-main" v-cloak >

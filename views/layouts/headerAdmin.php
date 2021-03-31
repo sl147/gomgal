@@ -15,7 +15,6 @@
    <link rel="stylesheet" href="/css/font-awesome-4.7.0/css/font-awesome.min.css" />
 </head>
 <body>
-
 		<nav class="main_menu clearfix">
 			<div class="btn-group btn-group-justified" role="group" aria-label="...">
 				<div class="btn-group" role="group">
@@ -113,6 +112,7 @@
 						<?php Auxiliary::showElementMenu("metaTags","редагування метатегів","редагування метатегів")?>
 					</ul>			
 				</div>
+				<?php if (User::isGuest()['login'] == 'sl147adm') :?>
 				<div class="btn-group btn-group-justified">
 					<button type="button" data-toggle="dropdown" class="btn btn-delta11 dropdown-toggle">
 						Калькулятори<span class="caret"></span>
@@ -122,7 +122,8 @@
 						<?php Auxiliary::showElementMenu("insuranceCommentEdit","редагування коментарів","Редагування коментарів")?>
 						<?php Auxiliary::showElementMenu("cEdit","редагування мір калькуляторів","Редагування мір калькуляторів")?>
 					</ul>			
-				</div>				
+				</div>
+				<?php endif ?>				
 			</div>			
 		</nav>
 <div class="container-fluid">

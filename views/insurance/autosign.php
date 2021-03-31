@@ -1,7 +1,7 @@
 <script>
 	document.cookie = "sw="+window.innerWidth;
 </script>
-<?php include 'views/Insurance/headerInsurance.php';?>
+<?php include 'views/insurance/headerInsurance.php';?>
 	<div id="sign">
 		<!-- <img src="../image/1.jpg" class="bgFull"> -->
 		<div class="str-main">
