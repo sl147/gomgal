@@ -205,5 +205,10 @@ class classGetData extends classGetDB
 	{
 		return $this->getRow( $this->getDBVue("SELECT * FROM ".$this->table) );
 	}
+
+	public function activated($id,$act)
+	{
+		return (intval($id)) ? $this->getDB("UPDATE ".$this->table." SET active=$act ".$this->formSql("id",$id)) : false;		
+	}
 }
 ?>

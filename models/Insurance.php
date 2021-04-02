@@ -26,10 +26,10 @@ class Insurance
 		while ($row = $result->fetch()) {
 			$comments[]   = $row;
 		}
-		return (isset($comments)) ? $comments : false;
+		return (count($comments)) ? $comments : [];
 	}
 
-	public static function saveComment ($type,$nik,$text,$ip)	{
+	public function saveComment ($type,$nik,$text,$ip)	{
 		$db     = Db::getConnection();
 		$sql    = "INSERT INTO CommentCalculators (type,nik,text,ip)
 		           VALUES(:type,:nik,:text,:ip)";
@@ -41,24 +41,5 @@ class Insurance
 		
 		return $result -> execute();			
 	}
-
-	public static function getTotal ($table, $id, $detail, $idName,$var) {
-		$totCount  = new Count($table,$id,$detail,$idName);
-		switch ($var) {
-		 	case 1:
-		 		return $totCount->get();
-		 		break;
-		 	case 2:
-		 		return $totCount->getNewOrder();
-		 		break;
-		 	case 3:
-		 		return $totCount->getId();
-		 		break;
-		 	default:
-		 		break;
-		 } 
-		
-	}
-
 }
 ?>

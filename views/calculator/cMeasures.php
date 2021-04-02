@@ -1,4 +1,4 @@
-<?php include 'views/Insurance/headerInsurance.php';?>
+<?php include 'views/insurance/headerInsurance.php';?>
 	<div id="length">
 		<!-- <img src="../image/1.jpg" class="bgFull"> -->
 		
@@ -68,8 +68,7 @@
 									<td class="text-right" style="width: 200px;">{{ result }}</td>
 									<td class="text-center">{{second.name}}</td>
 								</tr>
-								<tr v-for="type in typesActive">
-									
+								<tr v-for="type in typesActive">								
 									<td></td>
 									<td class="text-right">{{resActive(type)}}</td>
 									<td class="text-center">{{type.name}}</td>
@@ -98,10 +97,8 @@
 					    <h4>Коментарів немає</h4>
 					    </div>
 					<? else :?>
-
 					<h5 class="text-center">Коментарів <?= count($comment)?></h5>
-					    <?php foreach ($comment as $item) :?>
-					    	
+					    <?php foreach ($comment as $item) :?>					    	
 					        <p class='text-left ip_Comment'><?=$item['nik'] ?> :</p>
 					        <p class="news_Comment"><?=$item['text'] ?></p>
 					        <br>

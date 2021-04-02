@@ -11,68 +11,79 @@ class CalculatorController {
 		$this->InsuranceClass = new Insurance();
 	}
 	
-	private function json($d) {
+	private function json($d)
+	{
 		$data    = [
 		  'type' => $d
 		];
 		return json_encode($data);
 	}
 
-	private function viewMeasures($tab,$h3,$meta) {
+	private function viewMeasures($tab,$h3,$meta)
+	{
+		echo "SLMAI:".SLMAIL;
+		if ($meta == "") $meta = [];
 		$type    = 4;
 		$ip      = $_SERVER['REMOTE_ADDR'];
 		$subject = "перехід на ".$h3;
 		$massage = $subject." ip=".$ip."  з HTTP_REFERER ".$_SERVER['HTTP_REFERER']."\r\n"."  з REMOTE_ADDR ".$_SERVER['REMOTE_ADDR']."\r\n";		
-		$send    = $this->sendMail($subject,"sl147@ukr.net",$massage);
+		$send    = $this->sendMail($subject,SLMAIL,$massage);
 		$comment = $this->InsuranceClass->getComment($type);
 		if(isset($_POST['submit'])) {
 			$typeC   = new classGetData('typeCalculator');			
 			$nik     = $this->filterTXT('post', 'nik_com');
 			$text    = $this->filterTXT('post', 'txt_com');
 	        $ip      = $_SERVER['REMOTE_ADDR'];
-	        $result  = Insurance::saveComment($type,$nik,$text,$ip);
-			$subject = "Новий коментар ".$typeC->getDataFromTableById($type)['name']." ip=".$ip;
-			$to      = "sl147@ukr.net";
+	        $result  = $this->InsuranceClass->saveComment($type,$nik,$text,$ip);
+			$subject = "Новий коментар ".$typeC->getDataFromTableByNameFetch($type, "id")['name']." ip=".$ip;
+			//$to      = SLMAIL;
 			$massage = $subject." ip=".$ip."  з HTTP_REFERER ".$_SERVER['HTTP_REFERER']."\r\n"."  з REMOTE_ADDR ".$_SERVER['REMOTE_ADDR']."\r\n";
-			$sendd   = $this->sendMail($subject,"sl147@ukr.net",$massage);
+			$sendd   = $this->sendMail($subject,SLMAIL,$massage);
 	    }				
 		require_once ('views/calculator/cMeasures.php');
 		return true;
 	}
 
-	private function editMeasures($title) {	
+	private function editMeasures($title)
+	{	
 		require_once ('views/calculator/editMeasures.php');
 		return true;		
 	}
 
-	public function actionCSubEdit() {
+	public function actionCSubEdit()
+	{
 		$title = 'Редагування груп одиниць виміру';
 		require_once ('views/calculator/editSubMeasures.php');
 		return true;		
 	}
 
-	public function actionEdit() {
+	public function actionEdit()
+	{
+		$meta = [];
 		require_once ('views/calculator/editMeasures.php');
 		return true;		
 	}
 
-	public function actionLength() {
+	public function actionLength()
+	{
 		$res = self::viewMeasures("cLength","калькулятори інші","");
 		return true;	
 	}
 
-	public function actionViewUsers() {
+	public function actionViewUsers()
+	{
 		$users = Auxiliary::viewIPData();
 		require_once ('views/calculator/viewUsers.php');
 		return true;		
 	}
 
-	private function views2el($tab,$title,$name='',$id='',$isId='',$idVal='') {
+	private function views2el($tab,$title,$name='',$id='',$isId='',$idVal='')
+	{
 		$table = [
 			'table' => $tab,
-			'name' => $name,
-			'id' => $id,
-			'isId' => $isId,
+			'name'  => $name,
+			'id'    => $id,
+			'isId'  => $isId,
 			'idVal' => $idVal,
 		];
 		$json  = json_encode($table);
@@ -81,7 +92,8 @@ class CalculatorController {
 		return true;
 	}
 
-	public function actionTypesCalculator() {
+	public function actionTypesCalculator()
+	{
 		$t = self::views2el('typeCalculator',"Редагування типів калькуляторів","name","id",false);
 		return true;
 	}

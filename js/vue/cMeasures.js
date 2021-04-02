@@ -11,8 +11,8 @@ $(document).ready(function() {
 			types:[],
 			typesActive:[],
 			quantity: 1,
-			first: 0,
-			second:0,
+			first: 1,
+			second:1,
 			typeCalc: 0,
 			show: true,
 			nameFirst:'',
@@ -61,10 +61,10 @@ $(document).ready(function() {
 				console.log("getTypes start")
 				this.$http.get(this.select+'typeCalculator').then(function (response) {
 					this.rob = JSON.parse(response.data)
-					for (let r of this.rob){
-						console.log("name:"+r.name+"  tab:"+r.tab)
+					for (let r of this.rob){						
 						if (r.type == 1) {
 							this.types.push(r)
+							console.log("name:"+r.name+"  type:"+r.type)
 						}
 					}								
 				},function (error){
@@ -90,6 +90,7 @@ $(document).ready(function() {
 				})				
 			},
 			saveQuantity: function() {
+				console.log('first='+this.first.k+'  second='+this.second.k)
 				if ((this.first.k > 0) && (this.second.k > 0)) {
 					this.saveQ(this.first.id,this.first.quantity)
 					this.saveQ(this.second.id,this.second.quantity)

@@ -14,7 +14,8 @@ class InsuranceController
 	private function viewIns($metaTags, $type, $nameFile, $text)
 	{
 		
-		//$meta    = Auxiliary:: getMeta($metaTags);
+		//meta    = Auxiliary:: getMeta($metaTags);
+		$meta    = [];
 		$comment = $this->InsuranceClass->getComment($type);
 		require_once ('views/insurance/'.$nameFile.'.php');
 		$res     = self::smail($type, $text);
@@ -26,10 +27,9 @@ class InsuranceController
 
 		$width  = (isset($_COOKIE['sw'])) ? $_COOKIE['sw'] : 1000;
 		$getIPData = $this->getIPData($_SERVER['REMOTE_ADDR']);
-		//$saveIPData= $this->saveIPData($getIPData,$width,$_SERVER['HTTP_REFERER']);
         $massage = "перехід на ".$mass."\r\n";
         $subject = $massage;
-        $subject .= ($width < 992) ? " із мобільного" : '';
+        $subject .= ($width < 993) ? " із мобільного" : '';
         $massage .= "з країни ".$getIPData['country_code']." з міста ".$getIPData['city']."\r\n";
         $massage .= 'ширина екрану: '.$width."\r\n";
         $massage .= 'перехід з сайту: '.$_SERVER['HTTP_REFERER']."\r\n";
@@ -68,14 +68,16 @@ class InsuranceController
 			$id       = $this->filterINT('post','id');
 			$act      = $this->filterINT('post','active');
 			$getComCl = new classGetData('CommentCalculators');
-			$res      = $getComCl->activated($id,$act, 'CommentCalculators' );
+			$res      = $getComCl->activated($id,$act);
 			unset($getComCl);
 		}
 		$title      = "перегляд коментарів клієнтів";
 		$comments   = Insurance::getAllComment($page);
-        $total      = Insurance::getTotal('CommentCalculators','1','id','id',1);
+        $getTotal   = new Count('CommentCalculators');
+        $total      = $getTotal->get();
         $pagination = new Pagination($total, $page, Insurance::SHOWCOMMENT_BY_DEFAULT, 'page-');	
 		require_once ('views/insurance/insuranceCommentEdit.php');
+		unset($getTotal);
 		return true;
 	}
 }
