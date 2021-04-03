@@ -33,8 +33,8 @@ class UserController
 			else
 			{
 				$subject = "haks зі сторінки логування";
-				$to      = "sl147@ukr.net";
-				$massage = "haks зі сторінки логування";
+				$to      = SLMAIL;
+				$massage = $subject;
 				$mail    = $this->sendMail($subject,$to,$massage);
 			}
 		}
@@ -59,19 +59,16 @@ class UserController
 				$email    = $this->filterEmail('post', 'email');
 				$result   = $userCl->createUser($login,$password,$name,$surname,$email);
 				$subject  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
-				$to       = "sl147@ukr.net";
-				$massage  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
-				$res      = $this->sendMail($subject,$to,$massage);
 				$res      = $userCl->setcookie($login,$name,0);
 				unset($userCl);				
 			}
 			else
 			{
 				$subject = "haks зі сторінки реєстрації";
-				$to      = "sl147@ukr.net";
-				$massage = "haks зі сторінки реєстрації";
-				$mail    = $this->sendMail($subject,$to,$massage);
 			}
+
+			$massage = $subject;
+			$mail    = $this->sendMail($subject,SLMAIL,$massage);
 			header("Location: /"); exit();
 		}
 		$token    = $this->getToken();
@@ -104,19 +101,16 @@ class UserController
 					$email    = $this->filterEmail('post', 'email');
 					$result   = $userCl->changeUser($login,$name,$surname,$email);
 					$subject  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
-					$to       = "sl147@ukr.net";
-					$massage  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
-					$res      = $this->sendMail($subject,$to,$massage);
 					$res      = $userCl->setcookie($login,$name,0);
 					unset($userCl);										
 				}
 				else
 				{
 					$subject = "haks зі сторінки редагування даних";
-					$to      = "sl147@ukr.net";
-					$massage = "haks зі сторінки редагування даних";
-					$mail    = $this->sendMail($subject,$to,$massage);
 				}
+
+				$massage = $subject;
+				$mail    = $this->sendMail($subject,SLMAIL,$massage);
 				header("Location: /"); exit();
 			}
 			$token = $this->getToken();

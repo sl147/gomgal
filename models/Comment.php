@@ -30,9 +30,8 @@ class Comment
 		if ($this->isSpam($nik_com,$ip_com,$email_com,$txt_com)) 
 		{
 			$subject = "Спам зі сторінки новини коментар";
-			$to      = "sl147@ukr.net";
-			$massage = "Спам зі сторінки новини коментар\r\n від: $nik_com\r\n email:$email_com\r\ntxt_com:$txt_com\r\n";
-			$mail    = $this->sendMail($subject,$to,$massage);
+			$massage = $subject."\r\nвід: $nik_com\r\nemail:$email_com\r\ntxt_com:$txt_com\r\n";
+			$mail    = $this->sendMail($subject,SLMAIL,$massage);
 			return false;
 		}
 			

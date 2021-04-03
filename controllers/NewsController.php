@@ -49,6 +49,7 @@ class NewsController
 
 		if(isset($_POST['submit']))
 		{
+			$to = SLMAIL;
 			if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token']))
 			{
 				$id_cl     = $id;
@@ -59,12 +60,11 @@ class NewsController
 				if ($com->insComment($id_cl,$txt_com,$nik_com,$email_com,$ip_com))
 				{
 					if ($email_com) {
-						$subject = 'Дякуєм за Ваш коментар';
-						$massage = "Дякуєм за Ваш коментар. Завжди раді зустрічі з Вами на нашому сайті https://www.gomgal.lviv.ua/";
+						$subject = 'Дякуєм за Ваш коментар.';
+						$massage = $subject." Завжди раді зустрічі з Вами на нашому сайті https://www.gomgal.lviv.ua/";
 						$mail    = $this->sendMailToClient($subject,$email_com,$massage);
 					}
 					$subject = "Новий коментар до id=".$id." ip=".$ip_com;"Новий коментар  https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id;
-					$to      = "sl147@ukr.net";
 					$massage = "Новий коментар https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."  до id=".$id." ip=".$ip_com."  з HTTP_REFERER ".$_SERVER['HTTP_REFERER']."\r\n"."  з REMOTE_ADDR ".$_SERVER['REMOTE_ADDR'];
 					$mail  = $this->sendMail($subject,$to,$massage);					
 				}
@@ -72,8 +72,7 @@ class NewsController
 			else
 			{
 				$subject = "haks зі сторінки fullnew";
-				$to      = "sl147@ukr.net";
-				$massage = "haks зі сторінки fullnew https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."\r\n".$this->filterTXT('post','txt_com')."\r\n".$this->filterTXT('post','nik_com')."\r\n".$this->filterTXT('post','email_com');
+				$massage = $subject." https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."\r\n".$this->filterTXT('post','txt_com')."\r\n".$this->filterTXT('post','nik_com')."\r\n".$this->filterTXT('post','email_com');
 				$mail    = $this->sendMail($subject,$to,$massage);
 			}
 

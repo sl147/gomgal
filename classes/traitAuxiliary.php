@@ -336,5 +336,37 @@ trait traitAuxiliary
 
 		return $result -> execute();
 	}
+
+	private function formMailToSend($mass,$txt)
+	{
+		$width   = (isset($_COOKIE['sw'])) ? $_COOKIE['sw'] : 1000;
+		$ip      = $_SERVER['REMOTE_ADDR'];
+		$getIPData = $this->getIPData($ip);
+        $massage = $mass;
+        $subject = $massage;
+        $subject .= ($width < 993) ? " із мобільного" : '';
+        $massage .= "з країни ".$getIPData['country_code']." з міста ".$getIPData['city']."\r\n";
+        $massage .= 'ширина екрану: '.$width."\r\n";
+        $massage .= $txt.$_SERVER['HTTP_REFERER']."\r\n";
+		$send     = $this->sendMail($subject,SLMAIL,$massage);
+	}
+
+	public function formMail($mass)
+	{
+		$txt  = 'перехід з сайту: ';
+		$mass = "перехід на ".$mass."\r\n";
+		$send = $this->formMailToSend($mass, $txt);
+	}
+
+	public function formMailComment($type,$nik,$text)
+	{
+		$typeC  = new classGetData('typeCalculator');
+		$ins    = new Insurance();
+		$ip     = $_SERVER['REMOTE_ADDR'];
+        $result = $ins->saveComment($type,$nik,$text,$ip);
+        $txt    = 'Новий коментар: ';
+		$mass   = "Новий коментар11: \r\n";
+		$send   = $this->formMailToSend($mass, $txt);
+	}
 }
 ?>

@@ -19,26 +19,16 @@ class CalculatorController {
 		return json_encode($data);
 	}
 
-	private function viewMeasures($tab,$h3,$meta)
+	private function viewMeasures($tab,$mass,$meta)
 	{
-		echo "SLMAI:".SLMAIL;
 		if ($meta == "") $meta = [];
 		$type    = 4;
-		$ip      = $_SERVER['REMOTE_ADDR'];
-		$subject = "перехід на ".$h3;
-		$massage = $subject." ip=".$ip."  з HTTP_REFERER ".$_SERVER['HTTP_REFERER']."\r\n"."  з REMOTE_ADDR ".$_SERVER['REMOTE_ADDR']."\r\n";		
-		$send    = $this->sendMail($subject,SLMAIL,$massage);
+		$send    = $this->formMail($mass);
 		$comment = $this->InsuranceClass->getComment($type);
 		if(isset($_POST['submit'])) {
-			$typeC   = new classGetData('typeCalculator');			
-			$nik     = $this->filterTXT('post', 'nik_com');
-			$text    = $this->filterTXT('post', 'txt_com');
-	        $ip      = $_SERVER['REMOTE_ADDR'];
-	        $result  = $this->InsuranceClass->saveComment($type,$nik,$text,$ip);
-			$subject = "Новий коментар ".$typeC->getDataFromTableByNameFetch($type, "id")['name']." ip=".$ip;
-			//$to      = SLMAIL;
-			$massage = $subject." ip=".$ip."  з HTTP_REFERER ".$_SERVER['HTTP_REFERER']."\r\n"."  з REMOTE_ADDR ".$_SERVER['REMOTE_ADDR']."\r\n";
-			$sendd   = $this->sendMail($subject,SLMAIL,$massage);
+			$nik  = $this->filterTXT('post', 'nik_com');
+			$text = $this->filterTXT('post', 'txt_com');
+			$send = $this->formMailComment($type,$nik,$text);
 	    }				
 		require_once ('views/calculator/cMeasures.php');
 		return true;

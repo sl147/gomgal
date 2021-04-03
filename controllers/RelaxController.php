@@ -73,7 +73,7 @@ class RelaxController
 
 	public function actionRelaxAddAn()
 	{
-		$show = false;
+		$show  = false;
 		$relax = new Relax();
 		if(isset($_POST['submit']))
 		{
@@ -88,8 +88,8 @@ class RelaxController
 			else
 			{
 				$subject = "haks зі сторінки add an";
-				$to      = "sl147@ukr.net";
-				$massage = "haks зі сторінки add an";
+				$to      = SLMAIL;
+				$massage = $subject;
 				$mail    = $this->sendMail($subject,$to,$massage);
 				header("Location: /ralaxAddAn");
 			}

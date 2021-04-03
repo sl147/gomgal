@@ -1,4 +1,5 @@
 <?php
+//require_once ('../classes/traitAuxiliary.php');
 $response = [];
 if (isset($_POST['name'])) {
 	$nik_com = $_POST['name'];
@@ -7,9 +8,10 @@ if (isset($_POST['name'])) {
     $ip_com  = $_SERVER['REMOTE_ADDR'];
 	$result  = Contakt::saveComent($nik_com,$ip_com,$email,$txt_com);
 	$subject = "Нове повідомлення зі сторінки Контакти";
-	$to      = "sl147@ukr.net";
-	$massage = "Нове повідомлення зі сторінки Контакти";
-	$mail    = Auxiliary::sendMail($subject,$to,$massage);
+	$massage = $subject;
+	$mailClass = new Insurance();
+	$mail    = Auxiliary::sendMail($subject,SLMAIL,$massage);
+	//$mail    = $this->sendMail($subject,$to,$massage);
 	$response["success"] = 1;
 	$response["message"] = "Is ok";
 }

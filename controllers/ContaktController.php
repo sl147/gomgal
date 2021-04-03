@@ -10,6 +10,7 @@ class ContaktController {
 	{
 		if(isset($_POST['submit']))
 		{
+			$to = SLMAIL;
 			if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token']))
 			{
 				$cont    = new Contakt();
@@ -20,9 +21,8 @@ class ContaktController {
 		        if (!empty($txt_com)) {
 		        	if ($cont->saveComent($nik_com,$ip_com,$email,$txt_com))
 		        	{
-						$subject = "Нове повідомлення зі сторінки Контакти";
-						$to      = "sl147@ukr.net";
-						$massage = "Нове повідомлення зі сторінки Контакти\r\n від: $nik_com\r\n email:$email\r\n$txt_com\r\n";
+						$subject = "Нове повідомлення зі сторінки Контакти";						
+						$massage = $subject."\r\n від: $nik_com\r\n email:$email\r\n$txt_com\r\n";
 						$mail    = $this->sendMail($subject,$to,$massage);		        		
 		        	}
 
@@ -31,13 +31,11 @@ class ContaktController {
 			else
 			{
 				$subject = "haks зі сторінки Контакти";
-				$to      = "sl147@ukr.net";
-				$massage = "haks зі сторінки Контакти";
+				$massage = $subject;
 				$mail    = $this->sendMail($subject,$to,$massage);
-			}
-						        
+			}						        
 		}
-		$token = $this->getToken();
+		$token    = $this->getToken();
 		$siteFile = 'views/contakt/index.php';
 		$metaTags = 'contakt';
 		require_once ('views/layouts/siteIndex.php');		
