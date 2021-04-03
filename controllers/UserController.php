@@ -59,6 +59,7 @@ class UserController
 				$result   = $userCl->createUser($login,$password,$name,$surname,$email);
 				$subject  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
 				$res      = $userCl->setcookie($login,$name,0);
+				$mail    = $this->sendMail($subject,BanMAIL,$massage);
 				unset($userCl);				
 			}
 			else
@@ -101,8 +102,9 @@ class UserController
 					$surname  = $this->filterTXT('post', 'surname');
 					$email    = $this->filterEmail('post', 'email');
 					$result   = $userCl->changeUser($login,$name,$surname,$email);
-					$subject  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
+					$subject  = "Редагування даних відвідувача ".$name;
 					$res      = $userCl->setcookie($login,$name,0);
+					$mail     = $this->sendMail($subject,BanMAIL,$massage);
 					unset($userCl);										
 				}
 				else

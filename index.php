@@ -17,6 +17,7 @@ define('SHOWVIDEO_BY_DEFAULT', 6);
 define('SHOWFA_BY_DEFAULT', 6);
 define('NO_PHOTO', "немає фото");
 define('SLMAIL', "sl147@ukr.net");
+define('BanMAIL', "banevska@ukr.net");
 
 require_once (ROOT."/components/Autoload.php");
 require_once (ROOT."/components/Router.php");

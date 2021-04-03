@@ -32,7 +32,7 @@ class PosterController
 				$posterImpotant = $poster->getFindPostersImpot($findTXT);
 				$posterAll      = $poster->getFindPosters($findTXT,$page);
 				$total          = $poster->getFindTotalPoster($findTXT);
-				$pagination     = new Pagination($total, $this->getIntval($page) , SHOWPOSTER_BY_DEFAULT, 'page-');
+				$pagination     = new Pagination($total, $this->getIntval($page), SHOWPOSTER_BY_DEFAULT, 'page-');
 				$siteFile       = 'views/poster/catAll.php';							
 			}
 			else
