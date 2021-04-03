@@ -4,8 +4,7 @@
  */
 class Calculator
 {
-	
-	const SHOWCOMMENT_BY_DEFAULT = 3;
+
 	const SHOWMEASURES = 4;
 
 	private static function db() {

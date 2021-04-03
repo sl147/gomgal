@@ -5,7 +5,6 @@
 class News extends classGetDB
 {
 	use traitAuxiliary;
-	const SHOWNEWS_BY_DEFAULT = 25;	
 
 	private static function makePhotoSize($foto) {
 		$fotoSize = [];

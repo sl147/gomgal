@@ -6,9 +6,8 @@ class Poster  extends classGetDB
 {
 	use traitAuxiliary;
 
-	const SHOWPOSTER_BY_VUE = 6;
-
-	public function getPosters20() {
+	public function getPosters20()
+	{
 		$result = $this->getDB("SELECT id_poster,title_p FROM poster WHERE active='0' ORDER BY id_poster DESC LIMIT 20");
 		while ($row = $result->fetch()) {
 			$list[]=$row;
@@ -16,7 +15,8 @@ class Poster  extends classGetDB
 		return $list ?? [];
 	}
 
-	public  function getAllPostersImpotCat($cat) {
+	public  function getAllPostersImpotCat($cat)
+	{
 		$cat    = $this->getIntval($cat);
 		$result = $this->getDB("SELECT * FROM poster WHERE (cat_p = $cat) AND (impot=1) AND (active=0) ORDER BY id_poster DESC");
 		while ($row = $result->fetch()) {
@@ -25,7 +25,8 @@ class Poster  extends classGetDB
 		return $list ?? [];
 	}
 
-	public function getAllPostersImpot() {
+	public function getAllPostersImpot()
+	{
 		$result = $this->getDB("SELECT * FROM poster WHERE (impot=1) AND (active=0) ORDER BY id_poster DESC");
 		while ($row = $result->fetch()) {
 			$list[]=$row;			
@@ -33,7 +34,8 @@ class Poster  extends classGetDB
 		return $list ?? [];
 	}
 
-	public  function getAllPostersAllCat($cat, $page = 1) {
+	public  function getAllPostersAllCat($cat, $page = 1)
+	{
 		$cat    = $this->getIntval($cat);
 		$offset = ($this->getIntval($page) - 1) * SHOWPOSTER_BY_DEFAULT;
 		$sql    = "SELECT * FROM poster WHERE (cat_p = $cat) AND (active=0) AND ((NOT impot=1) OR (impot IS NULL)) ORDER BY id_poster DESC LIMIT ".SHOWPOSTER_BY_DEFAULT." OFFSET $offset";
@@ -61,13 +63,15 @@ class Poster  extends classGetDB
 		return $this->getListArr($sql);
 	}
 
-	public  function getFindPosters($txt,$page = 1) {
+	public  function getFindPosters($txt,$page = 1)
+	{
 		$offset   = ($this->getIntval($page) - 1) * SHOWPOSTER_BY_DEFAULT;
 		$sql      = "SELECT * FROM poster WHERE (active= 0) and ((impot=0) OR (impot IS NULL)) and (LOCATE('".$txt."',msg_p)) ORDER BY id_poster DESC LIMIT ".SHOWPOSTER_BY_DEFAULT." OFFSET $offset";
 		return $this->getListArr($sql);
 	}
 
-	public  function getFindPostersImpot($txt) {
+	public  function getFindPostersImpot($txt)
+	{
 		$sql  = "SELECT * FROM poster WHERE (active= 0) and (impot='1') and (LOCATE('".$txt."',msg_p)) ORDER BY id_poster DESC";
 		return $this->getListArr($sql);
 	}
@@ -76,7 +80,8 @@ class Poster  extends classGetDB
 		return ($i) ? $i : '-';
 	}
 
-	public  function getPostersVerify() {
+	public  function getPostersVerify()
+	{
 		$result = $this->getDB("SELECT * FROM catagory");
 		while ($row = $result->fetch()) {
 			$id_cat                 = $row['id_cat'];
@@ -126,14 +131,16 @@ class Poster  extends classGetDB
 		}
 	}
 
-	public  function getPostersCatEd() {
+	public  function getPostersCatEd()
+	{
 		$getData = new classGetData('catagory');
 		$catList = $getData->getDataFromTableOrder('cat_cat','');
 		unset($getData);
 		return $catList ?? [];
 	}
 
-	public function getPostersCat() {
+	public function getPostersCat()
+	{
 		$count_sell_all   = 0;
 		$count_buy_all    = 0;
 		$count_other_all  = 0;
@@ -207,23 +214,27 @@ class Poster  extends classGetDB
 		return $result -> execute();			
 	}
 
-	public  function getPostersByCat($cat) {
+	public  function getPostersByCat($cat)
+	{
 		$cat     = $this->getIntval($cat);
 		$getData = new classGetData('catagory');
 		$list    = $getData->getDataFromTableByNameFetch($cat,'id_cat');
 		return $list ?? [];
 	}
 
-	public function getAllTypePost() {
+	public function getAllTypePost()
+	{
 		return ["вибрати тип","куплю","продам","оренда","обмін","послуги"];
 	}
 
-	public  function getTypePost($type) {
+	public  function getTypePost($type)
+	{
 		$tPos = self::getAllTypePost();
 		return $tPos[$this->getIntval($type)];
 	}
 
-	public  function incrType ($cat,$type) {
+	public  function incrType ($cat,$type)
+	{
 		$cat          = $this->getIntval($cat);
 		$type         = $this->getIntval($type);
 		$db           = Db::getConnection();

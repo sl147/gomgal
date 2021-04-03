@@ -3,8 +3,6 @@
 class NewsController
 {	
 	use traitAuxiliary;
-	
-	const SHOWPOSTER_BY_DEFAULT = 25;
 	public $newsClass;
 
 	public function __construct()
@@ -49,7 +47,6 @@ class NewsController
 
 		if(isset($_POST['submit']))
 		{
-			$to = SLMAIL;
 			if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token']))
 			{
 				$id_cl     = $id;
@@ -65,17 +62,15 @@ class NewsController
 						$mail    = $this->sendMailToClient($subject,$email_com,$massage);
 					}
 					$subject = "Новий коментар до id=".$id." ip=".$ip_com;"Новий коментар  https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id;
-					$massage = "Новий коментар https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."  до id=".$id." ip=".$ip_com."  з HTTP_REFERER ".$_SERVER['HTTP_REFERER']."\r\n"."  з REMOTE_ADDR ".$_SERVER['REMOTE_ADDR'];
-					$mail  = $this->sendMail($subject,$to,$massage);					
+					$massage = "Новий коментар https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."  до id=".$id." ip=".$ip_com."  з HTTP_REFERER ".$_SERVER['HTTP_REFERER']."\r\n"."  з REMOTE_ADDR ".$_SERVER['REMOTE_ADDR'];					
 				}
 			}
 			else
 			{
 				$subject = "haks зі сторінки fullnew";
-				$massage = $subject." https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."\r\n".$this->filterTXT('post','txt_com')."\r\n".$this->filterTXT('post','nik_com')."\r\n".$this->filterTXT('post','email_com');
-				$mail    = $this->sendMail($subject,$to,$massage);
+				$massage = $subject." https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."\r\n".$this->filterTXT('post','txt_com')."\r\n".$this->filterTXT('post','nik_com')."\r\n".$this->filterTXT('post','email_com');				
 			}
-
+			$mail = $this->sendMail($subject,SLMAIL,$massage);
 		} 
 /*session_start();
 if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
@@ -149,7 +144,7 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 		$title = "перегляд коментарів клієнтів";
 		$total = $this->getCount('Comment');
 		$comms = $com->getComments($page);
-		$pagination = new Pagination($total, $page, self::SHOWPOSTER_BY_DEFAULT, 'page-');
+		$pagination = new Pagination($total, $page, SHOWPOSTER_BY_DEFAULT, 'page-');
 		unset($com);
 		require_once ('views/news/newsCommentEdit.php');
 		unset($pagination);
@@ -183,21 +178,21 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 			);
 		$json  = json_encode($table);		
 		$title = "редагування новин";		
-		$pagination = new Pagination($total, $page, self::SHOWPOSTER_BY_DEFAULT, 'page-');
+		$pagination = new Pagination($total, $page, SHOWPOSTER_BY_DEFAULT, 'page-');
 		require_once ('views/news/newsEdit.php');
 		unset($pagination);
 		return true;
 	}
 
-	 private static function objArraySearch($array, $index, $value)
-	    {
-	        foreach($array as $arrayInf) {
-	        	if ($arrayInf[$index] == $value) {
-	                return $arrayInf;
-	            }
-	        }
-	        return null;
-	    }
+	private static function objArraySearch($array, $index, $value)
+	{
+        foreach($array as $arrayInf) {
+        	if ($arrayInf[$index] == $value) {
+                return $arrayInf;
+            }
+        }
+        return null;
+    }
 
 	public function actionNewsEditOne($id, $page = 1)
 	{
@@ -228,7 +223,7 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 				$cat     = $this->filterINT('post', 'category');
 				$cat2    = $this->filterINT('post', 'category2');
 				//$msg     = $this->filterTXT('post', 'msg');
-				$msg     = $_POST['msg'];//$this->filterTXT('post', 'msg');
+				$msg     = $_POST['msg'];
 				$sourse  = $this->filterTXT('post', 'sourse');
 				$videoYT = $this->filterTXT('post', 'videoYT');
 				$FotoDel = $this->filterTXT('post', 'FotoDel');

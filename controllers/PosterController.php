@@ -38,9 +38,8 @@ class PosterController
 			else
 			{
 				$subject = "haks зі сторінки poster find";
-				$to      = SLMAIL;;
 				$massage = $subject;
-				$mail    = $this->sendMail($subject,$to,$massage);
+				$mail    = $this->sendMail($subject,SLMAIL,$massage);
 				$siteFile = 'views/poster/find.php';
 			}
 				

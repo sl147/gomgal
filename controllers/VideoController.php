@@ -18,7 +18,7 @@ class VideoController
 		$videoList  = $video->getVideo($page);
 		$siteFile   = 'views/video/index.php';
 		$metaTags   = 'відео Галичини';
-		$pagination = new Pagination($this->total, $page, Video::SHOWVIDEO_BY_DEFAULT, 'page-');
+		$pagination = new Pagination($this->total, $page, SHOWVIDEO_BY_DEFAULT, 'page-');
 		unset($video);
 		require_once ('views/layouts/siteIndex.php');
 		return true;
@@ -31,7 +31,7 @@ class VideoController
 			'page' => $page,
 			);			
 		$json  = json_encode($table);		
-		$pagination = new Pagination($this->total, $page, Video::SHOWVIDEO_BY_DEFAULT, 'page-');
+		$pagination = new Pagination($this->total, $page, SHOWVIDEO_BY_DEFAULT, 'page-');
 		require_once ('views/video/changeVideo.php');
 		return true;
 	}

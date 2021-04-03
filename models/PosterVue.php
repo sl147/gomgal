@@ -4,16 +4,15 @@
 */
 class PosterVue
 {
-	const SHOWPOSTER_BY_VUE = 6;
-
 	public function __construct()
 	{
 		require_once ('../classes/classGetDB.php');
 	}
 
-	public  function getAllPostersVue($page = 1) {
-		$offset   = ($page - 1) * self::SHOWPOSTER_BY_VUE;
-		$sql        = "SELECT * FROM poster ORDER BY id_poster DESC LIMIT ".self::SHOWPOSTER_BY_VUE." OFFSET $offset";
+	public  function getAllPostersVue($page = 1)
+	{
+		$offset     = ($page - 1) * SHOWPOSTER_BY_DEFAULT;
+		$sql        = "SELECT * FROM poster ORDER BY id_poster DESC LIMIT ".SHOWPOSTER_BY_DEFAULT." OFFSET $offset";
 		$classGetDB = new classGetDB();
 		$result     = $classGetDB->getDBVue($sql);
 		unset($getData);

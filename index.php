@@ -13,7 +13,7 @@ define('SHOWRELAX_BY_DEFAULT', 10);
 define('SHOWPOSTER_BY_DEFAULT', 15);
 define('SHOWCOMMENT_BY_DEFAULT', 25);
 define('SHOWNEWS_BY_DEFAULT', 15);
-define('SHOWUSERS_BY_DEFAULT', 6);
+define('SHOWVIDEO_BY_DEFAULT', 6);
 define('SHOWFA_BY_DEFAULT', 6);
 define('NO_PHOTO', "немає фото");
 define('SLMAIL', "sl147@ukr.net");

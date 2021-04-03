@@ -6,17 +6,18 @@
  */
 class NewsVue
 {
-    const SHOWNEWS_BY_DEFAULT = 25;
 		
-	public function __construct() {
+	public function __construct()
+	{
 		require_once ('../classes/traitAuxiliary.php');
 		require_once ('../classes/classGetDB.php');
 	}
 
-	public function getAllCommentsVue($page = 1) {
+	public function getAllCommentsVue($page = 1)
+	{
 
 		$getData = new classGetData('Comment');
-		$result  = $getData->getDataFromTableOrderPageVueWithoutGetRow(self::SHOWNEWS_BY_DEFAULT,$page,'id_com');
+		$result  = $getData->getDataFromTableOrderPageVueWithoutGetRow(SHOWNEWS_BY_DEFAULT,$page,'id_com');
 		unset($getData);
 		$i       = 0;
 		while ($row = $result->fetch()) {
@@ -31,18 +32,11 @@ class NewsVue
 		return $list ?? [];
 	}
 
-/*	public function getComsByIdVue($id, $page) {
-
-		$getData = new classGetData('Comment');
-		$list = $getData->getDataFromTableByNameVue($id,'id_com');
-		unset($getData);
-		return $list;
-	}*/
-
-	public function getAllNewsVue($page = 1) {
+	public function getAllNewsVue($page = 1)
+	{
 		require_once ('../classes/classGetData.php');
 		$getData  = new classGetData('msgs');
-		$list = $getData->getDataFromTableOrderPageVue(self::SHOWNEWS_BY_DEFAULT,$page,'id');
+		$list = $getData->getDataFromTableOrderPageVue(SHOWNEWS_BY_DEFAULT,$page,'id');
 		unset($getData);
 		return $list ?? [];
 	}

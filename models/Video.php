@@ -4,16 +4,13 @@
 */
 class Video extends classGetDB
 {	
-
 	use traitAuxiliary;
-
-	const SHOWVIDEO_BY_DEFAULT = 6;
 
 	public  function getVideo($page)
 	{
 		$getData = new classGetData('progrnk');
-		$offset  = ($this->getIntval($page) - 1) * self::SHOWVIDEO_BY_DEFAULT;
-		$result  = $getData->getDataByOffsetWithOutRow ('prid',self::SHOWVIDEO_BY_DEFAULT,$offset);
+		$offset  = ($this->getIntval($page) - 1) * SHOWVIDEO_BY_DEFAULT;
+		$result  = $getData->getDataByOffsetWithOutRow ('prid',SHOWVIDEO_BY_DEFAULT,$offset);
 		unset($getData);
 		$i       = 0;
 		while ($row = $result->fetch()) {			
@@ -27,8 +24,8 @@ class Video extends classGetDB
 	public static function getVideoVue($page=1)
 	{
 		$getDB  = new classGetDB();
-		$offset = (intval($page)  - 1) * self::SHOWVIDEO_BY_DEFAULT;
-		$sql    = "SELECT * FROM progrnk ORDER BY prid DESC LIMIT ".self::SHOWVIDEO_BY_DEFAULT." OFFSET $offset";
+		$offset = (intval($page)  - 1) * SHOWVIDEO_BY_DEFAULT;
+		$sql    = "SELECT * FROM progrnk ORDER BY prid DESC LIMIT ".SHOWVIDEO_BY_DEFAULT." OFFSET $offset";
 		$result = $getDB->getDBVue($sql);
 		$i      = 0;
 		while ($row = $result->fetch()) {

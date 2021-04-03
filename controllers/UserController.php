@@ -3,10 +3,9 @@
 class UserController
 {
 	use traitAuxiliary;
-
-	const SHOWCOMMENT_BY_DEFAULT = 25;
 	
-	public function actionIndex() {
+	public function actionIndex()
+	{
 		if(isset($_POST['submit']))
 		{
 			if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token']))
@@ -33,9 +32,8 @@ class UserController
 			else
 			{
 				$subject = "haks зі сторінки логування";
-				$to      = SLMAIL;
 				$massage = $subject;
-				$mail    = $this->sendMail($subject,$to,$massage);
+				$mail    = $this->sendMail($subject,SLMAIL,$massage);
 			}
 		}
 		$token = $this->getToken();
@@ -45,7 +43,8 @@ class UserController
 		return true;
 	}
 
-	public function actionAuthor() {
+	public function actionAuthor()
+	{
 		if(isset($_POST['submit']))
 		{
 			if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token']))
@@ -78,14 +77,16 @@ class UserController
 		return true;
 	}
 
-	public function actionUnreg() {
+	public function actionUnreg()
+	{
 		if (isset($_COOKIE['user'])) {
 			setcookie ("user",'', time() - 3600);
 			header("Location: /"); exit();
 		}
 	}
 
-	public function actionChangeData() {
+	public function actionChangeData()
+	{
 		$userCl      = new User();
 		$userCurrent = $userCl->userCurr();
 		$id          = $userCurrent['id'];
@@ -124,7 +125,8 @@ class UserController
 		}
 	}
 
-	public function actionUserComment($page = 1) {
+	public function actionUserComment($page = 1)
+	{
 		$page       = $this->getIntval($page);		
 		$title      = "перегляд новин клієнтів";
 		$total      = $this->getCount('ComCl');
@@ -135,7 +137,8 @@ class UserController
 		return true;
 	}
 
-	public function actionUserWishes($page = 1) {	
+	public function actionUserWishes($page = 1)
+	{	
 		$title      = "перегляд побажань клієнтів";
 		$total      = $this->getCount('wishCl');
 		$comms      = User::getUsersWishes($this->getIntval($page));

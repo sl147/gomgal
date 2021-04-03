@@ -88,9 +88,8 @@ class RelaxController
 			else
 			{
 				$subject = "haks зі сторінки add an";
-				$to      = SLMAIL;
 				$massage = $subject;
-				$mail    = $this->sendMail($subject,$to,$massage);
+				$mail    = $this->sendMail($subject,SLMAIL,$massage);
 				header("Location: /ralaxAddAn");
 			}
 		}
@@ -135,14 +134,12 @@ class RelaxController
 			$cat   = $this->filterINT('post','category');
 			$res   = $relax->updateRelax($id, $msg, $cat);
 			header("Location: /relaxEdit");
-		}
-		
+		}		
 		$comms      = $relax->getRelaxOne($id);
 		$tPos       = $relax->getRelax();
 		unset($relax);
 		require_once ('views/relax/relaxEditOne.php');
 		return true;
 	}
-
 }	
 ?>

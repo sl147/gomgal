@@ -59,7 +59,7 @@ class InsuranceController
 		$title      = "перегляд коментарів клієнтів";
 		$comments   = Insurance::getAllComment($page);
         $total      = $this->getCount('CommentCalculators');
-        $pagination = new Pagination($total, $page, Insurance::SHOWCOMMENT_BY_DEFAULT, 'page-');	
+        $pagination = new Pagination($total, $page, SHOWCOMMENT_BY_DEFAULT, 'page-');	
 		require_once ('views/insurance/insuranceCommentEdit.php');
 		unset($getTotal);
 		return true;

@@ -56,7 +56,7 @@
 				<?php endforeach; ?>					
 			</tbody>				
 		</table>
-		<?php if ($total > Insurance::SHOWCOMMENT_BY_DEFAULT) :?>
+		<?php if ($total > SHOWCOMMENT_BY_DEFAULT) :?>
 			<div class="text-center"><? echo $pagination->get(); ?></div>
 		<?php endif; ?>	
 	</div>

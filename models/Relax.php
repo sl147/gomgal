@@ -80,8 +80,8 @@ class Relax extends classGetDB
 	public function getRelaxAll($page)
 	{
 		$getData = new classGetData('msgs_relax');
-		$offset  = ($this->getIntval($page) - 1) * SHOWPOSTER_BY_DEFAULT;
-		$comList = $getData->getDataByOffset ('id',SHOWPOSTER_BY_DEFAULT,$offset);
+		$offset  = ($this->getIntval($page) - 1) * SHOWRELAX_BY_DEFAULT;
+		$comList = $getData->getDataByOffset ('id',SHOWRELAX_BY_DEFAULT,$offset);
 		unset($getData);
 		return $comList;
 	}

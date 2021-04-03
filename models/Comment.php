@@ -7,12 +7,12 @@ class Comment
 {
 
 	use traitAuxiliary;
-	const SHOWCOMMENTS_BY_DEFAULT = 25;
 	
-	public static function getComments($page) {
+	public static function getComments($page)
+	{
 		$getData = new classGetData('Comment');
-		$offset  = ($page - 1) * self::SHOWCOMMENTS_BY_DEFAULT;
-		$comList = $getData->getDataByOffset ('id_com',self::SHOWCOMMENTS_BY_DEFAULT,$offset);
+		$offset  = ($page - 1) * SHOWCOMMENT_BY_DEFAULT;
+		$comList = $getData->getDataByOffset ('id_com',SHOWCOMMENT_BY_DEFAULT,$offset);
 		unset($getData);
 		return $comList ?? [];
 	}
