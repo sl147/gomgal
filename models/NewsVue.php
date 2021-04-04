@@ -6,7 +6,8 @@
  */
 class NewsVue
 {
-		
+	const SHOWNEWS_BY_DEFAULT_Vue=25;
+
 	public function __construct()
 	{
 		require_once ('../classes/traitAuxiliary.php');
@@ -17,7 +18,7 @@ class NewsVue
 	{
 
 		$getData = new classGetData('Comment');
-		$result  = $getData->getDataFromTableOrderPageVueWithoutGetRow(SHOWNEWS_BY_DEFAULT,$page,'id_com');
+		$result  = $getData->getDataFromTableOrderPageVueWithoutGetRow(self::SHOWNEWS_BY_DEFAULT_Vue,$page,'id_com');
 		unset($getData);
 		$i       = 0;
 		while ($row = $result->fetch()) {
@@ -36,7 +37,7 @@ class NewsVue
 	{
 		require_once ('../classes/classGetData.php');
 		$getData  = new classGetData('msgs');
-		$list = $getData->getDataFromTableOrderPageVue(SHOWNEWS_BY_DEFAULT,$page,'id');
+		$list = $getData->getDataFromTableOrderPageVue(self::SHOWNEWS_BY_DEFAULT_Vue,$page,'id');
 		unset($getData);
 		return $list ?? [];
 	}
