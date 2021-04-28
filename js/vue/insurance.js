@@ -237,6 +237,7 @@
 		computed: {
 			suma: function(){
 				s = this.base * this.k1 * this.k2 * this.k3 * this.k4 * this.k5 * this.k6 * this.k7 * this.k8 * this.k9
+				console.log ('base='+this.base+'  k1='+this.k1+'  k2='+this.k2+' k3='+this.k3+' k4='+this.k4+' k5='+this.k5+' k6='+this.k6+' k7='+this.k7+' k8='+this.k8+' k9='+this.k9)
 				return (isNaN(s)) ? (0).toFixed(0) : (s).toFixed(0)
 			}			
 		},
@@ -425,13 +426,9 @@
 							break;
 					}
 				}
-			},				
-			print: function(){
-				console.log('fr='+this.fr)
-				console.log('print base='+this.base +' k1='+ this.k1+' k2='+this.k2+' k3='+this.k3+' k4='+this.k4+' k5='+this.k5+' k6='+this.k6+' k7='+this.k7+' k8='+this.k8+' k9='+this.k9)
 			},
 			printShow: function() {
-				console.log('showk1='+this.showk1+' showk41='+this.showk41+' showk42='+this.showk42)
+				//console.log('showk1='+this.showk1+' showk41='+this.showk41+' showk42='+this.showk42)
 			}	
 		},
 		created: function() {
