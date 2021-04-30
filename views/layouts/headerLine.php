@@ -2,17 +2,22 @@
 	<div class="header_topline">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+				<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
  					<img src="/image/gg.png" alt="Гомін Галичини" title="новини з Галичини оголошення" height="50" border="0"> 
 					<!--<img src="/image/GG-logo-NY.webp" alt="Гомін Галичини" title="новини з Галичини оголошення" height="50" border="0">-->
+					<div style="padding-left: 60px; padding-top:5px; color:grey">
+						<script type="text/javascript">datecurr()</script>	
+					</div>
+					
 				</div>
-				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-					<script type="text/javascript">datecurr()</script>
+
+				<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12"></div>
+					<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+						<a href="/insurance" target="_blank">
+							<img src="../image/autosmall.png" height="80" width="auto" alt="">
+						<a/>
 				</div>
-<!-- 				<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
-<iframe width="1600" height="900" src="https://app.powerbi.com/view?r=eyJrIjoiMmI2ZjExMzItZTcwNy00YmUwLWFlMTAtYTUxYzVjODZmYjA5IiwidCI6ImMxMzZlZWMwLWZlOTItNDVlMC1iZWFlLTQ2OTg0OTczZTIzMiIsImMiOjF9" frameborder="0" allowFullScreen="true"></iframe>
-</div> -->
-				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 					<div class="top_links">
 						<?php if (User::isGuest()) :?>
 							Привіт <b><?=User::isGuest()['name']?> </b><br>
