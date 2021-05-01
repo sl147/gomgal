@@ -16,7 +16,7 @@ class SiteController
 		if (count($allNews) == 0) {
 			$month--;
 			$month = ($month == 0) ? 12 : $month;
-			$allNews = $news->getLatestNews($month, $page);			 
+			$allNews = $news->getLatestNews($month, $year, $page);			 
 		}
 		unset($news);
 		$pagination = new Pagination($total, $page, SHOWNEWS_BY_DEFAULT, 'page-');
