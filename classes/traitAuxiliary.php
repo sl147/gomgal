@@ -368,5 +368,14 @@ trait traitAuxiliary
 		$mass   = "Новий коментар11: \r\n";
 		$send   = $this->formMailToSend($mass, $txt);
 	}
+
+	public function mailToClient($email,$subject)
+	{
+		if ($email)
+		{
+			$massage = $subject." Завжди раді зустрічі з Вами на нашому сайті https://www.gomgal.lviv.ua/";
+			$mail    = $this->sendMailToClient($subject,$email,$massage);
+		}
+	}
 }
 ?>

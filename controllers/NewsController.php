@@ -10,6 +10,46 @@ class NewsController
 		$this->newsClass = new News();
 	}
 
+	private function getMetaKeywords($title,$cat1,$cat2) 
+	{
+		$arrStr   = explode(" ", $title);
+		$keywords = '';
+		foreach ($arrStr as $value) {
+			if (mb_strlen($value) > 2)
+			{
+				$keywords .= $value.', ';	
+			}
+		}
+		$keywords .= $this->newsClass->getCatEl($cat1)['namecm'].', ';
+		$keywords .= $this->newsClass->getCatEl($cat2)['namecm'];
+
+		return $keywords;
+	}
+
+	private function getSubmit($id, $com)
+	{
+		$txt_com   = $this->filterTXT('post','txt_com');
+		$nik_com   = $this->filterTXT('post','nik_com');
+		$email_com = $this->filterTXT('post','email_com');
+		if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token']))
+		{			
+			$ip_com    = $_SERVER['REMOTE_ADDR'];
+			if ($com->insComment($id,$txt_com,$nik_com,$email_com,$ip_com))
+			{
+				$this->mailToClient($email_com,'Дякуєм за Ваш коментар.');
+				$subject = "Новий коментар до id=".$id." ip=".$ip_com;"Новий коментар  https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id;
+				$massage = "Новий коментар https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."  до id=".$id." ip=".$ip_com."  з HTTP_REFERER ".$_SERVER['HTTP_REFERER']."\r\n"."  з REMOTE_ADDR ".$_SERVER['REMOTE_ADDR'];
+				$mail    = $this->sendMail($subject,BanMAIL,$massage);					
+			}
+		}
+		else
+		{
+			$subject = "haks зі сторінки fullnew";
+			$massage = $subject." https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."\r\n".$txt_com."\r\n".$nik_com."\r\n".$email_com;				
+		}
+		$mail = $this->sendMail($subject,SLMAIL,$massage);
+	}
+
 	public function actionIndex($cat, $page = 1) {
 		$mt         = new MetaTags();
 		$page       = $this->getIntval($page);
@@ -44,46 +84,10 @@ class NewsController
 		$mt   = new MetaTags();
 		$com  = new Comment();
 		$id   = $this->getIntval($id);
-
 		if(isset($_POST['submit']))
 		{
-			if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token']))
-			{
-				$id_cl     = $id;
-				$txt_com   = $this->filterTXT('post','txt_com');
-				$nik_com   = $this->filterTXT('post','nik_com');
-				$email_com = $this->filterTXT('post','email_com');
-				$ip_com    = $_SERVER['REMOTE_ADDR'];
-				if ($com->insComment($id_cl,$txt_com,$nik_com,$email_com,$ip_com))
-				{
-					if ($email_com) {
-						$subject = 'Дякуєм за Ваш коментар.';
-						$massage = $subject." Завжди раді зустрічі з Вами на нашому сайті https://www.gomgal.lviv.ua/";
-						$mail    = $this->sendMailToClient($subject,$email_com,$massage);
-					}
-					$subject = "Новий коментар до id=".$id." ip=".$ip_com;"Новий коментар  https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id;
-					$massage = "Новий коментар https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."  до id=".$id." ip=".$ip_com."  з HTTP_REFERER ".$_SERVER['HTTP_REFERER']."\r\n"."  з REMOTE_ADDR ".$_SERVER['REMOTE_ADDR'];
-					$mail    = $this->sendMail($subject,BanMAIL,$massage);					
-				}
-			}
-			else
-			{
-				$subject = "haks зі сторінки fullnew";
-				$massage = $subject." https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."\r\n".$this->filterTXT('post','txt_com')."\r\n".$this->filterTXT('post','nik_com')."\r\n".$this->filterTXT('post','email_com');				
-			}
-			$mail = $this->sendMail($subject,SLMAIL,$massage);
-		} 
-/*session_start();
-if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
-    echo '_SESSION resolution: ' . $_SESSION['screen_width'] . 'x' . $_SESSION['screen_height'];
-} else if(isset($_REQUEST['width']) AND isset($_REQUEST['height'])) {
-    $_SESSION['screen_width'] = $_REQUEST['width'];
-    $_SESSION['screen_height'] = $_REQUEST['height'];
-    echo '_REQUEST resolution: ' . $_SESSION['screen_width'] . 'x' . $_SESSION['screen_height'];
-    //header('Location: ' . $_SERVER['PHP_SELF']);
-} else {
-    echo 'script  <script type="text/javascript">window.location = "' . $_SERVER['PHP_SELF'] . '?width="+screen.width+"&height="+screen.height;</script>';
-}*/
+			$this->getSubmit($id, $com);
+		}
 		$token     = $this->getToken();
 		$news      = $this->newsClass->getNewsById($id);
 		$newsCount = $this->newsClass->updateCountById($id,$news['countmsgs']);	
@@ -91,10 +95,12 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 		$comm      = $com->getCommentsById($id);
 		$meta      = $mt->getMTagsByUrl('fullnew');
 		$meta['title'] .= $news['title'];
+		$meta['descr'] = $news['prew'];
+		$meta['keywords'] = $this->getMetaKeywords($news['title'],$news['category'],$news['cat2']);
 		$fb = 'https://www.gomgal.lviv.ua/Fullnew/'.$id;
 		$siteFile  = 'views/news/fullNew.php';
-		$siteSmall = 'views/news/fullNew.php';
 		unset($com);
+		unset($mt);
 		require_once ('views/layouts/siteIndex.php');
 		return true;
 	}
@@ -151,24 +157,6 @@ if(isset($_SESSION['screen_width']) AND isset($_SESSION['screen_height'])){
 		unset($pagination);
 		return true;
 	}
-
-/*	public function actionNewsEditComOne($id, $page = 1) {
-		$id      = $this->getIntval($id);
-		$page    = $this->getIntval($page);
-		$title   = "редагування коментарів";
-		$allNews = NewsVue::getComsByIdVue($id,$page);
-		if(isset($_POST['submit'])) {
-			$nik   = Auxiliary::filterTXT('post', 'nik');
-			$txt   = Auxiliary::filterTXT('post', 'txt');
-			$email = Auxiliary::filterEmail('post', 'email');
-			$res   = News::updateComm($id,$nik,$txt,$email); 
-			$loc   = "Location: /newsCommentEdit/page-".$page;
-			header($loc);
-		}
-
-		require_once ('views/news/newsCommentEditOne.php');
-		return true;
-	}*/
 
 	public function actionNewsEdit($page = 1)
 	{

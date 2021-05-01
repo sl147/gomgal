@@ -5,34 +5,40 @@
 class ContaktController {
 
 	use traitAuxiliary;
-	
+
+	private function getSubmit()
+	{
+		$txt_com   = $this->filterTXT('post','txt_com');
+		$nik_com   = $this->filterTXT('post','nik_com');
+		$email_com = $this->filterTXT('post','email_com');
+		if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token']))
+		{			
+			$ip_com = $_SERVER['REMOTE_ADDR'];
+			if (!empty($txt_com))
+			{
+				$cont = new Contakt();
+				if ($cont->saveComent($nik_com,$ip_com,$email_com,$txt_com))
+				{
+					$this->mailToClient($email_com,'Дякуєм за Ваше повідомлення.');
+					$subject = "Нове повідомлення зі сторінки Контакти";
+					$massage = $subject."\r\n від: $nik_com\r\n email:$email_com\r\n$txt_com\r\n"." ip=".$ip_com."  з HTTP_REFERER ".$_SERVER['HTTP_REFERER']."\r\n"."  з REMOTE_ADDR ".$_SERVER['REMOTE_ADDR'];
+					$mail    = $this->sendMail($subject,BanMAIL,$massage);					
+				}
+			}
+		}
+		else
+		{
+			$subject = "haks зі сторінки Contakt";
+			$massage = $subject."\r\n".$txt_com."\r\n".$nik_com."\r\n".$email_com;				
+		}
+		$mail = $this->sendMail($subject,SLMAIL,$massage);
+	}
+
 	public function actionIndex()
 	{
 		if(isset($_POST['submit']))
 		{
-			if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token']))
-			{
-				$cont    = new Contakt();
-		        $nik_com = $this->filterTXT('post','nik_com');
-			    $email   = ($_POST['email_com']) ? $this->filterEmail('post','email_com') : "";
-		        $txt_com = $this->filterTXT('post','txt_com');
-		        $ip_com  = $_SERVER['REMOTE_ADDR'];
-		        if (!empty($txt_com)) {
-		        	if ($cont->saveComent($nik_com,$ip_com,$email,$txt_com))
-		        	{
-						$subject = "Нове повідомлення зі сторінки Контакти";						
-						$massage = $subject."\r\n від: $nik_com\r\n email:$email\r\n$txt_com\r\n";
-						$mail    = $this->sendMail($subject,BanMAIL,$massage);		
-		        	}
-		        }				
-			}
-			else
-			{
-				$subject = "haks зі сторінки Контакти";
-				$massage = $subject;				
-			}
-
-			$mail    = $this->sendMail($subject,SLMAIL,$massage);						        
+			$this->getSubmit();					        
 		}
 		$token    = $this->getToken();
 		$siteFile = 'views/contakt/index.php';
