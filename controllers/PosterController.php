@@ -89,9 +89,16 @@ class PosterController
 	public function actionPosterOne($id = 1)
 	{
 		$poster    = new Poster();
+		//$mt        = new MetaTags();
 		$id        = $this->getIntval($id);
 		$posterOne = $poster->getPosterById($id);
 		$res       = $poster->plusId($id);
+		$title = $posterOne['title_p'];
+		//$meta = [];
+		//$meta      = $mt->getMTagsByUrl('fullnew');
+		$meta['title'] = $this->getMetaTitle($posterOne['title_p']);
+		$meta['descr'] = $posterOne['title_p'];
+		$meta['keywords'] = $this->getMetaKeywords($posterOne['msg_p']);
 		$file      = 'posterFoto/'.$posterOne["foto_p1"];
 		$siteFile  = 'views/poster/one.php';
 		$metaTags  = 'poster';

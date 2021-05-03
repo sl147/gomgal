@@ -377,5 +377,51 @@ trait traitAuxiliary
 			$mail    = $this->sendMailToClient($subject,$email,$massage);
 		}
 	}
+
+	public function getMetaKeywords($text, $cat1="",$cat2="") 
+	{
+		$arrStr   = explode(".", $text);// текст оголошення по словах по крапках
+		$keywords = '';
+		
+		foreach ($arrStr as $strArr) { // слово
+			$arrTxt = explode(" ", $strArr);
+			foreach ($arrTxt as $value) 
+			{
+				//echo "value:$value<br>";
+				$str = "";
+				$add = false;
+				for ($i = 0; $i < mb_strlen($value, 'UTF-8'); $i++) {
+				    $symbol = mb_substr($value, $i, 1, 'UTF-8');				    
+				    if (ord($symbol) > 47)
+					{
+						$str .= $symbol;
+						$add = true;
+						//echo "str:$str<br>";
+					}
+				}
+				if ((mb_strlen($str, 'UTF-8') > 2) && ($add)) {
+					$keywords .= $str.", ";	
+				}
+				if (mb_strlen($keywords, 'UTF-8') > 100)
+				{
+					return $keywords.GOMGAL;
+				}		
+			}
+		}
+		if (!(empty($cat1)))
+		{
+			$keywords .= $this->newsClass->getCatEl($cat1)['namecm'].', ';
+		}		
+		if (!(empty($cat2)))
+		{
+			$keywords .= $this->newsClass->getCatEl($cat2)['namecm'].', ';
+		}
+		return $keywords.GOMGAL;
+	}
+
+	public function getMetaTitle($title)
+	{
+		return mb_substr($title,0,55,'UTF-8').GOMGAL;
+	}
 }
 ?>

@@ -10,22 +10,6 @@ class NewsController
 		$this->newsClass = new News();
 	}
 
-	private function getMetaKeywords($title,$cat1,$cat2) 
-	{
-		$arrStr   = explode(" ", $title);
-		$keywords = '';
-		foreach ($arrStr as $value) {
-			if (mb_strlen($value) > 2)
-			{
-				$keywords .= $value.', ';	
-			}
-		}
-		$keywords .= $this->newsClass->getCatEl($cat1)['namecm'].', ';
-		$keywords .= $this->newsClass->getCatEl($cat2)['namecm'];
-
-		return $keywords;
-	}
-
 	private function getSubmit($id, $com)
 	{
 		$txt_com   = $this->filterTXT('post','txt_com');
@@ -94,7 +78,7 @@ class NewsController
 		$newsOther = $this->newsClass->newsOther($id,$news['category'],$news['cat2']);
 		$comm      = $com->getCommentsById($id);
 		$meta      = $mt->getMTagsByUrl('fullnew');
-		$meta['title'] .= $news['title'];
+		$meta['title'] .= $this->getMetaTitle($news['title']);
 		$meta['descr'] = $news['prew'];
 		$meta['keywords'] = $this->getMetaKeywords($news['title'],$news['category'],$news['cat2']);
 		$fb = 'https://www.gomgal.lviv.ua/Fullnew/'.$id;
