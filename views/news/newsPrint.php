@@ -1,6 +1,6 @@
 <head>
 	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<?php if (isset($meta)) :?>
 		<title><?= $meta['title']?></title>
 		<meta name="keywords" content="<?= $meta['keywords']?>">
