@@ -20,6 +20,7 @@ return array(
 'calcLength' => 'calculator/length',
 'clCalk' => 'calculator/viewUsers',
 'contakt' => 'contakt/index',
+'clickButton/([0-9]+)' => 'clickButton/gov/$1',
 'FAcreate' => 'FA/create',
 'faEditOne/([0-9]+)' => 'FA/editOne/$1',
 'FAedit' => 'FA/edit',

@@ -3,7 +3,8 @@
 <!-- <?=Auxiliary::showReklamaArg('/insurance','velocityProduct','калькулятор автоцивілки','розрахунок вартості страхування автоцивілки')?> -->
 <br>
 <?=Auxiliary::showWeather()?>
-<?=Auxiliary::showReklamaArg('http://drohobych-rada.gov.ua/webcams/','webCamera','вебкамери Дрогобича','вебкамери в Дрогобичі')?>
+<?=Auxiliary::showReklamaArg('clickButton/6','webCamera','вебкамери Дрогобича','вебкамери в Дрогобичі')?>
+<!-- <?=Auxiliary::showReklamaArg('http://drohobych-rada.gov.ua/webcams/','webCamera','вебкамери Дрогобича','вебкамери в Дрогобичі')?> -->
 <?=Auxiliary::showRelaxRandom(1)?>
 <?=Auxiliary::showRelaxRandom(2)?>
 <?=Auxiliary::showReklRand()?>
