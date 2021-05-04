@@ -21,6 +21,7 @@ return array(
 'clCalk' => 'calculator/viewUsers',
 'contakt' => 'contakt/index',
 'clickButton/([0-9]+)' => 'clickButton/gov/$1',
+'countClickButton' => 'clickButton/countClickButton',
 'FAcreate' => 'FA/create',
 'faEditOne/([0-9]+)' => 'FA/editOne/$1',
 'FAedit' => 'FA/edit',

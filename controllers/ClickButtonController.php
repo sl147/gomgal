@@ -49,5 +49,16 @@ class ClickButtonController {
 	public static function showWeather() {
 			include ('views/layouts/showWeather.php');
 	}
+
+	public function actionCountClickButton()
+	{
+		$result = $this->getCountClickButton();
+		while ($row = $result->fetch()) {
+			$countButton[]   = $row;
+		}
+		
+		require_once ('views/admin/viewClickButton.php');
+		return true;
+	}
 }
 ?>

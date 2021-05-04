@@ -438,5 +438,12 @@ trait traitAuxiliary
 			return $getData->insertDataToTableByName ($type, "id_button","count");
 		}
 	}
+
+	public function getCountClickButton()
+	{
+		$sql = "SELECT Type.id, Type.name, Count.count FROM typeButton AS Type LEFT JOIN countClickButton AS Count ON Count.id_button = Type.id ORDER BY Type.id";
+		return Db::getConnection() -> query($sql);
+
+	}
 }
 ?>
