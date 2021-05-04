@@ -66,6 +66,13 @@ class AdminController {
 		return true;
 	}
 
+	public function actionTypeButton() {
+		$title = "Редагування типів кнопок";
+		$t     = self::json('typeButton',$title,"name","id");
+
+		return true;
+	}
+
 	public function actionSpam() {
 		$title = "Редагування spam";
 		$t     = self::json('spamTab',$title,"name","id");

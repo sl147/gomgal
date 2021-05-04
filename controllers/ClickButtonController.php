@@ -8,6 +8,7 @@ class ClickButtonController {
 
 	public function actionGov($type)
 	{
+		$this->plusClickButton($type);
 		switch ($type) {
 			case '1':
 				$this->formMail('сайт COVID');

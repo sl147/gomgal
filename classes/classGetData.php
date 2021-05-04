@@ -210,5 +210,23 @@ class classGetData extends classGetDB
 	{
 		return (intval($id)) ? $this->getDB("UPDATE ".$this->table." SET active=$act ".$this->formSql("id",$id)) : false;		
 	}
+
+/** Обновляєм запис в таблиці $this->table по елементу $elNameUpdate
+ *
+ *  @return true або false
+ */
+	public function updateDataFromTableByName ($elValue,$elName, $elValueUpDate,$elNameUpdate)
+	{	
+		return $this->getDB("UPDATE ".$this->table." SET ".$elNameUpdate."=".$elValueUpDate .$this->formSql($elName,$elValue)); 
+	}
+
+/** Вставляєм нульовий запис в таблицю $this->table по елементу $elName
+ *
+ *  @return true або false
+ */
+	public function insertDataToTableByName ($elValue,$elName,$elName0)
+	{	
+		return $this->getDB("INSERT INTO ".$this->table." (".$elName.",".$elName0.") VALUES(".$elValue.",1)"); 
+	}		
 }
 ?>

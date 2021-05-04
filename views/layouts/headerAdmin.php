@@ -110,7 +110,9 @@
 					</button>
 					<ul class="dropdown-menu">
 						<?php Auxiliary::showElementMenu("metaTags","редагування метатегів","редагування метатегів")?>
-					</ul>			
+						<?php Auxiliary::showElementMenu("typeButton","редагування типів кнопок","редагування типів кнопок")?>
+						<?php Auxiliary::showElementMenu("countClickButton","переходи по типах кнопок","переходи по типах кнопок")?>
+					</ul>		
 				</div>
 				<?php if (User::isGuest()['login'] == 'sl147adm') :?>
 				<div class="btn-group btn-group-justified">

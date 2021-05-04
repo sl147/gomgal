@@ -81,6 +81,7 @@ return array(
 'relax/([0-9]+)/page-([0-9]+)' => 'relax/index/$1/$2',
 'relax/([0-9]+)' => 'relax/index/$1',
 'spam' => 'admin/spam',
+'typeButton' => 'admin/typeButton',
 'videoChange/page-([0-9]+)' => 'video/changeVideo/$1',
 'videoChange' => 'video/changeVideo',
 'video/page-([0-9]+)' => 'video/index/$1',

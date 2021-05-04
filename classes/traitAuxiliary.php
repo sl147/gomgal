@@ -423,5 +423,20 @@ trait traitAuxiliary
 	{
 		return mb_substr($title,0,55,'UTF-8').GOMGAL;
 	}
+
+	public function plusClickButton($type)
+	{
+		$getData  = new classGetData("countClickButton");
+		$result = $getData->getDataFromTableByNameFetch ($type,"id_button");
+		if ($result)
+		{
+			$count = $result["count"] + 1;
+			return $getData->updateDataFromTableByName ($type, "id_button", $count,"count");
+		}
+		else
+		{
+			return $getData->insertDataToTableByName ($type, "id_button","count");
+		}
+	}
 }
 ?>
