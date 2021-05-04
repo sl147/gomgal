@@ -8,7 +8,11 @@ class ClickButtonController {
 
 	public function actionGov($type)
 	{
-		$this->plusClickButton($type);
+		if (!empty($_SERVER['HTTP_REFERER']))
+        {
+        	$this->plusClickButton($type);
+        }
+		
 		switch ($type) {
 			case '1':
 				$this->formMail('сайт COVID');

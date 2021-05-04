@@ -14,7 +14,9 @@
 				</tr>
 			</thead>
 			<tbody>
+				<? $all = 0;?>
 				<?php foreach ($countButton as $item) :?>
+					<? $all += $item['count'];?>
 					<tr class="text-center">
 						<td>
 							<?=$item['id']?>
@@ -27,6 +29,11 @@
 						</td>
 					</tr>
                <?php endforeach ?>
+				<tr class="text-center">
+					<td></td>
+					<td class="text-center">всього</td>
+					<td><?=$all?></td>
+				</tr>
 			</tbody>
 		</table>
 	</div>

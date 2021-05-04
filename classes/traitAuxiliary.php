@@ -348,7 +348,16 @@ trait traitAuxiliary
         $massage .= "з країни ".$getIPData['country_code']." з міста ".$getIPData['city']."\r\n";
         $massage .= 'ширина екрану: '.$width."\r\n";
         $massage .= $txt.$_SERVER['HTTP_REFERER']."\r\n";
-		$send     = $this->sendMail($subject,SLMAIL,$massage);
+        if (!empty($_SERVER['HTTP_REFERER']))
+        {
+        	$send = $this->sendMail($subject,SLMAIL,$massage);	
+        }
+        else
+        {
+        	$massage .= " пустий HTTP_REFERER";
+        	$send = $this->sendMail($subject,SLMAIL,$massage);
+        }
+		
 	}
 
 	public function formMail($mass)
