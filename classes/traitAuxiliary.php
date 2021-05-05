@@ -38,83 +38,6 @@ trait traitAuxiliary
 
 		return $result->fetch()['count'];
 	}
-
-	private function mailing ($to,$subject,$massage)
-	{
-		$from    = "info@gomgal.lviv.ua";
-		$headers = "From: $from\r\nReplay-To: $from\r\nContent-Type: text/plain; charset=utf-8\r\n ";
-		return mail($to,$subject,$massage,$headers);
-	}
-
-	public function sendMailToClient($subject,$to,$massage)
-	{
-		return $this->mailing($to,$subject,$massage);
-	}
-
-	public function sendMail($subject,$to,$massage) {
-		$indicesServer = array('PHP_SELF',
-			'argv',
-			'argc',
-			'GATEWAY_INTERFACE',
-			'SERVER_ADDR',
-			'SERVER_NAME',
-			'SERVER_SOFTWARE',
-			'SERVER_PROTOCOL',
-			'REQUEST_METHOD',
-			'REQUEST_TIME',
-			'REQUEST_TIME_FLOAT',
-			'QUERY_STRING',
-			'DOCUMENT_ROOT',
-			'HTTP_ACCEPT',
-			'HTTP_ACCEPT_CHARSET',
-			'HTTP_ACCEPT_ENCODING',
-			'HTTP_ACCEPT_LANGUAGE',
-			'HTTP_CONNECTION',
-			'HTTP_HOST',
-			'HTTP_REFERER',
-			'HTTP_USER_AGENT',
-			'HTTPS',
-			'REMOTE_ADDR',
-			'REMOTE_HOST',
-			'REMOTE_PORT',
-			'REMOTE_USER',
-			'REDIRECT_REMOTE_USER',
-			'SCRIPT_FILENAME',
-			'SERVER_ADMIN',
-			'SERVER_PORT',
-			'SERVER_SIGNATURE',
-			'PATH_TRANSLATED',
-			'SCRIPT_NAME',
-			'REQUEST_URI',
-			'PHP_AUTH_DIGEST',
-			'PHP_AUTH_USER',
-			'PHP_AUTH_PW',
-			'AUTH_TYPE',
-			'PATH_INFO',
-			'ORIG_PATH_INFO'
-		) ;
-
-        $massage .= "\r\n";
-		foreach ($indicesServer as $arg) {
-			/*if ($arg == 'argv'){
-				foreach ($arg as $i) {
-					echo "        is argv:".$i."<br>";
-				}
-			}else{
-				if (isset($_SERVER[$arg])) {
-
-					echo "is arg:".$arg."<br>";
-				} else {
-					echo "no arg".$arg."<br>";
-				}				
-			}*/
-
-
-			$massage .= $arg.':';
-		    $massage .= (isset($_SERVER[$arg])) ? $_SERVER[$arg]."\r\n" : "--\r\n";
-		}
-		return $this->mailing($to,$subject,$massage);
-	}
 	
 	public function filterINT($type, $field)
 	{
@@ -302,7 +225,6 @@ trait traitAuxiliary
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		$json = curl_exec($ch);
 		curl_close($ch);
-		//$ipwhois_result = json_decode($json, true);
 		return json_decode($json, true);
 	}
 
@@ -337,56 +259,6 @@ trait traitAuxiliary
 		return $result -> execute();
 	}
 
-	private function formMailToSend($mass,$txt)
-	{
-		$width   = (isset($_COOKIE['sw'])) ? $_COOKIE['sw'] : 1000;
-		$ip      = $_SERVER['REMOTE_ADDR'];
-		$getIPData = $this->getIPData($ip);
-        $massage = $mass;
-        $subject = $massage;
-        $subject .= ($width < 993) ? " із мобільного" : '';
-        $massage .= "з країни ".$getIPData['country_code']." з міста ".$getIPData['city']."\r\n";
-        $massage .= 'ширина екрану: '.$width."\r\n";
-        $massage .= $txt.$_SERVER['HTTP_REFERER']."\r\n";
-        if (!empty($_SERVER['HTTP_REFERER']))
-        {
-        	$send = $this->sendMail($subject,SLMAIL,$massage);	
-        }
-        else
-        {
-        	$massage .= " пустий HTTP_REFERER";
-        	$send = $this->sendMail($subject,SLMAIL,$massage);
-        }
-		
-	}
-
-	public function formMail($mass)
-	{
-		$txt  = 'перехід з сайту: ';
-		$mass = "перехід на ".$mass."\r\n";
-		$send = $this->formMailToSend($mass, $txt);
-	}
-
-	public function formMailComment($type,$nik,$text)
-	{
-		$typeC  = new classGetData('typeCalculator');
-		$ins    = new Insurance();
-		$ip     = $_SERVER['REMOTE_ADDR'];
-        $result = $ins->saveComment($type,$nik,$text,$ip);
-        $txt    = 'Новий коментар: ';
-		$mass   = "Новий коментар11: \r\n";
-		$send   = $this->formMailToSend($mass, $txt);
-	}
-
-	public function mailToClient($email,$subject)
-	{
-		if ($email)
-		{
-			$massage = $subject." Завжди раді зустрічі з Вами на нашому сайті https://www.gomgal.lviv.ua/";
-			$mail    = $this->sendMailToClient($subject,$email,$massage);
-		}
-	}
-
 	public function getMetaKeywords($text, $cat1="",$cat2="") 
 	{
 		$arrStr   = explode(".", $text);// текст оголошення по словах по крапках
@@ -396,7 +268,6 @@ trait traitAuxiliary
 			$arrTxt = explode(" ", $strArr);
 			foreach ($arrTxt as $value) 
 			{
-				//echo "value:$value<br>";
 				$str = "";
 				$add = false;
 				for ($i = 0; $i < mb_strlen($value, 'UTF-8'); $i++) {
@@ -405,7 +276,6 @@ trait traitAuxiliary
 					{
 						$str .= $symbol;
 						$add = true;
-						//echo "str:$str<br>";
 					}
 				}
 				if ((mb_strlen($str, 'UTF-8') > 2) && ($add)) {
@@ -452,7 +322,108 @@ trait traitAuxiliary
 	{
 		$sql = "SELECT Type.id, Type.name, Count.count FROM typeButton AS Type LEFT JOIN countClickButton AS Count ON Count.id_button = Type.id ORDER BY Type.id";
 		return Db::getConnection() -> query($sql);
+	}
 
+	public function sendMail($subject,$to,$massage) {
+		$indicesServer = array('PHP_SELF',
+			'argv',
+			'argc',
+			'GATEWAY_INTERFACE',
+			'SERVER_ADDR',
+			'SERVER_NAME',
+			'SERVER_SOFTWARE',
+			'SERVER_PROTOCOL',
+			'REQUEST_METHOD',
+			'REQUEST_TIME',
+			'REQUEST_TIME_FLOAT',
+			'QUERY_STRING',
+			'DOCUMENT_ROOT',
+			'HTTP_ACCEPT',
+			'HTTP_ACCEPT_CHARSET',
+			'HTTP_ACCEPT_ENCODING',
+			'HTTP_ACCEPT_LANGUAGE',
+			'HTTP_CONNECTION',
+			'HTTP_HOST',
+			'HTTP_REFERER',
+			'HTTP_USER_AGENT',
+			'HTTPS',
+			'REMOTE_ADDR',
+			'REMOTE_HOST',
+			'REMOTE_PORT',
+			'REMOTE_USER',
+			'REDIRECT_REMOTE_USER',
+			'SCRIPT_FILENAME',
+			'SERVER_ADMIN',
+			'SERVER_PORT',
+			'SERVER_SIGNATURE',
+			'PATH_TRANSLATED',
+			'SCRIPT_NAME',
+			'REQUEST_URI',
+			'PHP_AUTH_DIGEST',
+			'PHP_AUTH_USER',
+			'PHP_AUTH_PW',
+			'AUTH_TYPE',
+			'PATH_INFO',
+			'ORIG_PATH_INFO'
+		) ;
+
+        $massage .= "\r\n";
+		foreach ($indicesServer as $arg) {
+			$massage .= $arg.':';
+		    $massage .= (isset($_SERVER[$arg])) ? $_SERVER[$arg]."\r\n" : "--\r\n";
+		}
+		return $this->mailing($to,$subject,$massage);
+	}
+
+	private function mailing ($to,$subject,$massage)
+	{
+		$from    = "info@gomgal.lviv.ua";
+		$headers = "From: $from\r\nReplay-To: $from\r\nContent-Type: text/plain; charset=utf-8\r\n ";
+		return mail($to,$subject,$massage,$headers);
+	}
+
+	private function formMailToSend($mass,$txt)
+	{
+		$width   = (isset($_COOKIE['sw'])) ? $_COOKIE['sw'] : 1000;
+		$ip      = $_SERVER['REMOTE_ADDR'];
+		$getIPData = $this->getIPData($ip);
+        $massage = $mass;
+        $subject = $massage;
+        $subject .= ($width < 993) ? " із мобільного" : '';
+        $massage .= "з країни ".$getIPData['country_code']." з міста ".$getIPData['city']."\r\n";
+        $massage .= 'ширина екрану: '.$width."\r\n";
+        $massage .= $txt.$_SERVER['HTTP_REFERER']."\r\n";
+        if (!empty($_SERVER['HTTP_REFERER']))
+        {
+        	$send = $this->sendMail($subject,SLMAIL,$massage);	
+        }
+	}
+
+	public function formMail($mass)
+	{
+		$txt  = 'перехід з сайту: ';
+		$mass = "перехід на ".$mass."\r\n";
+		$send = $this->formMailToSend($mass, $txt);
+	}
+
+	public function formMailComment($type,$nik,$text)
+	{
+		$typeC  = new classGetData('typeCalculator');
+		$ins    = new Insurance();
+		$ip     = $_SERVER['REMOTE_ADDR'];
+        $result = $ins->saveComment($type,$nik,$text,$ip);
+        $txt    = 'Новий коментар: ';
+		$mass   = "Новий коментар: \r\n";
+		$send   = $this->formMailToSend($mass, $txt);
+	}
+
+	public function mailToClient($email,$subject)
+	{
+		if ($email)
+		{
+			$massage = $subject." Завжди раді зустрічі з Вами на нашому сайті https://www.gomgal.lviv.ua/";
+			$mail    = $this->mailing($email,$subject,$massage);
+		}
 	}
 }
 ?>

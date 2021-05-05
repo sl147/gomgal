@@ -43,15 +43,16 @@ class ClickButtonController {
 				$this->formMail('сайт webcams online');
 				header("Location: https://drohobych-rada.gov.ua/webcams");
 				break;
+			
+			case '7':
+				$this->formMail('Facebook');
+				header("Location: https://www.facebook.com/Гомін-Галичини-398431253663801");
+				break;
 
 			default:
 				# code...
 				break;
 		}
-	}
-
-	public static function showWeather() {
-			include ('views/layouts/showWeather.php');
 	}
 
 	public function actionCountClickButton()

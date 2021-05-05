@@ -37,7 +37,7 @@
 						<?php endif; ?>
 					</div><br><br>
 					<div class="text-right">
-						<a href="https://www.facebook.com/Гомін-Галичини-398431253663801" target="_blank">
+						<a href="clickButton/7" target="_blank">
 							<img src="/image/fb.png" height="30" width="auto" alt="">
 						</a>
 					</div>							
