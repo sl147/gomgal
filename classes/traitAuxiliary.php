@@ -183,7 +183,8 @@ trait traitAuxiliary
 		if (file_exists($fdelS)) unlink($fdelS);
 	}
 
-	public function isSpam($nik,$ip,$email,$txt) {
+	public function isSpam($nik,$ip,$email,$txt)
+	{
 		$spams = $this->getSpam();
 		foreach ($spams as $spam) {
 			if (strpos($nik,   $spam["name"]) !== false) return true;
