@@ -71,6 +71,10 @@ class Auxiliary
 		include ('views/layouts/showReklRand.php');
 	}
 
+	public static function getAdSence()	{
+		include ('views/layouts/AdSence.php');
+	}
+
 	public static function showKurs() {
 		$ch = curl_init('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

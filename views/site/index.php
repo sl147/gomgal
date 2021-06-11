@@ -1,9 +1,11 @@
 <?php News::showNews($topNews)?>
+
 <h3 class='text-center'>
 	НОВИНИ
 </h3>
 
 <?=Auxiliary::showReklRand()?>
+<?=Auxiliary::getAdSence()?>
 
 <?php foreach ($allNews as $item) :?>
 	<?php News::showNews($item)?>

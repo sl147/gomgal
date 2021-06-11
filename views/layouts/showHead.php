@@ -1,6 +1,8 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script data-ad-client="pub-9370914710542990" async src="https://pagead2.googlesyndication.com/
+pagead/js/adsbygoogle.js"></script>
 	<?php if ($siteFile  == 'views/news/fullNew.php') :?>
 		<meta property="og:url"         content="<?php echo $fb?>" />
 		<meta property="og:type"        content="article" />
@@ -18,4 +20,5 @@
 	<link rel="stylesheet" @media all href="/libs/font-awesome-4.2.0/css/font-awesome.min.css" />
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<script src="/js/lazyload.js"></script>
+	<script data-ad-client="ca-pub-9370914710542990" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </head>
