@@ -1,4 +1,5 @@
 <head>
+	<?php include 'views/layouts/GoogleAnalytics.php';?>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script data-ad-client="pub-9370914710542990" async src="https://pagead2.googlesyndication.com/
