@@ -10,7 +10,7 @@
 <?=Vote::showVote()?>
 <?=Auxiliary::showReklama('https://www.facebook.com/teatr.drohobych/','/rekl/theatre.jpg','Дрогобицький театр','театр ім.Ю.Дрогобича')?>
 <?=Auxiliary::showArchive()?>
-<?=Auxiliary::showLivecount()?>
+<!-- <?=Auxiliary::showLivecount()?> -->
 
 <?=Auxiliary::up()?>
 </aside>
