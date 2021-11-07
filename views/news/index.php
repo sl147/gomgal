@@ -8,7 +8,7 @@
 	if(count($allNewscat)) {
 	?>
 	<h3 class='text-center'>
-		Результати пошуку 
+		Результати пошуку <br>"<?php echo $txt_find ?>"
 	</h3>
 <?php }else{ ?>
 	<h3 class='text-center'>
