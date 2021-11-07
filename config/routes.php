@@ -22,6 +22,7 @@ return array(
 'contakt' => 'contakt/index',
 'clickButton/([0-9]+)' => 'clickButton/gov/$1',
 'countClickButton' => 'clickButton/countClickButton',
+'findNews' => 'news/findNews',
 'FAcreate' => 'FA/create',
 'faEditOne/([0-9]+)' => 'FA/editOne/$1',
 'FAedit' => 'FA/edit',

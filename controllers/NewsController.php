@@ -45,6 +45,7 @@ class NewsController
 		$pagination = new Pagination($total, $page, SHOWNEWS_BY_DEFAULT, 'page-');
 		$meta       = $mt->getMTagsByUrl('main');
 		$meta['title'] .= '|'.$this->newsClass->getCatEl($cat)['namecm'];
+		$var        = 1;
 		$siteFile   = 'views/news/index.php';
 		require_once ('views/layouts/siteIndex.php');
 		unset($pagination);
@@ -58,6 +59,7 @@ class NewsController
 		$allNewscat = $this->newsClass->getLatestNewsArchive($month, $year, $page);		
 		$pagination = new Pagination($total, $page, SHOWNEWS_BY_DEFAULT, 'page-');
 		$metaTags   = 'news';
+		$var        = 1;
 		$siteFile   = 'views/news/index.php';
 		require_once ('views/layouts/siteIndex.php');
 		unset($pagination);
@@ -234,6 +236,28 @@ class NewsController
 		
 		require_once ('views/news/newsEditID.php');
 		return true;
+	}
+
+	public function actionFindNews($page = 1) {
+		if (isset($_POST['submit'])) {
+			//$txt_find  = strtoupper($this->filterTXT('post','name_f'));
+			$txt_find  = $this->filterTXT('post','name_f');
+			$mt         = new MetaTags();
+			$page       = $this->getIntval($page);
+			$month      = date('n');
+			$year       = date('Y');
+			$topNews    = [];
+			$total      = $this->newsClass->getFindTotalNews($txt_find);
+			$allNewscat = $this->newsClass->getNewsFind($txt_find);		
+			$pagination = new Pagination($total, $page, SHOWNEWS_BY_DEFAULT, 'page-');
+			$meta       = $mt->getMTagsByUrl('main');
+			//$meta['title'] .= '|'.$this->newsClass->getCatEl($cat)['namecm'];
+			$var        = 0;
+			$siteFile   = 'views/news/index.php';
+			require_once ('views/layouts/siteIndex.php');
+			unset($pagination);
+			return true;
+		}
 	}
 }	
 ?>

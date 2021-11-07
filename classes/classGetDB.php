@@ -8,8 +8,9 @@
 class classGetDB
 {
 
-	public function getDB ($sql) {
-		return Db::getConnection() -> query($sql);
+	public function getDB ($sql)
+	{
+		return Db::getConnection()->query($sql);
 	}
 
 	public function getDBVue ($sql) {

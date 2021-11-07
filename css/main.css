@@ -36,7 +36,36 @@ img[src] {
 [v-cloak] {
   display: none;
 }
-
+.fa-search:before {
+    content: "\f002";
+}
+.sl147_find {
+    border: none;
+    height: 50px;
+}
+.form_find{
+  border: 1px solid #777;
+  border-radius: 2px;
+}
+.find_bcg {
+  background-color: #F0FFFF;
+}
+.search-submit {    
+    border: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    color: #777;
+    cursor: pointer;
+    font-size: 18px;
+    height: 28px;
+    width: 50px;
+    -webkit-transition: all 300ms ease-out 0s;
+    -moz-transition: all 300ms ease-out 0s;
+    -o-transition: all 300ms ease-out 0s;
+    -ms-transition: all 300ms ease-out 0s;
+    transition: all 300ms ease-out 0s;
+}
 .form-group-input {
   width: 123%;
 }

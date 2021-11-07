@@ -49,6 +49,39 @@ class News extends classGetDB
 		return $catList ?? [];
 	}
 
+	public  function getFindTotalNews($txt) {
+		$sql    = "SELECT count(*) as count FROM msgs WHERE (LOCATE('".$txt."',msg)) OR (LOCATE('".$txt."',title))";
+		$result = $this->getDB($sql);
+		$result -> setFetchMode(PDO::FETCH_ASSOC);
+		return $result->fetch()['count'];
+	}
+
+	public function getNewsFind($txt)
+	{
+		$sql    = "SELECT * FROM msgs WHERE (LOCATE('".$txt."',msg)) OR (LOCATE('".$txt."',title)) OR (LOCATE('".$txt."',prew))";
+		$result = $this->getDB($sql);
+		$i      = 1;
+		while ($row = $result->fetch()) {
+			$NewsList[$i]['id']        = $row['id'];
+			$NewsList[$i]['top']       = $row['top'];
+			$NewsList[$i]['title']     = ucfirst (mb_strtolower ($row['title'], 'UTF-8'));
+			$NewsList[$i]['titleengl'] = $row['titleengl'];
+			$NewsList[$i]['datetime']  = $row['datetime'];
+			$NewsList[$i]['prew']      = $row['prew'];
+			$NewsList[$i]['sourse']    = $row['sourse'];
+			$NewsList[$i]['countmsgs'] = $row['countmsgs'];
+			$NewsList[$i]['fotoF']     = $row['foto'];
+			$NewsList[$i]['foto']      = "NewsFoto/".$row['foto'];
+			$NewsList[$i]['width']     = 0;
+			$NewsList[$i]['height']    = 0;
+			$size                      = self::makePhotoSize($row['foto']);
+			$NewsList[$i]['width']     = $size['width'];
+			$NewsList[$i]['height']    = $size['height'];
+			$i++;
+		}
+		return $NewsList ?? [];
+	}
+
 	public static function getNews() {
 		$getData = new classGetData('msgs');
 		$result  = $getData->getDataFromTableOrderWithOutRow('id', 25);
@@ -269,7 +302,10 @@ class News extends classGetDB
 
 	public static function showNews($arrNews)
 	{
-		include ('views/news/showNews.php');
+		if (!empty($arrNews))
+		{
+			include ('views/news/showNews.php');
+		}
 	}
 }
 ?>
