@@ -38,6 +38,7 @@ class FAController
 
 	public function actionCreate()
 	{
+
         if(isset($_POST['submit'])) {
 			$fa     = new FA();
 	        $name_FA = $this->filterTXT('post', 'name_FA');
