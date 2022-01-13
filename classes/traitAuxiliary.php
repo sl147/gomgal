@@ -370,10 +370,10 @@ trait traitAuxiliary
 		) ;
 
         $massage .= "\r\n";
-		foreach ($indicesServer as $arg) {
+/*		foreach ($indicesServer as $arg) {
 			$massage .= $arg.':';
 		    $massage .= (isset($_SERVER[$arg])) ? $_SERVER[$arg]."\r\n" : "--\r\n";
-		}
+		}*/
 		return $this->mailing($to,$subject,$massage);
 	}
 

@@ -25,6 +25,11 @@ class NewsController
 				$massage = "Новий коментар https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."  до id=".$id." ip=".$ip_com."  з HTTP_REFERER ".$_SERVER['HTTP_REFERER']."\r\n"."  з REMOTE_ADDR ".$_SERVER['REMOTE_ADDR'];
 				$mail    = $this->sendMail($subject,BanMAIL,$massage);					
 			}
+			else
+			{
+				$massage = '';
+				$subject = '';
+			}
 		}
 		else
 		{

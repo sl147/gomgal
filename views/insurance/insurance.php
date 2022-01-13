@@ -115,13 +115,14 @@
 						    </div>
 						<? else :?>
 
-						<h5 class="text-center">Коментарів <?= count($comment)?></h5>
-						    <?php foreach ($comment as $item) :?>
+						<!-- <h5 class="text-center">Коментарів <?= count($comment)?></h5> -->
+						<h5 class="text-center">Коментарів ></h5>
+<!-- 						    <?php foreach ($comment as $item) :?>
 						    	
 						        <p class='text-left ip_Comment'><?=$item['nik'] ?> :</p>
 						        <p class="news_Comment"><?=$item['text'] ?></p>
 						        <br>
-						    <?php endforeach; ?>	
+						    <?php endforeach; ?>	 -->
 						<? endif; ?>						
 					</div>					
 				</div>
@@ -131,5 +132,6 @@
 
 <script src="/js/jquery-1.11.3.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 <script src="/js/vue.min.js"></script>
 <script src="/js/vue/insurance.js"></script>	
