@@ -1,4 +1,4 @@
-<?
+<?php
 //Front controller
 
 // Загальні настройки
@@ -24,9 +24,5 @@ require_once (ROOT."/components/Autoload.php");
 require_once (ROOT."/components/Router.php");
 require_once (ROOT."/components/Db.php");
 
-//Установка з'єднання з БД
-//$db = new Db();
-//Виклик Router
 $router = new Router();
 $router->run();
-?>

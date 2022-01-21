@@ -19,14 +19,18 @@
   });
 </script> -->
 <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+		<form method='POST'>
+	<br><input type="text" style="width: 100%;" name="name_f" placeholder="Введіть текст для пошуку"><br><br>
+	<input name="_token" type="hidden" value="<?= $token?>">
+	<button name="submit" type="submit" class="btn-block btn btn-info btn-lg">
+	 	Знайти
+	</button>
+</form>
 <div class='lastNews text-center'>
 	останні новини
 </div>
 </div>
 <br>
-<!-- <div class="showSmall showReklIns showReklInsImg">
-<?=Auxiliary::showReklamaArg('https://www.artargus.in.ua/insurance','','калькулятор автоцивілки','розрахунок вартості страхування автоцивілки')?>
- -->
 <div class="showSmall">
 	<br><br>
 	<div class="row ">
@@ -45,21 +49,6 @@
 		<div class='bordLeft media'>
 			<?php if ($item['fotoF']) :?>
 				<?php if (file_exists($item["foto"])) :?>
-<!-- 					<?php $size = getimagesize ($item["foto"]);
-						if ($size[0] == $size[1]) {
-							$w = 60;
-							$h = 60;
-						}
-						elseif($size[0] > $size[1]) {
-							$w = 80;
-							$h = 60;
-						}
-						else {
-							$w = 60;
-							$h = 80;
-						}
-					?> -->			
-
 					<a class='media-left media-top' href='/Fullnew/<?=$item["id"]?>'>
 						<img class="imgLazy" alt='завантажується...' width='60' height='auto' data-src='<?="/".$item["foto"]?>' title='<?=$item["title"]?>'>
 					</a>
