@@ -1,0 +1,59 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Gift to cart\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-24 13:07+0000\n"
+"PO-Revision-Date: 2023-07-15 14:14+0200\n"
+"Last-Translator: Jarosław\n"
+"Language-Team: Polski\n"
+"Language: uk_UK\n"
+"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n%10 >= 2 && n%10 <=4 && "
+"(n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || n%10 == 1 || (n%10 >= 5 && "
+"n%10 <=9)) || (n%100 >= 12 && n%100 <= 14)) ? 2 : 3);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: PO File Editor https://pofile.net/free-po-editor\n"
+"X-Loco-Version: 2.6.2; wp-6.0\n"
+"X-Domain: sl147_gift\n"
+
+#. Description of the plugin
+#| msgid "<code><strong>Gift to cart</strong></code> Added gift to cart"
+msgid "Simple Top Bar will allows you to display a nice top bar in your site"
+msgstr "Simple Top Bar дозволить вам відобразити гарний верхній рядок на вашому сайті"
+
+#: admin/partials/sl147_gift_add_form.php:46
+msgid "Installation"
+msgstr "Встановлення"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Reviews"
+msgstr "Відгуки"
+
+#: includes/class-sl147_gift.php:237 admin/partials/sl147_gift_add_form.php:67
+msgid "Details"
+msgstr "Подробиці"
+
+#: public/partials/sl147_gift_popup.php:59
+msgid "There are no reviews"
+msgstr "Відгуків немає"
+
+#: public/partials/sl147_gift_popup.php:59
+msgid "Upload the plugin to your page. Activate it. Place the shortcode ['sl147_TB_display'] on your page where you want to see it and that will be enough. "
+msgstr "Завантажте плагін на Вашу сторінку. Активуйте його.	Розмістіть шорткод ['sl147_TB_display'] на Вашій сторінці у тому місці, де Ви хочете його бачити і цього буде достатньо."
+
+#: includes/class-sl147_gift.php:237 admin/partials/sl147_gift_add_form.php:67
+msgid "Add a comment"
+msgstr "Додати коментар"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Name"
+msgstr "Ім'я"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Comment"
+msgstr "Відгуки"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Submit"
+msgstr "Надіслати"

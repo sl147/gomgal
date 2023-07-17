@@ -37,6 +37,8 @@ return array(
 'insuranceCommentEdit/page-([0-9]+)' => 'insurance/insuranceCommentEdit/$1',
 'insuranceCommentEdit' => 'insurance/insuranceCommentEdit',
 'insurance' => 'insurance/index',
+'topBar/([a-z]+)' => 'plugins/topBarLang/$1',
+'topBar' => 'plugins/topBarRun',
 'main/page-([0-9]+)' => 'site/index/$1',
 'main' => 'site/index',
 'metaTags/([0-9]+)' => 'metaTags/MetaTagsOne/$1',

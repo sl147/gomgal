@@ -1,7 +1,7 @@
 <?php include 'views/layouts/headerAdmin.php';?>
 <div class="col-lg-1 col-md-1 col-sm-0 col-xs-0"></div>
 <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-	<h2 class="text-center">перегляд коментарів</h2>
+	<h2 class="text-center">перегляд коментарів1</h2>
 	<table class="table table-responsive table-bordered table-striped table-hover">
 		<thead>
 			<tr class='success'>
