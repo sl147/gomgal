@@ -9,14 +9,14 @@
 			<div>
 				<a href="/topBar/en" class="textwidth btn btn-primary btn-block">En</a>
 				<a href="/topBar/pl" class="textwidth btn btn-primary btn-block">Pl</a>
-				<a href="/topBar/uk" class="textwidth btn btn-primary btn-block">Укр</a>
+				<a href="/topBar/uk" class="textwidth btn btn-primary ">Укр</a>
 			</div>
 
 		</div>
 		<div class="col-lg-1 col-md-1 col-sm-0 col-xs-0"></div>
 		<div class='col-lg-6 col-md-6 col-sm-10 col-xs-12'>	
 			<h2 class="text-center">Simple Top Bar</h2>
-			<ul class="nav nav-tabs" style="margin-left: 0;">
+			<ul class="nav nav-tabs" style="margin-left: 0; margin-bottom: 20px;">
 
 				<li class="active">
 					<a style="color: #337ab7;" data-toggle="tab" href="#myTab">
@@ -39,8 +39,22 @@
 
 			<div class="tab-content">
 				<div id="myTab" class="tab-pane fade in active">
-					<p><?php echo $this->Translate('Simple Top Bar will allows you to display a nice top bar in your site')?></p>
-					<p>В налаштуваннях плагіну можна задати наступні опції: кольор </p>
+					<ul>
+					<li><?php echo $this->Translate('Simple Top Bar will allows you to display a nice top bar in your site')?></li>
+					<li><?php echo $this->Translate('In the plugin settings, you can set the following options:')?></li>
+					<li><?php echo $this->Translate('Background color')?></li>
+					<li><?php echo $this->Translate('Font color')?></li>
+					<li><?php echo $this->Translate('Text in the bar')?></li>
+					<li><?php echo $this->Translate('Active bar')?></li>
+					<li><?php echo $this->Translate('Active bar non stop')?></li>
+					<li><?php echo $this->Translate('Bar width (%%)')?></li>
+					<li><?php echo $this->Translate('Border radius (px)')?></li>
+					<li><?php echo $this->Translate('Position')?></li>
+					<li><?php echo $this->Translate('UpDown')?></li>
+					<li><?php echo $this->Translate('Font size (px)')?></li>
+					<li><?php echo $this->Translate('Height top bar (px)')?></li>
+				</ul>
+
 					<p>author <a target="_blank" href="https://profiles.wordpress.org/sl147">Yaroslav Livchak</a> </p>
 				</div>
 				<div id="opinian" class="tab-pane fade">

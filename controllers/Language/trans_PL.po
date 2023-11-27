@@ -44,6 +44,10 @@ msgid "Upload the plugin to your page. Activate it. Place the shortcode ['sl147_
 msgstr "Prześlij wtyczkę na swoją stronę. Aktywuj. Umieść shortcode ['sl147_TB_display'] na swojej stronie w miejscu, w którym chcesz go zobaczyć, i to wystarczy."
 
 #: includes/class-sl147_gift.php:237 admin/partials/sl147_gift_add_form.php:67
+msgid "In the plugin settings, you can set the following options:"
+msgstr "W ustawieniach wtyczki możesz ustawić następujące opcje:"
+
+#: includes/class-sl147_gift.php:237 admin/partials/sl147_gift_add_form.php:67
 msgid "Add a comment"
 msgstr "Dodaj komentarz"
 
@@ -58,3 +62,47 @@ msgstr "Komentarz"
 #: admin/partials/sl147_gift_form.php:7
 msgid "Submit"
 msgstr "Wyslij"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Background color"
+msgstr "Kolor tła"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Font color"
+msgstr "Kolor czcionki"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Text in the bar"
+msgstr "Tekst w pasku"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Active bar"
+msgstr "Aktywny pasek"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Active bar non stop. When the option is enabled, the row will always be shown. When disabled, only until the first time closure"
+msgstr "Aktywny pasek non stop. Gdy opcja jest włączona, pasek będzie zawsze widoczny. Gdy włączona , tylko do pierwszego zamknięcia"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Bar width (%%)"
+msgstr "Szerokość paska (%%)"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Border radius (px)"
+msgstr "Border radius (px)"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Position"
+msgstr "Pozycja"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "UpDown"
+msgstr "Góra dół"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Font size (px)"
+msgstr "Rozmiar czcionki (px)"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Height top bar (px)"
+msgstr "Wysokość paska (px)"

@@ -37,7 +37,7 @@
 		<?php include 'views/layouts/hamburgerMenu.php';?>	
 		<div class='col-lg-0 col-md-0 col-sm-1 col-xs-1'></div>
 		<div class='col-lg-0 col-md-0 col-sm-6 col-xs-6'>
-			<a href="https://www.artargus.in.ua/insurance" target='_blank'>
+			<a href="https://www.gomgal.lviv.ua/insurance" target='_blank'>
 				<img class='insImgSize' height="50" width="auto" src="../image/autosmall.png" alt="калькулятор автоцивілки">
 			</a>		
 		</div>

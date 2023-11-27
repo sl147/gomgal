@@ -34,6 +34,10 @@ msgstr "Відгуки"
 msgid "Details"
 msgstr "Подробиці"
 
+#: includes/class-sl147_gift.php:237 admin/partials/sl147_gift_add_form.php:67
+msgid "In the plugin settings, you can set the following options:"
+msgstr "У налаштуваннях плагіна ви можете встановити такі параметри:"
+
 #: public/partials/sl147_gift_popup.php:59
 msgid "There are no reviews"
 msgstr "Відгуків немає"
@@ -57,3 +61,47 @@ msgstr "Відгуки"
 #: admin/partials/sl147_gift_form.php:7
 msgid "Submit"
 msgstr "Надіслати"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Background color"
+msgstr "Колір фону"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Font color"
+msgstr "Колір тексту"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Text in the bar"
+msgstr "Текст в рядку"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Active bar: show bar or not"
+msgstr "Активний бар"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Active bar non stop. When the option is enabled, the row will always be shown. When disabled, only until the first time closure"
+msgstr "Активний бар нон-стоп. При включеному параметрі рядок буде висвітлюватись завжди. При виключеному тільки до першого закриття рядка"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Bar width (%%)"
+msgstr "Ширина смуги (%%)"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Border radius (px)"
+msgstr "Радіус заокруглення (px)"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Position"
+msgstr "Позиція: фіксована, рухома"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "UpDown"
+msgstr "Розмшщення: зверху, знизу"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Font size (px)"
+msgstr "Розмір шрифту (px)"
+
+#: admin/partials/sl147_gift_form.php:7
+msgid "Height top bar (px)"
+msgstr "Висота (px)"

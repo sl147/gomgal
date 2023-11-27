@@ -1,4 +1,5 @@
 <header>
+	<?php header('Content-type: text/html; charset=utf-8')?>
 	<div class="header_topline">
 		<div class="container-fluid">
 			<div class="row">
