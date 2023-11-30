@@ -1,22 +1,20 @@
 <header>
-	<?php header('Content-type: text/html; charset=utf-8')?>
 	<div class="header_topline">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
- 					<img src="/image/gg.png" alt="Гомін Галичини" title="новини з Галичини оголошення" height="50" border="0"> 
-					<!--<img src="/image/GG-logo-NY.webp" alt="Гомін Галичини" title="новини з Галичини оголошення" height="50" border="0">-->
-					<div style="padding-left: 60px; padding-top:5px; color:grey">
+				<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="text-align: center;">
+					<a href="/main">
+ 						<img src="/image/gg.png" alt="Гомін Галичини" title="новини з Галичини оголошення" height="50" width="auto"> 
+ 					</a>
+					<div class="datecurr">
 						<script type="text/javascript">datecurr()</script>	
 					</div>
-
 				</div>
-
 				<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12"></div>
-					<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-						<a href="/insurance" target="_blank">
-							<img src="/image/autosmall.png" height="80" width="auto" alt="">
-						<a/>
+				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+					<a href="/insurance" target="_blank">
+						<img src="/image/autosmall.png" height="80" width="auto" alt="Калькулятор страхування цивільної відповідальності">
+					<a/>
 				</div>
 				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 					<div class="top_links">
@@ -39,11 +37,11 @@
 					</div><br><br>
 					<div class="text-right">
 						<a href="clickButton/7" target="_blank">
-							<img src="/image/fb.png" height="30" width="auto" alt="">
+							<img src="/image/fb.png" height="30" width="auto" alt="Facebook Гомін Галичини" title="Фейсбук Гомін Галичини">
 						</a>
-					</div>							
+					</div>
 				</div>
 			</div>
-		</div>													
+		</div>
 	</div>
 </header>

@@ -83,7 +83,10 @@ class RelaxController
 				$msg   = $this->filterTXT('post','msg');
 				$res   = $relax->addNewAn($teman, $msg);
 				$show  = true;
-				header("Location: /relaxALL");		
+				$subject = "новий анекдот зі сторінки add an";
+				$massage = $msg;
+				$mail    = $this->sendMail($subject,SLMAIL,$massage);
+				header("Location: /relax/1");		
 			}
 			else
 			{

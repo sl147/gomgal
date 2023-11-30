@@ -2,19 +2,6 @@
 
 /* Large Devices, Wide Screens */
 @media only screen and (max-width : 1200px) {
-
-
-.reklPicture {
-padding: 10px 30px; 
-}
-.arhYear {
-margin-left: 30px;
-font-size: 12px;
-}
-.arhYear2 {
-margin-left: 30px;
-font-size: 12px; 
-}
 }
 
 /* Medium Devices, Desktops */
@@ -23,99 +10,10 @@ font-size: 12px;
 }
 
 @media only screen and (max-width : 992px) {
-	body {
-		margin-left: 0px;
-		margin-right:0px;
-	}
-	.webDrog{
-		height: 20px;
-		font-size: 15px;
-	}
-	.leftR {
-		margin: 0px;
-	}
-	.posterTXT {
-		font-size: 16px;
-	}
-	.showLarge {
-		display: none;	
-	}
-	.showSmall {
-		display: block;
-		/*height: 50px;*/	
-	}
-	.showSmall1 {
-		height: 21%;
-		font-size: 18px;
-		/*padding-top: 20px;*/
-	}
-	.imgNews {
-		display: none;
-	}
-
-	.velocityProduct {
-		background-image: none;
-		height: 22%;
-		width: auto;
-	}
-	.lastNews{
-		width: 100%;
-		margin-left: 0px;
-	}
-	.showRekl {
-    display: block;  
-	}
-	#vote {
-		width: 100%;
-	}
-	.main_menu{
-		display: none;
-		position: absolute;
-		width: 100%;
-	}
-	.reklPicture {
-		padding: 10px 180px; 
-	}
-	.news_msg {
-	  padding: 0px;
-	}
-	.videoRow {
-	  height: 28%;
-	}
 }
 
 /* Small Devices, Tablets */
 @media only screen and (max-width : 768px) {
-	.hamburgerAdmin{
-		 visibility: visible;
-		 z-index: 100;
-		}
-	.menuMain {
-	  /*visibility: hidden;*/
-	  display: none;;
-	}
-	.top_links {
-		background-color: #585d61;
-		display: none;
-		margin-top: 15px;
-		padding: 14px;
-		position: absolute;
-		vertical-align: middle;
-		width: 100%;
-	}
-	.header_topline {
-		display: none;
-	}
-
-	.fb {
-		display: none;
-	}	
-	.reklT {
-		display: none;
-	}
-	.reklPicture {
-		padding: 10px 120px; 
-	}
 
 }
 
@@ -135,9 +33,7 @@ font-size: 12px;
 
 /* Extra Small Devices, Phones */
 @media only screen and (max-width : 480px) {
-.reklPicture {
-display: none;
-}
+
 }
 @media only screen and (max-width : 414px) {
 

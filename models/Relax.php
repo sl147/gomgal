@@ -66,13 +66,24 @@ class Relax extends classGetDB
 		return ""; 
 	}
 
-	public function addNewAn($teman, $msg)
+	private function getCountRl() :int 
 	{
-		$teman  = $this->getIntval($teman);
-        $sql    = "INSERT INTO msgs_relax (teman,msg) VALUES(:teman, :msg)";
-        $result = $this->getPrepareSQL($sql);
-        $result -> bindParam(':teman', $teman, PDO::PARAM_STR);
-        $result -> bindParam(':msg',   $msg,   PDO::PARAM_STR);
+		$result = $this->getDB("SELECT countrl FROM msgs_relax");
+		while ($row = $result->fetch()) {			
+			$list[] = $row['countrl'];
+		}
+		return (int) max($list);
+	}
+
+	public function addNewAn($teman, string $msg)
+	{
+		$teman   = $this->getIntval($teman);
+		$countrl = $this->getCountRl() + 1;
+        $sql     = "INSERT INTO msgs_relax (teman, msg, countrl) VALUES(:teman, :msg, :countrl )";
+        $result  = $this->getPrepareSQL($sql);
+        $result -> bindParam(':teman',   $teman, PDO::PARAM_STR);
+        $result -> bindParam(':msg',     $msg,   PDO::PARAM_STR);
+        $result -> bindParam(':countrl', $countrl, PDO::PARAM_STR);
 
         return $result -> execute();		
 	}

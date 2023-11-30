@@ -1,28 +1,25 @@
 <?php
-/**
-* 
-*/
+
 //use \classes\traitAuxiliary as traitAuxiliary;
-class FA  extends classGetDB
-{
+
+class FA  extends classGetDB {
+
 	use traitAuxiliary;
 
-	public function createFA($name,$msgs,$log)
-	{
+	public function createFA($name,$msgs,$log) {
 		$sql = "INSERT INTO photoalbum (name_FA,msgs_FA,log_FA)
 		 VALUES(:name,:msgs,:log)";
-		$result = $this->getDB($sql);
+		$result = $this->getPrepareSQL($sql);
 		$result -> bindParam(':name', $name, PDO::PARAM_STR);
 		$result -> bindParam(':msgs', $msgs, PDO::PARAM_STR);
 		$result -> bindParam(':log',  $log,  PDO::PARAM_STR);
 		return $result -> execute();		
 	}	
 
-	public function insertPhoto($id,$subscribe,$fotoName,$fotoNameS)
-	{
+	public function insertPhoto($id,$subscribe,$fotoName,$fotoNameS) {
 		$sql    = "INSERT INTO photoInAlbum (id_album,subscribe,fotoName,fotoNameS)
 		 VALUES(:id_album,:subscribe,:fotoName,:fotoNameS)";
-		$result = $this->getDB($sql);
+		$result = $this->getPrepareSQL($sql);
 		$result -> bindParam(':id_album',  $id,  PDO::PARAM_STR);
 		$result -> bindParam(':subscribe', $subscribe, PDO::PARAM_STR);
 		$result -> bindParam(':fotoName',  $fotoName,  PDO::PARAM_STR);
@@ -30,24 +27,21 @@ class FA  extends classGetDB
 		return $result -> execute();		
 	}
 
-	public static function getFAName($name)
-	{
+	public static function getFAName($name)	{
 		$getData  = new classGetData('photoalbum');
 		$NewsList = $getData->getDataFromTableByNameFetch($name,'name_FA');
 		unset($getData);
 		return $NewsList;
 	}
 
-	public function getFAId($id)
-	{
+	public function getFAId($id) {
 		$getData  = new classGetData('photoalbum');
 		$NewsList = $getData->getDataFromTableByNameFetch($id,'id_FA');
 		unset($getData);
 		return $NewsList;
 	}
 
-	public function getFAAll($page = 1)
-	{
+	public function getFAAll($page = 1) {
 		$offset  = ($this->getIntval($page) - 1) * SHOWFA_BY_DEFAULT;
 		$getData = new classGetData('photoalbum');
 		$result  = $getData->getDataByOffsetWithOutRow('id_FA',SHOWFA_BY_DEFAULT,$offset);
@@ -56,16 +50,20 @@ class FA  extends classGetDB
 		while ($row = $result->fetch()) {			
 			$faList[$i]['id']   = $row['id_FA'];
 			$faList[$i]['name'] = $row['name_FA'];
-			$foto = self::getFAOne($row['id_FA']);
-			$faList[$i]['foto'] = $foto[1]["fotoName"];
-			$faList[$i]['fns']  =$foto[1]["fotoNameS"];
+			$foto               = self::getFAOne($row['id_FA']);
+			if ( count($foto) ) {
+				$faList[$i]['foto'] = $foto[1]["fotoName"];
+				$faList[$i]['fns']  = $foto[1]["fotoNameS"];
+			}else{
+				$faList[$i]['foto'] = '';
+				$faList[$i]['fns']  = '';
+			}
 			$i++;
 		}
 		return $faList ?? [];
 	}
 
-	public function getFAOne($id)
-	{
+	public function getFAOne($id) {
 		$getData = new classGetData('photoInAlbum');
 		$result  = $getData->getDataFromTableByNameWithOutRow ($id,"id_album");
 		unset($getData);
@@ -77,21 +75,18 @@ class FA  extends classGetDB
 			$faOne[$i]['fotoNameS'] = '../album/'.$id.'/'.$row['fotoNameS'];
 			$i++;
 		}
-
 		return $faOne ?? [];
 	}
-	
-/* для редагування фотоальбомів. Наразі не задіяно
 
-	private function getDBVueFa()
-	{
+// для редагування фотоальбомів. Наразі не задіяно
+
+	private function getDBVueFa() {
 		require_once ('../models/Auxiliary.php');
 		$aux = new Auxiliary();
 		return $aux->getDBVue();
 	}
 
-	public function getFAVue()
-	{
+	public function getFAVue() {
 		$db     = self::getDBVueFa();
 		$result = $db -> query("SELECT * FROM photoalbum ORDER BY id_FA DESC");
 		$i      = 1;
@@ -103,8 +98,7 @@ class FA  extends classGetDB
 		return $faList ?? [];
 	}
 
-	public function getFAOneVue($id)
-	{
+	public function getFAOneVue($id) {
 		$db     = self::getDBVueFa();
 		$sql    = "SELECT * FROM photoInAlbum WHERE id_album=".$id;
 		$result = $db -> query($sql);
@@ -119,15 +113,13 @@ class FA  extends classGetDB
 		return $faOne ?? [];
 	}
 
-	public function updateFAVue ($id,$subscribe)
-	{
+	public function updateFAVue ($id,$subscribe) {
 		if(intval($id)) {
 			$db     = self::getDBVueFa();
 			$sql    = "UPDATE photoInAlbum SET subscribe=:subscribe WHERE id_foto=$id";
 			$result = $db -> prepare($sql);
 			$result -> bindParam(':subscribe', $subscribe, PDO::PARAM_STR);
-			
 			return $result -> execute();
 		}
-	}*/
+	}
 }

@@ -13,6 +13,7 @@ class VideoController
 
 	public function actionIndex($page = 1)
 	{
+		$count_ads  = 0;
 		$page       = $this->getIntval($page);
 		$video      = new Video();
 		$videoList  = $video->getVideo($page);

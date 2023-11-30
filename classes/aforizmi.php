@@ -1,10 +1,10 @@
-<?php
-
-class aforizmi extends classRelax
-{
-	
-	public function viewRelax()
-	{
-		return 'index.php';
-	}
+<?php
+
+class aforizmi extends classRelax
+{
+	
+	public function viewRelax()
+	{
+		return 'index.php';
+	}
 }

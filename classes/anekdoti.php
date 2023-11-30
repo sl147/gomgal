@@ -1,10 +1,10 @@
-<?php
-
-class anekdoti extends classRelax
-{
-	
-	public function viewRelax()
-	{
-		return 'index.php';
-	}
+<?php
+
+class anekdoti extends classRelax
+{
+	
+	public function viewRelax()
+	{
+		return 'index.php';
+	}
 }

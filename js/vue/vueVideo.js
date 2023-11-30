@@ -3,10 +3,10 @@ var vue_tovList = new Vue({
 	el: '#vueVideo',
 	data: {
 		show: false,
-		select : '../Vue/selVideo.php?page=',
+		select: '/Vue/selVideo.php?page=',
 		addF:    '/Vue/addVideo.php?idYT=',
-		editF: '../Vue/editVideo.php?id=',
-		delF:    '../Vue/delVue.php?id=',
+		editF: '/Vue/editVideo.php?id=',
+		delF:    '/Vue/delVue.php?id=',
 		page:'',
 		cat:'',
 		newidYT: '',
@@ -46,11 +46,13 @@ var vue_tovList = new Vue({
 		},	
 		getVideos() {
 			let req = this.select+this.page
+			console.log("reqsel - "+req)
 			this.$http.get(req).then(function (response) {
+				console.log(response.data)
 				this.videos = JSON.parse(response.data)
-/*				for (var bas of this.videos) {
+				for (var bas of this.videos) {
 					console.log("id - "+bas.id+"   idYT - "+bas.idYT+"   title - "+bas.title)
-				}*/			
+				}			
 			},function (error){
 				console.log(error);
 			})
@@ -59,7 +61,7 @@ var vue_tovList = new Vue({
 	created: function() {
 		let get   = window.table
 		this.page = get["page"]
-		console.log("page-"+this.page)
+		console.log("1page-"+this.page)
 		this.getVideos()
 	}
 })

@@ -1,5 +1,5 @@
-<div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/uk_UA/sdk.js#xfbml=1&version=v9.0&appId=554682698014491&autoLogAppEvents=1" nonce="iBZrkq3V"></script>
-
-
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/uk_UA/sdk.js#xfbml=1&version=v9.0&appId=554682698014491&autoLogAppEvents=1" nonce="iBZrkq3V"></script>
+
+
 <div class="fb-page" data-href="https://www.facebook.com/&#x413;&#x43e;&#x43c;&#x456;&#x43d;-&#x413;&#x430;&#x43b;&#x438;&#x447;&#x438;&#x43d;&#x438;-398431253663801/" data-tabs="timeline" data-width="" data-height="" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/&#x413;&#x43e;&#x43c;&#x456;&#x43d;-&#x413;&#x430;&#x43b;&#x438;&#x447;&#x438;&#x43d;&#x438;-398431253663801/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/&#x413;&#x43e;&#x43c;&#x456;&#x43d;-&#x413;&#x430;&#x43b;&#x438;&#x447;&#x438;&#x43d;&#x438;-398431253663801/">Гомін Галичини</a></blockquote></div>

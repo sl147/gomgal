@@ -16,12 +16,31 @@ class Video extends classGetDB
 		while ($row = $result->fetch()) {			
 			$list[] = $row;
 			$list[$i]['value']  = "//www.youtube.com/v/".$row['pridYT']."?hl=uk_UA&amp;version=3";
+			//$list[$i]['value']  = "https://www.youtube.com/watch?v=".$row['pridYT'];
 			$i++;
 		}
 		return $list ?? [];
 	}
 
-	public static function getVideoVue($page=1)
+	public function getAllNewsVue11($page = 1)
+	{
+		require_once ('../classes/classGetData.php');
+		$getData  = new classGetData('msgs');
+		$list = $getData->getDataFromTableOrderPageVue(self::SHOWNEWS_BY_DEFAULT_Vue,$page,'id');
+		unset($getData);
+		return $list ?? [];
+	}
+
+	public function getVideoVue($page = 1)
+	{
+		require_once ('../classes/classGetData.php');
+		$getData  = new classGetData('progrnk');
+		$list = $getData->getDataFromTableOrderPageVue(self::SHOWVIDEO_BY_DEFAULT_Vue,$page,'prid');
+		unset($getData);
+		return $list ?? [];
+	}
+
+	public static function getVideoVue1($page=1)
 	{
 		$getDB  = new classGetDB();
 		$offset = (intval($page)  - 1) * self::SHOWVIDEO_BY_DEFAULT_Vue;
