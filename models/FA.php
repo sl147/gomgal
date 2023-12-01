@@ -5,7 +5,7 @@
 class FA  extends classGetDB {
 
 	use traitAuxiliary;
-
+	const SHOWFA_BY_DEFAULT_Vue = 25;
 	public function createFA($name,$msgs,$log) {
 		$sql = "INSERT INTO photoalbum (name_FA,msgs_FA,log_FA)
 		 VALUES(:name,:msgs,:log)";
@@ -86,16 +86,12 @@ class FA  extends classGetDB {
 		return $aux->getDBVue();
 	}
 
-	public function getFAVue() {
-		$db     = self::getDBVueFa();
-		$result = $db -> query("SELECT * FROM photoalbum ORDER BY id_FA DESC");
-		$i      = 1;
-		while ($row = $result->fetch()) {			
-			$faList[$i]['id']   = $row['id_FA'];
-			$faList[$i]['name'] = $row['name_FA'];
-			$i++;
-		}
-		return $faList ?? [];
+	public function getFAVue($page = 1) {
+		require_once ('../classes/classGetData.php');
+		$getData  = new classGetData('photoalbum');
+		$list = $getData->getDataFromTableOrderPageVue(self::SHOWFA_BY_DEFAULT_Vue,$page,'id_FA ');
+		unset($getData);
+		return $list ?? [];
 	}
 
 	public function getFAOneVue($id) {
