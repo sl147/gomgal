@@ -17,4 +17,4 @@ foreach ($pr as $item) {
 	);
 	array_push($data, $new_item);
 }
-	echo json_encode($data);
+echo json_encode($data);

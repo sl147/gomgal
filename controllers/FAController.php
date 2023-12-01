@@ -83,9 +83,7 @@ class FAController {
 	}
 
 	public function actionEdit() {
-		$fa     = new FA();
-		$faList = $fa->getFAAll();
-		unset($fa);
+
 		require_once ('views/FA/edit.php');
 		return true;
 	}

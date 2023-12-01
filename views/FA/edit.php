@@ -35,4 +35,4 @@
 </div>
 </div>
 <?php include 'views/layouts/footerAdmin.php';?>
-<script src="../js/vue/FA.js"></script>
+<script src="/js/vue/FA.js"></script>

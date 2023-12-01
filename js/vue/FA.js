@@ -3,7 +3,7 @@ var vue_tovList = new Vue({
 	el: '#edit',
 	data: {
 		show: false,
-		select: '/Vue/selFA.php?',
+		select: '/Vue/selFA.php',
 		delete: '/Vue/delVue.php?id=',
 		like: '/Vue/like.php?id=',
 		page:'',
