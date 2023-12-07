@@ -591,3 +591,33 @@ border-radius: 10px;
 .posterMSG{
 	margin-bottom: 15px;
 }
+.photoalbum{
+	th{
+   	font-size: 12px;
+   	vertical-align: middle!important;
+   }
+   td{
+   	font-size: 12px;
+   	vertical-align: middle!important;
+   }
+}
+.form_Photo {
+   width: 100%;
+   padding: 10px;
+   margin: 10px;
+   font-size: 16px;
+   border: 1px solid grey;
+   textarea {
+   	margin-bottom: 10px;
+   }
+   label {
+		@include authLabel(13em);
+	}
+ }
+ .width_th_photoalbum {
+ 	width: 35px;
+ }
+  .width_td_photoalbum {
+ 	width: 350px;
+ 	padding: 5px;
+ }

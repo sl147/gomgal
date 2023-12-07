@@ -16,7 +16,7 @@ class FA  extends classGetDB {
 		return $result -> execute();		
 	}	
 
-	public function insertPhoto($id,$subscribe,$fotoName,$fotoNameS) {
+	public function insertPhoto($id,$subscribe,$fotoName,$fotoNameS="") {
 		$sql    = "INSERT INTO photoInAlbum (id_album,subscribe,fotoName,fotoNameS)
 		 VALUES(:id_album,:subscribe,:fotoName,:fotoNameS)";
 		$result = $this->getPrepareSQL($sql);
@@ -95,6 +95,13 @@ class FA  extends classGetDB {
 	}
 
 	public function getFAOneVue($id) {
+		require_once ('../classes/classGetData.php');
+		$getData  = new classGetData('photoinalbum');
+		$list = $getData->getDataFromTableByNameAllVue ($id,'id_album');
+		unset($getData);
+		return $list ?? [];
+
+/*
 		$db     = self::getDBVueFa();
 		$sql    = "SELECT * FROM photoInAlbum WHERE id_album=".$id;
 		$result = $db -> query($sql);
@@ -106,10 +113,10 @@ class FA  extends classGetDB {
 			$faOne[$i]['isFile']    = file_exists ($faOne[$i]['fotoName']);
 			$i++;
 		}
-		return $faOne ?? [];
+		return $faOne ?? [];*/
 	}
 
-	public function updateFAVue ($id,$subscribe) {
+/*	public function updateFAVue ($id,$subscribe) {
 		if(intval($id)) {
 			$db     = self::getDBVueFa();
 			$sql    = "UPDATE photoInAlbum SET subscribe=:subscribe WHERE id_foto=$id";
@@ -117,5 +124,44 @@ class FA  extends classGetDB {
 			$result -> bindParam(':subscribe', $subscribe, PDO::PARAM_STR);
 			return $result -> execute();
 		}
+	}*/
+	public function updateFAVue ($id,$name_FA,$msgs_FA)	{
+		$getDB  = new classGetDB();
+		$sql    = "UPDATE photoalbum SET name_FA=:name, msgs_FA=:msgs WHERE id_FA =$id";
+		$result = $getDB->getPrepareSQLVue($sql);
+		$result -> bindParam(':name',  $name_FA,  PDO::PARAM_STR);
+		$result -> bindParam(':msgs', $msgs_FA, PDO::PARAM_STR);
+		unset($getDB);
+		return $result -> execute();
+	}
+
+	public function updateFAOneVue ($id,$subscribe)	{
+		$getDB  = new classGetDB();
+		$sql    = "UPDATE photoinalbum SET subscribe=:subscribe WHERE id_foto =$id";
+		$result = $getDB->getPrepareSQLVue($sql);
+		$result -> bindParam(':subscribe',  $subscribe,  PDO::PARAM_STR);
+		unset($getDB);
+		return $result -> execute();
+	}
+
+	public function deleteFAOnePhoto( $id, $fotoName, $fotoNames, $idAlbum ){
+		$fdel = '../album/'. $idAlbum .'/'.$fotoName;
+		unlink($fdel);
+		$fdel = '../album/'. $idAlbum .'/'.$fotoNames;
+		unlink($fdel);
+	}
+
+	public function deleteFAAlbumPhoto( $idAlbum ){
+		$dir = '../album/'. $idAlbum ;
+		$includes = new FilesystemIterator($dir);
+
+		foreach ($includes as $include) {
+			if(is_dir($include) && !is_link($include)) {
+				recursiveRemoveDir($include);
+			}else {
+				unlink($include);
+			}
+		}
+		rmdir($dir);
 	}
 }

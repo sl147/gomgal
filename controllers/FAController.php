@@ -3,6 +3,7 @@ class FAController {
 	use traitAuxiliary;
 	public function __construct() {
 		$this->FAClass = new FA();
+		$this->total = $this->getCount('photoalbum');
 	}
 
 	public function actionLook($page = 1) {
@@ -65,8 +66,23 @@ class FAController {
 		return true;	
 	}
 
-	public function actionEditOne($id) {		
+	public function actionEditOne($id) {
 		$fa     = new FA();	
+		if(isset($_POST['submit'])) {
+			if ($_FILES['photo'] ['tmp_name']) {
+				$id = $_POST['if_photo'];
+				$subscribe = $this->filterTXT('post', 'desc_photo');
+				$fotoName  = $this->rus2translit($_FILES['photo']['name']);
+				$pathdir   = 'album/'.$id;
+				move_uploaded_file ($_FILES['photo'] ['tmp_name'],$pathdir.'/'.$fotoName);
+
+				$res = $fa->insertPhoto($id,$subscribe,$fotoName);
+				$res = $this->changePhotoWSlashWithOutS($fotoName,$pathdir);
+			}
+			header ("Location: /faEditOne/$id");
+		}
+
+		
 		$id = $this->getIntval($id);
 		$table  = array(
 			'id'   => $id
@@ -82,8 +98,14 @@ class FAController {
 		return true;
 	}
 
-	public function actionEdit() {
-
+	public function actionEdit($page = 1) {
+		$page  = $this->getIntval($page);
+		$table = array(
+			'page' => $page,
+			'total'=> $this->total
+			);			
+		$json  = json_encode($table);
+		$pagination = new Pagination($this->total, $page, SHOWFA_BY_DEFAULT, 'page-');
 		require_once ('views/FA/edit.php');
 		return true;
 	}
@@ -91,5 +113,11 @@ class FAController {
 	public function actionDropZone($substr)	{
 		require_once ('views/FA/uploadDZ.php');
 		return true;
-	}	
+	}
+
+	public function actionFAAdd_Photo() {
+		if(isset($_POST['submit'])) {
+			header ("Location: /FAedit");
+		}
+	}
 }
