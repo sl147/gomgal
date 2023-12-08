@@ -2,12 +2,12 @@
 /**
 * 
 */
-class Video extends classGetDB
-{	
+class Video extends classGetDB {
+
 	use traitAuxiliary;
 	const SHOWVIDEO_BY_DEFAULT_Vue = 25;
-	public  function getVideo($page)
-	{
+
+	public  function getVideo($page) {
 		$getData = new classGetData('progrnk');
 		$offset  = ($this->getIntval($page) - 1) * SHOWVIDEO_BY_DEFAULT;
 		$result  = $getData->getDataByOffsetWithOutRow ('prid',SHOWVIDEO_BY_DEFAULT,$offset);
@@ -22,17 +22,7 @@ class Video extends classGetDB
 		return $list ?? [];
 	}
 
-	public function getAllNewsVue11($page = 1)
-	{
-		require_once ('../classes/classGetData.php');
-		$getData  = new classGetData('msgs');
-		$list = $getData->getDataFromTableOrderPageVue(self::SHOWNEWS_BY_DEFAULT_Vue,$page,'id');
-		unset($getData);
-		return $list ?? [];
-	}
-
-	public function getVideoVue($page = 1)
-	{
+	public function getVideoVue($page = 1) {
 		require_once ('../classes/classGetData.php');
 		$getData  = new classGetData('progrnk');
 		$list = $getData->getDataFromTableOrderPageVue(self::SHOWVIDEO_BY_DEFAULT_Vue,$page,'prid');
@@ -40,8 +30,7 @@ class Video extends classGetDB
 		return $list ?? [];
 	}
 
-	public static function getVideoVue1($page=1)
-	{
+	public static function getVideoVue1($page=1) {
 		$getDB  = new classGetDB();
 		$offset = (intval($page)  - 1) * self::SHOWVIDEO_BY_DEFAULT_Vue;
 		$sql    = "SELECT * FROM progrnk ORDER BY prid DESC LIMIT ".self::SHOWVIDEO_BY_DEFAULT_Vue." OFFSET $offset";
@@ -57,8 +46,7 @@ class Video extends classGetDB
 		return $list ?? [];
 	}
 
-	public static function updateVideoVue ($id,$idYT,$title)
-	{
+	public static function updateVideoVue ($id,$idYT,$title) {
 		$getDB  = new classGetDB();
 		$sql    = "UPDATE progrnk SET pridYT=:idYT, prhar=:title WHERE prid=$id";
 		$result = $getDB->getPrepareSQLVue($sql);
@@ -68,8 +56,7 @@ class Video extends classGetDB
 		return $result -> execute();
 	}
 
-	public static function addVideoVue ($idYT,$title)
-	{
+	public static function addVideoVue ($idYT,$title) {
 		$getDB  = new classGetDB();
 		$sql    = "INSERT INTO progrnk (pridYT,prhar)
 		                VALUES(:idYT,:title)";
@@ -80,4 +67,3 @@ class Video extends classGetDB
 		return $result -> execute();			
 	}
 }
-?>

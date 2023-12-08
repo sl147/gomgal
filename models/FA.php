@@ -78,18 +78,10 @@ class FA  extends classGetDB {
 		return $faOne ?? [];
 	}
 
-// для редагування фотоальбомів. Наразі не задіяно
-
-	private function getDBVueFa() {
-		require_once ('../models/Auxiliary.php');
-		$aux = new Auxiliary();
-		return $aux->getDBVue();
-	}
-
 	public function getFAVue($page = 1) {
 		require_once ('../classes/classGetData.php');
 		$getData  = new classGetData('photoalbum');
-		$list = $getData->getDataFromTableOrderPageVue(self::SHOWFA_BY_DEFAULT_Vue,$page,'id_FA ');
+		$list = $getData->getDataFromTableOrderPageVue(self::SHOWFA_BY_DEFAULT_Vue,$page,'id_FA');
 		unset($getData);
 		return $list ?? [];
 	}
@@ -100,31 +92,8 @@ class FA  extends classGetDB {
 		$list = $getData->getDataFromTableByNameAllVue ($id,'id_album');
 		unset($getData);
 		return $list ?? [];
-
-/*
-		$db     = self::getDBVueFa();
-		$sql    = "SELECT * FROM photoInAlbum WHERE id_album=".$id;
-		$result = $db -> query($sql);
-		$i      = 1;
-		while ($row = $result->fetch()) {			
-			$faOne[$i]['id']        = $row['id_foto'];
-			$faOne[$i]['subscribe'] = $row['subscribe'];
-			$faOne[$i]['fotoName']  = '../album/'.$id.'/'.$row['fotoName'];
-			$faOne[$i]['isFile']    = file_exists ($faOne[$i]['fotoName']);
-			$i++;
-		}
-		return $faOne ?? [];*/
 	}
 
-/*	public function updateFAVue ($id,$subscribe) {
-		if(intval($id)) {
-			$db     = self::getDBVueFa();
-			$sql    = "UPDATE photoInAlbum SET subscribe=:subscribe WHERE id_foto=$id";
-			$result = $db -> prepare($sql);
-			$result -> bindParam(':subscribe', $subscribe, PDO::PARAM_STR);
-			return $result -> execute();
-		}
-	}*/
 	public function updateFAVue ($id,$name_FA,$msgs_FA)	{
 		$getDB  = new classGetDB();
 		$sql    = "UPDATE photoalbum SET name_FA=:name, msgs_FA=:msgs WHERE id_FA =$id";

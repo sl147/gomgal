@@ -4,8 +4,7 @@ require_once ('../classes/classGetDB.php');
 require_once ('../models/FA.php');
 
 $page = trim(strip_tags($_GET['page']));
-$data = array();
-$pr   = array();
+$data = [];
 $MK   = new FA();
 $pr   = $MK->getFAVue($page);
 
