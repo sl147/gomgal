@@ -6,6 +6,7 @@ class FA  extends classGetDB {
 
 	use traitAuxiliary;
 	const SHOWFA_BY_DEFAULT_Vue = 25;
+	
 	public function createFA($name,$msgs,$log) {
 		$sql = "INSERT INTO photoalbum (name_FA,msgs_FA,log_FA)
 		 VALUES(:name,:msgs,:log)";
@@ -76,6 +77,14 @@ class FA  extends classGetDB {
 			$i++;
 		}
 		return $faOne ?? [];
+	}
+
+	public function getVideoVue1($page = 1) {
+		require_once ('../classes/classGetData.php');
+		$getData  = new classGetData('progrnk');
+		$list = $getData->getDataFromTableOrderPageVue(self::SHOWFA_BY_DEFAULT_Vue,$page,'prid');
+		unset($getData);
+		return $list ?? [];
 	}
 
 	public function getFAVue($page = 1) {

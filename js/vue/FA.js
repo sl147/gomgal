@@ -18,9 +18,10 @@ var vue_tovList = new Vue({
 			console.log("req - "+req)
 			this.$http.get(req).then(function (response) {
 				this.albums = JSON.parse(response.data)
-				/*for (var bas of this.albums) {
-					console.log("name - "+bas.name_FA+"   id - "+bas.id_FA)
-				}*/				
+				//console.log("name - "+this.albums)
+				for (var bas of this.albums) {
+					console.log("name - "+bas.count+"   id - "+bas.id_FA)
+				}			
 			},function (error){
 				console.log(error);
 			})
