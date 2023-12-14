@@ -313,6 +313,7 @@ border-radius: 10px;
 .reklRand {
 	border: 4px double red;
 	background-color: #fff;
+	margin: 20px 0;
 	&:hover {
 		background-color: $bcDelta11;
 		color: #fff!important;
@@ -411,6 +412,7 @@ border-radius: 10px;
 	text-indent: 5%;
 	white-space:pre-line;
 	width: 100%;
+	overflow-x: auto; 
 	@media only screen and (max-width : 992px){
 		padding: 0px;
 	}
@@ -418,10 +420,7 @@ border-radius: 10px;
 
 .imgNews {
 	float: left;
-	padding-right: 20px;
-	padding-bottom: 5px;
-	width: 30%;
-	height: auto;
+	margin: 0 15px 15px 0;
 	@media only screen and (max-width : 992px){
 		display: none;
 	}
@@ -620,4 +619,9 @@ border-radius: 10px;
   .width_td_photoalbum {
  	width: 350px;
  	padding: 5px;
+ }
+ .sl147_footer{
+ 	margin-top: 20px;
+ 	padding: 15px 0;
+ 	background-color: #DCDCDC;
  }

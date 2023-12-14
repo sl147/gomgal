@@ -1,4 +1,4 @@
-<?php if ( (isset($meta['url_name'])) && (trim($_SERVER["REQUEST_URI"],'/') == $meta['url_name']) ) :?>
+<?php if ( isset($meta['title']) ) :?>
 
 	<title><?= $meta['title']?></title>
 
