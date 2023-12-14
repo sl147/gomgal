@@ -1,9 +1,7 @@
 <?php
 
 /**
-
 * 
-
 */
 
 class ContaktController {
@@ -15,7 +13,7 @@ class ContaktController {
 		$nik_com   = $this->filterTXT('post','nik_com');
 		$email_com = $this->filterTXT('post','email_com');
 		$subject = "haks1 зі сторінки Contakt";
-			$massage = $subject."\r\n".$txt_com."\r\n".$nik_com."\r\n".$email_com;
+		$massage = $subject."\r\n".$txt_com."\r\n".$nik_com."\r\n".$email_com;
 		if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token'])) {			
 			$ip_com = $_SERVER['REMOTE_ADDR'];
 			if (!empty($txt_com)) {
