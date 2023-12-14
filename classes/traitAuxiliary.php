@@ -167,13 +167,7 @@ trait traitAuxiliary {
     	$pathdir .= '/'.$year.'/'.$month;
         $res      = $this->makeDir($pathdir);
         move_uploaded_file ($_FILES['file'] ['tmp_name'],$pathdir."/".$nameFile); 
-        //$res = $this->changePhoto($nameFile,$pathdir);
         return $year.'/'.$month.'/'.$nameFile;
-    }
-
-    public static function savePhotoS($nameFile,$pathdir) {      
-        $res = $this->makeDir($pathdir);
-        $res = $this->changePhoto($nameFile,$pathdir);    
     }
 
 	private function getPathFile($file,$folder,$delim="") {
@@ -206,8 +200,7 @@ trait traitAuxiliary {
 		return  false;
 	}
 
-
-	public function getSpam() {
+	private function getSpam() {
 		$getData  = new classGetData("spamTab");
 		$spamList = $getData->getDataFromTable();
 		unset($getData);
@@ -307,8 +300,6 @@ trait traitAuxiliary {
 			return $getData->insertDataToTableByName ($type, "id_button","count");
 		}
 	}
-
-
 
 	public function getCountClickButton() {
 		$sql = "SELECT Type.id, Type.name, Count.count FROM typeButton AS Type LEFT JOIN countClickButton AS Count ON Count.id_button = Type.id ORDER BY Type.id";

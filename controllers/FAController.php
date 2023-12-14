@@ -77,7 +77,7 @@ class FAController {
 				move_uploaded_file ($_FILES['photo'] ['tmp_name'],$pathdir.'/'.$fotoName);
 
 				$res = $fa->insertPhoto($id,$subscribe,$fotoName);
-				$res = $this->changePhotoWSlashWithOutS($fotoName,$pathdir);
+				//$res = $this->changePhotoWSlashWithOutS($fotoName,$pathdir);
 			}
 			header ("Location: /faEditOne/$id");
 		}
