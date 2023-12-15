@@ -59,7 +59,6 @@ class FAController {
 			$pathdir   = 'album/'.$id;
 			move_uploaded_file ($_FILES['photo'] ['tmp_name'],$pathdir.'/'.$fotoName);
 	        $res = $fa->insertPhoto($id,$subscribe,$fotoName,$fotoNameS);
-	        $res = $this->changePhotoWSlash($fotoName,$pathdir);
 			unset($fa);
         }
 		require_once ('views/FA/upload.php');
@@ -75,13 +74,10 @@ class FAController {
 				$fotoName  = $this->rus2translit($_FILES['photo']['name']);
 				$pathdir   = 'album/'.$id;
 				move_uploaded_file ($_FILES['photo'] ['tmp_name'],$pathdir.'/'.$fotoName);
-
 				$res = $fa->insertPhoto($id,$subscribe,$fotoName);
-				//$res = $this->changePhotoWSlashWithOutS($fotoName,$pathdir);
 			}
 			header ("Location: /faEditOne/$id");
 		}
-
 		
 		$id = $this->getIntval($id);
 		$table  = array(

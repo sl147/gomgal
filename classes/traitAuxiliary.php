@@ -141,28 +141,6 @@ trait traitAuxiliary {
         unset($image);  
 	}
 
-	private function changePhotoWSlashWithOutS($nameFile,$pathdir) {
-		include_once 'components/classSimpleImage.php';
-        $fns    = $pathdir."/".$nameFile;
-        $image  = new SimpleImage();
-        $image->load($fns);
-        $image->resizeToWidth(100);
-        $image->resizeToHeight(100);
-        unset($image);  
-	}
-
-	private function changePhoto($nameFile,$pathdir) {
-		include_once 'components/classSimpleImage.php';
-        $fns    = $pathdir."/".$nameFile;
-        $fnSmal = $pathdir."/"."s".'_'.$nameFile;
-        $image  = new SimpleImage();
-        $image->load($fns);
-        $image->resizeToWidth(100);
-        $image->resizeToHeight(100);
-        $image->save($fnSmal);
-        unset($image);  
-	}
-
     public function savePhoto($nameFile, $pathdir,$year, $month) {
     	$pathdir .= '/'.$year.'/'.$month;
         $res      = $this->makeDir($pathdir);
@@ -202,25 +180,26 @@ trait traitAuxiliary {
 
 	private function getSpam() {
 		$getData  = new classGetData("spamTab");
-		$spamList = $getData->getDataFromTable();
-		unset($getData);
-		return $spamList;		
+		return $getData->getDataFromTable();		
 	}
 
-	public function getToken($length = 32) {
-		$chars = '1234567890qwertyuiopasdfghjklzxcvbnm';
-		$max = strlen($chars) - 1;
-		$token = '';
-		for ($i=0; $i < $length; $i++) { 
-			$token .= $chars[rand(0,$max)];
-		}
-		$token .= password_hash($token.session_name(), PASSWORD_DEFAULT);
-		$_SESSION['token'] = $token;
-		return $token;
-	}
+	public function getToken( $strength = 16) {
+	$input	 = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $input_length = strlen($input);
+    $token = '';
+    for($i = 0; $i < $strength; $i++) {
+        $random_character = $input[mt_rand(0, $input_length - 1)];
+        $token .= $random_character;
+    }
+    $_SESSION['token'] = $token;
+    return $token;
+}
 
 	public function tokensMatch($token)	{
-		return isset($_SESSION['token']) ? hash_equals( $token, $_SESSION['token'] ) : false;
+		if ( isset($_SESSION['token']) ) {
+			if ( $_SESSION['token'] == $token ) return true;
+		}
+		return false;
 	}
 
 	public static function getIPData($ip) {
