@@ -20,6 +20,7 @@ return array(
 'calcLength' => 'calculator/length',
 'clCalk' => 'calculator/viewUsers',
 'contakt' => 'contakt/index',
+'checkFilesNews' => 'news/checkFilesNews',
 'clickButton/([0-9]+)' => 'clickButton/gov/$1',
 'countClickButton' => 'clickButton/countClickButton',
 'FAadd_Photo' => 'FA/add_Photo',

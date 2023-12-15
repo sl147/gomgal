@@ -97,7 +97,7 @@ class FA  extends classGetDB {
 
 	public function getFAOneVue($id) {
 		require_once ('../classes/classGetData.php');
-		$getData  = new classGetData('photoinalbum');
+		$getData  = new classGetData('photoInAlbum');
 		$list = $getData->getDataFromTableByNameAllVue ($id,'id_album');
 		unset($getData);
 		return $list ?? [];
