@@ -10,11 +10,12 @@
 						<script type="text/javascript">datecurr()</script>	
 					</div>
 				</div>
-				<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12"></div>
-				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-					<a href="/insurance" target="_blank">
+				<div class="col-lg-1 col-md-1 col-sm-6 col-xs-12"></div>
+				<div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+					<?=Auxiliary::showReklRand()?>		
+<!-- 					<a href="/insurance" target="_blank">
 						<img src="/image/autosmall.png" height="80" width="auto" alt="Калькулятор страхування цивільної відповідальності">
-					<a/>
+					<a/> -->
 				</div>
 				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 					<div class="top_links">

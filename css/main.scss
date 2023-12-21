@@ -106,6 +106,7 @@ visibility: hidden;
     display: none; 
     @media only screen and (max-width : 992px){
     	display: block;
+    	margin-top: 15px;
     }    
   }
 
@@ -402,7 +403,7 @@ border-radius: 10px;
 }
 .fotoLook {
 	margin: 0px;
-	width: 76%;
+	width: 100%;
 	height: auto;
 	object-fit: cover;
 	transition: all 0.5s;
@@ -624,4 +625,7 @@ border-radius: 10px;
  	margin-top: 20px;
  	padding: 15px 0;
  	background-color: #DCDCDC;
+ }
+ .header_topline .ads {
+ 	height: 50px!important;
  }
