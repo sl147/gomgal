@@ -27,12 +27,10 @@ class SiteController {
 		unset($pagination);
 		return true;
 	}
+
 	private function getMeta() {
-		$mt      = new MetaTags();
-		
+		$mt      = new MetaTags();	
 		$a = explode("/",trim($_SERVER["REQUEST_URI"],'/'));
-		//echo "a:".$a[0];
-		//echo "req:".trim($_SERVER["REQUEST_URI"],'/');
 		$b = $mt->getMTagsByUrl($a[0]);
 		return $b;
 	}

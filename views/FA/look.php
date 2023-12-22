@@ -6,22 +6,18 @@
     });
   });
 </script>
+
+<?php include 'views/layouts/hamburgerMenu.php';?>
+
 <div class="container-fluid">
-	<div class="row">
-		<div class="col-lg-1 col-md-1 col-sm-0 col-xs-0"></div>
-		<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
 			<div class="row">
-				<?php include 'views/layouts/hamburgerMenu.php';?>
-				<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<h2 class="text-center">
 						ФОТОАЛЬБОМИ
 					</h2>
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
-<?=Auxiliary::showReklRand()?>
 <table class="table table-responsive table-striped table-hover">
 	<tbody>
 		<?php $j=1;?>

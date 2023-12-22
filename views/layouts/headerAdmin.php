@@ -38,13 +38,10 @@
 				</button>
 				<ul class="dropdown-menu">
 					<li>
-						<a class="btn btn-block btn-info" href="/FAlook" title="переглядфотоальбомів Галичини">перегляд</a>
+						<a class="btn btn-block btn-info" href="/FAcreate" title="створення фотоальбому">створення фотоальбому</a>
 					</li>
 					<li>
-						<a class="btn btn-block btn-info" href="/FAcreate" title="створення фотоальбому про Дрогобич">створення</a>
-					</li>
-					<li>
-						<a class="btn btn-block btn-info" href="/FAedit" title="редагування фотоальбому з Дрогобича">редагування</a>
+						<a class="btn btn-block btn-info" href="/FAedit" title="редагування фотоальбомів">редагування фотоальбомів</a>
 					</li>
 				</ul>			
 			</div> 

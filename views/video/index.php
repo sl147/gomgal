@@ -1,13 +1,7 @@
 <div class="container-fluid">
 	<div class="row">
-		<div class="container-fluid">
-			<div class="row">
-				<?php include 'views/layouts/hamburgerMenu.php';?>						
-				<div class="col-lg-12 col-md-12 col-sm-9 col-xs-9 video_rekl">	
-					<?=Auxiliary::showReklRand()?>						
-				</div>	
-			</div>
-		</div>
+		
+		<?php include 'views/layouts/hamburgerMenu.php';?>
 		
 		<?php foreach ($videoList as $item) :?>
 			<?php $count_ads +=1;?>

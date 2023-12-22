@@ -5,14 +5,13 @@
             	Cookies.set('sh', window.innerHeight)
                 /*$.cookie('sw',screen.width);
                 $.cookie('sh',screen.height);*/
-                //alert('cookie width='+ Cookies.get('sw'))
                 return true;
             }
             setScreenHWCookie();
 </script>
-<div class="showSmall">
-		<?php include 'views/layouts/hamburgerMenu.php';?>		
-</div>
+
+<?php include 'views/layouts/hamburgerMenu.php';?>
+
 <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
 	<form method='POST' action="/findNews" class="form_find">
 		<div class="input-group margin-bottom-sm">

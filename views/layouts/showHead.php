@@ -9,6 +9,7 @@ pagead/js/adsbygoogle.js"></script>
 		<meta property="og:title"       content="<?=$news['title']?>" />
 		<meta property="og:description" content="<?=$news['prew']?>" />
 		<meta property="og:image"       content="<?='https://www.gomgal.lviv.ua'.$news['photo']?>" />
+		<link rel="canonical" href="<?=$news['title']?>" />
 	<?php endif; ?>
 	
 	<?php include 'views/layouts/showMeta.php';?>
@@ -19,7 +20,6 @@ pagead/js/adsbygoogle.js"></script>
 	<link rel="stylesheet" @media all href="/css/media.css" />
 	<link rel="stylesheet" @media all href="/libs/font-awesome-4.2.0/css/font-awesome.min.css" />
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link rel="canonical" href="<?php echo $fb?>" />
 	<script src="/js/lazyload.js"></script>
 	<script data-ad-client="ca-pub-9370914710542990" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9370914710542990"
