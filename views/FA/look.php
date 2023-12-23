@@ -40,11 +40,7 @@
 			</tr>
 			<?php $j++; if($j == 4) :?>
 			<tr>
-				<td>			
-					<div class="ads">
-						<?=Auxiliary::getAdSence()?>
-					</div>		
-				</td>
+				<td colspan="2"><?=Auxiliary::getAdSence()?></td>
 			</tr>
 			<?php endif;?>
 		<?php endforeach; ?>

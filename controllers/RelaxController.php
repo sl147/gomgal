@@ -116,7 +116,7 @@ class RelaxController
 		}
 		$page  = $this->getIntval($page);		
 		$title = "Редагування дозвілля";
-		$total = Auxiliary::getCount('msgs_relax');
+		$total = $this->getCount('msgs_relax');
 		$relax = new Relax();
 		$comms = $relax->getRelaxAll($page);
 		unset($relax);

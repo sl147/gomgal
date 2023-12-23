@@ -1,6 +1,6 @@
 <div class="showSmall">
-	<div style="display: flex;justify-content: space-between;align-items: center;">
-		<div>
+	<div class="row">
+		<div class="col-lg-0 col-md-0 col-sm-2 col-xs-2">
 			<?php
 			$content ="<div class='text-center' >
 			<a href='/' title='ГОЛОВНА' class='text-menu btn btn-info'>ГОЛОВНА</a>
@@ -14,14 +14,17 @@
 			?>
 			<div class='text-left'>		
 				<a style="margin-top:0px;" href="#" tabindex="0" data-trigger="focus" class="btn btn-lg"
-					data-container="body" role="button" data-toggle="popover" 
-					data-placement="bottom" data-html="true" title = "<?=$nm?>" data-content="<?=$content?>">
-					<i class="fa fa-bars fa-1x"></i>
-				</a>
-			</div>
-		</div>
-		<div>
-			<?=Auxiliary::showReklRand()?>
+				data-container="body" role="button" data-toggle="popover" 
+				data-placement="bottom" data-html="true" title = "<?=$nm?>" data-content="<?=$content?>">
+				<i class="fa fa-bars fa-1x"></i>
+			</a>
+		</div>			
+	</div>
+	<div class='col-lg-0 col-md-0 col-sm-10 col-xs-10'>
+		<?=Auxiliary::showReklRand()?>	
+<!-- 			<a href="https://www.gomgal.lviv.ua/insurance" target='_blank'>
+				<img class='insImgSize' height="50" width="auto" src="../image/autosmall.png" alt="калькулятор автоцивілки">
+			</a>	 -->	
 		</div>
 	</div>
 </div>

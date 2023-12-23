@@ -12,7 +12,8 @@
 			<th class="text-center">всього</th>
 		</tr>
 	</thead>
-	<?php foreach ($posterCat as $item) :?>
+	<tbody>
+	<?php $j=1; foreach ($posterCat as $item) :?>
 		<?php if ($item['cat_cat'] <> 'all') :?>
 			<tr class='text-center' style='color: grey; font-size:14px; font-weight:bold;'>
 				<td class='text-left'>
@@ -26,5 +27,11 @@
 				<?php include 'views/poster/showRowPoster.php';?>
 			</tr>
 		<?php endif; ?>
+		<?php $j++; if( ($j == 10) || ($j == 25) ) :?>
+			<tr >
+				<td colspan="7"><?=Auxiliary::getAdSence()?></td>
+			</tr>
+		<?php endif;?>
 	<?php endforeach; ?>
+	</tbody>
 </table>
