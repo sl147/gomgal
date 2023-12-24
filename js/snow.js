@@ -392,5 +392,6 @@ function SnowStorm() {
 }
 
 
-
+if ( window.screen.width > 5768) {
 snowStorm = new SnowStorm();
+}
