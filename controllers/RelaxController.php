@@ -5,7 +5,7 @@
  */
 
 class RelaxController {
-	
+
 	use traitAuxiliary;
 
 	private function check_index_catagory ( $cat ) :bool {
@@ -13,6 +13,19 @@ class RelaxController {
 		$cat_list = $relax->getRelax();
 		foreach ($cat_list as $key => $var) {
 			if ( $var['id'] == $cat ) return (bool) true;
+		}
+		return (bool) false;
+	}
+
+	private function check_index_theme_an ( $teman ) :bool {
+		$relax    = new Relax();
+		$cat_list = $relax->getThemeAn();
+/*		echo "<pre>";
+		var_dump($cat_list);
+		echo "</pre>";*/
+		foreach ($cat_list as $key => $var) {
+			//echo "<br>id=".$var['id']."  teman=".$teman;
+			if ( $var['id'] == $teman ) return (bool) true;
 		}
 		return (bool) false;
 	}
@@ -48,7 +61,7 @@ class RelaxController {
 	}
 
 	public function actionRelaxAll( $page = 1 ) {
-		$total      = $this->getCount('msgs_relax');
+		$total = $this->getCount('msgs_relax');
 		$page  = $this->check_index_page($this->getIntval($page), $total);
 		$table = array(
 			'cat'   => 0,
@@ -64,9 +77,12 @@ class RelaxController {
 	}
 
 	public function actionFullAnCat($teman = 1, $page=1) {
+		$teman = ($this->check_index_theme_an($teman)) ? $teman : 1;
 		$total = $this->getCountAtr('msgs_relax', 'teman',$teman);
-		$teman = $this->getIntval($teman);
 		$page  = $this->check_index_page($this->getIntval($page), $total);
+
+		//echo "page=".$page."  total=".$total."  teman=".$teman;
+
 		$table = array(
 			'cat'   => $teman,
 			'page'  => $page,
