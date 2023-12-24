@@ -4,23 +4,34 @@
  * 
  */
 
-class RelaxController
-{	
+class RelaxController {
+	
 	use traitAuxiliary;
 
-	public function actionIndex($cat, $page = 1)
-	{
+	private function check_index_catagory ( $cat ) :bool {
+		$relax    = new Relax();
+		$cat_list = $relax->getRelax();
+		foreach ($cat_list as $key => $var) {
+			if ( $var['id'] == $cat ) return (bool) true;
+		}
+		return (bool) false;
+	}
+
+	private function check_index_page ( $page, $total ) {
+		return ($page > ( ($total / SHOWRELAX_BY_DEFAULT) + 1 )) ? 1 : $page;
+	}
+
+	public function actionIndex( $cat, $page = 1) {
 		$mt    = new MetaTags();
-		$cat   = $this->getIntval($cat);
-		$page  = $this->getIntval($page);
-		$cat   = ($cat > 5) ? $cat = 1 : $cat;
+		$cat   = ($this->check_index_catagory($cat)) ? $cat : 1;
+		$total = $this->getCountAtr('msgs_relax', 'category',$cat);
+		$page  = $this->check_index_page($this->getIntval($page), $total);
 		$table = array(
 			'cat'   => $cat,
 			'page'  => $page,
 		'SHOWRELAX' => SHOWRELAX_BY_DEFAULT
 		);
 		$json       = json_encode($table);
-		$total      = $this->getCountAtr('msgs_relax', 'category',$cat);
 		$meta       = $mt->getMTagsByUrl('relax');
 		$pagination = new Pagination($total, $page, SHOWRELAX_BY_DEFAULT, 'page-');
 		$relax      = new Relax();
@@ -29,23 +40,22 @@ class RelaxController
 			if ($a['id'] == $cat) {
 				$b = $this->rus2translit( $a['name'] );
 				$c = new $b();
+				$c->draw($json,$total,$pagination,$cat);
 				break;
 			}
 		}
-		$c->draw($json,$total,$pagination,$cat);
 		return true;
 	}
 
-	public function actionRelaxAll($page=1)
-	{
-		$page  = $this->getIntval($page);
+	public function actionRelaxAll( $page = 1 ) {
+		$total      = $this->getCount('msgs_relax');
+		$page  = $this->check_index_page($this->getIntval($page), $total);
 		$table = array(
 			'cat'   => 0,
 			'page'  => $page,
 		'SHOWRELAX' => SHOWRELAX_BY_DEFAULT
 		);
-		$json       = json_encode($table);
-		$total      = $this->getCount('msgs_relax');
+		$json       = json_encode($table);		
 		$pagination = new Pagination($total, $page, SHOWRELAX_BY_DEFAULT, 'page-');
 		$siteFile   = 'views/relax/index.php';
 		$metaTags   = '';
@@ -53,17 +63,16 @@ class RelaxController
 		return true;
 	}
 
-	public function actionFullAnCat($teman = 1,$page=1)
-	{
+	public function actionFullAnCat($teman = 1, $page=1) {
+		$total = $this->getCountAtr('msgs_relax', 'teman',$teman);
 		$teman = $this->getIntval($teman);
-		$page  = $this->getIntval($page);
+		$page  = $this->check_index_page($this->getIntval($page), $total);
 		$table = array(
 			'cat'   => $teman,
 			'page'  => $page,
 		'SHOWRELAX' => SHOWRELAX_BY_DEFAULT
 		);
 		$json       = json_encode($table);
-		$total      = $this->getCountAtr('msgs_relax', 'teman',$teman);
 		$pagination = new Pagination($total, $page, SHOWRELAX_BY_DEFAULT, 'page-');
 		$siteFile   = 'views/relax/anThema.php';
 		$metaTags   = '';
@@ -71,15 +80,14 @@ class RelaxController
 		return true;
 	}
 
-	public function actionRelaxAddAn()
-	{
+	public function actionRelaxAddAn() {
 		$show  = false;
 		$relax = new Relax();
 		if(isset($_POST['submit']))
 		{
 			if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token']))
 			{
-				$teman = $this->filterTXT('post','teman');
+				$teman = $this->filterINT('post','teman');
 				$msg   = $this->filterTXT('post','msg');
 				$res   = $relax->addNewAn($teman, $msg);
 				$show  = true;
@@ -106,17 +114,16 @@ class RelaxController
 		return true;		
 	}
 
-	public function actionRelaxEdit($page = 1)
-	{
+	public function actionRelaxEdit($page = 1) {
 		if(isset($_POST['submit'])) {
-			$id      = $this->filterTXT('post','id');
+			$id      = $this->filterINT('post','id');
 			$getData = new classGetData('msgs_relax');
 			$comList = $getData->deleteDataFromTable($id);
 			unset($getData);			
 		}
-		$page  = $this->getIntval($page);		
-		$title = "Редагування дозвілля";
 		$total = $this->getCount('msgs_relax');
+		$page  = $this->check_index_page($this->getIntval($page), $total);		
+		$title = "Редагування дозвілля";		
 		$relax = new Relax();
 		$comms = $relax->getRelaxAll($page);
 		unset($relax);
@@ -127,8 +134,7 @@ class RelaxController
 		return true;
 	}
 
-	public function actionRelaxEditOne($id)
-	{
+	public function actionRelaxEditOne($id) {
 		$id    = $this->getIntval($id);
 		$title = "Редагування 1 дозвілля";
 		$relax = new Relax();
@@ -144,5 +150,4 @@ class RelaxController
 		require_once ('views/relax/relaxEditOne.php');
 		return true;
 	}
-}	
-?>
+}
