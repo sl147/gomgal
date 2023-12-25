@@ -12,7 +12,7 @@ class FAController {
 		$page       = $this->check_index_page($this->getIntval($page), $total, SHOWFA_BY_DEFAULT);
 		$faList     = $this->FAClass->getFAAll($page);
 		$pagination = new Pagination($total, $page, SHOWFA_BY_DEFAULT, 'page-');
-		$metaTags   = 'FA';
+		$meta     = $this->getMeta();
 		$siteFile   = 'views/FA/look.php';
 		require_once ('views/layouts/siteIndex.php');
 		unset($pagination);

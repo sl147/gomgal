@@ -37,7 +37,8 @@ class RelaxController {
 		'SHOWRELAX' => SHOWRELAX_BY_DEFAULT
 		);
 		$json       = json_encode($table);
-		$meta       = $mt->getMTagsByUrl('relax');
+		//$meta       = $mt->getMTagsByUrl('relax');
+		$meta       = $this->getMeta();
 		$pagination = new Pagination($total, $page, SHOWRELAX_BY_DEFAULT, 'page-');
 		$relax      = new Relax();
 		$arr        = $relax->getRelax();
@@ -63,7 +64,10 @@ class RelaxController {
 		$json       = json_encode($table);		
 		$pagination = new Pagination($total, $page, SHOWRELAX_BY_DEFAULT, 'page-');
 		$siteFile   = 'views/relax/index.php';
-		$metaTags   = '';
+		//$metaTags   = '';
+		//$metaTags   = new MetaTags;
+		$meta       = $this->getMeta();
+		//$meta       = $metaTags->getMTagsByUrl(trim($_SERVER["REQUEST_URI"],'/'));
 		require_once ('views/layouts/siteIndex.php');
 		return true;
 	}
@@ -127,7 +131,7 @@ class RelaxController {
 			unset($getData);			
 		}
 		$total = $this->getCount('msgs_relax');
-		$page  = $this->check_index_page($this->getIntval($page), $total);		
+		$page  = $this->check_index_page($this->getIntval($page), $total, SHOWCOMMENT_BY_DEFAULT);		
 		$title = "Редагування дозвілля";		
 		$relax = new Relax();
 		$comms = $relax->getRelaxAll($page);

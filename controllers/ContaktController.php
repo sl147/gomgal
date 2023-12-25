@@ -44,7 +44,7 @@ class ContaktController {
 
 		$token    = $this->getToken();
 		$siteFile = 'views/contakt/index.php';
-		$metaTags = 'contakt';
+		$meta     = $this->getMeta();
 		require_once ('views/layouts/siteIndex.php');		
 		return true;
 	}
