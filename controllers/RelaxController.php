@@ -30,15 +30,15 @@ class RelaxController {
 		return (bool) false;
 	}
 
-	private function check_index_page ( $page, $total ) {
+/*	private function check_index_page ( $page, $total ) {
 		return ($page > ( ($total / SHOWRELAX_BY_DEFAULT) + 1 )) ? 1 : $page;
-	}
+	}*/
 
 	public function actionIndex( $cat, $page = 1) {
 		$mt    = new MetaTags();
 		$cat   = ($this->check_index_catagory($cat)) ? $cat : 1;
 		$total = $this->getCountAtr('msgs_relax', 'category',$cat);
-		$page  = $this->check_index_page($this->getIntval($page), $total);
+		$page  = $this->check_index_page($this->getIntval($page), $total, SHOWRELAX_BY_DEFAULT);
 		$table = array(
 			'cat'   => $cat,
 			'page'  => $page,
@@ -62,7 +62,7 @@ class RelaxController {
 
 	public function actionRelaxAll( $page = 1 ) {
 		$total = $this->getCount('msgs_relax');
-		$page  = $this->check_index_page($this->getIntval($page), $total);
+		$page  = $this->check_index_page($this->getIntval($page), $total, SHOWRELAX_BY_DEFAULT);
 		$table = array(
 			'cat'   => 0,
 			'page'  => $page,
@@ -79,10 +79,7 @@ class RelaxController {
 	public function actionFullAnCat($teman = 1, $page=1) {
 		$teman = ($this->check_index_theme_an($teman)) ? $teman : 1;
 		$total = $this->getCountAtr('msgs_relax', 'teman',$teman);
-		$page  = $this->check_index_page($this->getIntval($page), $total);
-
-		//echo "page=".$page."  total=".$total."  teman=".$teman;
-
+		$page  = $this->check_index_page($this->getIntval($page), $total, SHOWRELAX_BY_DEFAULT);
 		$table = array(
 			'cat'   => $teman,
 			'page'  => $page,
