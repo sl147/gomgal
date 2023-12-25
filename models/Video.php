@@ -7,7 +7,7 @@ class Video extends classGetDB {
 	use traitAuxiliary;
 	const SHOWVIDEO_BY_DEFAULT_Vue = 25;
 
-	public  function getVideo($page) {
+	public  function getVideo(int $page) {
 		$getData = new classGetData('progrnk');
 		$offset  = ($this->getIntval($page) - 1) * SHOWVIDEO_BY_DEFAULT;
 		$result  = $getData->getDataByOffsetWithOutRow ('prid',SHOWVIDEO_BY_DEFAULT,$offset);
@@ -48,8 +48,9 @@ class Video extends classGetDB {
 
 	public static function updateVideoVue ($id,$idYT,$title) {
 		$getDB  = new classGetDB();
-		$sql    = "UPDATE progrnk SET pridYT=:idYT, prhar=:title WHERE prid=$id";
+		$sql    = "UPDATE progrnk SET pridYT=:idYT, prhar=:title WHERE prid=:id";
 		$result = $getDB->getPrepareSQLVue($sql);
+		$result -> bindParam(':id',     $id,   PDO::PARAM_INT);
 		$result -> bindParam(':idYT',  $idYT,  PDO::PARAM_STR);
 		$result -> bindParam(':title', $title, PDO::PARAM_STR);
 		unset($getDB);

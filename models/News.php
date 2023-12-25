@@ -266,12 +266,13 @@ class News extends classGetDB {
 	}
 
 	public function updateNews($id,$title,$prew,$category,$cat2,$sourse,$msg,$foto,$top,$videoYT) {
-		$sql    = "UPDATE msgs SET title=:title,prew=:prew,category=:category,cat2=:cat2,sourse=:sourse,msg=:msg,foto=:foto,top=:top,videoYT=:videoYT WHERE id=$id";
+		$sql    = "UPDATE msgs SET title=:title,prew=:prew,category=:category,cat2=:cat2,sourse=:sourse,msg=:msg,foto=:foto,top=:top,videoYT=:videoYT WHERE id=:id";
 		$result = $this->getPrepareSQL($sql);
+		$result -> bindParam(':id',      $id,      PDO::PARAM_INT);
 		$result -> bindParam(':title',   $title,   PDO::PARAM_STR);
 		$result -> bindParam(':prew',    $prew,    PDO::PARAM_STR);
-		$result -> bindParam(':category',$category,PDO::PARAM_INT );
-		$result -> bindParam(':cat2',    $cat2,    PDO::PARAM_INT );
+		$result -> bindParam(':category',$category,PDO::PARAM_INT);
+		$result -> bindParam(':cat2',    $cat2,    PDO::PARAM_INT);
 		$result -> bindParam(':sourse',  $sourse,  PDO::PARAM_STR);
 		$result -> bindParam(':top',     $top,     PDO::PARAM_STR);
 		$result -> bindParam(':msg',     $msg,     PDO::PARAM_STR);
@@ -282,12 +283,13 @@ class News extends classGetDB {
 	}
 
 	public function updateNewsWithoutPhoto($id,$title,$prew,$category,$cat2,$sourse,$msg,$top,$videoYT) {
-		$sql    = "UPDATE msgs SET title=:title,prew=:prew,category=:category,cat2=:cat2,sourse=:sourse,msg=:msg,top=:top,videoYT=:videoYT WHERE id=$id";
+		$sql    = "UPDATE msgs SET title=:title,prew=:prew,category=:category,cat2=:cat2,sourse=:sourse,msg=:msg,top=:top,videoYT=:videoYT WHERE id=:id";
 		$result = $this->getPrepareSQL($sql);
+		$result -> bindParam(':id',      $id,      PDO::PARAM_INT);
 		$result -> bindParam(':title',   $title,   PDO::PARAM_STR);
 		$result -> bindParam(':prew',    $prew,    PDO::PARAM_STR);
-		$result -> bindParam(':category',$category,PDO::PARAM_INT );
-		$result -> bindParam(':cat2',    $cat2,    PDO::PARAM_INT );
+		$result -> bindParam(':category',$category,PDO::PARAM_INT);
+		$result -> bindParam(':cat2',    $cat2,    PDO::PARAM_INT);
 		$result -> bindParam(':sourse',  $sourse,  PDO::PARAM_STR);
 		$result -> bindParam(':top',     $top,     PDO::PARAM_STR);
 		$result -> bindParam(':msg',     $msg,     PDO::PARAM_STR);
@@ -297,8 +299,9 @@ class News extends classGetDB {
 	}
 
 	public function updateComm($id,$nik,$txt,$email) {
-		$sql    = "UPDATE Comment SET nik_com=:nik, email_com=:email, txt_com=:txt WHERE id_com=$id";
+		$sql    = "UPDATE Comment SET nik_com=:nik, email_com=:email, txt_com=:txt WHERE id_com=:id";
 		$result = $this->getPrepareSQL($sql);
+		$result -> bindParam(':id',    $id,    PDO::PARAM_INT);
 		$result -> bindParam(':nik',   $nik,   PDO::PARAM_STR);
 		$result -> bindParam(':email', $email, PDO::PARAM_STR);
 		$result -> bindParam(':txt',   $txt,   PDO::PARAM_STR);

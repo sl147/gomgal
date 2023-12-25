@@ -21,7 +21,7 @@ class FA  extends classGetDB {
 		$sql    = "INSERT INTO photoInAlbum (id_album,subscribe,fotoName,fotoNameS)
 		 VALUES(:id_album,:subscribe,:fotoName,:fotoNameS)";
 		$result = $this->getPrepareSQL($sql);
-		$result -> bindParam(':id_album',  $id,  PDO::PARAM_STR);
+		$result -> bindParam(':id_album',  $id,        PDO::PARAM_INT);
 		$result -> bindParam(':subscribe', $subscribe, PDO::PARAM_STR);
 		$result -> bindParam(':fotoName',  $fotoName,  PDO::PARAM_STR);
 		$result -> bindParam(':fotoNameS', $fotoNameS, PDO::PARAM_STR);
@@ -79,14 +79,6 @@ class FA  extends classGetDB {
 		return $faOne ?? [];
 	}
 
-	public function getVideoVue1($page = 1) {
-		require_once ('../classes/classGetData.php');
-		$getData  = new classGetData('progrnk');
-		$list = $getData->getDataFromTableOrderPageVue(self::SHOWFA_BY_DEFAULT_Vue,$page,'prid');
-		unset($getData);
-		return $list ?? [];
-	}
-
 	public function getFAVue($page = 1) {
 		require_once ('../classes/classGetData.php');
 		$getData  = new classGetData('photoalbum');
@@ -105,9 +97,10 @@ class FA  extends classGetDB {
 
 	public function updateFAVue ($id,$name_FA,$msgs_FA)	{
 		$getDB  = new classGetDB();
-		$sql    = "UPDATE photoalbum SET name_FA=:name, msgs_FA=:msgs WHERE id_FA =$id";
+		$sql    = "UPDATE photoalbum SET name_FA=:name, msgs_FA=:msgs WHERE id_FA =:id";
 		$result = $getDB->getPrepareSQLVue($sql);
-		$result -> bindParam(':name',  $name_FA,  PDO::PARAM_STR);
+		$result -> bindParam(':id',   $id,      PDO::PARAM_INT );
+		$result -> bindParam(':name', $name_FA, PDO::PARAM_STR);
 		$result -> bindParam(':msgs', $msgs_FA, PDO::PARAM_STR);
 		unset($getDB);
 		return $result -> execute();
@@ -115,9 +108,10 @@ class FA  extends classGetDB {
 
 	public function updateFAOneVue ($id,$subscribe)	{
 		$getDB  = new classGetDB();
-		$sql    = "UPDATE photoinalbum SET subscribe=:subscribe WHERE id_foto =$id";
+		$sql    = "UPDATE photoinalbum SET subscribe=:subscribe WHERE id_foto =:id";
 		$result = $getDB->getPrepareSQLVue($sql);
-		$result -> bindParam(':subscribe',  $subscribe,  PDO::PARAM_STR);
+		$result -> bindParam(':id',         $id,        PDO::PARAM_INT );
+		$result -> bindParam(':subscribe',  $subscribe, PDO::PARAM_STR);
 		unset($getDB);
 		return $result -> execute();
 	}
