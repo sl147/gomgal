@@ -375,8 +375,9 @@ trait traitAuxiliary {
 		}
 	}
 
-	private function check_index_page ( $page, $total, $show ) {
-		//echo "page=".$page."  total=".$total."  show=".$show;
-		return ($page > ( ($total / $show) + 1 )) ? 1 : $page;
+	private function check_index_page ( $page, $total, $show ) :int {
+		$page = $this->getIntval($page);
+		echo "page=".$page."  total=".$total."  show=".$show;
+		return (int) ($page > ( ($total / $show) + 1 )) ? 1 : $page;
 	}
 }
