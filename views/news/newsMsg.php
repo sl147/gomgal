@@ -14,7 +14,7 @@
 	<?= strip_tags($news['datetime'])?>
 </p>
 <div>
-
+<?=Auxiliary::getAdSence()?>
 <div class='news_msg text-justify'>
 	<?php if ($news['foto']) :?>
 		<img class='imgNews' width="200" height="auto" src="<?=$news['photo']?>" title="<?=$news['title']?>" alt="<?=$news['title']?>" />

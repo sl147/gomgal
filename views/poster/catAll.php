@@ -13,14 +13,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php
-			$p = new Poster();
-			if ($page == 1) {
-				$r = $p->showPosterAll($posterImpotant);
-			}
-			$r = $p->showPosterAll($posterAll);
-			unset($p);
-		?>
+		<?php include ('views/poster/showPosterAll.php') ?>
 	</tbody>
 </table>
 </div>

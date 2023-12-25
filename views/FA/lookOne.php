@@ -1,7 +1,7 @@
 <script src="/js/jquery.lazyload.min.js"></script>
 <script type="text/javascript">
   $(function() {
-    $("img.fotoLook").lazyload({
+    $("img").lazyload({
       effect: "fadeIn"
     });
   });
@@ -12,9 +12,12 @@
 <div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					<h2 class="text-center">
+					<h2 class="text-center showLarge">
 						<?=$nameFA['name_FA']?>	
 					</h2>
+					<h4 class="text-center showSmall">
+						<?=$nameFA['name_FA']?>	
+					</h4>
 				</div>
 			</div>
 		</div>
@@ -31,12 +34,18 @@
 				</div>
 				
 				<?php $j++; if($j == 4) :?>
-				<div class="text-center col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<div class="ads">
-						<?=Auxiliary::getAdSence()?>
+					<div class="col-lg-2 col-md-2 col-sm-1 col-xs-1"></div>
+					<div class="col-lg-8 col-md-8 col-sm-10 col-xs-10">
+								<?=Auxiliary::getAdSence()?>
 					</div>
-				</div>
 				<?php endif;?>
 			<?php endforeach; ?>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-2 col-md-2 col-sm-1 col-xs-1"></div>
+	<div class="col-lg-8 col-md-8 col-sm-10 col-xs-10">
+				<?=Auxiliary::getAdSence()?>
 	</div>
 </div>
