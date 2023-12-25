@@ -20,19 +20,11 @@ class RelaxController {
 	private function check_index_theme_an ( $teman ) :bool {
 		$relax    = new Relax();
 		$cat_list = $relax->getThemeAn();
-/*		echo "<pre>";
-		var_dump($cat_list);
-		echo "</pre>";*/
 		foreach ($cat_list as $key => $var) {
-			//echo "<br>id=".$var['id']."  teman=".$teman;
 			if ( $var['id'] == $teman ) return (bool) true;
 		}
 		return (bool) false;
 	}
-
-/*	private function check_index_page ( $page, $total ) {
-		return ($page > ( ($total / SHOWRELAX_BY_DEFAULT) + 1 )) ? 1 : $page;
-	}*/
 
 	public function actionIndex( $cat, $page = 1) {
 		$mt    = new MetaTags();

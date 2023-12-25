@@ -7,8 +7,9 @@ class FAController {
 	}
 
 	public function actionLook($page = 1) {
-		$page       = $this->getIntval($page);
+		
 		$total      = $this->getCount('photoalbum');
+		$page       = $this->check_index_page($this->getIntval($page), $total, SHOWFA_BY_DEFAULT);
 		$faList     = $this->FAClass->getFAAll($page);
 		$pagination = new Pagination($total, $page, SHOWFA_BY_DEFAULT, 'page-');
 		$metaTags   = 'FA';
@@ -66,10 +67,10 @@ class FAController {
 	}
 
 	public function actionEditOne($id) {
-		$fa     = new FA();	
+		$fa = new FA();	
 		if(isset($_POST['submit'])) {
 			if ($_FILES['photo'] ['tmp_name']) {
-				$id = $_POST['if_photo'];
+				$id        = $this->filterINT('post', 'if_photo');
 				$subscribe = $this->filterTXT('post', 'desc_photo');
 				$fotoName  = $this->rus2translit($_FILES['photo']['name']);
 				$pathdir   = 'album/'.$id;
@@ -86,8 +87,8 @@ class FAController {
 		$json   = json_encode($table);
 		$nameFA = $fa->getFAId($id);
 		if(isset($_POST['submit'])) {
-			$subscr = $_POST['subscr'];
-			$file   = $_POST['file'];
+			$subscr = $this->filterTXT('post', 'subscr');
+			$file   = $this->filterTXT('post', 'file');
 		}
 		unset($fa);			
 		require_once ('views/FA/editOne.php');
@@ -97,11 +98,10 @@ class FAController {
 	public function actionEdit($page = 1) {
 		$page  = $this->getIntval($page);
 		$table = array(
-			'page' => $page,
-			'total'=> $this->total
+			'page' => $page
 			);			
 		$json  = json_encode($table);
-		$pagination = new Pagination($this->total, $page, SHOWFA_BY_DEFAULT, 'page-');
+		$pagination = new Pagination($this->total, $page, 25, 'page-');
 		require_once ('views/FA/edit.php');
 		return true;
 	}
