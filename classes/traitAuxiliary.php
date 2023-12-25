@@ -374,4 +374,9 @@ trait traitAuxiliary {
 			$mail    = $this->mailing($email,$subject,$massage);
 		}
 	}
+
+	private function check_index_page ( $page, $total, $show ) {
+		//echo "page=".$page."  total=".$total."  show=".$show;
+		return ($page > ( ($total / $show) + 1 )) ? 1 : $page;
+	}
 }
