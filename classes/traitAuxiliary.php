@@ -268,6 +268,26 @@ trait traitAuxiliary {
 		return mb_substr($title,0,55,'UTF-8').GOMGAL;
 	}
 
+	private function getMeta() {
+		$mt      = new MetaTags();	
+		$a = explode("/",trim($_SERVER["REQUEST_URI"],'/'));
+		$b = $mt->getMTagsByUrl($a[0]);
+		return $b;
+	}
+
+	private function getMeta1() {
+		$mt      = new MetaTags();	
+		$a = explode("/",trim($_SERVER["REQUEST_URI"],'/'));
+		$b = $mt->getMTagsByUrl($a[0]);
+		$b = "";
+		for ($i=0; $i < count($a); $i++) { 
+			if ($i > 0 ) {$b .= "/".$a[$i];}
+			else {$b .= $a[$i];}
+		}
+		$c = $mt->getMTagsByUrl($b);
+		return $b;
+	}
+
 	public function plusClickButton($type) {
 		$getData  = new classGetData("countClickButton");
 		$result = $getData->getDataFromTableByNameFetch ($type,"id_button");
@@ -377,7 +397,6 @@ trait traitAuxiliary {
 
 	private function check_index_page ( $page, $total, $show ) :int {
 		$page = $this->getIntval($page);
-		echo "page=".$page."  total=".$total."  show=".$show;
 		return (int) ($page > ( ($total / $show) + 1 )) ? 1 : $page;
 	}
 }
