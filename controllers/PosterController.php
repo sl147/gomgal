@@ -46,18 +46,26 @@ class PosterController {
 		return true;
 	}
 
+	private function getMetaWithSubPoster($poster) {
+		$mt = new MetaTags();	
+		$a  = explode("/",trim($_SERVER["REQUEST_URI"],'/'));
+		$b  = $mt->getMTagsByUrl($a[0]);
+		$b['title'] .= ' - '. $poster->getPostersByCat($a[1])['cat_cat'];
+		return $b;
+	}
+
 	public function actionPosterCatFull($cat, $page = 1) {
 		$cat            = $this->getIntval($cat);
 		$poster         = new Poster();
 		$posterImpotant = $poster->getAllPostersImpotCat($cat);
 		$posterAll      = $poster->getAllPostersAllCat($cat,$page);
 		$total          = $this->getCountAtr('poster', 'cat_p',$cat);
-		unset($poster);
 		$pagination     = new Pagination($total, $this->getIntval($page), SHOWPOSTER_BY_DEFAULT, 'page-');
 		$siteFile       = 'views/poster/catAll.php';
-		$metaTags       = '';
+		$meta           = $this->getMetaWithSubPoster($poster);
 		require_once ('views/layouts/siteIndex.php');
 		unset($pagination);
+		unset($poster);
 		return true;
 	}
 

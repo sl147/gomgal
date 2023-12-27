@@ -36,16 +36,8 @@ class FAController {
 	        $msgs_FA = $this->filterTXT('post', 'msgs_FA');
 	        $log_FA  = 1;
 	        $result  = $fa->createFA($name_FA,$msgs_FA,$log_FA);
-            $idAlbum = $fa->getFAName($name_FA);
-			$pathdir = "album/".$idAlbum['id_FA'];
-		    if ($this->makeDir($pathdir)) {
-				header("Location: /FA/upload/".$idAlbum['id_FA']); exit();
-		    } 
-		    else {
-				print "no dir".$pathdir." read";
- 	            header ("Location: /FAcreate");
-        	}
-			unset($fa);
+	        unset($fa);
+	        header ("Location: /FAedit");			
 		}
 		require_once ('views/FA/create.php');
 		return true;
@@ -74,8 +66,11 @@ class FAController {
 				$subscribe = $this->filterTXT('post', 'desc_photo');
 				$fotoName  = $this->rus2translit($_FILES['photo']['name']);
 				$pathdir   = 'album/'.$id;
+				$res  = $this->makeDir($pathdir);
 				move_uploaded_file ($_FILES['photo'] ['tmp_name'],$pathdir.'/'.$fotoName);
-				$res = $fa->insertPhoto($id,$subscribe,$fotoName);
+				$res = $fa->insertPhoto($id, $subscribe, $this->convertNameToWebp($fotoName));
+				$this->webpImage('./'.$pathdir."/".$fotoName);
+				unlink('./'.$pathdir."/".$fotoName);
 			}
 			header ("Location: /faEditOne/$id");
 		}
