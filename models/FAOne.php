@@ -12,4 +12,23 @@ class FAOne {
 		unset($getData);
 		return $list ?? [];
 	}
+
+	public function updateFAOneVue ($id,$subscribe)	{
+		$getDB  = new classGetDB();
+		$sql    = "UPDATE photoInAlbum SET subscribe=:subscribe WHERE id_foto =:id";
+		$result = $getDB->getPrepareSQLVue($sql);
+		$result -> bindParam(':id',         $id,        PDO::PARAM_INT );
+		$result -> bindParam(':subscribe',  $subscribe, PDO::PARAM_STR);
+		unset($getDB);
+		return $result -> execute();
+	}
+
+	public function deleteFAOneVue ($id) {
+		$getDB  = new classGetDB();
+		$sql    = "DELETE FROM photoInAlbum WHERE id_foto =:id";
+		$result = $getDB->getPrepareSQLVue($sql);
+		$result -> bindParam(':id',         $id,        PDO::PARAM_INT );
+		unset($getDB);
+		return $result -> execute();
+	}
 }

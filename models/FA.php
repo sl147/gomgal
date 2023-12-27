@@ -106,16 +106,6 @@ class FA  extends classGetDB {
 		return $result -> execute();
 	}
 
-	public function updateFAOneVue ($id,$subscribe)	{
-		$getDB  = new classGetDB();
-		$sql    = "UPDATE photoinalbum SET subscribe=:subscribe WHERE id_foto =:id";
-		$result = $getDB->getPrepareSQLVue($sql);
-		$result -> bindParam(':id',         $id,        PDO::PARAM_INT );
-		$result -> bindParam(':subscribe',  $subscribe, PDO::PARAM_STR);
-		unset($getDB);
-		return $result -> execute();
-	}
-
 	public function deleteFAOnePhoto( $id, $fotoName, $fotoNames, $idAlbum ){
 		$fdel = '../album/'. $idAlbum .'/'.$fotoName;
 		unlink($fdel);
