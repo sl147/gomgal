@@ -145,7 +145,9 @@ trait traitAuxiliary {
     	$pathdir .= '/'.$year.'/'.$month;
         $res      = $this->makeDir($pathdir);
         move_uploaded_file ($_FILES['file'] ['tmp_name'],$pathdir."/".$nameFile); 
-        return $year.'/'.$month.'/'.$nameFile;
+        $destination = $this->webpImage($pathdir."/".$nameFile);
+		unlink($pathdir."/".$nameFile);
+        return $year.'/'.$month.'/'.$this->convertNameToWebp($destination);
     }
 
 	private function getPathFile($file,$folder,$delim="") {
@@ -166,6 +168,39 @@ trait traitAuxiliary {
 		if (file_exists($fdel))  unlink($fdel);
 		if (file_exists($fdelS)) unlink($fdelS);
 	}
+	
+	private function webpImage($source, $quality = 100, $removeOld = false) {
+        $pathdir     = pathinfo($source, PATHINFO_DIRNAME);
+        $name        = pathinfo($source, PATHINFO_FILENAME);
+        $destination = $pathdir . DIRECTORY_SEPARATOR . $name . '.webp';
+        $info        = getimagesize($source);
+        $isAlpha     = false;
+        if ($info['mime'] == 'image/jpeg')
+            $image = imagecreatefromjpeg($source);
+        elseif ($isAlpha = $info['mime'] == 'image/gif') {
+            $image = imagecreatefromgif($source);
+        } elseif ($isAlpha = $info['mime'] == 'image/png') {
+            $image = imagecreatefrompng($source);
+        } else {
+            return $source;
+        }
+        if ($isAlpha) {
+            imagepalettetotruecolor($image);
+            imagealphablending($image, true);
+            imagesavealpha($image, true);
+        }
+        imagewebp($image, $destination, $quality);
+
+        if ($removeOld)
+            unlink($source);
+
+        return $destination;
+    }
+
+    private function convertNameToWebp($filename) {
+    	$name = pathinfo($filename, PATHINFO_FILENAME);
+    	return $name . '.webp';
+    }
 
 	public function isSpam($nik,$ip,$email,$txt) {
 		$spams = $this->getSpam();
@@ -269,23 +304,21 @@ trait traitAuxiliary {
 	}
 
 	private function getMeta() {
-		$mt      = new MetaTags();	
-		$a = explode("/",trim($_SERVER["REQUEST_URI"],'/'));
-		$b = $mt->getMTagsByUrl($a[0]);
+		$mt = new MetaTags();	
+		$a  = explode("/",trim($_SERVER["REQUEST_URI"],'/'));
+		$b  = $mt->getMTagsByUrl($a[0]);
 		return $b;
 	}
 
-	private function getMeta1() {
-		$mt      = new MetaTags();	
-		$a = explode("/",trim($_SERVER["REQUEST_URI"],'/'));
-		$b = $mt->getMTagsByUrl($a[0]);
-		$b = "";
+	private function getMetaWithSubSite() {
+		$mt = new MetaTags();	
+		$a  = explode("/",trim($_SERVER["REQUEST_URI"],'/'));
 		for ($i=0; $i < count($a); $i++) { 
 			if ($i > 0 ) {$b .= "/".$a[$i];}
-			else {$b .= $a[$i];}
+			else {$b = $a[$i];}
 		}
 		$c = $mt->getMTagsByUrl($b);
-		return $b;
+		return $c;
 	}
 
 	public function plusClickButton($type) {
