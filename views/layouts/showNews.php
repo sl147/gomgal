@@ -52,12 +52,5 @@
 				</a>	
 			<?php endif; ?>
 		</div>
-		<?php $j++; if ($j == 12) :?>
-		<div class="showSmall">
-		<div class="ads">
-	<?=Auxiliary::getAdSence()?>
-</div>
-</div>
-	<?php endif; ?>
 	<?php endforeach; ?>
 </div>
