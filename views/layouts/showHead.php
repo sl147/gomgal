@@ -9,11 +9,12 @@ pagead/js/adsbygoogle.js"></script>
 		<meta property="og:title"       content="<?=$news['title']?>" />
 		<meta property="og:description" content="<?=$news['prew']?>" />
 		<meta property="og:image"       content="<?='https://www.gomgal.lviv.ua'.$news['photo']?>" />
-		<link rel="canonical" href="<?=$news['title']?>" />
 		<title><?= $news['title']?></title>
+	<?php else :?>
+		<?php include 'views/layouts/showMeta.php';?>		
 	<?php endif; ?>
 	
-	<?php include 'views/layouts/showMeta.php';?>
+	<link rel="canonical" href="https://www.gomgal.lviv.ua/<?echo trim($_SERVER["REQUEST_URI"],'/');?>" />
 	<link rel="stylesheet" @media all href="/libs/bootstrap/bootstrap.min.css" />
 	<link rel="stylesheet" @media all href="/libs/fancybox/jquery.fancybox.css" />
 	<link rel="stylesheet" @media all href="/css/fonts.css" />
