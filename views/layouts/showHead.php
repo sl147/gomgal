@@ -10,6 +10,7 @@ pagead/js/adsbygoogle.js"></script>
 		<meta property="og:description" content="<?=$news['prew']?>" />
 		<meta property="og:image"       content="<?='https://www.gomgal.lviv.ua'.$news['photo']?>" />
 		<link rel="canonical" href="<?=$news['title']?>" />
+		<title><?= $news['title']?></title>
 	<?php endif; ?>
 	
 	<?php include 'views/layouts/showMeta.php';?>
