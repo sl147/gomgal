@@ -38,18 +38,18 @@ trait traitAuxiliary {
 	public function filterINT($type, $field) {
 		switch($type) {
 			case 'get':
-			$ouput = filter_input(INPUT_GET, $field, FILTER_VALIDATE_INT);
+			$field = filter_input(INPUT_GET, $field, FILTER_VALIDATE_INT);
 			break;
 
 			case 'post':
-			$output = filter_input(INPUT_POST, $field, FILTER_VALIDATE_INT); 
+			$field = filter_input(INPUT_POST, $field, FILTER_VALIDATE_INT); 
 			break;
 
 			default:
 			break;
 		}
 
-		return $output;
+		return $field;
 	}
 
 	public function filterTXT($type, $field) {
@@ -80,6 +80,7 @@ trait traitAuxiliary {
 
 			case 'post':
 			$output = filter_input(INPUT_POST, $field, FILTER_VALIDATE_EMAIL); 
+			$output = filter_input(INPUT_POST, $field, FILTER_SANITIZE_EMAIL); 
 			break;
 
 			default:
