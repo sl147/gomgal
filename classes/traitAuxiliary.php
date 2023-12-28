@@ -80,7 +80,6 @@ trait traitAuxiliary {
 
 			case 'post':
 			$output = filter_input(INPUT_POST, $field, FILTER_VALIDATE_EMAIL); 
-			$output = filter_input(INPUT_POST, $field, FILTER_SANITIZE_EMAIL); 
 			break;
 
 			default:
