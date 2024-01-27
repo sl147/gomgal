@@ -117,7 +117,7 @@ trait traitAuxiliary {
 	        'Э' => 'E',   'Ю' => 'Yu',  'Я' => 'Ya',
 	        ' ' => '_',   'і' => 'y',   'І' => 'Y',
 	        'ї' => 'yi',  'Ї' => 'YI',  "'" => '',
-	        '"' => ''
+	        '"' => '',    'є' => 'e',    'Є' => 'E',
 	    );
 	    return strtr($string, $converter);		
 	}

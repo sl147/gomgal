@@ -55,7 +55,8 @@ class Relax extends classGetDB {
 
 	private function getRelaxMsg( int $cat) :array {
 		$cat    = $this->getIntval($cat);
-		$result = $this->getDB("SELECT * FROM msgs_relax WHERE category=$cat and CHAR_LENGTH(msg)<400 and countrl>10");
+		//$result = $this->getDB("SELECT * FROM msgs_relax WHERE category=$cat and CHAR_LENGTH(msg)<400 and countrl>10");
+		$result = $this->getDB("SELECT * FROM msgs_relax WHERE category=$cat and CHAR_LENGTH(msg)<400");
 		while ($row = $result->fetch()) {			
 			$list[] = $row;
 		}

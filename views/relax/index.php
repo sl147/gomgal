@@ -27,6 +27,7 @@
 			</div>
 		</div>					
 		<hr>
+		<div v-if="item.num==5"><?=Auxiliary::showReklRand()?></div>
 	</div>
 	<?php if ($total > SHOWRELAX_BY_DEFAULT) :?>
 		<div class="text-center"><? echo $pagination->get(); ?></div>

@@ -109,7 +109,11 @@ visibility: hidden;
     	margin-top: 15px;
     }    
   }
-
+.sl147_an_showSmall .showSmall{
+	@media only screen and (max-width : 992px){
+		margin-top: 0!important; 
+	}
+}
 .adecor {
     text-decoration:none;
 }

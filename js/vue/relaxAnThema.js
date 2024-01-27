@@ -8,7 +8,8 @@ var vue_tovList = new Vue({
 		page:'',
 		cat:'',
 		SHOWRELAX:'',
-		relaxes: []	
+		relaxes: [],
+		j:1
 	},
 	methods: {
 		edCount(g,val) {
@@ -23,7 +24,11 @@ var vue_tovList = new Vue({
 			const req = this.select+this.cat+'&page='+this.page+'&SHOWRELAX='+this.SHOWRELAX
 			console.log(req)
 			this.$http.get(req).then(function (response) {
-				this.relaxes = JSON.parse(response.data)			
+				this.relaxes = JSON.parse(response.data)
+				for (var relax of this.relaxes) {
+					relax.num = this.j
+					this.j++
+				}			
 			},function (error){
 				console.log(error);
 			})

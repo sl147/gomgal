@@ -1,3 +1,7 @@
+<?php
+var_dump(explode("/",trim($_SERVER["REQUEST_URI"],'/')));
+var_dump($meta);
+?>
 <?php if ($siteFile  != 'views/news/fullNew.php') :?>
 	<?php if ( isset($meta['title']) ) :?>
 

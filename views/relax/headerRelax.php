@@ -19,7 +19,7 @@
 						<?php endforeach; unset($r);?>
 					</ul>			
 				</div>
-				<a href="/ralaxAddAn" class="btn btn-success">
+				<a href="/ralaxAddAn" class="sl147_an_showSmall btn btn-success">
 					<div class="showLarge">додати анекдот</div>
 					<div class="showSmall">додати</div>
 				</a>
