@@ -28,7 +28,7 @@
 			<div class="posterMSG">
 				<?=$posterOne["msg_p"]?><br><br>
 			Надіслав(ла): <?=$posterOne['name_p']?><br>
-			e-mail: <?=$posterOne['email_p']?>
+			e-mail: <?=$poster_email?>
 			</div>
 		</div>
 		<div class="close1"></div>

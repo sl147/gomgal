@@ -17,10 +17,25 @@ msgstr ""
 "X-Loco-Version: 2.6.2; wp-6.0\n"
 "X-Domain: sl147_gift\n"
 
-#. Description of the plugin
-#| msgid "<code><strong>Gift to cart</strong></code> Added gift to cart"
-msgid "Simple Top Bar will allows you to display a nice top bar in your site"
-msgstr "Simple Top Bar дозволить вам відобразити гарний верхній рядок на вашому сайті"
+#: admin/partials/sl147_gift_add_form.php:46
+msgid "Simple Top Bar is a simple but powerful tool that will make your site more stylish and user-friendly! This innovative element allows you to create an elegant top bar that will impress your visitors and make their stay on your site unforgettable."
+msgstr "Simple Top Bar - це простий, але потужний інструмент, який зробить ваш сайт більш стильним і зручним для користувачів! Цей інноваційний елемент дозволяє вам створити елегантний верхній рядок, який вразить ваших відвідувачів і зробить їх перебування на сайті незабутнім."
+
+#: admin/partials/sl147_gift_add_form.php:46
+msgid "With Simple Top Bar, you can easily display important information such as promotions, offers or the most important message so that your visitors don't miss any important event."
+msgstr "З Simple Top Bar ви можете легко відобразити важливу інформацію, таку як акції, пропозиції або найголовніше повідомлення, щоб ваші відвідувачі не пропустили жодної важливої події!."
+
+#: admin/partials/sl147_gift_add_form.php:46
+msgid "This tool allows you to customize the colors, fonts and placement to perfectly fit your design."
+msgstr "Цей інструмент дозволяє налаштовувати кольори, шрифти і розміщення, щоб він ідеально вписувався у ваш дизайн."
+
+#: admin/partials/sl147_gift_add_form.php:46
+msgid "Thanks to the Simple Top Bar, you will be able to attract attention immediately after users enter your site. It is easy to use, but adds professionalism and elegance to your site."
+msgstr "Завдяки Simple Top Bar ви зможете залучити увагу відразу після того, як користувачі зайдуть на ваш сайт. Він простий у використанні, але додає вашому веб-сайту професіоналізму та елегантності."
+
+#: admin/partials/sl147_gift_add_form.php:46
+msgid "Don't waste time, install Simple Top Bar today and make your site more attractive to your visitors! Impress them at first sight with this simple yet powerful tool to create a great top line!"
+msgstr "Не втрачайте часу, встановіть Simple Top Bar вже сьогодні і зробіть ваш сайт більш привабливим для ваших відвідувачів! Вражайте їх з першого погляду, використовуючи цей простий, але потужний інструмент для створення чудового верхнього рядка!"
 
 #: admin/partials/sl147_gift_add_form.php:46
 msgid "Installation"
@@ -35,6 +50,14 @@ msgid "Details"
 msgstr "Подробиці"
 
 #: includes/class-sl147_gift.php:237 admin/partials/sl147_gift_add_form.php:67
+msgid "author"
+msgstr "автор"
+
+#: includes/class-sl147_gift.php:237 admin/partials/sl147_gift_add_form.php:67
+msgid "Yaroslav Livchak"
+msgstr "Ярослав Лівчак"
+
+#: includes/class-sl147_gift.php:237 admin/partials/sl147_gift_add_form.php:67
 msgid "In the plugin settings, you can set the following options:"
 msgstr "У налаштуваннях плагіна ви можете встановити такі параметри:"
 
@@ -43,8 +66,8 @@ msgid "There are no reviews"
 msgstr "Відгуків немає"
 
 #: public/partials/sl147_gift_popup.php:59
-msgid "Upload the plugin to your page. Activate it. Place the shortcode ['sl147_TB_display'] on your page where you want to see it and that will be enough. "
-msgstr "Завантажте плагін на Вашу сторінку. Активуйте його.	Розмістіть шорткод ['sl147_TB_display'] на Вашій сторінці у тому місці, де Ви хочете його бачити і цього буде достатньо."
+msgid "Upload the plugin to your page. Activate it and set settings only."
+msgstr "Завантажте плагін на свій сайт.<br> Активуйте його та встановіть лише налаштування.<br> І цього вистачить."
 
 #: includes/class-sl147_gift.php:237 admin/partials/sl147_gift_add_form.php:67
 msgid "Add a comment"
@@ -105,3 +128,7 @@ msgstr "Розмір шрифту (px)"
 #: admin/partials/sl147_gift_form.php:7
 msgid "Height top bar (px)"
 msgstr "Висота (px)"
+
+#: includes/class-sl147_gift.php:237 admin/partials/sl147_gift_add_form.php:67
+msgid "is not displayed in reviews"
+msgstr "не відображається у відгуках"

@@ -52,6 +52,6 @@
 		<?php endforeach; ?>
 	</tbody>
 </table>
-<?php if ($total > SHOWFA_BY_DEFAULT) :?>
+<?php if ($this->total > SHOWFA_BY_DEFAULT) :?>
 <div class="text-center"><?php echo $pagination->get(); ?></div>
 <?php endif ;?>

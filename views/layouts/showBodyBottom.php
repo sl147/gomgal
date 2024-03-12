@@ -25,5 +25,5 @@ svMaxY = 3;
 ssnowStick = 1;
 sfollowMouse = 1;
 </script>
-<script type="text/javascript" src="/js/snow.js"></script>
+<!-- <script type="text/javascript" src="/js/snow.js"></script> -->
 </body>

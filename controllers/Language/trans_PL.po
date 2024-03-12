@@ -17,10 +17,29 @@ msgstr ""
 "X-Loco-Version: 2.6.2; wp-6.0\n"
 "X-Domain: sl147_gift\n"
 
-#. Description of the plugin
-#| msgid "<code><strong>Gift to cart</strong></code> Added gift to cart"
-msgid "Simple Top Bar will allows you to display a nice top bar in your site"
-msgstr "Simple Top Bar pozwoli Ci wyświetlić ładny górny pasek w Twojej witrynie"
+#: includes/class-sl147_gift.php:237 admin/partials/sl147_gift_add_form.php:67
+msgid "author"
+msgstr "autor"
+
+#: admin/partials/sl147_gift_add_form.php:46
+msgid "Simple Top Bar is a simple but powerful tool that will make your site more stylish and user-friendly! This innovative element allows you to create an elegant top bar that will impress your visitors and make their stay on your site unforgettable."
+msgstr "Simple Top Bar to proste, ale potężne narzędzie, które sprawi, że Twoja witryna stanie się bardziej stylowa i przyjazna dla użytkownika! Ten innowacyjny element pozwala stworzyć elegancki górny pasek, który zrobi wrażenie na Twoich gościach i sprawi, że ich pobyt na stronie będzie niezapomniany."
+
+#: admin/partials/sl147_gift_add_form.php:46
+msgid "With Simple Top Bar, you can easily display important information such as promotions, offers or the most important message so that your visitors don't miss any important event."
+msgstr "Dzięki Simple Top Bar z łatwością wyeksponujesz ważne informacje takie jak promocje, oferty czy najważniejszy komunikat, tak aby Twoi odwiedzający nie przegapili żadnego ważnego wydarzenia."
+
+#: admin/partials/sl147_gift_add_form.php:46
+msgid "This tool allows you to customize the colors, fonts and placement to perfectly fit your design."
+msgstr "To narzędzie umożliwia dostosowanie kolorów, czcionek i rozmieszczenia, aby idealnie pasowały do Twojego projektu."
+
+#: admin/partials/sl147_gift_add_form.php:46
+msgid "Thanks to the Simple Top Bar, you will be able to attract attention immediately after users enter your site. It is easy to use, but adds professionalism and elegance to your site."
+msgstr "Dzięki Simple Top Bar będziesz w stanie przyciągnąć uwagę użytkownika natychmiast po wejściu na Twoją stronę. Jest łatwy w użyciu, ale dodaje Twojej witrynie profesjonalizmu i elegancjiі."
+
+#: admin/partials/sl147_gift_add_form.php:46
+msgid "Don't waste time, install Simple Top Bar today and make your site more attractive to your visitors! Impress them at first sight with this simple yet powerful tool to create a great top line!"
+msgstr "Nie trać czasu, zainstaluj Simple Top Bar już dziś i spraw, aby Twoja witryna była bardziej atrakcyjna dla odwiedzających! Zaimponuj im od pierwszego wejrzenia dzięki temu prostemu, ale potężnemu narzędziu do stworzenia wspaniałego górnego paska!"
 
 #: admin/partials/sl147_gift_add_form.php:46
 msgid "Installation"
@@ -40,8 +59,8 @@ msgid "There are no reviews"
 msgstr "Jeszcze nie ma opinij"
 
 #: public/partials/sl147_gift_popup.php:59
-msgid "Upload the plugin to your page. Activate it. Place the shortcode ['sl147_TB_display'] on your page where you want to see it and that will be enough. "
-msgstr "Prześlij wtyczkę na swoją stronę. Aktywuj. Umieść shortcode ['sl147_TB_display'] na swojej stronie w miejscu, w którym chcesz go zobaczyć, i to wystarczy."
+msgid "Upload the plugin to your page. Activate it and set settings only."
+msgstr "Prześlij wtyczkę na swoją stronę. Aktywuj i skonfiguruj tylko ustawienia. I to wystarczy."
 
 #: includes/class-sl147_gift.php:237 admin/partials/sl147_gift_add_form.php:67
 msgid "In the plugin settings, you can set the following options:"
@@ -106,3 +125,7 @@ msgstr "Rozmiar czcionki (px)"
 #: admin/partials/sl147_gift_form.php:7
 msgid "Height top bar (px)"
 msgstr "Wysokość paska (px)"
+
+#: includes/class-sl147_gift.php:237 admin/partials/sl147_gift_add_form.php:67
+msgid "is not displayed in reviews"
+msgstr "nie jest wyświetlana w opinijach"

@@ -88,7 +88,14 @@ trait traitAuxiliary {
 		return $output;
 	}
 
-
+	public function sl147_clean($value = "") {
+	    $value = trim($value);
+	    $value = stripslashes($value);
+	    $value = strip_tags($value);
+	    $value = htmlspecialchars($value);
+	    
+	    return $value;
+	}
 
 	public function rus2translit($string) {
 

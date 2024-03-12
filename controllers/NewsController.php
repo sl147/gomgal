@@ -48,9 +48,41 @@ class NewsController {
 	}
 
 	public function actionCheckFilesNews() {
-		$NewsList    = $this->newsClass->getNewsAll();
+		$getData = new classGetData('msgs');
+		$result  = $getData->getDataFromTable(2);
+		unset($getData);
 
-		$files = scandir('NewsFoto');
+		$i       = 1;
+		while ($row = $result->fetch()) {
+			$NewsList[$i]['id']        = $row['id'];
+			$NewsList[$i]['top']       = $row['top'];
+			$NewsList[$i]['title']     = ucfirst (mb_strtolower ($row['title'], 'UTF-8'));
+			$NewsList[$i]['titleengl'] = $row['titleengl'];
+			$NewsList[$i]['datetime']  = $row['datetime'];
+			$NewsList[$i]['fotoF']     = $row['foto'];
+			$NewsList[$i]['foto']      = "NewsFoto/".$row['foto'];
+			$i++;
+		}
+
+		$news  = [];
+		$j = 0;
+foreach ($NewsList as $item) {
+	if ( ! empty($item['foto'])) {
+		
+		if ( ! file_exists( $item['foto'])) {
+			$j ++;
+			$news[$j] = $item['id']; 
+		}
+/*		$new_item = array (
+			'id'    => $item['id'],
+		'photo'     => $item['photo']
+		);
+		array_push($data, $new_item);*/
+	}
+}
+require_once ('views/news/checkFiles.php');
+
+/*		$files = scandir('NewsFoto');
 		$j = 0;
 		$news = [];
 		for ($i=0; $i < count($files); $i++) { 
@@ -68,7 +100,7 @@ class NewsController {
  			}
 		}
 		sort($news);
-		require_once ('views/news/checkFiles.php');
+		require_once ('views/news/checkFiles.php');*/
 		return true;	
 	}
 
@@ -93,13 +125,15 @@ class NewsController {
 	}
 
 	public function actionIndex($cat=1, $page = 1) {
-		$mt         = new MetaTags();
+		$cat        = $this->getIntval($cat);
 		$page       = $this->getIntval($page);
+		$mt         = new MetaTags();
 		$month      = date('n');
 		$year       = date('Y');
 		$topNews    = $this->newsClass->getNewsTop();
 		$total      = $this->newsClass->getTotalNewsCat($cat, $month, $year);
-		$allNewscat = $this->newsClass->getLatestNewsCat($cat, $month, $year, $page);		
+		$allNewscat = $this->newsClass->getLatestNewsCat($cat, $month, $year, $page);
+		if( empty($allNewscat)) return;		
 		$pagination = new Pagination($total, $page, SHOWNEWS_BY_DEFAULT, 'page-');
 		$meta       = $mt->getMTagsByUrl('main');
 		$meta['title'] .= '|'.$this->newsClass->getCatEl($cat)['namecm'];

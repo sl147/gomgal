@@ -7,11 +7,9 @@ class FAController {
 	}
 
 	public function actionLook($page = 1) {
-		
-		$total      = $this->getCount('photoalbum');
-		$page       = $this->check_index_page($this->getIntval($page), $total, SHOWFA_BY_DEFAULT);
+		$page       = $this->check_index_page($this->getIntval($page), $this->total, SHOWFA_BY_DEFAULT);
 		$faList     = $this->FAClass->getFAAll($page);
-		$pagination = new Pagination($total, $page, SHOWFA_BY_DEFAULT, 'page-');
+		$pagination = new Pagination($this->total, $page, SHOWFA_BY_DEFAULT, 'page-');
 		$meta     = $this->getMeta();
 		$siteFile   = 'views/FA/look.php';
 		require_once ('views/layouts/siteIndex.php');
@@ -19,9 +17,10 @@ class FAController {
 		return true;
 	}
 
-	public function actionLookOne($id) {	
+	public function actionLookOne( int $id) {	
 		$id     = $this->getIntval($id);
 		$faList = $this->FAClass->getFAOne($id);
+		if( empty($faList)) return;
 		$nameFA = $this->FAClass->getFAId($id);
 		$metaTags = 'FA';
 		$siteFile = 'views/FA/lookOne.php';

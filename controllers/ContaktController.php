@@ -9,9 +9,9 @@ class ContaktController {
 	use traitAuxiliary;
 
 	private function getSubmit() {
-		$txt_com   = $this->filterTXT('post','txt_com');
-		$nik_com   = $this->filterTXT('post','nik_com');
-		$email_com = $this->filterTXT('post','email_com');
+		$txt_com   = $this->sl147_clean($_POST['txt_com']);
+		$nik_com   = $this->sl147_clean($_POST['nik_com']);
+		$email_com = $this->filterEmail('post','email_com');
 		
 		if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token'])) {			
 			$ip_com = $_SERVER['REMOTE_ADDR'];

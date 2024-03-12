@@ -59,6 +59,7 @@ class PosterController {
 		$poster         = new Poster();
 		$posterImpotant = $poster->getAllPostersImpotCat($cat);
 		$posterAll      = $poster->getAllPostersAllCat($cat,$page);
+		if( empty($posterAll)) return;
 		$total          = $this->getCountAtr('poster', 'cat_p',$cat);
 		$pagination     = new Pagination($total, $this->getIntval($page), SHOWPOSTER_BY_DEFAULT, 'page-');
 		$siteFile       = 'views/poster/catAll.php';
@@ -83,10 +84,18 @@ class PosterController {
 		return true;
 	}
 
+	private function sl147_get_email($email) {
+		$a = explode("@",$email);
+		$before = substr($a[0], 0, 1) ."<span class='sl147_anti_spam'>sl147 anti spam</span>".substr($a[0], 1); 
+		$after = substr($a[1], 0, 1) ."<span class='sl147_anti_spam'>sl147 anti spam</span>".substr($a[1], 1); 
+		return $before. "@".$after."<span class='sl147_anti_spam'>sl147 anti spam</span>";
+	}
+
 	public function actionPosterOne($id = 1) {
 		$poster    = new Poster();
 		$id        = $this->getIntval($id);
 		$posterOne = $poster->getPosterById($id);
+		if(empty($posterOne)) return;
 		$res       = $poster->plusId($id);
 		$title = $posterOne['title_p'];
 		$meta['title'] = $this->getMetaTitle($posterOne['title_p']);
@@ -95,6 +104,7 @@ class PosterController {
 		$file      = 'posterFoto/'.$posterOne["foto_p1"];
 		$siteFile  = 'views/poster/one.php';
 		$metaTags  = 'poster';
+		$poster_email = $this->sl147_get_email($posterOne['email_p']);
 		unset($poster);
 		require_once ('views/layouts/siteIndex.php');
 		return true;
@@ -107,11 +117,11 @@ class PosterController {
 		$catList = $poster->getPostersCat();
 		$fruit   = array_pop($catList);
 		if(isset($_POST['submit'])) {
-			$nik   = $this->filterTXT('post', 'nik');
-			$type  = $this->filterTXT('post', 'type');
-			$cat   = $this->filterTXT('post', 'category');
-			$title = $this->filterTXT('post', 'title');
-			$msg   = $this->filterTXT('post', 'msg');
+			$nik   = $this->sl147_clean($_POST['nik']);//$this->filterTXT('post', 'nik');
+			$type  = $this->filterINT('post', 'type');
+			$cat   = $this->filterINT('post', 'category');
+			$title = $this->sl147_clean($_POST['title']);//$this->filterTXT('post', 'title');
+			$msg   = $this->sl147_clean($_POST['msg']);//$this->filterTXT('post', 'msg');
 			$email = $this->filterEmail('post', 'email');
 			$foto  = $_FILES['file']['name'];
 			$ip    = $_SERVER['REMOTE_ADDR'];
