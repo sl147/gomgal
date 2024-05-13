@@ -14,6 +14,44 @@ class PluginsController {
 		$this->lang = "en";
 	}
 
+	public function actionLicensekey($license_key){
+/*		if( require ('classes/classGetDB.php') == 0) {
+			$lk = 'no classGetDB';
+			
+			require_once ('views/plugins/license.php');
+		 	return true;
+		}else{
+			$lk = 'yes classGetDB';
+			
+			require_once ('views/plugins/license.php');
+		 	return true;
+		}*/
+		$lk = $license_key.' start';
+		require_once ('classes/classGetDB.php');
+		require_once ('classes/classGetData.php');
+		require_once ('components/Db.php');
+		//$db = new Db();
+		$getData = new classGetData('plugins_license_key');
+		//$res = $getData->getDataFromTableByNameFetch($license_key, 'license_key');
+		$res = $getData->getDataFromTableByName($license_key, 'license_key');
+		//$lk = $value['license_key'];
+		//$res = $getData->getDataFromTable(2);
+		foreach ($res as $key => $value) {
+			$lk = $value['license_key'];
+			$pl = $value['plugin'];
+		}
+/*		$sql    = "SELECT * FROM plugins_license_key WHERE license_key=$license_key";
+		$result = $db::getConnection() -> query($sql);
+		$reslk  = [];
+		while ($row = $result->fetch()) {
+			$lk = $row['license_key'];
+			$pl = $row['plugin'];
+			$reslk[]   = $row;
+		}*/
+		require_once ('views/plugins/license.php');
+		return true;
+	}
+	
 	public function actionTopBarRun() {
 		$comment = [];
 		if(isset($_POST['submit'])) {

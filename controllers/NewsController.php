@@ -109,7 +109,7 @@ require_once ('views/news/checkFiles.php');
 		$nik_com   = $this->filterTXT('post','nik_com');
 		$email_com = $this->filterTXT('post','email_com');
 		if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token'])) {			
-			$ip_com    = $_SERVER['REMOTE_ADDR'];
+			$ip_com  = $_SERVER['REMOTE_ADDR'];
 			if ($com->insComment($id,$txt_com,$nik_com,$email_com,$ip_com)) {
 				$this->mailToClient($email_com,'Дякуєм за Ваш коментар.');
 				$subject = "Новий коментар до id=".$id." ip=".$ip_com;"Новий коментар  https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id;
@@ -120,8 +120,8 @@ require_once ('views/news/checkFiles.php');
 		else {
 			$subject = "haks зі сторінки fullnew";
 			$massage = $subject." https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."\r\n".$txt_com."\r\n".$nik_com."\r\n".$email_com;				
-		}
-		$mail = $this->sendMail($subject,SLMAIL,$massage);
+			$mail = $this->sendMail($subject,SLMAIL,$massage);
+		}	
 	}
 
 	public function actionIndex($cat=1, $page = 1) {
@@ -219,7 +219,8 @@ require_once ('views/news/checkFiles.php');
 			);
 		$json  = json_encode($table);
 
-		if(isset($_POST['submit'])) $res = $com->delComment($this->filterTXT('post', 'id'));
+		if( (isset($_POST['submit'])) && (isset($_POST['id']))) $res = $com->delComment($this->filterTXT('post', 'id'));
+		if( (isset($_POST['submit'])) && (isset($_POST['active']))) $res = $com->changeActiveComment($this->filterTXT('post', 'active'), $this->filterTXT('post', 'id_change'));
 	
 		$title = "перегляд коментарів клієнтів";
 		$total = $this->getCount('Comment');
@@ -330,5 +331,292 @@ require_once ('views/news/checkFiles.php');
 			unset($pagination);
 			return true;
 		}
+	}
+
+public function actionFB_SDK(){
+	require_once 'facebook/vendor/autoload.php';
+	$fb = new Facebook\Facebook([
+  'app_id' => '553789431437151',
+  'app_secret' => '8174d68853d30433d2f8f965b7605f62',
+  'default_graph_version' => 'v2.10',
+]);
+
+$helper = $fb->getRedirectLoginHelper();
+
+try {
+  $accessToken = $helper->getAccessToken();
+} catch(Facebook\Exceptions\FacebookResponseException $e) {
+  // Помилка відповіді з Facebook
+  echo 'Graph returned an error: ' . $e->getMessage();
+  exit;
+} catch(Facebook\Exceptions\FacebookSDKException $e) {
+  // Помилка SDK Facebook
+  echo 'Facebook SDK returned an error: ' . $e->getMessage();
+  exit;
+}
+echo "<pre>";
+var_dump($helper);
+echo "</pre>";
+//print_r($helper);
+
+
+if (! isset($accessToken)) {
+  if ($helper->getError()) {
+    header('HTTP/1.0 401 Unauthorized');
+    echo "Error: " . $helper->getError() . "\n";
+    echo "Error Code: " . $helper->getErrorCode() . "\n";
+    echo "Error Reason: " . $helper->getErrorReason() . "\n";
+    echo "Error Description: " . $helper->getErrorDescription() . "\n";
+  } else {
+    header('HTTP/1.0 400 Bad Request');
+    echo 'Bad request';
+  }
+  exit;
+}
+
+// Отримайте інформацію про користувача
+try {
+  // Returns a `Facebook\FacebookResponse` object
+  $response = $fb->get('/me?fields=id,name', $accessToken->getValue());
+} catch(Facebook\Exceptions\FacebookResponseException $e) {
+  echo 'Graph returned an error: ' . $e->getMessage();
+  exit;
+} catch(Facebook\Exceptions\FacebookSDKException $e) {
+  echo 'Facebook SDK returned an error: ' . $e->getMessage();
+  exit;
+}
+
+$user = $response->getGraphUser();
+
+echo 'ID: ' . $user['id'];
+echo 'Name: ' . $user['name'];
+
+}
+public function actionFB_SDK3(){
+  //session_start();
+  require_once 'facebook/vendor/autoload.php';
+
+  Facebook\FacebookSession::setDefaultApplication('553789431437151', '8174d68853d30433d2f8f965b7605f62');
+  $facebook = new Facebook\FacebookRedirectLoginHelper('www.gomgal.lviv.ua');
+
+  try {
+   if($session = $facebook->getSessionFromRedirect()) {
+    $_SESSION['facebook'] = $session->getToken();
+    header('Location index.php');
+   }
+
+   if(isset($_SESSION['facebook'])) {
+    $session = new Facebook\FacebookSession($_SESSION['facebook']);
+    $request = new Facebook\FacebookRequest($session, 'GET', '/me');
+    $request = $request->execute();
+    $user = $request->getGraphObject()->asArray();
+   }
+
+  } catch(Facebook\FacebookRequestException $e) {
+   // если facebook вернул ошибку
+  } catch(\Exception $e) {
+   // Локальная ошибка
+  }
+}
+
+public function actionFB_SDK4() {
+	require_once 'facebook/vendor/autoload.php';
+$fb = new \Facebook\Facebook([
+  'app_id' => '{553789431437151}',
+  'app_secret' => '{8174d68853d30433d2f8f965b7605f62}',
+  'default_graph_version' => 'v2.10',
+  //'default_access_token' => '{access-token}', // optional
+]);
+
+// Use one of the helper classes to get a Facebook\Authentication\AccessToken entity.
+   $helper = $fb->getRedirectLoginHelper();
+//   $helper = $fb->getJavaScriptHelper();
+//   $helper = $fb->getCanvasHelper();
+//   $helper = $fb->getPageTabHelper();
+
+try {
+  // Get the \Facebook\GraphNodes\GraphUser object for the current user.
+  // If you provided a 'default_access_token', the '{access-token}' is optional.
+  $response = $fb->get('/me', '{889da2896485cd02b577322775334acf}');
+} catch(\Facebook\Exceptions\FacebookResponseException $e) {
+  // When Graph returns an error
+  echo 'Graph returned an error: ' . $e->getMessage();
+  exit;
+} catch(\Facebook\Exceptions\FacebookSDKException $e) {
+  // When validation fails or other local issues
+  echo 'Facebook SDK returned an error: ' . $e->getMessage();
+  exit;
+}
+
+$me = $response->getGraphUser();
+echo 'Logged in as ' . $me->getName();
+}
+
+
+public function actionFB_SDK2() {
+//session_start();
+		require_once 'facebook/vendor/autoload.php';
+$fb = new Facebook\Facebook([
+  'app_id' => '553789431437151',
+  'app_secret' => '8174d68853d30433d2f8f965b7605f62',
+  'default_graph_version' => 'v12.0',
+  // Додайте довірені відомості для доступу до сторінки
+  'default_access_token' => '889da2896485cd02b577322775334acf',
+]);
+try {
+  // Параметри поста
+  $params = [
+    'message' => 'Це текст вашого поста',
+    'link' => 'https://example.com', // Посилання на ваш сайт або іншу сторінку
+    // Додаткові параметри можуть бути додані тут, відповідно до документації Graph API
+  ];
+
+  // Запит на виставлення поста на сторінці Facebook
+  $response = $fb->post('/me/feed', $params);
+
+  // Отримання ID виставленого поста
+  $graphNode = $response->getGraphNode();
+  echo 'Пост був опублікований з ID: ' . $graphNode['id'];
+} catch(Facebook\Exceptions\FacebookResponseException $e) {
+  // Помилка відповіді Graph API
+  echo 'Графічний API повернув помилку: ' . $e->getMessage();
+} catch(Facebook\Exceptions\FacebookSDKException $e) {
+  // Помилка SDK Facebook
+  echo 'Facebook SDK викинув помилку: ' . $e->getMessage();
+}
+
+/*
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+
+$fb = new Facebook\Facebook([
+	  'app_id' => '553789431437151', //Замените на ваш id приложения
+	  'app_secret' => '8174d68853d30433d2f8f965b7605f62' ,//Ваш секрет приложения
+	  'default_access_token' => '889da2896485cd02b577322775334acf',
+	  ]);
+
+
+$helper = $fb->getRedirectLoginHelper();*/
+
+//Добавьте разрешение publish_actions, чтобы постить от имени пользователя, а не от имени страницы
+/*$permissions = ['manage_pages','publish_pages'];
+
+$loginUrl = $helper->getLoginUrl('https://www.gomgal.lviv.ua/main', $permissions);
+
+echo '<a href="' . htmlspecialchars($loginUrl) . '">Вход</a>';*/
+
+
+}
+
+	public function actionFB_SDK1() {
+
+
+		//session_start();
+		require_once 'facebook/vendor/autoload.php';
+		$fb = new \Facebook\Facebook([
+		  'app_id' => '553789431437151',
+		  'app_secret' => '8174d68853d30433d2f8f965b7605f62',
+		  'default_graph_version' => 'v2.10',
+		  //'default_access_token' => '889da2896485cd02b577322775334acf', // optional
+		]);
+
+
+$access_token = "889da2896485cd02b577322775334acf";
+$result = $fb->api(
+    '/me/feed/',
+    'post',
+    array('access_token' => $access_token, 'message' => 'Playing around with FB Graph..')
+);
+$siteFile  = 'views/news/newsFB.php';
+require_once ('views/layouts/siteIndex.php');
+return;
+?>
+<script>
+  logInWithFacebook = function() {
+    FB.login(function(response) {
+      if (response.authResponse) {
+        alert('You are logged in & cookie set!');
+        // Now you can redirect the user or do an AJAX request to
+        // a PHP script that grabs the signed request from the cookie.
+      } else {
+        alert('User cancelled login or did not fully authorize.');
+      }
+    });
+    return false;
+  };
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId: '553789431437151',
+      cookie: true, // This is important, it's not enabled by default
+      version: 'v2.10'
+    });
+  };
+
+  (function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+
+<?php
+
+$helper = $fb->getCanvasHelper();
+
+try {
+  $accessToken = $helper->getAccessToken();
+} catch(Facebook\Exceptions\FacebookResponseException $e) {
+  // When Graph returns an error
+  echo 'Graph returned an error: ' . $e->getMessage();
+  exit;
+} catch(Facebook\Exceptions\FacebookSDKException $e) {
+  // When validation fails or other local issues
+  echo 'Facebook SDK returned an error: ' . $e->getMessage();
+  exit;
+}
+
+if (! isset($accessToken)) {
+  echo 'No OAuth data could be obtained from the signed request. User has not authorized your app yet.';
+  exit;
+}
+
+// Logged in
+echo '<h3>Signed Request</h3>';
+var_dump($helper->getSignedRequest());
+
+echo '<h3>Access Token</h3>';
+var_dump($accessToken->getValue());
+
+
+/*$linkData = [
+  'link' => 'https://www.gomgal.lviv.ua/Fullnew/6667',
+  'message' => 'User provided message',
+  ];
+
+try {
+  // Returns a `Facebook\Response` object
+  $response = $fb->post('/me/feed', $linkData, '889da2896485cd02b577322775334acf');
+  $siteFile  = 'views/news/newsFB.php';
+require_once ('views/layouts/siteIndex.php');
+} catch(Facebook\Exception\ResponseException $e) {
+  echo 'Graph returned an error: ' . $e->getMessage();
+  exit;
+} catch(Facebook\Exception\SDKException $e) {
+  echo 'Facebook SDK returned an error: ' . $e->getMessage();
+  exit;
+}
+
+		
+$graphNode = $response->getGraphNode();*/
+
+//require_once ('views/news/newsFB.php');
+
+/*$siteFile  = 'views/news/newsFB.php';
+require_once ('views/layouts/siteIndex.php');
+		return true;*/
+
 	}
 }

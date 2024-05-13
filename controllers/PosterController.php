@@ -70,11 +70,21 @@ class PosterController {
 		return true;
 	}
 
+	private function getCountPoster(){
+		$getDB  = new classGetDB();
+		$result = $getDB->getDB("SELECT count(*) as count FROM poster WHERE ((impot=0) OR (impot IS NULL))AND (active = 0)");
+		unset($getDB);
+		$result -> setFetchMode(PDO::FETCH_ASSOC);
+
+		return $result->fetch()['count'];
+	}
+
 	public function actionPosterFull($page = 1) {
 		$poster         = new Poster();
 		$posterImpotant = $poster->getAllPostersImpot();
 		$posterAll      = $poster->getAllPostersAll($this->getIntval($page));
-		$total          = $this->getCount('poster');
+		//$total          = $this->getCount('poster');
+		$total          = $this->getCountPoster('poster');
 		$pagination     = new Pagination($total, $this->getIntval($page), SHOWPOSTER_BY_DEFAULT, 'page-');
 		unset($poster);
 		$siteFile       = 'views/poster/catAll.php';

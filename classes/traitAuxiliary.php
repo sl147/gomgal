@@ -124,7 +124,16 @@ trait traitAuxiliary {
 	        'Э' => 'E',   'Ю' => 'Yu',  'Я' => 'Ya',
 	        ' ' => '_',   'і' => 'y',   'І' => 'Y',
 	        'ї' => 'yi',  'Ї' => 'YI',  "'" => '',
-	        '"' => '',    'є' => 'e',    'Є' => 'E',
+	        '"' => '',    'є' => 'e',   'Є' => 'E',
+	        '!' => '_',   '@' => '_',   '#' => '_',
+	        '$' => '_',   '%' => '_',   '^' => '_',
+	        '&' => '_',   '*' => '_',   '(' => '_',
+	        ')' => '_',   '-' => '_',   '+' => '_',
+	        '=' => '_',   '|' => '_',   '[' => '_',
+	        ']' => '_',   '{' => '_',   '}' => '_',
+	        ';' => '_',   ':' => '_',   '<' => '_',
+	        '>' => '_',   '?' => '_',   '/' => '_',
+	        ',' => '_',   '%' => '_',   '№' => '_',
 	    );
 	    return strtr($string, $converter);		
 	}
@@ -152,9 +161,10 @@ trait traitAuxiliary {
     	$pathdir .= '/'.$year.'/'.$month;
         $res      = $this->makeDir($pathdir);
         move_uploaded_file ($_FILES['file'] ['tmp_name'],$pathdir."/".$nameFile); 
-        $destination = $this->webpImage($pathdir."/".$nameFile);
-		unlink($pathdir."/".$nameFile);
-        return $year.'/'.$month.'/'.$this->convertNameToWebp($destination);
+        return $year.'/'.$month."/".$nameFile;
+        //$destination = $this->webpImage($pathdir."/".$nameFile);
+		//unlink($pathdir."/".$nameFile);
+        //return $year.'/'.$month.'/'.$this->convertNameToWebp($destination);
     }
 
 	private function getPathFile($file,$folder,$delim="") {
@@ -226,16 +236,16 @@ trait traitAuxiliary {
 	}
 
 	public function getToken( $strength = 16) {
-	$input	 = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $input_length = strlen($input);
-    $token = '';
-    for($i = 0; $i < $strength; $i++) {
-        $random_character = $input[mt_rand(0, $input_length - 1)];
-        $token .= $random_character;
-    }
-    $_SESSION['token'] = $token;
-    return $token;
-}
+		$input	 = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	    $input_length = strlen($input);
+	    $token = '';
+	    for($i = 0; $i < $strength; $i++) {
+	        $random_character = $input[mt_rand(0, $input_length - 1)];
+	        $token .= $random_character;
+	    }
+	    $_SESSION['token'] = $token;
+	    return $token;
+	}
 
 	public function tokensMatch($token)	{
 		if ( isset($_SESSION['token']) ) {

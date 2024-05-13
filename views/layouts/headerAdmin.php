@@ -29,6 +29,7 @@
 						Auxiliary::showElementMenu("userNews","редагування новин клієнтів","редагування новин клієнтів");
 						Auxiliary::showElementMenu("userWishes","перегляд побажань клієнтів","перегляд побажань клієнтів");
 						Auxiliary::showElementMenu("spam","перегляд spam","перегляд spam");
+						Auxiliary::showElementMenu("newsFB","перегляд FB","перегляд FB");
 					?>
 				<ul>
 			</div>
@@ -110,6 +111,7 @@
 						<?php Auxiliary::showElementMenu("calctypes","типи калькуляторів","Типи калькуляторів")?>
 						<?php Auxiliary::showElementMenu("insuranceCommentEdit","редагування коментарів","Редагування коментарів")?>
 						<?php Auxiliary::showElementMenu("cEdit","редагування мір калькуляторів","Редагування мір калькуляторів")?>
+						<?php Auxiliary::showElementMenu("topBarlicensekey/112233","top bar","topbar")?>
 					</ul>			
 				</div>
 			<?php endif ?>				
