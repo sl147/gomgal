@@ -104,7 +104,7 @@ require_once ('views/news/checkFiles.php');
 		return true;	
 	}
 
-	private function getSubmit($id, $com) {
+	private function getSubmit(int $id, OBJECT $com) {
 		$txt_com   = $this->filterTXT('post','txt_com');
 		$nik_com   = $this->filterTXT('post','nik_com');
 		$email_com = $this->filterTXT('post','email_com');
@@ -112,9 +112,10 @@ require_once ('views/news/checkFiles.php');
 			$ip_com  = $_SERVER['REMOTE_ADDR'];
 			if ($com->insComment($id,$txt_com,$nik_com,$email_com,$ip_com)) {
 				$this->mailToClient($email_com,'Дякуєм за Ваш коментар.');
-				$subject = "Новий коментар до id=".$id." ip=".$ip_com;"Новий коментар  https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id;
-				$massage = "Новий коментар https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."  до id=".$id." ip=".$ip_com."  з HTTP_REFERER ".$_SERVER['HTTP_REFERER']."\r\n"."  з REMOTE_ADDR ".$_SERVER['REMOTE_ADDR'];
-				$mail    = $this->sendMail($subject,BanMAIL,$massage);	
+				$subject = "Новий коментар до id=".$id." ip=".$ip_com;
+				$massage = "Новий коментар з ".$_SERVER['HTTP_REFERER']."\r\n Для затвердження перейдіть за посиланням https://www.gomgal.lviv.ua/newsCommentEdit"; 
+				$mail    = $this->sendMail($subject,BanMAIL,$massage);
+				$mail    = $this->sendMail($subject,SLMAIL,$massage);
 			}
 		}
 		else {

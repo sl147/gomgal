@@ -59,6 +59,10 @@ class classGetData extends classGetDB {
 		return $this->getRow($this->getDB("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue)));
 	}
 
+	public function getDataFromTableByNameActive ($elValue,$elName) {	
+		return $this->getRow($this->getDB("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue)." AND active=1"));
+	}
+
 
 /** Отримуєм записи з таблиці $this->table по елементу $elName
  *
@@ -84,14 +88,6 @@ class classGetData extends classGetDB {
 	public function getDataFromTableByNameFetch2WHERE ($elValue1,$elName1,$elValue2,$elName2) {
 		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql2($elName1,$elValue1,$elName2,$elValue2))->fetch();	
 	}
-
-/** Отримуєм один запис з таблиці $this->table по id
- *
- *  @return масив даних
- */
-/*	public function getDataFromTableById($id) {
-		return (intval($id)) ? $this->getDB("SELECT * FROM ".$this->table." WHERE id=".$id)->fetch() : false;
-	}*/
 
 /** Отримуєм записи з таблиці $this->table по елементу $elName
  *
