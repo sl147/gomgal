@@ -28,13 +28,7 @@ class FAController {
 		return true;
 	}
 
-<<<<<<< HEAD
 	public function actionCreate() {
-=======
-	public function actionCreate()
-	{
-
->>>>>>> 794f6b20b741bd6353fe7f9c1ad5df9082cad23e
         if(isset($_POST['submit'])) {
 			$fa      = new FA();
 	        $name_FA = $this->filterTXT('post', 'name_FA');

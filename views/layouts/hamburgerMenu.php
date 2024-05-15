@@ -1,5 +1,5 @@
 <div class="showSmall">
-	<div style="display: flex;justify-content: space-between;align-items: center;">
+	<div style="display: flex;justify-content: space-evenly;align-items: center;">
 		<div>
 			<?php
 			$content ="<div class='text-center' >

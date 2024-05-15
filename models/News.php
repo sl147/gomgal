@@ -72,12 +72,7 @@ class News extends classGetDB {
 		return $result->fetch()['count'];
 	}
 
-<<<<<<< HEAD
 	public function getNewsFind($txt) {
-=======
-	public function getNewsFind($txt)
-	{
->>>>>>> 794f6b20b741bd6353fe7f9c1ad5df9082cad23e
 		$sql    = "SELECT * FROM msgs WHERE (LOCATE('".$txt."',msg)) OR (LOCATE('".$txt."',title)) OR (LOCATE('".$txt."',prew))";
 		$result = $this->getDB($sql);
 		$i      = 1;
@@ -314,17 +309,8 @@ class News extends classGetDB {
 		return $result -> execute();			
 	}
 
-<<<<<<< HEAD
 	public static function showNews($arrNews) {
 		if (!empty($arrNews)) include ('views/news/showNews.php');
 
-=======
-	public static function showNews($arrNews)
-	{
-		if (!empty($arrNews))
-		{
-			include ('views/news/showNews.php');
-		}
->>>>>>> 794f6b20b741bd6353fe7f9c1ad5df9082cad23e
 	}
 }

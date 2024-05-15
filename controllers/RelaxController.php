@@ -97,15 +97,12 @@ class RelaxController {
 			if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token']))
 			{
 				$teman = $this->filterINT('post','teman');
-				$msg   = $this->sl147_clean($_POST['msg']);
-				if( !empty($msg)) {
-					$res     = $relax->addNewAn($teman, $msg);
-					$show    = true;
-					$subject = "новий анекдот зі сторінки add an";
-					$massage = $msg;
-					$mail    = $this->sendMail($subject,SLMAIL,$massage);					
-				}
-
+				$msg   = $this->sl147_clean($_POST['msg']);//$this->filterTXT('post','msg');
+				$res   = $relax->addNewAn($teman, $msg);
+				$show  = true;
+				$subject = "новий анекдот зі сторінки add an";
+				$massage = $msg;
+				$mail    = $this->sendMail($subject,SLMAIL,$massage);
 				header("Location: /relax/1");		
 			}
 			else

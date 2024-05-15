@@ -1,7 +1,6 @@
 <?php include 'views/poster/menuPoster.php';?>
 
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	<?php echo $total ." : ". SHOWPOSTER_BY_DEFAULT ?>
 <table class='table table-hover table-responsive'> 
 	<thead>
 		<tr class='success' style='color: grey; font-size:12px; font-weight:bold;'>

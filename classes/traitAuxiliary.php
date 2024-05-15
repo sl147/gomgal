@@ -398,14 +398,7 @@ trait traitAuxiliary {
 			'ORIG_PATH_INFO'
 		) ;
         $massage .= "\r\n";
-<<<<<<< HEAD
 
-=======
-/*		foreach ($indicesServer as $arg) {
-			$massage .= $arg.':';
-		    $massage .= (isset($_SERVER[$arg])) ? $_SERVER[$arg]."\r\n" : "--\r\n";
-		}*/
->>>>>>> 794f6b20b741bd6353fe7f9c1ad5df9082cad23e
 		return $this->mailing($to,$subject,$massage);
 	}
 

@@ -3,3 +3,4 @@
 		<?= $post['title'] ?>
 	</a>
 </div>
+<br class="showLarge"><br class="showLarge">

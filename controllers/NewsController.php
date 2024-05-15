@@ -117,11 +117,6 @@ require_once ('views/news/checkFiles.php');
 				$mail    = $this->sendMail($subject,BanMAIL,$massage);
 				$mail    = $this->sendMail($subject,SLMAIL,$massage);
 			}
-			else
-			{
-				$massage = '';
-				$subject = '';
-			}
 		}
 		else {
 			$subject = "haks зі сторінки fullnew";
@@ -321,10 +316,6 @@ require_once ('views/news/checkFiles.php');
 
 	public function actionFindNews($page = 1) {
 		if (isset($_POST['submit'])) {
-<<<<<<< HEAD
-=======
-			//$txt_find  = strtoupper($this->filterTXT('post','name_f'));
->>>>>>> 794f6b20b741bd6353fe7f9c1ad5df9082cad23e
 			$txt_find  = $this->filterTXT('post','name_f');
 			$mt         = new MetaTags();
 			$page       = $this->getIntval($page);
@@ -335,10 +326,6 @@ require_once ('views/news/checkFiles.php');
 			$allNewscat = $this->newsClass->getNewsFind($txt_find);		
 			$pagination = new Pagination($total, $page, SHOWNEWS_BY_DEFAULT, 'page-');
 			$meta       = $mt->getMTagsByUrl('main');
-<<<<<<< HEAD
-=======
-			//$meta['title'] .= '|'.$this->newsClass->getCatEl($cat)['namecm'];
->>>>>>> 794f6b20b741bd6353fe7f9c1ad5df9082cad23e
 			$var        = 0;
 			$siteFile   = 'views/news/index.php';
 			require_once ('views/layouts/siteIndex.php');
@@ -346,7 +333,6 @@ require_once ('views/news/checkFiles.php');
 			return true;
 		}
 	}
-<<<<<<< HEAD
 
 public function actionFB_SDK(){
 	require_once 'facebook/vendor/autoload.php';
@@ -635,7 +621,3 @@ require_once ('views/layouts/siteIndex.php');
 
 	}
 }
-=======
-}	
-?>
->>>>>>> 794f6b20b741bd6353fe7f9c1ad5df9082cad23e

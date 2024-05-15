@@ -23,11 +23,7 @@ return array(
 'checkFilesNews' => 'news/checkFilesNews',
 'clickButton/([0-9]+)' => 'clickButton/gov/$1',
 'countClickButton' => 'clickButton/countClickButton',
-<<<<<<< HEAD
 'FAadd_Photo' => 'FA/add_Photo',
-=======
-'findNews' => 'news/findNews',
->>>>>>> 794f6b20b741bd6353fe7f9c1ad5df9082cad23e
 'FAcreate' => 'FA/create',
 'faEditOne/([0-9]+)' => 'FA/editOne/$1',
 'FAedit/page-([0-9]+)' => 'FA/edit/$1',
