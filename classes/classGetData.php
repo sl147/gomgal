@@ -146,7 +146,6 @@ class classGetData extends classGetDB {
 		return $this->getRow2EL( $this->getDBVue($sql),$id,$name);
 	}
 
-
 	public function getMetaTable() {
 		$sql = "SHOW COLUMNS FROM ".$this->table;
 		$res = $this->getDB($sql);
@@ -229,5 +228,5 @@ class classGetData extends classGetDB {
  */
 	public function insertDataToTableByName ($elValue,$elName,$elName0) {	
 		return $this->getDB("INSERT INTO ".$this->table." (".$elName.",".$elName0.") VALUES(".$elValue.",1)"); 
-	}		
+	}
 }
