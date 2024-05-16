@@ -1,5 +1,6 @@
 <?php include 'views/layouts/headerAdmin.php';?>
 <h2 class="text-center">Редагування голосування</h2>
+<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div>
 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
 	<div id="voteAd">
 		<table style='margin-bottom: 20px;'>

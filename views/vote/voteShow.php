@@ -2,6 +2,7 @@
 <div id="vue2el">
 	<h2 class="text-center"><?= $title?></h2>
 	<div class="row">
+		<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div>
 		<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
 			<table class="table table-responsive table-bordered table-striped table-hover">
 				<thead>
