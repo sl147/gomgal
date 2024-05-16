@@ -25,7 +25,7 @@ class VoteController {
 		return true;
 	}
 
-	private function set_arr($table, $id_name, $name_name, $isId, $idVal) {		
+	private function set_arr(string $table, string $id_name, string $name_name, int $isId, int $idVal) {
 		return json_encode(
 			array(
 				'table' => $table,
@@ -53,14 +53,7 @@ class VoteController {
 		return true;
 	}
 
-	public function actionVoteOne($id) {
-		$title = 'Редагування голосування';
-		$json  = $this->set_arr('vote', 'id', 'msg', 1, $id);
-		require_once ('views/vote/editVoteOne.php');
-		return true;
-	}
-
-	public function actionVoteShowOne($id) {
+	public function actionVoteOne(int $id) {
 		$title = 'Редагування голосування';
 		$json  = $this->set_arr('vote', 'id', 'msg', 1, $id);
 		require_once ('views/vote/editVoteOne.php');

@@ -98,7 +98,7 @@ return array(
 'voteEdit' => 'Vote/voteEdit',
 'voteOne/([0-9]+)' => 'Vote/voteOne/$1',
 'voteShow' => 'Vote/voteShow',
-'voteShowOne/([0-9]+)' => 'Vote/voteShowOne/$1',
+'voteShowOne/([0-9]+)' => 'Vote/voteOne/$1',
 'uploadDZ' => 'FA/dropZone/$1',
 'userAuthor' => 'user/author',
 'userChangedata' => 'user/changeData',
