@@ -221,7 +221,9 @@ class classGetData extends classGetDB {
 		return $this->getDB("UPDATE ".$this->table." SET ".$elNameUpdate."=".$elValueUpDate .$this->formSql($elName,$elValue)); 
 	}
 
-
+	public function updateDataVue (string $elValue, string $elName, string $elValueUpDate, string $elNameUpdate) {	
+		return $this->getDBVue("UPDATE ".$this->table." SET ".$elNameUpdate."=".$elValueUpDate .$this->formSql($elName,$elValue)); 
+	}
 /** Вставляєм нульовий запис в таблицю $this->table по елементу $elName
  *
  *  @return true або false

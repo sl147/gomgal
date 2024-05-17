@@ -8,7 +8,7 @@
 <?=Auxiliary::showReklRand()?>
 <?=Auxiliary::showReklama('https://www.facebook.com/teatr.drohobych/','/rekl/theatre.jpg','Дрогобицький театр','театр ім.Ю.Дрогобича')?>
 <?=Auxiliary::showArchive()?>
-<!-- <?=Vote::showVote()?> -->
+<?=Vote::showVote()?>
 
 <?=Auxiliary::up()?>
 </aside>

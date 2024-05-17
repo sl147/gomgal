@@ -51,12 +51,9 @@ class Vote {
 	}
 
 	public static function getVoteVue() {
-		$result = self::getSQLVoteVue("SELECT * FROM catVote WHERE active=1 LIMIT 1");
-		while ($row = $result->fetch()) {
-			$voteList['id']   = $row['idrl'];
-			$voteList['name'] = $row['namerl'];
-		}
-		return $voteList ?? [];;
+		require_once ('../classes/classGetData.php');
+		$getData = new classGetData('catVote');
+		return $getData->getDataFromTableByNameVue(1, "active");
 	}
 
 	public function getTxtVoteVue($id) {
@@ -65,8 +62,10 @@ class Vote {
 		return $getData->getDataFromTableByNameAllVue($id, "category");
 	}
 
-	public static function addVote($id) {
-		return self::getSQLVoteVue("UPDATE vote SET countrl = countrl + 1".self::formSqlVote("id",$id));
+	public static function addVote($id, $count) {
+		require_once ('../classes/classGetData.php');
+		$getData = new classGetData('vote');
+		return $getData->updateDataVue ($id, 'id', $count,'countrl');
 	}
 
 	public static function addElVote($name,$cat) {
