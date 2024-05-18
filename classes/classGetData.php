@@ -94,8 +94,10 @@ class classGetData extends classGetDB {
  *  @return елемент даних
  */
 
-	public function getDataFromTableByNameVue ($elValue,$elName) {
-		return $this->getDBVue("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue))->fetch();
+	public function selectWhereFetch ($elValue, $elName, $vue=false){
+		$sql = "SELECT * FROM ".$this->table.$this->formSql($elName,$elValue);
+		return ($vue) ? $this->getDBVue($sql)->fetch()
+					  : $this->getDB($sql)->fetch();
 	}
 
 /** Отримуєм записи з таблиці $this->table по елементу $elName
@@ -136,6 +138,9 @@ class classGetData extends classGetDB {
 		return $this->getDB("SELECT * FROM ".$this->table." ORDER BY ".$nameOrder." ".$desk." LIMIT ".$limit);
 	}
 
+	public function SelectWhereOrderBy(string $nameid, int $id, string $nameOrder, string $desk = 'DESC') {
+		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql($nameid,$id)." ORDER BY ".$nameOrder." ".$desk);
+	}
 
 /** Отримуєм дані з таблиці $this->table для 2 елементів з Vue
  *
@@ -230,5 +235,9 @@ class classGetData extends classGetDB {
  */
 	public function insertDataToTableByName ($elValue,$elName,$elName0) {	
 		return $this->getDB("INSERT INTO ".$this->table." (".$elName.",".$elName0.") VALUES(".$elValue.",1)"); 
+	}
+
+	public function insert2ElementsVue(string $elName1, string $elName2, string $elValue1, string $elValue2) {
+		return $this->getDBVue("INSERT INTO ".$this->table." (".$elName1.",".$elName2.") VALUES('".$elValue1."','".$elValue2."')"); 
 	}
 }

@@ -33,7 +33,7 @@ var vue_tovList = new Vue({
 			this.$http.get(this.select).then(function (response) {
 				this.votes = JSON.parse(response.data)
 				for (let bas of this.votes) {
-					this.nameVote = bas.msg
+					this.nameVote = bas.name
 					console.log("name - "+bas.msg+"   id - "+bas.id+"   countrl = "+bas.countrl)
 				}
 			},function (error){

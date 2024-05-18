@@ -14,7 +14,7 @@ foreach ($listVote as $item) {
 		'id'      => $item["id"],
 		'msg'     => $item["msg"],
 		'countrl' => $item["countrl"],
-		'name'    => $vote['name'],
+		'name'    => $vote['namerl'],
 	);
 	array_push($data, $new_item);
 }

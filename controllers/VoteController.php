@@ -8,8 +8,10 @@ class VoteController {
 	use traitAuxiliary;
 
 	public function actionVote() {
-		$vote    = Vote::getVote();
-		$txtVote = Vote::getTxtVote($vote['id']);
+		$clVote  = new Vote();
+		$vote    = $clVote->getVote();
+		$txtVote = $clVote->getTxtVote($vote);
+
 		require_once ('views/vote/showVote.php');
 		return true;
 	}
@@ -20,7 +22,7 @@ class VoteController {
 			$id  = $this->filterTXT('post','id');
 			$res = $vote->activated($id);
 		}
-		$allVotes = Vote::getAllVote();
+		$allVotes = $vote->getAllVote();
 		require_once ('views/vote/voteActive.php');
 		return true;
 	}
