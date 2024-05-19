@@ -24,6 +24,7 @@ class Comment {
 	}	
 
 	public function insComment(int $id_cl, string $txt_com, string $nik_com, string $email_com, string $ip_com)	{
+		if ( empty(trim($txt_com))) return false;
 		if ($this->isSpam($nik_com,$ip_com,$email_com,$txt_com)) {
 			$subject = "Спам зі сторінки новини коментар";
 			$massage = $subject."\r\nвід: $nik_com\r\nemail:$email_com\r\ntxt_com:$txt_com\r\n";
