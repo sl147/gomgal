@@ -28,12 +28,8 @@
 											<table class="table table-responsive table-bordered table-striped table-hover">
 												<tbody v-for="item in items">
 													<tr>
-														<td>
-															{{item.msg}}
-														</td>
-														<td>
-															{{item.countrl}}
-														</td>
+														<td>{{item.msg}}</td>
+														<td>{{item.countrl}}</td>
 													</tr>
 												</tbody>
 											</table>

@@ -7,12 +7,8 @@
 			<div class='vote' v-for="vote in votes">
 				<div class="container-fluid">
 					<div class="row">
-						<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-							{{vote.msg}}
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-							- {{vote.countrl}}
-						</div>
+						<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">{{vote.msg}}</div>
+						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">- {{vote.countrl}}</div>
 					</div>
 				</div>
 			</div>
