@@ -12,6 +12,7 @@
 					<th class="text-center">e-mail</th>
 					<th class="text-center">IP</th>
 					<th class="text-center">стан</th>
+					<th class="text-center">дата</th>
 					<th></th>
 				</tr>					
 			</thead>
@@ -33,6 +34,7 @@
 								</button>
 							 </form>
 						</td>
+						<td class="text-left" style="width: 100px;">  <?=date_create($item['comment_date'])->Format('Y-m-d')?></td>
 						<td>
 							<form method="post">
 							   <input type="hidden" name="id" value="<?=$item['id_com']?>">
