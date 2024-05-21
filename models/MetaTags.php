@@ -7,46 +7,36 @@
 class MetaTags{
 
 	public function __construct() {
-		$this->getDB = new classGetDB();
+		$this->meta_tags = new classGetData('meta_tags');
 	}
 
 	public function getMTags() {
-		$result = $this->getDB->getDB("SELECT * FROM meta_tags");
-		while ($row = $result->fetch()) {
-			$list[]=$row;
-		}
-		return $list ?? [];
+		return $this->meta_tags->getDataFromTable() ?? [];
 	}
 
 	public function getMTagsByID($id) {
-		$result = $this->getDB->getDB("SELECT * FROM meta_tags WHERE id=".$id);
-		return $result->fetch();
+		return $this->meta_tags->getDataFromTableByNameFetch ($id, 'id');
 	}
 
-	private function saveMT($url_name,$title,$descr,$keywords,$sql,$follow) {
-		$result = $this->getDB->getPrepareSQL($sql);
-		$result -> bindParam(':url_name', $url_name, PDO::PARAM_STR);
-		$result -> bindParam(':title',   $title,     PDO::PARAM_STR);
-		$result -> bindParam(':descr',   $descr,     PDO::PARAM_STR);
-		$result -> bindParam(':keywords',$keywords,  PDO::PARAM_STR);	
-		$result -> bindParam(':follow',  $follow,    PDO::PARAM_STR);	
-		return $result -> execute();
+	public function editMetaTags(int $id, string $url_name, string $title, string $description, string $keywords, string $follow) {
+		$args = array(
+			'url_name' => $url_name,
+			'title'    => $title,
+			'descr'    => $description,
+			'keywords' => $keywords,
+			'follow'   => $follow,
+		);
+		$this->meta_tags->updateDataInTable( $args, $id, 'id');
 	}
 
-	public function editMetaTags($id,$url_name,$title,$descr,$keywords,$follow) {
-		$sql = "UPDATE meta_tags SET url_name=:url_name,title=:title,descr=:descr,keywords=:keywords,follow=:follow WHERE id=$id";
-		$r = $this->saveMT($url_name,$title,$descr,$keywords,$sql,$follow);	
+	public function saveMTags (string $url_name, string $title, string $description, string $keywords, string $follow) {
+		$names  = ['url_name', 'title', 'descr', 'keywords', 'follow'];
+		$values = [$url_name, $title, $description, $keywords, $follow];
+		$this->meta_tags->insertDataToTable( $values, $names);	
 	}
 
-	public function saveMTags ($url_name,$title,$descr,$keywords,$follow) {
-		$sql = "INSERT INTO meta_tags (url_name,title,descr,keywords,follow)
-		 VALUES(:url_name,:title,:descr,:keywords,:follow)";
-		$r = $this->saveMT($url_name,$title,$descr,$keywords,$sql,$follow);			
-	}
-
-	public function getMTagsByUrl($url) {
-		$result = $this->getDB->getDB("SELECT * FROM meta_tags WHERE url_name = '".$url."'");
-		return $result->fetch();
+	public function getMTagsByUrl( string $url) {
+		return $this->meta_tags->getDataFromTableByNameFetch ($url, 'url_name');
 	}
 
 	public function showMeta($metaTags, $news = 1) {
