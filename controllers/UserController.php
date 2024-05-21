@@ -5,18 +5,20 @@ class UserController {
 
 	use traitAuxiliary;
 
+	public function __construct() {
+		$this->user = new User();
+	}
 	public function actionIndex() {
 		if(isset($_POST['submit'])) {
 			if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token'])) {
-				$userCl   = new User();
 		        $login    = $this->filterTXT('post', 'login');;
 		        $password = $this->filterTXT('post', 'password');
 		        $errors   = false;
-				$userId   = $userCl->chekUserData($login,$password);
+				$userId   = $this->user->chekUserData($login,$password);
 				if ($userId == false) $errors []= "не вірний логін або пароль"; 
 				else {
-					$user = $userCl->getUserByLogin($login);
-					$res  = $userCl->setcookie($login,$user['name'],$user['admin']);
+					$user = $this->user->getUserByLogin($login);
+					$res  = $this->user->setcookie($login,$user['name'],$user['admin']);
 					if ($user['admin'] == 1) {
 						header("Location:/newsEdit");
 						 exit();
@@ -40,17 +42,15 @@ class UserController {
 	public function actionAuthor() {
 		if(isset($_POST['submit'])) {
 			if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token'])) {
-				$userCl   = new User();
 				$login    = $this->filterTXT('post', 'login');
 				$password = password_hash(trim($this->filterTXT('post', 'password')), PASSWORD_DEFAULT);
 				$name     = $this->filterTXT('post', 'name');
 				$surname  = $this->filterTXT('post', 'surname');
 				$email    = $this->filterEmail('post', 'email');
-				$result   = $userCl->createUser($login,$password,$name,$surname,$email);
-				$subject  = "Новий відвідувач www.gomgal.lviv.ua ".$name;
-				$res      = $userCl->setcookie($login,$name,0);
-				$mail    = $this->sendMail($subject,BanMAIL,$massage);
-				unset($userCl);				
+				$result   = $this->user->createUser($login,$password,$name,$surname,$email);
+				$res      = $this->user->setcookie($login,$name,0);
+				$subject  = "Новий користувач на сайті ".$name;
+				$mail    = $this->sendMail($subject,BanMAIL,$massage);			
 			}else {
 				$subject = "haks зі сторінки реєстрації";
 			}
@@ -73,22 +73,19 @@ class UserController {
 	}
 
 	public function actionChangeData() {
-		$userCl      = new User();
-		$userCurrent = $userCl->userCurr();
-		$id          = $userCurrent['id'];
+		$userCurrent = $this->user->userCurrent();
 		if ($userCurrent) {
 			if(isset($_POST['submit'])) {
 				if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token'])) {
 					$login    = $userCurrent['user_login'];
-					$password = ($id < 10) ? md5(md5(trim($this->filterTXT('post', 'password')))) : password_hash(trim($this->filterTXT('post', 'password')),PASSWORD_DEFAULT);
+					$password = ($userCurrent['id'] < 10) ? md5(md5(trim($this->filterTXT('post', 'password')))) : password_hash(trim($this->filterTXT('post', 'password')),PASSWORD_DEFAULT);
 					$name     = $this->filterTXT('post', 'name');
 					$surname  = $this->filterTXT('post', 'surname');
 					$email    = $this->filterEmail('post', 'email');
-					$result   = $userCl->changeUser($login,$name,$surname,$email);
+					$result   = $this->user->changeUser($login,$name,$surname,$email);
+					$res      = $this->user->setcookie($login,$name,0);
 					$subject  = "Редагування даних відвідувача ".$name;
-					$res      = $userCl->setcookie($login,$name,0);
-					$mail     = $this->sendMail($subject,BanMAIL,$massage);
-					unset($userCl);										
+					$mail     = $this->sendMail($subject,BanMAIL,$massage);								
 				} else {
 					$subject = "haks зі сторінки редагування даних";
 				}
@@ -106,21 +103,33 @@ class UserController {
 		}
 	}
 
-	public function actionUserComment($page = 1) {
-		$page       = $this->getIntval($page);		
-		$title      = "перегляд новин клієнтів";
-		$total      = $this->getCount('ComCl');
-		$comms      = User::getUsersComments($page);
+	private function view_Comment_Wishes( int $page = 1, string $title, array $comms, string $table, string $file) {
+		$page       = $this->getIntval($page);
+		$total      = $this->getCount($table);
 		$pagination = new Pagination($total, $page, SHOWCOMMENT_BY_DEFAULT, 'page-');
-		require_once ('views/user/userNews.php');
+		require_once ($file);
 		return true;
 	}
 
-	public function actionUserWishes($page = 1) {	
-		$title      = "перегляд побажань клієнтів";
-		$total      = $this->getCount('wishCl');
-		$comms      = User::getUsersWishes($this->getIntval($page));
-		require_once ('views/user/userWishes.php');
+	public function actionUserComment(int $page = 1) {
+		$this->view_Comment_Wishes(
+			$page,
+			"перегляд новин клієнтів",
+			$this->user->getUsersComments($this->getIntval($page)),
+			'ComCl',
+			'views/user/userNews.php'
+		);
+		return true;
+	}
+
+	public function actionUserWishes(int $page = 1) {
+		$this->view_Comment_Wishes( 
+			$page,
+			"перегляд побажань клієнтів",
+			$this->user->getUsersWishes($this->getIntval($page)),
+			'wishCl',
+			'views/user/userWishes.php'
+		);
 		return true;
 	}
 }

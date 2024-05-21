@@ -229,6 +229,18 @@ class classGetData extends classGetDB {
 	public function updateDataVue (string $elValue, string $elName, string $elValueUpDate, string $elNameUpdate) {	
 		return $this->getDBVue("UPDATE ".$this->table." SET ".$elNameUpdate."=".$elValueUpDate .$this->formSql($elName,$elValue)); 
 	}
+
+	private function set_update_names_values( array $args) {
+		$update = "";
+		foreach ($args as $key => $value) {
+			$update .= $key . "='" . $value."',";
+		}
+		return substr($update, 0, -1);
+	}
+
+	public function updateDataInTable ( array $args, string $valueUpDate, string $nameUpdate) {	
+		return $this->getDB("UPDATE ".$this->table." SET ".$this->set_update_names_values($args).$this->formSql($nameUpdate,$valueUpDate)); 
+	}
 /** Вставляєм нульовий запис в таблицю $this->table по елементу $elName
  *
  *  @return true або false
@@ -239,5 +251,19 @@ class classGetData extends classGetDB {
 
 	public function insert2ElementsVue(string $elName1, string $elName2, string $elValue1, string $elValue2) {
 		return $this->getDBVue("INSERT INTO ".$this->table." (".$elName1.",".$elName2.") VALUES('".$elValue1."','".$elValue2."')"); 
+	}
+
+	private function set_insert_values( array $values, bool $var) {
+		$value = "";
+		$start = ($var) ? ''  : "'";
+		$end   = ($var) ? "," : "',";
+		for ($i=0; $i < count($values); $i++) { 
+			$value .= $start. $values[$i] . $end;
+		}
+		return substr($value, 0, -1);
+	}
+
+	public function insertDataToTable( array $values, array $names) {
+		return $this->getDB("INSERT INTO " . $this->table . " (" . $this->set_insert_values($names, true) . ") VALUES(" . $this->set_insert_values($values, false) . ")"); 
 	}
 }
