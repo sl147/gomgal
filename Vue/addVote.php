@@ -5,4 +5,5 @@ require_once ('../classes/classGetData.php');
 require_once ('../models/Vote.php');
 
 $MK   = new Vote();
-$pr   = $MK->addVote(trim(strip_tags($_GET['voteid'])), trim(strip_tags($_GET['count'])));
+$pr   = $MK->addVote(trim(strip_tags($_GET['voteid'])),
+					 trim(strip_tags($_GET['count'])));

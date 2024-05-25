@@ -36,7 +36,7 @@ var vue_tovList = new Vue({
 		del(g) {
 			let accepted = confirm('Ви дійсно хочете видалити цей запис?');
 			if (accepted) {
-				let delt = this.delF + g.id+"&nameId=prid&nameTab=progrnk"
+				let delt = this.delF + g.id+"&nameId=prid&tab=progrnk"
 				this.$http.get(delt).then(function (response) {	          
 					this.videos.splice(this.videos.indexOf(g),1)
 				},function (error){

@@ -341,13 +341,20 @@ trait traitAuxiliary {
 
 	public function plusClickButton($type) {
 		$getData  = new classGetData("countClickButton");
-		$result = $getData->getDataFromTableByNameFetch ($type,"id_button");
+		$args = array(
+			'id_button' => $type
+		);
+		$result = $getData->selectDataFromTableWHEREFetch( $args );
 		if ($result) {
-			$count = $result["count"] + 1;
-			return $getData->updateDataFromTableByName ($type, "id_button", $count,"count");
+			$args = array(
+				'count'    => $result["count"] + 1,
+			);
+			return $getData->updateDataInTable( $args, $type, 'id_button');
 		}
 		else {
-			return $getData->insertDataToTableByName ($type, "id_button","count");
+			$names  = ['id_button', 'count'];
+			$values = [$type, 1];
+			return $getData->insertDataToTable( $values, $names);
 		}
 	}
 

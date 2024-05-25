@@ -2,9 +2,8 @@
 
 require_once ('../models/User.php');
 
-$page  = $_GET['page'];
 $MK    = new User();
-$comms = $MK->getAllUserNewsVue($page);
+$comms = $MK->getAllUserNewsVue(trim(strip_tags($_GET['page'])));
 $data = [];
 
 foreach ($comms as $item) {

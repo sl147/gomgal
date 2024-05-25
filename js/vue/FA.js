@@ -35,7 +35,7 @@ var vue_tovList = new Vue({
 		deleteFA(g) {
 			let accepted = confirm('Ви дійсно хочете видалити цей запис?');
 			if (accepted) {
-				let delt = this.delete + g.id_FA+"&nameId=id_FA&nameTab=photoalbum"
+				let delt = this.delete + g.id_FA+"&nameId=id_FA&tab=photoalbum"
 				this.$http.get(delt).then(function (response) {	          
 					this.albums.splice(this.albums.indexOf(g),1)
 				},function (error){

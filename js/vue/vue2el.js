@@ -7,7 +7,7 @@ var vue_app = new Vue({
 		selectElm: '/Vue/selectElm.php?id=',
 		edit:   '/Vue/edit2el.php?id=',
 		add:    '/Vue/add2el.php?name=',
-		del:    '/Vue/delData2el.php?id=',
+		del:    '/Vue/delVue.php?id=',
 		nameElement:'',
 		nameId:'',
 		tbl:'',
@@ -33,6 +33,7 @@ var vue_app = new Vue({
 			const accepted = confirm('Ви дійсно хочете видалити цей запис?');
 			if (accepted) {
 				let delt = this.del + item.id+"&tab="+this.tbl+"&nameId="+this.nameId
+				console.log('delt: '+delt)
 				this.$http.get(delt).then(function (response) {
 					this.elements.splice(this.elements.indexOf(item),1)
 				},function (error){
@@ -40,6 +41,7 @@ var vue_app = new Vue({
 				})
 				if (this.tbl == "catVote") {
 					delt = this.del + item.id+"&tab=vote&nameId=category"
+					console.log('delt: '+delt)
 					this.$http.get(delt).then(function (response) {
 					},function (error){
 						console.log(error)
@@ -101,7 +103,8 @@ var vue_app = new Vue({
 		this.nameId      = get["id"]
 		this.isId        = get["isId"]
 		this.idVal       = get["idVal"]	
-		console.log('112  isId - '+this.isId+'   idVal - '+this.idVal+'  table - '+this.tbl+'    nameElement - '+this.nameElement+'    nameId - '+this.nameId)
+
+		console.log('vue2el  isId - '+this.isId+'   idVal - '+this.idVal+'  table - '+this.tbl+'    nameElement - '+this.nameElement+'    nameId - '+this.nameId)
 		this.getAll()
 	}	
   })

@@ -60,11 +60,11 @@ class User extends classGetDB {
 	}
 
 	public function getUserByLogin($login) {
-		return $this->friends->getDataFromTableByNameFetch ($login,'user_login') ?? [];
+		return $this->friends->selectDataFromTableWHEREFetch( array('user_login' => $login ) ) ?? [];
 	}
 
 	public function getUserNameById($id) {
-		$user  = $this->friends->getDataFromTableByNameFetch ($id,'id');
+		$user = $this->friends->selectDataFromTableWHEREFetch( array('id' => $id ) );
 		return $user['name'] . ' ' . $user['surname'];
 	}
 

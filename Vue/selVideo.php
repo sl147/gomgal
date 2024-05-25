@@ -1,11 +1,11 @@
 <?php
 require_once ('../classes/traitAuxiliary.php');
 require_once ('../classes/classGetDB.php');
+require_once ('../classes/classGetData.php');
 require_once ('../models/Video.php');
 
-$page = trim(strip_tags($_GET['page']));
 $MK   = new Video();
-$pr   = $MK->getVideoVue($page);
+$pr   = $MK->getVideoVue(trim(strip_tags($_GET['page'])));
 $data = [];
 
 

@@ -6,7 +6,7 @@ var vue_app = new Vue({
 		select: '/Vue/selectEditOne.php?id=',
 		edit:   '/Vue/edit2el.php?id=',
 		add:    '/Vue/addElVote.php?name=',
-		del:    '/Vue/delData2el.php?id=',
+		del:    '/Vue/delVue.php?id=',
 		nameElement:'',
 		nameId:'',
 		tbl:'',

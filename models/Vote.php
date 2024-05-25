@@ -20,7 +20,7 @@ class Vote {
 	}
 
 	public function addElVote(string $name, int $cat) {
-		return $this->vote->insert2ElementsVue( "msg", "category", $name, $cat);
+		return $this->vote->insertDataToTable( array($name, $cat), array('msg', 'category'), true);
 	}
 
 	public function getAllVote() {
@@ -40,11 +40,11 @@ class Vote {
 	}
 
 	public function addVote(int $id, int $count) {
-		return $this->vote->updateDataVue ($id, 'id', $count,'countrl');
+		return $this->vote->updateDataInTable( array( 'countrl' => $count ), $id, 'id', true);
 	}
 
 	public function activated(int $id){
-		$this->catVote->updateDataFromTableByName (1  , 'active', 0, 'active');
-		$this->catVote->updateDataFromTableByName ($id, 'idrl'  , 1, 'active');
+		$this->catVote->updateDataInTable( array( 'active' => 0	), 1, 'active');
+		$this->catVote->updateDataInTable( array( 'active' => 1	), $id, 'idrl');
 	}
 }

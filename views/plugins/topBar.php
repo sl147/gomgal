@@ -44,12 +44,12 @@
 					<p><?php echo $this->Translate('author')?> <a target="_blank" href="https://profiles.wordpress.org/sl147"><?php echo $this->Translate('Yaroslav Livchak')?></a> </p>
 				</div>
 				<div id="opinian" class="tab-pane fade">
-					<? if (empty($comment)) :?>
+					<? if ($comment->rowCount() == 0 ) :?>
 						<div class="text-center">
 							<h4><?php echo $this->Translate('There are no reviews')?></h4>
 						</div>
 					<? else :?>
-						<h5 class="text-center"><?php echo $this->Translate('Reviews')?> <?= count($comment)?></h5>
+						<h5 class="text-center"><?php echo $this->Translate('Reviews')?> <?= $comment->rowCount()?></h5>
 						<?php foreach ($comment as $item) :?>
 							<p class='text-left ip_Comment'><?=$item['nik'] ?> : <?=$item['text'] ?></p>
 							<br>

@@ -14,8 +14,11 @@ class MetaTags{
 		return $this->meta_tags->getDataFromTable() ?? [];
 	}
 
-	public function getMTagsByID($id) {
-		return $this->meta_tags->getDataFromTableByNameFetch ($id, 'id');
+	public function getMTagsByID(int $id) {
+		$args = array(
+			'id' => $id
+		);
+		return $this->meta_tags->selectDataFromTableWHEREFetch( $args );
 	}
 
 	public function editMetaTags(int $id, string $url_name, string $title, string $description, string $keywords, string $follow) {
@@ -36,10 +39,13 @@ class MetaTags{
 	}
 
 	public function getMTagsByUrl( string $url) {
-		return $this->meta_tags->getDataFromTableByNameFetch ($url, 'url_name');
+		$args = array(
+			'url_name' => $url
+		);
+		return $this->meta_tags->selectDataFromTableWHEREFetch( $args );
 	}
 
-	public function showMeta($metaTags, $news = 1) {
+/*	public function showMeta($metaTags, $news = 1) {
 		if ($metaTags == "") {
 			$meta['title']    = "Гомін Галичични";
 			$meta['keywords'] = 'Дрогобич';
@@ -56,5 +62,5 @@ class MetaTags{
 			$meta = $this->getMTagsByUrl($metaTags);	
 		}
 		include ('views/layouts/showMeta.php');
-	}
+	}*/
 }

@@ -80,26 +80,6 @@ class classGetData extends classGetDB {
 		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue))->fetch();	
 	}
 
-
-/** Отримуєм записи з таблиці $this->table по елементу $elName->fetch()
- *
- *  @return елемент даних
- */
-	public function getDataFromTableByNameFetch2WHERE ($elValue1,$elName1,$elValue2,$elName2) {
-		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql2($elName1,$elValue1,$elName2,$elValue2))->fetch();	
-	}
-
-/** Отримуєм записи з таблиці $this->table по елементу $elName
- *
- *  @return елемент даних
- */
-
-	public function selectWhereFetch ($elValue, $elName, $vue=false){
-		$sql = "SELECT * FROM ".$this->table.$this->formSql($elName,$elValue);
-		return ($vue) ? $this->getDBVue($sql)->fetch()
-					  : $this->getDB($sql)->fetch();
-	}
-
 /** Отримуєм записи з таблиці $this->table по елементу $elName
  *
  *  @return елемент даних
@@ -196,15 +176,6 @@ class classGetData extends classGetDB {
 	}
 
 
-/** Видадаєм запис з таблиці $this->table
- *
- *  @return true or false
- */
-	public function deleteDataFromTable($id,$nameid='id') {
-		return (intval($id)) ? $this->getDB("DELETE FROM ".$this->table.$this->formSql($nameid,$id)) : false;
-	}
-
-
 /** Отримуєм всі дані з таблиці $this->table для запитів з Vue
  *
  *  @return масив даних
@@ -213,23 +184,49 @@ class classGetData extends classGetDB {
 		return $this->getRow( $this->getDBVue("SELECT * FROM ".$this->table) );
 	}
 
-	public function activated($id,$act, $id_name = 'id') {
-		return (intval($id)) ? $this->getDB("UPDATE ".$this->table." SET active=$act ".$this->formSql($id_name, $id)) : false;		
+/** Отримуєм записи з таблиці $this->table по елементу $elName->fetch()
+ *
+ *  @return елемент даних
+ */
+	private function setWhere($args) {
+		$set = " WHERE";
+		foreach ($args as $key => $value) {
+			$set .= " (" . $key . "='" . $value."') AND";
+		}
+		return substr($set, 0, -4);
 	}
 
+	public function selectDataFromTableWHERE (array $args) {
+		return $this->getDB("SELECT * FROM ".$this->table.$this->setWhere($args));	
+	}
+
+	public function selectDataFromTableWHEREFetch (array $args) {
+		return $this->getDB("SELECT * FROM ".$this->table.$this->setWhere($args))->fetch();	
+	}
+
+	public function getDataFromTableByNameFetch2WHERE ($elValue1,$elName1,$elValue2,$elName2) {
+		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql2($elName1,$elValue1,$elName2,$elValue2))->fetch();	
+	}
+
+/*	public function activated($id,$act, $id_name = 'id') {
+		return (intval($id)) ? $this->getDB("UPDATE ".$this->table." SET active=$act ".$this->formSql($id_name, $id)) : false;		
+	}*/
+
+/** Отримуєм записи з таблиці $this->table по елементу $elName
+ *
+ *  @return елемент даних
+ */
+
+	public function selectWhereFetch ($elValue, $elName, $vue=false){
+		$sql = "SELECT * FROM ".$this->table.$this->formSql($elName,$elValue);
+		return ($vue) ? $this->getDBVue($sql)->fetch()
+					  : $this->getDB($sql)->fetch();
+	}
 
 /** Обновляєм запис в таблиці $this->table по елементу $elNameUpdate
  *
  *  @return true або false
  */
-	public function updateDataFromTableByName ($elValue,$elName, $elValueUpDate,$elNameUpdate) {	
-		return $this->getDB("UPDATE ".$this->table." SET ".$elNameUpdate."=".$elValueUpDate .$this->formSql($elName,$elValue)); 
-	}
-
-	public function updateDataVue (string $elValue, string $elName, string $elValueUpDate, string $elNameUpdate) {	
-		return $this->getDBVue("UPDATE ".$this->table." SET ".$elNameUpdate."=".$elValueUpDate .$this->formSql($elName,$elValue)); 
-	}
-
 	private function set_update_names_values( array $args) {
 		$update = "";
 		foreach ($args as $key => $value) {
@@ -238,19 +235,10 @@ class classGetData extends classGetDB {
 		return substr($update, 0, -1);
 	}
 
-	public function updateDataInTable ( array $args, string $valueUpDate, string $nameUpdate) {	
-		return $this->getDB("UPDATE ".$this->table." SET ".$this->set_update_names_values($args).$this->formSql($nameUpdate,$valueUpDate)); 
-	}
-/** Вставляєм нульовий запис в таблицю $this->table по елементу $elName
- *
- *  @return true або false
- */
-	public function insertDataToTableByName ($elValue,$elName,$elName0) {	
-		return $this->getDB("INSERT INTO ".$this->table." (".$elName.",".$elName0.") VALUES(".$elValue.",1)"); 
-	}
-
-	public function insert2ElementsVue(string $elName1, string $elName2, string $elValue1, string $elValue2) {
-		return $this->getDBVue("INSERT INTO ".$this->table." (".$elName1.",".$elName2.") VALUES('".$elValue1."','".$elValue2."')"); 
+	public function updateDataInTable( array $args, string $valueUpDate, string $nameUpdate, bool $vue = false) {	
+		$sql = "UPDATE ".$this->table." SET ".$this->set_update_names_values($args).$this->formSql($nameUpdate,$valueUpDate);
+		return  ($vue)  ? $this->getDBVue($sql)
+						: $this->getDB($sql);
 	}
 
 	private function set_insert_values( array $values, bool $var) {
@@ -263,7 +251,19 @@ class classGetData extends classGetDB {
 		return substr($value, 0, -1);
 	}
 
-	public function insertDataToTable( array $values, array $names) {
-		return $this->getDB("INSERT INTO " . $this->table . " (" . $this->set_insert_values($names, true) . ") VALUES(" . $this->set_insert_values($values, false) . ")"); 
+	public function insertDataToTable( array $values, array $names, bool $vue = false) {
+		$sql = "INSERT INTO " . $this->table . " (" . $this->set_insert_values($names, true) . ") VALUES(" . $this->set_insert_values($values, false) . ")";
+		return ($vue) ? $this->getDBVue($sql)
+					  : $this->getDB($sql); 
+	}
+
+/** Видадаєм запис з таблиці $this->table
+ *
+ *  @return true or false
+ */
+	public function deleteDataFromTable( int $id, string $nameid='id', bool $vue = false) {
+		$sql = "DELETE FROM " . $this->table . $this->formSql($nameid,$id);
+		return ($vue) ? $this->getDBVue($sql)
+					  : $this->getDB($sql); 
 	}
 }

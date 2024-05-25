@@ -6,80 +6,57 @@
 
 class AuxiliaryVue {
 
-	public function getDBVue() {
-		require_once ('../components/Db.php');
-		$db   = new Db();
-		return $db ->getConnectionVue();
+	public function __construct( string $table) {
+		$this->table = new classGetData($table);
 	}
 
-	public static function getSQLAuxVue($sql) {
-		$db  = self::getDBVue();
-		return $db -> query($sql);
+	public function sel2El( string $name, string $id, string $idVal, bool $isId) {
+		return $this->table->getData2ElVue($id,$name,$idVal);
 	}
 
-	public static function getPrepareSQLVue($sql) {
-		$db  = self::getDBVue();
-		return $db -> prepare($sql);
+	public function addVue2El( string $name, string $nameEl) {
+		return $this->table->insertDataToTable( array($name), array($nameEl), true);	
+	}
+	
+	public function updateVue2El ( int $id, string $name, string $nameEl, string $nameId) {
+		$args = array(
+			 $nameEl  => $name,
+		);
+		return $this->table->updateDataInTable( $args, $id, $nameId, true);		
 	}
 
-	public static function sel2El($tab,$name,$id,$idVal,$isId) {
-		require_once ('../classes/traitAuxiliary.php');
-		require_once ('../classes/classGetDB.php');
-		require_once ('../classes/classGetData.php');
-		$getData  = new classGetData($tab);
-		$NewsList = $getData->getData2ElVue($id,$name,$idVal);
-		unset($getData);
-		return $NewsList;
+	public function delVue2El(int $id, string $name_Id) {
+		$this->table->deleteDataFromTable($id, $name_Id, true);
+
+		if ($tab == "poster") $res = $this->delFilePoster($id);		
 	}
 
-	public static function updateVue2El ($id, $name, $tab, $nameEl, $nameId) {
-		$sql    = "UPDATE ".$tab." SET ".$nameEl."=:name WHERE ".$nameId.' = '.$id;
-		$result = self::getPrepareSQLVue($sql);
-		$result -> bindParam(':name', $name, PDO::PARAM_STR);
-
-		return $result -> execute();			
+	private function delFilePoster( int $id) {
+		$poster = $this->getPosterById($id);
+		$res    = $this->delFileVue($poster["foto_p1"],"posterFoto");	
 	}
 
-	public static function addVue2El($name, $tab, $nameEl) {
-		$sql    = "INSERT INTO ".$tab." (".$nameEl.") VALUES(:name)";
-		$result = self::getPrepareSQLVue($sql);
-		$result -> bindParam(':name', $name, PDO::PARAM_STR);
-
-		return $result -> execute();		
-	}
-
-	private static function delFilePoster($id) {
-		$poster = self::getPosterById($id);
-		$res    = self::delFileVue($poster["foto_p1"],"posterFoto");	
-	}
-
-	public static function delVue2El($id, $tab, $nameId) {
-		$sql    = "DELETE FROM ".$tab.' WHERE '.$nameId.' = '.$id;
-		$result = self::getSQLAuxVue($sql);
-		if ($tab == "poster") {
-			$res = self::delFilePoster($id);
-		}
-	}
-
-	private static function getPathFile($file,$folder,$delim="") {
+	private function getPathFile( string $file, string $folder, string $delim="") {
 		return "./".$folder."/".$delim.$file;
 	}
 
-	public static function delFileVue($file,$folder) {
-		$fdel  = self::getPathFile($file,$folder);
+	public function delFileVue( string $file, string $folder) {
+		$fdel  = $this->getPathFile($file,$folder);
 		$str  = explode( '/', $file );
 		$file = '';
 		for ($i=0; $i < count($str)-1; $i++) { 
 			$file .= $str[$i].'/';
 		}
 		$file .= 's_'.$str[count($str)-1];
-		$fdelS = self::getPathFile($file,$folder);
+		$fdelS = $this->getPathFile($file,$folder);
 		if (file_exists($fdel))  unlink($fdel);
 		if (file_exists($fdelS)) unlink($fdelS);
 	}
 
-	public static function getPosterById($id) {
-		$result = self::getSQLAuxVue("SELECT * FROM poster WHERE id_poster=".$id);
+	public function getPosterById($id) {
+		$table = new classGetData('poster');
+		$result = $table->getDataFromTableByNameAllVue ($id, 'id_poster');
+		//$result = self::getSQLAuxVue("SELECT * FROM poster WHERE id_poster=".$id);
 		return $result->fetch();
 	}
 }

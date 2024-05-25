@@ -1,14 +1,16 @@
 <?php
+require_once ('../classes/traitAuxiliary.php');
+require_once ('../classes/classGetDB.php');
+require_once ('../classes/classGetData.php');
 require_once ('../models/AuxiliaryVue.php');
 
 $data = [];
-$tab  = trim(strip_tags($_GET['tab']));
-$name = trim(strip_tags($_GET['name']));
-$id   = trim(strip_tags($_GET['id']));
-$idVal= trim(strip_tags($_GET['idVal']));
-$isId = trim(strip_tags($_GET['isId']));
-$MK   = new AuxiliaryVue();
-$pr   = $MK->sel2El($tab,$name,$id,$idVal,$isId);
+$MK   = new AuxiliaryVue(trim(strip_tags($_GET['tab'])));
+
+$pr   = $MK->sel2El(trim(strip_tags($_GET['name'])),
+					trim(strip_tags($_GET['id'])),
+					trim(strip_tags($_GET['idVal'])),
+					trim(strip_tags($_GET['isId'])));
 
 foreach ($pr as $item) {
 			$new_item  = array(

@@ -53,7 +53,7 @@ class Comment {
 		$this->getData->deleteDataFromTable($id,$nameid='id_com');
 	}
 
-	public function changeActiveComment(bool $active, int $id) : void {
-		$this->getData->activated($id, ($active) ? 0 : 1 , 'id_com');
+	public function changeActiveComment(bool $active, int $id) {
+		return $this->getData->updateDataInTable( array( 'active' => ($active) ? 0 : 1 ), $id, 'id_com');
 	}
 }
