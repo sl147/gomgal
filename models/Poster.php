@@ -9,6 +9,7 @@ class Poster  extends classGetDB {
 	public function __construct() {
 		$this->poster   = new classGetData('poster');
 		$this->category = new classGetData('catagory');
+		$this->show     = 25;
 	}
 
 	public function getPosters20() {
@@ -238,5 +239,20 @@ class Poster  extends classGetDB {
 	public  function showPhoto($list) {
 		$file = 'posterFoto/'.$list["foto_p1"];
 		include ('views/poster/showPhoto.php');
+	}
+
+	public  function getAllPostersVue($page = 1) {
+		$i          = 1;
+		$result = $this->poster->selectOrderPageVue($this->show,$page, 'id_poster', $desk = 'DESC');
+		while ($row = $result->fetch()) {
+			$postList[$i]['id']       = $row['id_poster'];
+			$postList[$i]['title_p']  = $row['title_p'];
+			$postList[$i]['type_p']   = $row['type_p'];
+			$postList[$i]['date_p']   = $row['date_p'];
+			$postList[$i]['foto_p1']  = $row['foto_p1'];
+			$postList[$i]['count_p']  = $row['count_p'];
+			$i++;
+		}
+		return $postList ?? [];
 	}
 }

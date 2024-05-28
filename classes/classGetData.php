@@ -182,6 +182,7 @@ class classGetData extends classGetDB {
 	public function getDataFromTableByNameFetch2WHERE ($elValue1,$elName1,$elValue2,$elName2) {
 		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql2($elName1,$elValue1,$elName2,$elValue2))->fetch();	
 	}
+//-------------------SELECT-------------------------------------------------------------
 
 	public function selectFromTable ($var = true) {
 		return ($var) ? $this->getRow($this->getDB("SELECT * FROM ".$this->table)) :
@@ -201,6 +202,11 @@ class classGetData extends classGetDB {
 		$sql = "SELECT * FROM ".$this->table.$this->formSql($elName,$elValue);
 		return ($vue) ? $this->getDBVue($sql)->fetch()
 					  : $this->getDB($sql)->fetch();
+	}
+
+	public function selectOrderPageVue($SHOW_BY_DEFAULT,$page,$nameOrder, $desk = 'DESC') {
+		$offset = ($page - 1) * $SHOW_BY_DEFAULT;
+		return $this->getDBVue("SELECT * FROM ".$this->table." ORDER BY ".$nameOrder." ".$desk." LIMIT ".$SHOW_BY_DEFAULT." OFFSET ".$offset);
 	}
 
 	private function formSql2El( $id, $name, $idVal) {
@@ -226,6 +232,8 @@ class classGetData extends classGetDB {
 		return $this->getRow2EL( $this->getDBVue($sql),$id,$name);
 	}
 
+
+//---------------------UPDATE ------------------------------------------------
 /** Обновляєм запис в таблиці $this->table по елементу $elNameUpdate
  *
  *  @return true або false
@@ -244,6 +252,10 @@ class classGetData extends classGetDB {
 						: $this->getDB($sql);
 	}
 
+
+//--------------------------UPDATE-----------------------------------
+
+//--------------------------INSERT-----------------------------------
 	private function set_insert_values( array $values, bool $var) {
 		$value = "";
 		$start = ($var) ? ''  : "'";
@@ -261,7 +273,9 @@ class classGetData extends classGetDB {
 		return ($vue) ? $this->getDBVue($sql)
 					  : $this->getDB($sql); 
 	}
+//--------------------------INSERT-------------------------------------------------
 
+//--------------------------DELETE-------------------------------------------------
 /** Видадаєм запис з таблиці $this->table
  *
  *  @return true or false
