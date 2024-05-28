@@ -9,17 +9,17 @@ class Comment {
 	use traitAuxiliary;
 
 	public function __construct() {
-		$this->getData = new classGetData('Comment');
+		$this->comment = new classGetData('Comment');
 	}
 
 	public function getComments(int $page) {
 		$offset  = ($page - 1) * SHOWCOMMENT_BY_DEFAULT;
-		$comList = $this->getData->getDataByOffset ('id_com',SHOWCOMMENT_BY_DEFAULT,$offset);
+		$comList = $this->comment->getDataByOffset ('id_com',SHOWCOMMENT_BY_DEFAULT,$offset);
 		return $comList ?? [];
 	}
 
 	public function getCommentsById(int $id) {
-		$comList = $this->getData->getDataFromTableByNameActive($this->getIntval($id),'id_cl');
+		$comList = $this->comment->getDataFromTableByNameActive($this->getIntval($id),'id_cl');
 		return $comList ?? [];
 	}	
 
@@ -36,24 +36,17 @@ class Comment {
 		$massage = $subject."\r\nвід: $nik_com\r\nemail:$email_com\r\ntxt_com:$txt_com\r\n";
 		$mail    = $this->sendMail($subject,SLMAIL,$massage);
 
-		$sql    = "INSERT INTO Comment (id_cl,txt_com,nik_com,email_com,ip_com)
-		 VALUES(:id_cl,:txt,:nik,:email,:ip)";
-		$getDB  = new classGetDB();
-		$result = $getDB->getPrepareSQL($sql);
-		$result -> bindParam(':id_cl', $id_cl,     PDO::PARAM_STR);
-		$result -> bindParam(':txt',   $txt_com,   PDO::PARAM_STR);
-		$result -> bindParam(':nik',   $nik_com,   PDO::PARAM_STR);
-		$result -> bindParam(':email', $email_com, PDO::PARAM_STR);
-		$result -> bindParam(':ip',    $ip_com,    PDO::PARAM_STR);
-		unset($getDB);		
-		return $result -> execute();		
+		return $this->comment->insertDataToTable( 
+									array($id_cl, $txt_com, $nik_com, $email_com, $ip_com),
+									array('id_cl', 'txt_com', 'nik_com', 'email_com', 'ip_com')
+								);
 	}
 
 	public function delComment(int $id) :void {
-		$this->getData->deleteDataFromTable($id,$nameid='id_com');
+		$this->comment->deleteDataFromTable($id,$nameid='id_com');
 	}
 
 	public function changeActiveComment(bool $active, int $id) {
-		return $this->getData->updateDataInTable( array( 'active' => ($active) ? 0 : 1 ), $id, 'id_com');
+		return $this->comment->updateDataInTable( array( 'active' => ($active) ? 0 : 1 ), $id, 'id_com');
 	}
 }

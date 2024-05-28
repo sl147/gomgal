@@ -24,23 +24,6 @@ class classGetData extends classGetDB {
 		return $list ?? [];
 	}
 
-	private function formSql2El($id,$name,$idVal) {
-		$sql = "SELECT * FROM ".$this->table." ORDER BY ".$name;
-		return ($idVal) ? $sql . $this->formSql($id,$idVal) : $sql;
-	}
-
-	private function getRow2El ($result,$id,$name) {
-		$i  = 0;
-		while ($row = $result->fetch()) {
-			$list[$i]['id']   = $row[$id];
-			$list[$i]['name'] = $row[$name];
-			$i++;
-		}
-		return $list ?? [];
-	}
-
-
-
 /** Отримуєм всі записи з таблиці $this->table
  *
  *  @return масив даних
@@ -122,14 +105,6 @@ class classGetData extends classGetDB {
 		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql($nameid,$id)." ORDER BY ".$nameOrder." ".$desk);
 	}
 
-/** Отримуєм дані з таблиці $this->table для 2 елементів з Vue
- *
- *  @return масив даних
- */
-	public function getData2ElVue($id,$name,$idVal=0) {
-		$sql = $this->formSql2El($id,$name,$idVal);
-		return $this->getRow2EL( $this->getDBVue($sql),$id,$name);
-	}
 
 	public function getMetaTable() {
 		$sql = "SHOW COLUMNS FROM ".$this->table;
@@ -208,9 +183,14 @@ class classGetData extends classGetDB {
 		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql2($elName1,$elValue1,$elName2,$elValue2))->fetch();	
 	}
 
-/*	public function activated($id,$act, $id_name = 'id') {
-		return (intval($id)) ? $this->getDB("UPDATE ".$this->table." SET active=$act ".$this->formSql($id_name, $id)) : false;		
-	}*/
+	public function selectFromTable ($var = true) {
+		return ($var) ? $this->getRow($this->getDB("SELECT * FROM ".$this->table)) :
+		                                   $this->getDB("SELECT * FROM ".$this->table) ;
+	}
+
+	public function selectOrderBy(string $nameOrder, string $desk = 'DESC') {
+		return $this->getDB("SELECT * FROM ".$this->table." ORDER BY ".$nameOrder." ".$desk);
+	}
 
 /** Отримуєм записи з таблиці $this->table по елементу $elName
  *
@@ -223,6 +203,29 @@ class classGetData extends classGetDB {
 					  : $this->getDB($sql)->fetch();
 	}
 
+	private function formSql2El( $id, $name, $idVal) {
+		$sql = "SELECT * FROM ".$this->table." ORDER BY ".$name;
+		return ($idVal) ? $sql . $this->formSql($id,$idVal) : $sql;
+	}
+
+	private function getRow2El ( $result, $id, $name) {
+		$i  = 0;
+		while ($row = $result->fetch()) {
+			$list[$i]['id']   = $row[$id];
+			$list[$i]['name'] = $row[$name];
+			$i++;
+		}
+		return $list ?? [];
+	}
+/** Отримуєм дані з таблиці $this->table для 2 елементів з Vue
+ *
+ *  @return масив даних
+ */
+	public function getData2ElVue( $id, $name, $idVal=0) {
+		$sql = $this->formSql2El($id,$name,$idVal);
+		return $this->getRow2EL( $this->getDBVue($sql),$id,$name);
+	}
+
 /** Обновляєм запис в таблиці $this->table по елементу $elNameUpdate
  *
  *  @return true або false
@@ -230,7 +233,7 @@ class classGetData extends classGetDB {
 	private function set_update_names_values( array $args) {
 		$update = "";
 		foreach ($args as $key => $value) {
-			$update .= $key . "='" . $value."',";
+			$update .= $key . "='" . $this->sl147_clean($value)."',";
 		}
 		return substr($update, 0, -1);
 	}
@@ -246,7 +249,9 @@ class classGetData extends classGetDB {
 		$start = ($var) ? ''  : "'";
 		$end   = ($var) ? "," : "',";
 		for ($i=0; $i < count($values); $i++) { 
-			$value .= $start. $values[$i] . $end;
+			$value .= $start;
+			$value .= ($var) ? $values[$i] : $this->sl147_clean($values[$i]);
+			$value .= $end;
 		}
 		return substr($value, 0, -1);
 	}

@@ -129,6 +129,7 @@ class PosterController {
 		if(isset($_POST['submit'])) {
 			$nik   = $this->sl147_clean($_POST['nik']);//$this->filterTXT('post', 'nik');
 			$type  = $this->filterINT('post', 'type');
+			$type  = ($type == 0 ) ? 1 : $type;
 			$cat   = $this->filterINT('post', 'category');
 			$title = $this->sl147_clean($_POST['title']);//$this->filterTXT('post', 'title');
 			$msg   = $this->sl147_clean($_POST['msg']);//$this->filterTXT('post', 'msg');
@@ -142,7 +143,7 @@ class PosterController {
 			$fotoN = $id['id_poster'].'.'.$jpg[count($jpg)-1];
 			$fotoN = $this->savePhoto($fotoN, ROOT."/posterFoto",date('y'),date('m'));
 			$res   = $poster->updateFoto($id['id_poster'],$fotoN);
-			$res   = $poster->incrType($cat,$type);
+			$res   = $poster->incrementTypeCategory($cat,$type);
 			unset($poster);
 			header("Location: /posterFull");
 		}
