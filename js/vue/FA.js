@@ -27,6 +27,7 @@ var vue_tovList = new Vue({
 		},
 		editFA(g){
 			let req = this.edit + g.id_FA+"&name_FA="+g.name_FA+"&msgs_FA="+g.msgs_FA
+			console.log("editFA req - "+req)
 			this.$http.get(req).then(function (response){
 			},function (error){
 				console.log(error)

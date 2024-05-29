@@ -27,7 +27,7 @@ var vue_tovList = new Vue({
 		},
 		editFAOne(item) {
 			var req = this.edit+item.id+'&subscribe='+item.subscribe
-			console.log("req - "+req)
+			console.log("editFAOne req - "+req)
 			this.$http.get(req).then(function (response){     
 				this.getFAOne()
 			},function (error){
@@ -56,7 +56,7 @@ var vue_tovList = new Vue({
 		},
 		getFAOne() {
 			var req = this.select+this.id
-			console.log("req - "+req)
+			console.log("select req - "+req)
 			this.$http.get(req).then(function (response) {
 				this.albums = JSON.parse(response.data)
 				for (var bas of this.albums) {
@@ -64,7 +64,7 @@ var vue_tovList = new Vue({
 					//'../album/'.$id.'/'.$row['fotoName'];
 					bas.fn = bas.fotoName
 					bas.fotoName = '../album/'+this.id+'/'+bas.fotoName
-					console.log("isFile - "+bas.isFile+"   fotoName - "+bas.fotoName+"   id_foto - "+bas.id)
+					console.log("11 isFile - "+bas.isFile+"   fotoName - "+bas.fotoName+"   id_foto - "+bas.id)
 					//					console.log("isFile - "+bas.isFile+"   fotoName - "+'../album/'+bas.id+'/'+bas.fotoName+"   id_foto - "+bas.id)
 				}				
 			},function (error){

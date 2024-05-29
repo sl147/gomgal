@@ -184,9 +184,10 @@ class classGetData extends classGetDB {
 	}
 //-------------------SELECT-------------------------------------------------------------
 
+
 	public function selectFromTable ($var = true) {
 		return ($var) ? $this->getRow($this->getDB("SELECT * FROM ".$this->table)) :
-		                                   $this->getDB("SELECT * FROM ".$this->table) ;
+		                              $this->getDB("SELECT * FROM ".$this->table) ;
 	}
 
 	public function selectOrderBy(string $nameOrder, string $desk = 'DESC') {
@@ -197,6 +198,11 @@ class classGetData extends classGetDB {
  *
  *  @return елемент даних
  */
+	public function selectWhere ($elValue, $elName, $vue=false){
+		$sql = "SELECT * FROM ".$this->table.$this->formSql($elName,$elValue);
+		return ($vue) ? $this->getDBVue($sql)
+					  : $this->getDB($sql);
+	}
 
 	public function selectWhereFetch ($elValue, $elName, $vue=false){
 		$sql = "SELECT * FROM ".$this->table.$this->formSql($elName,$elValue);
@@ -204,9 +210,20 @@ class classGetData extends classGetDB {
 					  : $this->getDB($sql)->fetch();
 	}
 
-	public function selectOrderPageVue($SHOW_BY_DEFAULT,$page,$nameOrder, $desk = 'DESC') {
+	public function selectWhereGetRow ($elValue,$elName) {
+		return $this->getRow($this->getDBVue("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue)));	
+	}
+
+	public function selectOrderPage (int $SHOW_BY_DEFAULT, int $page, string $nameOrder, string $desc = 'DESC' ) {
 		$offset = ($page - 1) * $SHOW_BY_DEFAULT;
-		return $this->getDBVue("SELECT * FROM ".$this->table." ORDER BY ".$nameOrder." ".$desk." LIMIT ".$SHOW_BY_DEFAULT." OFFSET ".$offset);
+		return $this->getDB("SELECT * FROM " . $this->table . " ORDER BY " . $nameOrder . " " . $desc . " LIMIT " . $SHOW_BY_DEFAULT . " OFFSET " . $offset);	
+	}
+
+	public function selectOrderPageVue( int $SHOW_BY_DEFAULT, int $page, string $nameOrder, string $desk = 'DESC', bool $getRow = false) {
+		$offset = ($page - 1) * $SHOW_BY_DEFAULT;
+		return ($getRow) 
+						? $this->getRow( $this->getDBVue("SELECT * FROM ".$this->table." ORDER BY ".$nameOrder." ".$desk." LIMIT ".$SHOW_BY_DEFAULT." OFFSET ".$offset) )
+						: $this->getDBVue("SELECT * FROM ".$this->table." ORDER BY ".$nameOrder." ".$desk." LIMIT ".$SHOW_BY_DEFAULT." OFFSET ".$offset);
 	}
 
 	private function formSql2El( $id, $name, $idVal) {
@@ -231,7 +248,7 @@ class classGetData extends classGetDB {
 		$sql = $this->formSql2El($id,$name,$idVal);
 		return $this->getRow2EL( $this->getDBVue($sql),$id,$name);
 	}
-
+//---------------------SELECT-----------------------------------------------
 
 //---------------------UPDATE ------------------------------------------------
 /** Обновляєм запис в таблиці $this->table по елементу $elNameUpdate

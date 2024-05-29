@@ -1,14 +1,12 @@
 <?php
 require_once ('../classes/traitAuxiliary.php');
 require_once ('../classes/classGetDB.php');
+require_once ('../classes/classGetData.php');
 require_once ('../models/FA.php');
-require_once ('../models/Video.php');
 
-
-$page = trim(strip_tags($_GET['page']));
-$data = [];
 $MK   = new FA();
-$pr   = $MK->getFAVue($page);
+$pr   = $MK->getFAVue(trim(strip_tags($_GET['page'])));
+$data = array();
 
 foreach ($pr as $item) {
 	$new_item = array(
