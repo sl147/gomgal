@@ -126,9 +126,9 @@ class classGetData extends classGetDB {
  *
  *  @return масив даних
  */
-	public function getDataByOffset ($id,$show,$offset) {
+/*	public function getDataByOffset ($id,$show,$offset) {
 		return $this->getRow($this->getDB("SELECT * FROM ".$this->table." ORDER BY ".$id." DESC LIMIT ".$show." OFFSET $offset"));	
-	}
+	}*/
 
 
 /** Отримуєм записи з таблиці $this->table по offset

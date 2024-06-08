@@ -12,10 +12,7 @@ class User extends classGetDB {
 
 	private function getData($table, $nameID, $page) {
 		$getData = new classGetData($table);
-		$offset  = ($page - 1) * SHOWCOMMENT_BY_DEFAULT;
-		$comList = $getData->getDataByOffset ($nameID,SHOWCOMMENT_BY_DEFAULT,$offset);
-		unset($getData);
-		return $comList ?? [];
+		return $getData->selectOrderPage ( SHOWCOMMENT_BY_DEFAULT, $page, $nameID, 'DESC', true );
 	}
 
 	public function getUsersComments($page) {

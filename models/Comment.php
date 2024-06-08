@@ -12,15 +12,12 @@ class Comment {
 		$this->comment = new classGetData('Comment');
 	}
 
-	public function getComments(int $page) {
-		$offset  = ($page - 1) * SHOWCOMMENT_BY_DEFAULT;
-		$comList = $this->comment->getDataByOffset ('id_com',SHOWCOMMENT_BY_DEFAULT,$offset);
-		return $comList ?? [];
+	public function getComments(int $page) :array {
+		return (array) $this->comment->selectOrderPage( SHOWCOMMENT_BY_DEFAULT, $page, 'id_com', 'DESC', true );
 	}
 
-	public function getCommentsById(int $id) {
-		$comList = $this->comment->getDataFromTableByNameActive($this->getIntval($id),'id_cl');
-		return $comList ?? [];
+	public function getCommentsById(int $id) :array {
+		return (array) $this->comment->getDataFromTableByNameActive($this->getIntval($id),'id_cl');
 	}	
 
 	public function insComment(int $id_cl, string $txt_com, string $nik_com, string $email_com, string $ip_com)	{
