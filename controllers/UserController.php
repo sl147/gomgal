@@ -132,4 +132,10 @@ class UserController {
 		);
 		return true;
 	}
+
+	public function actionUsersView() {
+		$users = $this->user->getUsers();
+		require_once ('views/user/userView.php');
+		return true;
+	}
 }

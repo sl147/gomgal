@@ -100,6 +100,7 @@
 					<?php Auxiliary::showElementMenu("typeButton","редагування типів кнопок","редагування типів кнопок")?>
 					<?php Auxiliary::showElementMenu("countClickButton","переходи по типах кнопок","переходи по типах кнопок")?>
 					<?php Auxiliary::showElementMenu("checkFilesNews","Видалення фото","Видалення фото")?>
+					<?php Auxiliary::showElementMenu("usersView","Перегляд користувачів","Перегляд користувачів")?>
 				</ul>		
 			</div>
 			<?php if ( (User::isGuest()) && (User::isGuest()['login'] == 'sl147adm')) :?>

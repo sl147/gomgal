@@ -87,17 +87,7 @@ class User extends classGetDB {
 		return false;
 	}
 
-/*	public static function getAllUserNewsVue($page = 1) {
-		require_once ('../models/Auxiliary.php');
-		$MK     = new Auxiliary();
-		$page   = $MK ->getIntval($page);
-		$offset = ($page - 1) * SHOWCOMMENT_BY_DEFAULT;
-		$sql    = "SELECT * FROM ComCl ORDER BY id DESC LIMIT ".SHOWCOMMENT_BY_DEFAULT." OFFSET $offset";
-		$result = $MK ->getSQLVue($sql);
-		while ($row = $result->fetch()) {
-			$list[] = $row;
-		}
-		unset($MK);
-		return $list ?? [];
-	}*/
+	public function getUsers() {
+		return $this->friends->selectFromTable();	
+	}
 }
