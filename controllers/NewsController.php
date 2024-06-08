@@ -132,7 +132,7 @@ require_once ('views/news/checkFiles.php');
 		$month      = date('n');
 		$year       = date('Y');
 		$topNews    = $this->newsClass->getNewsTop();
-		$total      = $this->newsClass->getTotalNewsCat($cat, $month, $year);
+		$total      = $this->newsClass->getTotalNews( $month, $year, $cat);
 		$allNewscat = $this->newsClass->getLatestNewsCat($cat, $month, $year, $page);
 		if( empty($allNewscat)) return;		
 		$pagination = new Pagination($total, $page, SHOWNEWS_BY_DEFAULT, 'page-');
@@ -148,8 +148,8 @@ require_once ('views/news/checkFiles.php');
 	public function actionArchive($month, $year, $page = 1)	{
 		$page       = $this->getIntval($page);
 		$topNews    = $this->newsClass->getNewsTop();
-		$total      = $this->newsClass->getTotalNewsArchive($month, $year);
-		$allNewscat = $this->newsClass->getLatestNewsArchive($month, $year, $page);		
+		$total      = $this->newsClass->getTotalNews($month, $year);
+		$allNewscat = $this->newsClass->getLatestNews($month, $year, $page);		
 		$pagination = new Pagination($total, $page, SHOWNEWS_BY_DEFAULT, 'page-');
 		$metaTags   = 'news';
 		$var        = 1;
@@ -295,7 +295,7 @@ require_once ('views/news/checkFiles.php');
 			                    $res = $this->newsClass->updateNews($id,$title,$prew,$cat,$cat2,$sourse,$msg,"",$top,$videoYT);
 			                    $res = $this->delFile($photo,"NewsFoto");
 			            } else {
-			                    $res = $this->newsClass->updateNewsWithoutPhoto($id,$title,$prew,$cat,$cat2,$sourse,$msg,$top,$videoYT);
+			            				$res = $this->newsClass->updateNews($id,$title,$prew,$cat,$cat2,$sourse,$msg,"",$top,$videoYT);
 			            }
 			        }
 				header("Location: /newsEdit");
@@ -323,7 +323,7 @@ require_once ('views/news/checkFiles.php');
 			$year       = date('Y');
 			$topNews    = [];
 			$total      = $this->newsClass->getFindTotalNews($txt_find);
-			$allNewscat = $this->newsClass->getNewsFind($txt_find);		
+			$allNewscat = $this->newsClass->getNewsFind($txt_find);	
 			$pagination = new Pagination($total, $page, SHOWNEWS_BY_DEFAULT, 'page-');
 			$meta       = $mt->getMTagsByUrl('main');
 			$var        = 0;

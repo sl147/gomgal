@@ -22,8 +22,15 @@ var vue_tovList = new Vue({
 		},	
 		getRelaxes() {
 			let req = this.selRelax+this.cat+'&page='+this.page+'&SHOWRELAX='+this.SHOWRELAX
+			console.log('getRelaxes - '+req)
 			this.$http.get(req).then(function (response) {
 				this.relaxes = JSON.parse(response.data)
+
+				for (var bas of this.relaxes) {
+					console.log(bas)
+					console.log("id - "+bas.id+"   category - "+bas.cat+"   msg - "+bas.msg)
+				}
+
 				for (let relax of this.relaxes) {
 					this.nameVote = relax.name
 					relax.num = this.j
@@ -39,6 +46,7 @@ var vue_tovList = new Vue({
 		this.cat       = get["cat"]
 		this.page      = get["page"]
 		this.SHOWRELAX = get["SHOWRELAX"]
+		console.log("created  cat - "+this.cat+"   page - "+this.page+"   SHOWRELAX - "+this.SHOWRELAX)
 		this.getRelaxes()
 	}
 })

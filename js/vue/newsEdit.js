@@ -49,7 +49,10 @@ let vue_app = new Vue({
 		getAll() {
 			let req = this.select+this.page
 			this.$http.get(req).then(function (response) {
-				this.elements = JSON.parse(response.data)		
+				this.elements = JSON.parse(response.data)
+				for (var bas of this.elements) {
+					console.log("id - "+bas.id+"   title - "+bas.title+"   page - "+bas.page)
+				}	
 			},function (error){
 				console.log(error)
 			})

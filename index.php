@@ -16,7 +16,7 @@ define('SHOWNEWS_BY_DEFAULT', 15);
 define('SHOWVIDEO_BY_DEFAULT', 6);
 define('SHOWFA_BY_DEFAULT', 6);
 define('GOMGAL', " Гомін Галичини");
-define('NO_PHOTO', "немає фото");
+define('NO_PHOTO', '/posterFoto/gg.webp');
 define('SLMAIL', "sl147@ukr.net");
 define('BanMAIL', "banevska@ukr.net");
 

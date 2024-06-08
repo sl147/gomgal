@@ -1,123 +1,98 @@
 <?php
-
 /**
 * 
 */
 
-class Relax extends classGetDB {	
+class Relax {	
 
 	use traitAuxiliary;
 
+	public function __construct() {
+		$this->msgs_relax = new classGetData('msgs_relax');
+		$this->catan      = new classGetData('catan');
+		$this->catrelax   = new classGetData('catrelax');
+	}
+
 	public function getRelaxId( int $id) :int {
-		$getData = new classGetData('catrelax');
-		$cat     = $getData->getDataFromTableByNameFetch ($this->getIntval($id),'idrl');
-		unset($getData);
-		return (int) $cat;
+		return (int) $this->catrelax->selectWhereFetch ($this->getIntval($id),'idrl');
+	}
+
+	private function getRowRelax($result) {
+		$i = 1;
+		while ($row = $result->fetch()) {			
+			$relaxList[$i]['id']   = $row['idrl'];
+			$relaxList[$i]['name'] = $row['namerl'];
+			$i++;
+		}
+		return (array) $relaxList ?? [];
 	}
 
 	public function getRelax() :array {
-		$getData = new classGetData('catrelax');
-		$result  = $getData->getDataFromTable(2);
-		unset($getData);
-		$i       = 1;
-		while ($row = $result->fetch()) {			
-			$relaxList[$i]['id']   = $row['idrl'];
-			$relaxList[$i]['name'] = $row['namerl'];
-			$i++;
-		}
-		return (array) $relaxList ?? [];
+		return (array) $this->getRowRelax($this->catrelax->selectFromTable(false));
 	}
 
 	public function getThemeAn() :array {
-		$getData = new classGetData('catan');
-		$result  = $getData->getDataFromTable(2);
-		unset($getData);
-		$i       = 1;
-		while ($row = $result->fetch()) {			
-			$relaxList[$i]['id']   = $row['idrl'];
-			$relaxList[$i]['name'] = $row['namerl'];
-			$i++;
-		}
-		return (array) $relaxList ?? [];
+		return (array) $this->getRowRelax($this->catan->selectFromTable(false));
 	}
 
 	public function getAnList() :array {
-		$result = $this->getDB("SELECT * FROM catan ORDER BY namerl");
-		$i      = 1;
-		while ($row = $result->fetch()) {			
-			$relaxList[$i]['id']   = $row['idrl'];
-			$relaxList[$i]['name'] = $row['namerl'];
-			$i++;
-		}
-		return (array) $relaxList ?? [];
-	}
-
-
-	private function getRelaxMsg( int $cat) :array {
-		$cat    = $this->getIntval($cat);
-		//$result = $this->getDB("SELECT * FROM msgs_relax WHERE category=$cat and CHAR_LENGTH(msg)<400 and countrl>10");
-		$result = $this->getDB("SELECT * FROM msgs_relax WHERE category=$cat and CHAR_LENGTH(msg)<400");
-		while ($row = $result->fetch()) {			
-			$list[] = $row;
-		}
-		return (array) $list ?? [];
+		return (array) $this->getRowRelax($this->catan->selectOrderBy('namerl') );
 	}
 
 	public function getRelaxRandom( int $cat) :string{
-		$arr = self::getRelaxMsg($cat);
-		if (count($arr) > 0) {
-			$j   = rand (0,count($arr)-1);
-			return (string) $arr[$j]['msg'];
+		$tmp_array = $this->msgs_relax->selectRelaxMsg($cat);
+		if (count($tmp_array) > 0) {
+			$j = rand (0,count($tmp_array)-1);
+			return (string) $tmp_array[$j]['msg'];
 		}
 		return (string) ""; 
 	}
 
 	private function getCountRl() :int {
-		$result = $this->getDB("SELECT countrl FROM msgs_relax");
+		$result = $this->msgs_relax->selectFromTable(false);
 		while ($row = $result->fetch()) {			
 			$list[] = $row['countrl'];
 		}
 		return (int) max($list);
 	}
 
-	public function addNewAn( int $teman, string $msg) :bool{
-		$teman   = $this->getIntval($teman);
-		$countrl = $this->getCountRl() + 1;
-        $sql     = "INSERT INTO msgs_relax (teman, msg, countrl) VALUES(:teman, :msg, :countrl )";
-        $result  = $this->getPrepareSQL($sql);
-        $result -> bindParam(':teman',   $teman,   PDO::PARAM_INT);
-        $result -> bindParam(':msg',     $msg,     PDO::PARAM_STR);
-        $result -> bindParam(':countrl', $countrl, PDO::PARAM_INT);
-
-        return $result -> execute();		
+	public function addNewAn( int $teman, string $msg) :object {
+		return $this->msgs_relax->insertDataToTable(
+				array( $teman, $this->sl147_clean($msg), $this->getCountRl() + 1),
+				array( 'teman','msg','countrl')							
+			);	
 	}
 
 	public function getRelaxAll( int $page) :array {
-		$getData = new classGetData('msgs_relax');
-		$offset  = ($this->getIntval($page) - 1) * SHOWRELAX_BY_DEFAULT;
-		$comList = $getData->getDataByOffset ('id',SHOWRELAX_BY_DEFAULT,$offset);
-		unset($getData);
-		return (array) $comList;
+		return (array) $this->msgs_relax->selectOrderPage (SHOWRELAX_BY_DEFAULT, $page, 'id','DESC', true);
 	}
 
 	public function getRelaxOne( int $id) :array {
-		$getData = new classGetData('msgs_relax');
-		$comList = $getData->getDataFromTableByNameFetch ($this->getIntval($id),'id');
-		unset($getData);
-		return (array) $comList;
+		return (array) $this->msgs_relax->selectWhereFetch ($id,'id');
 	}
 
-	public function updateRelax( int $id, string $msg, int $cat) :bool {
-		$cat    = $this->getIntval($cat);
-		$result = $this->getPrepareSQL("UPDATE msgs_relax SET msg = :msg, category = :cat".$this->formSql( "id", $this->getIntval($id)));
-		$result -> bindParam(':msg',   $msg, PDO::PARAM_STR);
-		$result -> bindParam(':cat',   $cat, PDO::PARAM_INT);
-		return $result -> execute();			
+	public function updateRelax( int $id, string $msg, int $cat) {
+		$args = array(
+					'msg' => $this->sl147_clean($msg),
+					'category' => $cat
+		 		);
+		return $this->msgs_relax->updateDataInTable( $args, $id, 'id', false);	
 	}
 
 	public function updateCountRelax( int $id, int $count) :bool {
-		$result = $this->getPrepareSQL("UPDATE msgs_relax SET countrl = :count".$this->formSql( "id", $this->getIntval($id)));
-		$result -> bindParam(':count',   $count, PDO::PARAM_INT);
-		return $result -> execute();			
+		return $this->msgs_relax->updateDataInTable( array( 'countrl' => $count ), $id, 'id', false);			
+	}
+
+	public  function getLike( int $id, int $count) :bool {
+		return (bool) $this->msgs_relax->updateDataInTable( array( 'countrl' => $count ), $id, 'id', true);
+	}
+
+	public function getAnThemaVue( int $teman = 1, int $page = 1, int $SHOWRELAX = 1)	:array {
+		return (array) $this->msgs_relax->selectWhereOrderPageVue( $teman, 'teman', $SHOWRELAX, $page, 'countrl', 'DESC', true);
+	}
+
+	public function getRelaxVue( int $cat, int $page = 1, int $SHOWRELAX = 1) :array {
+		if ($cat == 0 ) return $this->msgs_relax->selectOrderPageVue( $SHOWRELAX, $page, 'id', 'DESC', true );  
+		return (array) $this->msgs_relax->selectWhereOrderPageVue( $cat, 'category', $SHOWRELAX, $page, 'countrl', 'DESC', true );
 	}
 }

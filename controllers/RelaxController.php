@@ -30,7 +30,7 @@ class RelaxController {
 		$mt    = new MetaTags();
 		$cat   = ($this->check_index_catagory($cat)) ? $cat : 1;
 		$total = $this->getCountAtr('msgs_relax', 'category',$cat);
-		$page  = $this->check_index_page($this->getIntval($page), $total, SHOWRELAX_BY_DEFAULT);
+		//$page  = $this->check_index_page($this->getIntval($page), $total, SHOWRELAX_BY_DEFAULT);
 		$table = array(
 			'cat'   => $cat,
 			'page'  => $page,
@@ -40,16 +40,19 @@ class RelaxController {
 		//$meta       = $mt->getMTagsByUrl('relax');
 		$meta       = $this->getMeta();
 		$pagination = new Pagination($total, $page, SHOWRELAX_BY_DEFAULT, 'page-');
-		$relax      = new Relax();
-		$arr        = $relax->getRelax();
-		foreach ($arr as $a) {
+		//$relax      = new Relax();
+		//$arr        = $relax->getRelax();
+		$catag = $cat;
+		$siteFile   = 'views/relax/index.php';
+		require_once ('views/layouts/siteIndex.php');
+/*		foreach ($arr as $a) {
 			if ($a['id'] == $cat) {
 				$b = $this->rus2translit( $a['name'] );
 				$c = new $b();
 				$c->draw($json,$total,$pagination,$cat);
 				break;
 			}
-		}
+		}*/
 		return true;
 	}
 

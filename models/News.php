@@ -1,33 +1,22 @@
 <?php
 
 /**
-
 * Клас для новин
-
 */
 
-class News extends classGetDB {
+class News {
 
 	use traitAuxiliary;
+	const SHOWNEWS_BY_DEFAULT_Vue=25;
 
-	public static function getNewsAll() {
-		$getData = new classGetData('msgs');
-		$result  = $getData->getDataFromTable(2);
-		unset($getData);
-		$i       = 1;
-		while ($row = $result->fetch()) {
-			if( ! $row['foto'] == "") {
-				$NewsList[$i] = $row['foto'];
-				$i++;
-			}
-		}		
-		return $NewsList ?? [];
+	public function __construct() {
+		$this->msgs    = new classGetData('msgs');
+		$this->catmsgs = new classGetData('catmsgs');
 	}
 
-	private static function makePhotoSize($foto) {
+	private function makePhotoSize( string $foto) :array {
 		$fotoSize = [];
-		$fotoSize['width'] = 0;
-		$fotoSize['height']= 0;
+		$fotoSize['width'] = $fotoSize['height'] = 0;
 		if ($foto!=NULL) {
 			$fotoFile = "NewsFoto/".$foto;
 			if (file_exists($fotoFile)) {
@@ -48,269 +37,138 @@ class News extends classGetDB {
 				$fotoSize['height']= $h;
 			}
 		}
-		return $fotoSize;
+		return (array) $fotoSize;
 	}
 
-	public static function getCatNews() : array {
-		$getData = new classGetData('catmsgs');
-		$catList = $getData->getData2El('idcm','namecm');
-		unset($getData);
-		return $catList ?? [];
+	public function getCatNews() :array {
+		return (array) $this->catmsgs->getData2El('idcm','namecm');
 	}
 
-	public static function getCatEl($cat) {
-		$getData = new classGetData('catmsgs');
-		$catList = $getData->getDataFromTableByNameFetch ($cat,'idcm');
-		unset($getData);
-		return $catList ?? [];
+	public function getCatEl( int $cat) {
+		return $this->catmsgs->selectWhereFetch ( $cat, 'idcm');
 	}
 
-	public  function getFindTotalNews($txt) {
-		$sql    = "SELECT count(*) as count FROM msgs WHERE (LOCATE('".$txt."',msg)) OR (LOCATE('".$txt."',title))";
-		$result = $this->getDB($sql);
-		$result -> setFetchMode(PDO::FETCH_ASSOC);
-		return $result->fetch()['count'];
+	public function getFindTotalNews( string $txt ) :int{
+		return (int) $this->msgs->selectFindNews($txt)->rowCount();
 	}
 
-	public function getNewsFind($txt) {
-		$sql    = "SELECT * FROM msgs WHERE (LOCATE('".$txt."',msg)) OR (LOCATE('".$txt."',title)) OR (LOCATE('".$txt."',prew))";
-		$result = $this->getDB($sql);
-		$i      = 1;
-		while ($row = $result->fetch()) {
-			$NewsList[$i]['id']        = $row['id'];
-			$NewsList[$i]['top']       = $row['top'];
-			$NewsList[$i]['title']     = ucfirst (mb_strtolower ($row['title'], 'UTF-8'));
-			$NewsList[$i]['titleengl'] = $row['titleengl'];
-			$NewsList[$i]['datetime']  = $row['datetime'];
-			$NewsList[$i]['prew']      = $row['prew'];
-			$NewsList[$i]['sourse']    = $row['sourse'];
-			$NewsList[$i]['countmsgs'] = $row['countmsgs'];
-			$NewsList[$i]['fotoF']     = $row['foto'];
-			$NewsList[$i]['foto']      = "NewsFoto/".$row['foto'];
-			$NewsList[$i]['width']     = 0;
-			$NewsList[$i]['height']    = 0;
-			$size                      = self::makePhotoSize($row['foto']);
-			$NewsList[$i]['width']     = $size['width'];
-			$NewsList[$i]['height']    = $size['height'];
-			$i++;
-		}
-		return $NewsList ?? [];
-	}
-
-	public static function getNews() {
-		$getData = new classGetData('msgs');
-		$result  = $getData->getDataFromTableOrderWithOutRow('id', 25);
-		unset($getData);
-		$i       = 1;
-		while ($row = $result->fetch()) {
-			$NewsList[$i]['id']        = $row['id'];
-			$NewsList[$i]['top']       = $row['top'];
-			$NewsList[$i]['title']     = ucfirst (mb_strtolower ($row['title'], 'UTF-8'));
-			$NewsList[$i]['titleengl'] = $row['titleengl'];
-			$NewsList[$i]['datetime']  = $row['datetime'];
-			$NewsList[$i]['fotoF']     = $row['foto'];
-			$NewsList[$i]['foto']      = "NewsFoto/".$row['foto'];
-			$i++;
-		}
-		return $NewsList ?? [];
-	}
-
-	public function getNewsTop() {
-		$result  = $this->getDB("SELECT * FROM msgs WHERE top=1 ORDER BY id  DESC LIMIT 1");
-		$topNews = $result->fetch();
-		$topNews['width']  = 0;
-		$topNews['height'] = 0;
-		$size    = self::makePhotoSize($topNews['foto']);
-		$topNews['width']  = $size['width'];
-		$topNews['height'] = $size['height'];
-		$topNews['foto']  = "NewsFoto/".$topNews['foto'];
-
-		return $topNews ?? [];
-	}
-
-	public function getTotalNewsCat(int $cat, int $month, int $year) : int {
-		$cat    = $this->getIntval($cat);
-		$month  = $this->getIntval($month);
-		$year   = $this->getIntval($year);
-		$sql    = "SELECT count(*) as count FROM msgs WHERE ((category=$cat) or (cat2=$cat)) and (month(datetime) = '".$month."') and (year(datetime) = '".$year."')";
-		$result = $this->getDB($sql);
-		$result -> setFetchMode(PDO::FETCH_ASSOC);
-		return $result->fetch()['count'];
-	}
-
-	public function getTotalNewsArchive($month, $year) {
-		$month  = $this->getIntval($month);
-		$year   = $this->getIntval($year);
-		$sql    = "SELECT count(*) as count FROM msgs WHERE month(datetime) = '".$month."' and year(datetime) = '".$year."'";
-		$result = $this->getDB($sql);
-		$result -> setFetchMode(PDO::FETCH_ASSOC);
-		return $result->fetch()['count'];
-	}
-
-	public function getTotalNews($month, $year, $id=1) {
-		$month = $this->getIntval($month);
-		$year  = $this->getIntval($year);
-		$id    = $this->getIntval($id);
-		$sql   = "SELECT count(*) as count FROM msgs WHERE (month(datetime) = '".$month."') and (year(datetime) = '".$year."')";
-		$result = $this->getDB($sql);
-		$result -> setFetchMode(PDO::FETCH_ASSOC);
-		return $result->fetch()['count'];
-	}
-
-	public  function getLatestNewsArchive($month, $year, $page = 1) {
-		$month    = $this->getIntval($month);
-		$year     = $this->getIntval($year);
-		$page     = $this->getIntval($page);
-		$offset   = ($page - 1) * SHOWNEWS_BY_DEFAULT;
-		$sql      = "SELECT * FROM msgs WHERE month(datetime) = '".$month."' and year(datetime) = '".$year."' ORDER BY countmsgs DESC LIMIT ".SHOWNEWS_BY_DEFAULT." OFFSET $offset";
-		$result = $this->getDB($sql);
-		$i= 0;
-		while ($row = $result->fetch()) {
-			$NewsList[$i]['id']        = $row['id'];
-			$NewsList[$i]['top']       = $row['top'];
-			$NewsList[$i]['title']     = $row['title'];
-			$NewsList[$i]['prew']      = $row['prew'];
-			$NewsList[$i]['sourse']    = $row['sourse'];
-			$NewsList[$i]['datetime']  = $row['datetime'];
-			$NewsList[$i]['countmsgs'] = $row['countmsgs'];
-			$NewsList[$i]['fotoF']     = $row['foto'];
-			$size = self::makePhotoSize($row['foto']);
-			$NewsList[$i]['width']  = $size['width'];
-			$NewsList[$i]['height'] = $size['height'];
-			$NewsList[$i]['foto']   = "NewsFoto/".$row['foto'];			
-			$i++;
-		}
-		return $NewsList ?? [];
-	}
-
-	public function getLatestNewsCat($cat, $month, $year, $page = 1) {
-		$month  = $this->getIntval($month);
-		$year   = $this->getIntval($year);
-		$cat    = $this->getIntval($cat);
-		$page   = $this->getIntval($page);
-		$offset = ($page - 1) * SHOWNEWS_BY_DEFAULT;
-		$sql    = "SELECT * FROM msgs WHERE ((category=$cat) or (cat2=$cat)) and (month(datetime) = '".$month."') and (year(datetime) = '".$year."') ORDER BY countmsgs DESC LIMIT ".SHOWNEWS_BY_DEFAULT." OFFSET $offset";
-		$result = $this->getDB($sql);
+	public function getNewsFind( string $txt) :array {
+		$result = $this->msgs->selectFindNews($txt);
 		$i      = 0;
 		while ($row = $result->fetch()) {
-			$NewsList[]             = $row;
-			$size = self::makePhotoSize($row['foto']);
-			$NewsList[$i]['width']  = $size['width'];
-			$NewsList[$i]['height'] = $size['height'];
-			$NewsList[$i]['foto']   = "NewsFoto/".$row['foto'];			
+			$NewsList[]            = $row;
+			$NewsList[$i]['title'] = ucfirst (mb_strtolower ($row['title'], 'UTF-8'));
+			$NewsList[$i]['fotoF'] = $row['foto'];
+			$NewsList[$i]['foto']  = "NewsFoto/".$row['foto'];
+			$size                  = $this->makePhotoSize($row['foto']);
+			$NewsList[$i]['width'] = $size['width'];
+			$NewsList[$i]['height']= $size['height'];
 			$i++;
 		}
-		return $NewsList ?? [];
+		return (array) $NewsList ?? [];
 	}
 
-	public function getLatestNews($month, $year, $page = 1) {
-		$month    = $this->getIntval($month);
-		$year     = $this->getIntval($year);
-		$page     = $this->getIntval($page);
-		$offset   = ($page - 1) * SHOWNEWS_BY_DEFAULT;
-		$sql      = "SELECT * FROM msgs WHERE (month(datetime) = '".$month."') and (year(datetime) = '".$year."') ORDER BY countmsgs DESC LIMIT ".SHOWNEWS_BY_DEFAULT." OFFSET $offset";
-		$result   = $this->getDB($sql);
-		$i        = 0;
+	public function getAllNewsVue( int $page = 1) {
+		return $this->msgs->selectOrderPageVue( self::SHOWNEWS_BY_DEFAULT_Vue, $page, 'id', 'DESC', true);
+	}
+
+	public function getNews() : array {
+		$result = $this->msgs->selectOrderPage (25, 1, 'id' );
+		$i      = 0;
 		while ($row = $result->fetch()) {
-			$NewsList[]             = $row;
-			$NewsList[$i]['fotoF']  = $row['foto'];
-			$size = self::makePhotoSize($row['foto']);
-			$NewsList[$i]['width']  = $size['width'];
-			$NewsList[$i]['height'] = $size['height'];
-			$NewsList[$i]['foto']   = "NewsFoto/".$row['foto'];			
+			$NewsList[]            = $row;
+			$NewsList[$i]['title'] = ucfirst (mb_strtolower ($row['title'], 'UTF-8'));
+			$NewsList[$i]['fotoF'] = $row['foto'];
+			$NewsList[$i]['foto']  = "NewsFoto/".$row['foto'];
+			$i++;
+		}
+		return (array) $NewsList ?? [];
+	}
+
+	private function addPhotoSize( array $arrNews, string $photo) :array{
+		$size              = $this->makePhotoSize($photo);
+		$arrNews['width']  = $size['width'];
+		$arrNews['height'] = $size['height'];
+		return $arrNews;
+	}
+
+	public function getNewsTop() :array {
+		$topNews         = $this->msgs->selectWhereLimitFetch ( 1, 'id', 1, 'top');
+		$topNews         = $this->addPhotoSize( $topNews, $topNews['foto']);
+		$topNews['foto'] = "NewsFoto/".$topNews['foto'];
+		
+		return (array) $topNews ?? [];
+	}
+
+	public function getTotalNews(int $month, int $year, int $cat = 0) :int {
+		return (int) $this->msgs->selectTotalNews($month, $year, $cat);
+	}
+
+	public function getLatestNewsCat( int $cat, int $month, int $year, int $page = 1) :array{
+		$result = $this->msgs->selectLatestNewsCat( $cat, $month, $year, $page, SHOWNEWS_BY_DEFAULT);
+		$i      = 0;
+		while ($row = $result->fetch()) {
+			$NewsList[]           = $row;
+			$NewsList[$i]         = $this->addPhotoSize( $NewsList[$i], $row['foto']);
+			$NewsList[$i]['foto'] = "NewsFoto/".$row['foto'];			
+			$i++;
+		}
+		return (array) $NewsList ?? [];
+	}
+
+	public function getLatestNews( int $month, int $year, int $page = 1) :array {
+		$result = $this->msgs->selectNews($month, $year, $page, SHOWNEWS_BY_DEFAULT);
+		$i      = 0;
+		while ($row = $result->fetch()) {
+			$NewsList[]            = $row;
+			$NewsList[$i]['fotoF'] = $row['foto'];
+			$NewsList[$i]          = $this->addPhotoSize( $NewsList[$i], $row['foto']);
+			$NewsList[$i]['foto']  = "NewsFoto/".$row['foto'];			
 			$i++;
 		}
 		return $NewsList ?? [];
 	}
 
-	public static function getNewsById($id) {
-		$getData        = new classGetData('msgs');
-		$list           = $getData->getDataFromTableByNameFetch($id,'id');
+	public function getNewsById( int $id) :array {
+		$list = $this->msgs->selectWhereFetch ( $id, 'id');
 		$list['photo']  = "/NewsFoto/".$list['foto'];
 		$list['video']  = "//www.youtube.com/v/".$list['videoYT']."?hl=uk_UA&amp;version=3";
 		unset($getData);
-		return $list ?? [];
+		return (array) $list ?? [];
 	}
 
-	public function newsOther($id,$cat1,$cat2) {
-		$id    = $this->getIntval($id);
-		$cat1  = $this->getIntval($cat1);
-		$cat2  = $this->getIntval($cat2);
-		$sql   = "SELECT * FROM msgs  WHERE cat2='".$cat2."' && category='".$cat1."' && id<'".$id."' ORDER BY id  DESC LIMIT 10";
-		$result = $this->getDB($sql);
-		while ($row = $result->fetch()) {
-			$News[]  = $row;
-		}
-		return $News ?? [];
+	public function newsOther( int $id, int $cat1, int $cat2) {
+		return $this->msgs->selectNewsOther( $id, $cat1, $cat2);
 	}
 
-	public function updateCountById($id,$count) {
-		return $this->getDB("UPDATE msgs SET countmsgs=$count+1".$this->formSql("id",$id));		
+	public function updateCountById( int $id, int $count) {
+		return $this->msgs->updateDataInTable( array (	'countmsgs' => $count + 1), $id, 'id');		
 	}
 
-	public function createNews($title,$prew,$category,$cat2,$sourse,$msg,$foto,$top,$videoYT) {
-		$sql    = "INSERT INTO msgs (title,prew,category,cat2,sourse,msg,foto,top,videoYT)
-		 VALUES(:title,:prew,:category,:cat2,:sourse,:msg,:foto,:top,:videoYT)";
-		$result = $this->getPrepareSQL($sql);
-		$result -> bindParam(':title',   $title,   PDO::PARAM_STR);
-		$result -> bindParam(':prew',    $prew,    PDO::PARAM_STR);
-		$result -> bindParam(':category',$category,PDO::PARAM_INT);
-		$result -> bindParam(':cat2',    $cat2,    PDO::PARAM_INT);
-		$result -> bindParam(':sourse',  $sourse,  PDO::PARAM_STR);
-		$result -> bindParam(':top',     $top,     PDO::PARAM_STR);
-		$result -> bindParam(':msg',     $msg,     PDO::PARAM_STR);
-		$result -> bindParam(':foto',    $foto,    PDO::PARAM_STR);
-		$result -> bindParam(':videoYT', $videoYT, PDO::PARAM_STR);
-
-		return $result -> execute();		
+	public function createNews( string $title, string $prew, int $category, int $cat2, string $sourse, string $msg, string $foto, int $top, string $videoYT) {
+		
+		return $this->msgs->insertDataToTable(
+					array( $title, $prew, $category, $cat2, $sourse, $top, $msg, $foto, $videoYT),
+					array( 'title','prew','category','cat2','sourse','top','msg','foto','videoYT')
+				);	
 	}
 
-	public function updateNews($id,$title,$prew,$category,$cat2,$sourse,$msg,$foto,$top,$videoYT) {
-		$sql    = "UPDATE msgs SET title=:title,prew=:prew,category=:category,cat2=:cat2,sourse=:sourse,msg=:msg,foto=:foto,top=:top,videoYT=:videoYT WHERE id=:id";
-		$result = $this->getPrepareSQL($sql);
-		$result -> bindParam(':id',      $id,      PDO::PARAM_INT);
-		$result -> bindParam(':title',   $title,   PDO::PARAM_STR);
-		$result -> bindParam(':prew',    $prew,    PDO::PARAM_STR);
-		$result -> bindParam(':category',$category,PDO::PARAM_INT);
-		$result -> bindParam(':cat2',    $cat2,    PDO::PARAM_INT);
-		$result -> bindParam(':sourse',  $sourse,  PDO::PARAM_STR);
-		$result -> bindParam(':top',     $top,     PDO::PARAM_STR);
-		$result -> bindParam(':msg',     $msg,     PDO::PARAM_STR);
-		$result -> bindParam(':foto',    $foto,    PDO::PARAM_STR);
-		$result -> bindParam(':videoYT', $videoYT, PDO::PARAM_STR);
-
-		return $result -> execute();		
-	}
-
-	public function updateNewsWithoutPhoto($id,$title,$prew,$category,$cat2,$sourse,$msg,$top,$videoYT) {
-		$sql    = "UPDATE msgs SET title=:title,prew=:prew,category=:category,cat2=:cat2,sourse=:sourse,msg=:msg,top=:top,videoYT=:videoYT WHERE id=:id";
-		$result = $this->getPrepareSQL($sql);
-		$result -> bindParam(':id',      $id,      PDO::PARAM_INT);
-		$result -> bindParam(':title',   $title,   PDO::PARAM_STR);
-		$result -> bindParam(':prew',    $prew,    PDO::PARAM_STR);
-		$result -> bindParam(':category',$category,PDO::PARAM_INT);
-		$result -> bindParam(':cat2',    $cat2,    PDO::PARAM_INT);
-		$result -> bindParam(':sourse',  $sourse,  PDO::PARAM_STR);
-		$result -> bindParam(':top',     $top,     PDO::PARAM_STR);
-		$result -> bindParam(':msg',     $msg,     PDO::PARAM_STR);
-		$result -> bindParam(':videoYT', $videoYT, PDO::PARAM_STR);
-
-		return $result -> execute();		
-	}
-
-	public function updateComm($id,$nik,$txt,$email) {
-		$sql    = "UPDATE Comment SET nik_com=:nik, email_com=:email, txt_com=:txt WHERE id_com=:id";
-		$result = $this->getPrepareSQL($sql);
-		$result -> bindParam(':id',    $id,    PDO::PARAM_INT);
-		$result -> bindParam(':nik',   $nik,   PDO::PARAM_STR);
-		$result -> bindParam(':email', $email, PDO::PARAM_STR);
-		$result -> bindParam(':txt',   $txt,   PDO::PARAM_STR);
-
-		return $result -> execute();			
+	public function updateNews( int $id, string $title, string $prew, int $category, int $cat2, string $sourse, string $msg, string $foto, int $top, string $videoYT) {
+		$args = array(
+			'title'    => $title,
+			'prew'     => $prew,
+			'category' => $category,
+			'cat2'     => $cat2,
+			'sourse'   => $sourse,
+			'top'      => $top,
+			'msg'      => $msg,
+			'videoYT'  => $videoYT,
+		);
+		if ( $foto ) array_push($args, array ( 'foto' => $foto ));
+		return $this->msgs->updateDataInTable( $args, $id, 'id');
 	}
 
 	public static function showNews($arrNews) {
 		if (!empty($arrNews)) include ('views/news/showNews.php');
-
 	}
 }

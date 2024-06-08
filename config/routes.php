@@ -32,6 +32,7 @@ return array(
 'FAlook/page-([0-9]+)' => 'FA/look/$1',
 'FAlook' => 'FA/look',
 'FA/upload/([0-9]+)' => 'FA/upload/$1',
+'findNews' => 'news/findNews',
 'Fullnew/([0-9]+)' => 'news/fullnew/$1',
 'indexVote' => 'Vote/vote',
 'index/page-([0-9]+)' => 'site/index/$1',

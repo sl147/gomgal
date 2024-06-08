@@ -29,7 +29,8 @@
 <br>
 
 <div class='leftR'>
-	<?php $j=1; foreach (News::getNews() as $item) :?>
+	<?php $j=1; $news= new News(); 
+	foreach ($news->getNews() as $item) :?>
 		<div class='bordLeft media'>
 			<?php if ($item['fotoF']) :?>
 				<?php if (file_exists($item["foto"])) :?>

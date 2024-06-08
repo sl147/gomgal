@@ -219,20 +219,47 @@ trait traitAuxiliary {
     	return $name . '.webp';
     }
 
-	public function isSpam($nik,$ip,$email,$txt) {
+    private function add_to_email_spam( string $email) {
+    	if ( !$email ) return;
+    	$spam_email = new classGetData('spam_email');
+    	if ( $spam_email->selectWhere( $email , 'email')->rowCount() > 0 ) return; 
+ 
+    	return $spam_email->insertDataToTable( array( $email ), array('email'));
+    }
+
+	public function isEmailSpam( string $email ) {		
+		if ( !$email ) return false;
+    	$spam_email = new classGetData('spam_email');
+    	if ( $spam_email->selectWhere( $email , 'email')->rowCount() > 0 ) return true; 
+		return  false;
+	}
+
+	public function isSpam($nik,$ip,$email,$txt) {		
 		$spams = $this->getSpam();
 		foreach ($spams as $spam) {
-			if (strpos($nik,   $spam["name"]) !== false) return true;
-			if (strpos($txt,   $spam["name"]) !== false) return true;
-			if (strpos($email, $spam["name"]) !== false) return true;
-			if (strpos($ip,    $spam["name"]) !== false) return true;
+			if (strpos($nik,   $spam["name"]) !== false) {
+				$this->add_to_email_spam($email);
+				return true;
+			}
+			if (strpos($txt,   $spam["name"]) !== false) {
+				$this->add_to_email_spam($email);
+				return true;
+			}
+			if (strpos($email, $spam["name"]) !== false) {
+				$this->add_to_email_spam($email);
+				return true;
+			}
+			if (strpos($ip,    $spam["name"]) !== false) {
+				$this->add_to_email_spam($email);
+				return true;
+			}
 		}
 		return  false;
 	}
 
 	private function getSpam() {
 		$getData  = new classGetData("spamTab");
-		return $getData->getDataFromTable();		
+		return $getData->selectFromTable();		
 	}
 
 	public function getToken( $strength = 16) {

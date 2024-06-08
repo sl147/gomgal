@@ -77,13 +77,11 @@ class classGetData extends classGetDB {
  *  @return масив даних
  */
 	public function getDataFromTableOrderPageVue($SHOW_BY_DEFAULT,$page,$nameOrder, $desk = 'DESC') {
-		$offset = ($page - 1) * $SHOW_BY_DEFAULT;
-		return $this->getRow( $this->getDBVue("SELECT * FROM ".$this->table." ORDER BY ".$nameOrder." ".$desk." LIMIT ".$SHOW_BY_DEFAULT." OFFSET ".$offset) );
+		return $this->getRow( $this->getDBVue("SELECT * FROM ".$this->table." ORDER BY ".$nameOrder." ".$desk." LIMIT ".$SHOW_BY_DEFAULT." OFFSET " . $this->getOffset( $page, $SHOW_BY_DEFAULT )) );
 	}
 
 	public function getDataFromTableOrderPageVueWithoutGetRow($SHOW_BY_DEFAULT,$page,$nameOrder, $desk = 'DESC') {
-		$offset = ($page - 1) * $SHOW_BY_DEFAULT;
-		return $this->getDBVue("SELECT * FROM ".$this->table." ORDER BY ".$nameOrder." ".$desk." LIMIT ".$SHOW_BY_DEFAULT." OFFSET ".$offset);
+		return $this->getDBVue("SELECT * FROM ".$this->table." ORDER BY ".$nameOrder." ".$desk." LIMIT ".$SHOW_BY_DEFAULT." OFFSET " . $this->getOffset( $page, $SHOW_BY_DEFAULT ));
 	}
 
 
@@ -112,15 +110,6 @@ class classGetData extends classGetDB {
 		while ($row = $res->fetch()) {
 			$columns[] = $row['Field'];
 		}
-	}
-
-/** Отримуєм дані з таблиці $this->table для 2 елементів 
- *
- *  @return масив даних
- */
-	public function getData2El($id,$name,$idVal=0) {
-		$sql = $this-> formSql2El($id,$name,$idVal);
-		return $this->getRow2EL( $this->getDB($sql),$id,$name);
 	}
 
 
@@ -184,6 +173,9 @@ class classGetData extends classGetDB {
 	}
 //-------------------SELECT-------------------------------------------------------------
 
+	private function getOffset ( int $page, int $SHOW_BY_DEFAULT) {
+		return ($page - 1) * $SHOW_BY_DEFAULT;
+	}
 
 	public function selectFromTable ($var = true) {
 		return ($var) ? $this->getRow($this->getDB("SELECT * FROM ".$this->table)) :
@@ -204,26 +196,40 @@ class classGetData extends classGetDB {
 					  : $this->getDB($sql);
 	}
 
-	public function selectWhereFetch ($elValue, $elName, $vue=false){
-		$sql = "SELECT * FROM ".$this->table.$this->formSql($elName,$elValue);
+	public function selectWhereFetch ( string $elValue, string $elName, bool $vue=false){
+		$sql = "SELECT * FROM ".$this->table.$this->formSql( $elName, $elValue );
 		return ($vue) ? $this->getDBVue($sql)->fetch()
 					  : $this->getDB($sql)->fetch();
 	}
 
-	public function selectWhereGetRow ($elValue,$elName) {
+	public function selectWhereLimitFetch ( int $SHOW_BY_DEFAULT, string $nameOrder, string $elValue, string $elName, string $desc = 'DESC', bool $vue=false){
+		$sql = "SELECT * FROM ".$this->table.$this->formSql( $elName, $elValue ). " ORDER BY " . $nameOrder . " "  . $desc . " LIMIT " . $SHOW_BY_DEFAULT;
+		return ($vue) ? $this->getDBVue($sql)->fetch()
+					  : $this->getDB($sql)->fetch();
+	}
+
+	public function selectWhereGetRow ( string $elValue, string $elName) {
 		return $this->getRow($this->getDBVue("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue)));	
 	}
 
-	public function selectOrderPage (int $SHOW_BY_DEFAULT, int $page, string $nameOrder, string $desc = 'DESC' ) {
-		$offset = ($page - 1) * $SHOW_BY_DEFAULT;
-		return $this->getDB("SELECT * FROM " . $this->table . " ORDER BY " . $nameOrder . " " . $desc . " LIMIT " . $SHOW_BY_DEFAULT . " OFFSET " . $offset);	
+	public function selectOrderPage (int $SHOW_BY_DEFAULT, int $page, string $nameOrder, string $desc = 'DESC', $getRow = false ) {
+		$sql    = "SELECT * FROM " . $this->table . " ORDER BY " . $nameOrder . " " . $desc . " LIMIT " . $SHOW_BY_DEFAULT . " OFFSET " . $this->getOffset( $page, $SHOW_BY_DEFAULT );
+		return ($getRow) ? $this->getRow($this->getDB( $sql ))
+						 : $this->getDB( $sql );	
 	}
 
 	public function selectOrderPageVue( int $SHOW_BY_DEFAULT, int $page, string $nameOrder, string $desk = 'DESC', bool $getRow = false) {
-		$offset = ($page - 1) * $SHOW_BY_DEFAULT;
+		$sql    = "SELECT * FROM ".$this->table." ORDER BY ".$nameOrder." ".$desk." LIMIT ".$SHOW_BY_DEFAULT." OFFSET " . $this->getOffset( $page, $SHOW_BY_DEFAULT );
 		return ($getRow) 
-						? $this->getRow( $this->getDBVue("SELECT * FROM ".$this->table." ORDER BY ".$nameOrder." ".$desk." LIMIT ".$SHOW_BY_DEFAULT." OFFSET ".$offset) )
-						: $this->getDBVue("SELECT * FROM ".$this->table." ORDER BY ".$nameOrder." ".$desk." LIMIT ".$SHOW_BY_DEFAULT." OFFSET ".$offset);
+						? $this->getRow( $this->getDBVue($sql) )
+						: $this->getDBVue( $sql );
+	}
+
+	public function selectWhereOrderPageVue( $elValue, string $atr, int $SHOW_BY_DEFAULT, int $page, string $nameOrder, string $desk = 'DESC', bool $getRow = false) {
+		$sql    = "SELECT * FROM ".$this->table.$this->formSql( $atr, $elValue ) . " ORDER BY ".$nameOrder." ".$desk." LIMIT ".$SHOW_BY_DEFAULT." OFFSET " . $this->getOffset( $page, $SHOW_BY_DEFAULT );
+		return ($getRow) 
+					? $this->getRow( $this->getDBVue( $sql ) )
+					: $this->getDBVue( $sql );
 	}
 
 	private function formSql2El( $id, $name, $idVal) {
@@ -248,6 +254,51 @@ class classGetData extends classGetDB {
 		$sql = $this->formSql2El($id,$name,$idVal);
 		return $this->getRow2EL( $this->getDBVue($sql),$id,$name);
 	}
+
+/** Отримуєм дані з таблиці $this->table для 2 елементів 
+ *
+ *  @return масив даних
+ */
+	public function getData2El($id,$name,$idVal=0) {
+		$sql = $this-> formSql2El($id,$name,$idVal);
+		return $this->getRow2EL( $this->getDB($sql),$id,$name);
+	}
+//-----------------SELECT NEWS-------------------------------
+	public function selectRelaxMsg(int $cat) :array {
+		return (array) $this->getRow($this->getDB("SELECT * FROM " . $this->table . " WHERE category=$cat and CHAR_LENGTH(msg)<400"));
+	}
+
+	public function selectFindNews ( string $txt) {
+		return $this->getDB("SELECT * FROM $this->table WHERE ( LOWER(msg) LIKE '%$txt%') OR ( LOWER(title) LIKE '%$txt%') OR ( LOWER(prew) LIKE '%$txt%')");
+	}
+
+	public function selectNews( int $month, int $year, int $page, int $SHOWNEWS_BY_DEFAULT){
+		return $this->getDB("SELECT * FROM $this->table WHERE (month(datetime) = '$month') and (year(datetime) = '$year') ORDER BY countmsgs DESC LIMIT $SHOWNEWS_BY_DEFAULT OFFSET " . $this->getOffset( $page, $SHOWNEWS_BY_DEFAULT ) );
+	}
+
+	public function selectNewsOther( int $id, int $cat1, int $cat2) {
+		return $this->getRow( $this->getDB( "SELECT * FROM " . $this->table . "  WHERE cat2='$cat2' && category='$cat1' && id<'$id' ORDER BY id  DESC LIMIT 10" ) );
+	}
+
+	public function selectLatestNewsCat( int $cat, int $month, int $year, int $page = 1, int $SHOWNEWS_BY_DEFAULT) {
+		return $this->getDB("SELECT * FROM " . $this->table ." WHERE ((category=$cat) or (cat2=$cat)) and (month(datetime) = '$month') and (year(datetime) = '$year') ORDER BY countmsgs DESC LIMIT $SHOWNEWS_BY_DEFAULT OFFSET " . $this->getOffset( $page, $SHOWNEWS_BY_DEFAULT ));
+	}
+
+	private function addCategory (int $month, int $year, int $cat) {
+		return sprintf("SELECT count(*) as count FROM %s WHERE %s (month(datetime) = '%d') and (year(datetime) = '%d')",
+						$this->table,
+						($cat) ? "((category=$cat) or (cat2=$cat)) and " : " ",
+						$month,
+						$year
+				);
+	}
+
+	public function selectTotalNews(int $month, int $year, int $cat = 0) {
+		return $this->getDB( $this->addCategory( $month, $year, $cat ))->fetch()['count'];
+	}
+
+
+//-----------------SELECT NEWS---------------------------------------------
 //---------------------SELECT-----------------------------------------------
 
 //---------------------UPDATE ------------------------------------------------

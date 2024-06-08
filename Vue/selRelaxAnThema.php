@@ -1,5 +1,8 @@
 <?php
-require_once ('../models/RelaxVue.php');
+require_once ('../classes/traitAuxiliary.php');
+require_once ('../classes/classGetDB.php');
+require_once ('../classes/classGetData.php');
+require_once ('../models/Relax.php');
 
 $cat       = $_GET['cat'];
 $page      = $_GET['page'];
@@ -7,7 +10,7 @@ $SHOWRELAX = $_GET['SHOWRELAX'];
 
 $data = [];
 $pr   = [];
-$MK   = new RelaxVue();
+$MK   = new Relax();
 $pr   = $MK->getAnThemaVue($cat,$page,$SHOWRELAX);
 
 foreach ($pr as $item) {
