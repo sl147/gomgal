@@ -13,7 +13,7 @@ class classGetData extends classGetDB {
 
 	use traitAuxiliary;
 
-	public function __construct($table)	{
+	public function __construct( string $table)	{
 		$this->table = $table;
 	}
 
@@ -22,58 +22,6 @@ class classGetData extends classGetDB {
 			$list[] = $row;
 		}
 		return $list ?? [];
-	}
-
-/** Отримуєм всі записи з таблиці $this->table
- *
- *  @return масив даних
- */
-/*	public function getDataFromTable ($var = 1) {
-		return ($var == 1) ? $this->getRow($this->getDB("SELECT * FROM ".$this->table)) :
-		                                   $this->getDB("SELECT * FROM ".$this->table) ;
-	}*/
-
-
-/** Отримуєм записи з таблиці $this->table по елементу $elName
- *
- *  @return масив даних
- */
-/*	public function getDataFromTableByName ($elValue,$elName) {	
-		return $this->getRow($this->getDB("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue)));
-	}*/
-
-/*	public function getDataFromTableByNameActive ($elValue,$elName) {	
-		return $this->getRow($this->getDB("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue)." AND active=1"));
-	}*/
-
-
-/** Отримуєм записи з таблиці $this->table по елементу $elName
- *
- *  @return масив даних
- */
-	public function getDataFromTableByNameWithOutRow ($elValue,$elName) {
-		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue));
-	}
-
-/** Отримуєм записи з таблиці $this->table по елементу $elName->fetch()
- *
- *  @return елемент даних
- */
-	public function getDataFromTableByNameFetch ($elValue,$elName) {
-		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue))->fetch();	
-	}
-
-
-/** Отримуєм дані з таблиці $this->table відсортованих по $nameOrder по $desk, LIMIT $SHOW_BY_DEFAULT з Vue
- *
- *  @return масив даних
- */
-	public function getDataFromTableOrderPageVue($SHOW_BY_DEFAULT,$page,$nameOrder, $desk = 'DESC') {
-		return $this->getRow( $this->getDBVue("SELECT * FROM ".$this->table." ORDER BY ".$nameOrder." ".$desk." LIMIT ".$SHOW_BY_DEFAULT." OFFSET " . $this->getOffset( $page, $SHOW_BY_DEFAULT )) );
-	}
-
-	public function getDataFromTableOrderPageVueWithoutGetRow($SHOW_BY_DEFAULT,$page,$nameOrder, $desk = 'DESC') {
-		return $this->getDBVue("SELECT * FROM ".$this->table." ORDER BY ".$nameOrder." ".$desk." LIMIT ".$SHOW_BY_DEFAULT." OFFSET " . $this->getOffset( $page, $SHOW_BY_DEFAULT ));
 	}
 
 
@@ -112,15 +60,6 @@ class classGetData extends classGetDB {
 	public function getDataByOffsetVue ($id,$show,$offset) {
 		return $this->getDBVue("SELECT * FROM ".$this->table." ORDER BY ".$id." DESC LIMIT ".$show." OFFSET $offset");	
 	}
-
-
-/** Отримуєм записи з таблиці $this->table по offset
- *
- *  @return масив даних
- */
-/*	public function getDataByOffset ($id,$show,$offset) {
-		return $this->getRow($this->getDB("SELECT * FROM ".$this->table." ORDER BY ".$id." DESC LIMIT ".$show." OFFSET $offset"));	
-	}*/
 
 
 /** Отримуєм записи з таблиці $this->table по offset

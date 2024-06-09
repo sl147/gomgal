@@ -25,8 +25,7 @@ class Video extends classGetDB {
 	}
 
 	public function getVideoVue(int $page = 1) {
-		$list = $this->progrnk->getDataFromTableOrderPageVue(self::SHOWVIDEO_BY_DEFAULT_Vue,$page,'prid');
-		return $list ?? [];
+		return $this->progrnk->selectOrderPageVue( self::SHOWVIDEO_BY_DEFAULT_Vue, $page, 'prid', 'DESC', true);
 	}
 
 	public function updateVideoVue (int $id, string $idYT, string $title) {

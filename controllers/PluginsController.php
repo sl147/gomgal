@@ -32,7 +32,6 @@ class PluginsController {
 		require_once ('components/Db.php');
 		//$db = new Db();
 		$getData = new classGetData('plugins_license_key');
-		//$res = $getData->getDataFromTableByNameFetch($license_key, 'license_key');
 		$res = $getData->selectWhereGetRow($license_key, 'license_key', false);
 		//$lk = $value['license_key'];
 		//$res = $getData->selectFromTable(true);
