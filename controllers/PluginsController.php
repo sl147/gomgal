@@ -33,9 +33,9 @@ class PluginsController {
 		//$db = new Db();
 		$getData = new classGetData('plugins_license_key');
 		//$res = $getData->getDataFromTableByNameFetch($license_key, 'license_key');
-		$res = $getData->getDataFromTableByName($license_key, 'license_key');
+		$res = $getData->selectWhereGetRow($license_key, 'license_key', false);
 		//$lk = $value['license_key'];
-		//$res = $getData->getDataFromTable(2);
+		//$res = $getData->selectFromTable(true);
 		foreach ($res as $key => $value) {
 			$lk = $value['license_key'];
 			$pl = $value['plugin'];

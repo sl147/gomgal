@@ -17,7 +17,11 @@ class Comment {
 	}
 
 	public function getCommentsById(int $id) :array {
-		return (array) $this->comment->getDataFromTableByNameActive($this->getIntval($id),'id_cl');
+		$args = array(
+			'id_cl'  => $id,
+			'active' => 1
+		);
+		return $this->comment->selectDataFromTableWHERE( $args, false );
 	}	
 
 	public function insComment(int $id_cl, string $txt_com, string $nik_com, string $email_com, string $ip_com)	{

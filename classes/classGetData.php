@@ -28,23 +28,23 @@ class classGetData extends classGetDB {
  *
  *  @return масив даних
  */
-	public function getDataFromTable ($var = 1) {
+/*	public function getDataFromTable ($var = 1) {
 		return ($var == 1) ? $this->getRow($this->getDB("SELECT * FROM ".$this->table)) :
 		                                   $this->getDB("SELECT * FROM ".$this->table) ;
-	}
+	}*/
 
 
 /** Отримуєм записи з таблиці $this->table по елементу $elName
  *
  *  @return масив даних
  */
-	public function getDataFromTableByName ($elValue,$elName) {	
+/*	public function getDataFromTableByName ($elValue,$elName) {	
 		return $this->getRow($this->getDB("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue)));
-	}
+	}*/
 
-	public function getDataFromTableByNameActive ($elValue,$elName) {	
+/*	public function getDataFromTableByNameActive ($elValue,$elName) {	
 		return $this->getRow($this->getDB("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue)." AND active=1"));
-	}
+	}*/
 
 
 /** Отримуєм записи з таблиці $this->table по елементу $elName
@@ -61,14 +61,6 @@ class classGetData extends classGetDB {
  */
 	public function getDataFromTableByNameFetch ($elValue,$elName) {
 		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue))->fetch();	
-	}
-
-/** Отримуєм записи з таблиці $this->table по елементу $elName
- *
- *  @return елемент даних
- */
-	public function getDataFromTableByNameAllVue ($elValue,$elName) {
-		return $this->getRow($this->getDBVue("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue)));	
 	}
 
 
@@ -148,6 +140,10 @@ class classGetData extends classGetDB {
 		return $this->getRow( $this->getDBVue("SELECT * FROM ".$this->table) );
 	}
 
+	public function getDataFromTableByNameFetch2WHERE ($elValue1,$elName1,$elValue2,$elName2) {
+		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql2($elName1,$elValue1,$elName2,$elValue2))->fetch();	
+	}
+//-------------------SELECT-------------------------------------------------------------
 /** Отримуєм записи з таблиці $this->table по елементу $elName->fetch()
  *
  *  @return елемент даних
@@ -160,18 +156,15 @@ class classGetData extends classGetDB {
 		return substr($set, 0, -4);
 	}
 
-	public function selectDataFromTableWHERE (array $args) {
-		return $this->getDB("SELECT * FROM ".$this->table.$this->setWhere($args));	
+	public function selectDataFromTableWHERE (array $args, bool $row = true) {
+		$sql = "SELECT * FROM ".$this->table.$this->setWhere($args);
+		return ( $row ) ? $this->getDB( $sql)
+						: $this->getRow($this->getDB($sql));	
 	}
 
 	public function selectDataFromTableWHEREFetch (array $args) {
 		return $this->getDB("SELECT * FROM ".$this->table.$this->setWhere($args))->fetch();	
 	}
-
-	public function getDataFromTableByNameFetch2WHERE ($elValue1,$elName1,$elValue2,$elName2) {
-		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql2($elName1,$elValue1,$elName2,$elValue2))->fetch();	
-	}
-//-------------------SELECT-------------------------------------------------------------
 
 	private function getOffset ( int $page, int $SHOW_BY_DEFAULT) {
 		return ($page - 1) * $SHOW_BY_DEFAULT;
@@ -208,8 +201,10 @@ class classGetData extends classGetDB {
 					  : $this->getDB($sql)->fetch();
 	}
 
-	public function selectWhereGetRow ( string $elValue, string $elName) {
-		return $this->getRow($this->getDBVue("SELECT * FROM ".$this->table.$this->formSql($elName,$elValue)));	
+	public function selectWhereGetRow ( string $elValue, string $elName, bool $vue = false) {
+		$sql = "SELECT * FROM ".$this->table.$this->formSql($elName,$elValue);
+		return ( $vue ) ? $this->getRow($this->getDBVue( $sql ))
+						: $this->getRow($this->getDB($sql));	
 	}
 
 	public function selectOrderPage (int $SHOW_BY_DEFAULT, int $page, string $nameOrder, string $desc = 'DESC', $getRow = false ) {

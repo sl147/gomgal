@@ -66,7 +66,7 @@ class FA  extends classGetDB {
 	}
 
 	public function getFAOneVue( int $id ) {
-		return $this->photoInAlbum->selectWhereGetRow ($id,'id_album');
+		return $this->photoInAlbum->selectWhereGetRow ($id,'id_album', true);
 	}
 
 	public function updateFAOneVue ( int $id, string $subscribe )	{

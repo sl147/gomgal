@@ -24,7 +24,7 @@ class Vote {
 	}
 
 	public function getAllVote() {
-		return $this->catVote->getDataFromTable(2) ?? [];
+		return $this->catVote->selectFromTable(false) ?? [];
 	}
 
 	public static function showVote() {
@@ -36,7 +36,7 @@ class Vote {
 	}
 
 	public function getTxtVoteVue(int $id) {
-		return $this->vote->getDataFromTableByNameAllVue($id, "category");
+		return $this->vote->selectWhereGetRow($id, "category", true);
 	}
 
 	public function addVote(int $id, int $count) {

@@ -55,7 +55,6 @@ class AuxiliaryVue {
 
 	public function getPosterById($id) {
 		$table = new classGetData('poster');
-		$result = $table->getDataFromTableByNameAllVue ($id, 'id_poster');
-		return $result->fetch();
+		return $table->selectWhereGetRow ($id, 'id_poster', true)->fetch();
 	}
 }
