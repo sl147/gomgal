@@ -243,7 +243,8 @@ class classGetData extends classGetDB {
 	private function set_update_names_values( array $args) {
 		$update = "";
 		foreach ($args as $key => $value) {
-			$update .= $key . "='" . $this->sl147_clean($value)."',";
+			//$update .= $key . "='" . $this->sl147_clean($value)."',";
+			$update .= $key . "='" . $value."',";
 		}
 		return substr($update, 0, -1);
 	}
@@ -264,7 +265,7 @@ class classGetData extends classGetDB {
 		$end   = ($var) ? "," : "',";
 		for ($i=0; $i < count($values); $i++) { 
 			$value .= $start;
-			$value .= ($var) ? $values[$i] : $this->sl147_clean($values[$i]);
+			$value .= $values[$i];//($var) ? $values[$i] : $this->sl147_clean($values[$i]);
 			$value .= $end;
 		}
 		return substr($value, 0, -1);
@@ -278,10 +279,14 @@ class classGetData extends classGetDB {
 //--------------------------INSERT-------------------------------------------------
 
 //--------------------------DELETE-------------------------------------------------
-/** Видадаєм запис з таблиці $this->table
- *
- *  @return true or false
- */
+	/**
+     * Видадаєм запис з таблиці $this->table
+     * @param $nameid string назва реквізиту по якому видаляєм
+	 * @param $id int значення реквізиту
+	 * @param $vue bool true для vue; false ні
+     * @return void
+     * 
+     */ 
 	public function deleteDataFromTable( int $id, string $nameid='id', bool $vue = false) {
 		$sql = "DELETE FROM " . $this->table . $this->formSql($nameid,$id);
 		return ($vue) ? $this->getDBVue($sql)
