@@ -89,11 +89,12 @@ trait traitAuxiliary {
 	}
 
 	public function sl147_clean($value = "") {
-		$value = strval($value);
+		return $value;
+/*		$value = strval($value);
 		$value = stripslashes($value);
 		$value = str_ireplace(array("\0", "\a", "\b", "\v", "\e", "\f"), ' ', $value);
 		$value = htmlspecialchars_decode($value, ENT_QUOTES);
-		return strip_tags(trim($value));
+		return strip_tags(trim($value));*/
 	}
 
 	public function rus2translit($string) {

@@ -13,28 +13,27 @@ class Poster  extends classGetDB {
 	}
 
 	public function getPosters20() {
-		$result = $this->getDB("SELECT id_poster,title_p FROM poster WHERE active='0' ORDER BY id_poster DESC LIMIT 20");
-		while ($row = $result->fetch()) {
-			$list[]=$row;
-		}
-		return $list ?? [];
+		$args = array(
+			'active' => 0
+		);
+		return $this->poster->selectWhereLimitRow ( 20, 'id_poster', $args , 'DESC', false);
 	}
 
-	public  function getAllPostersImpotCat($cat) {
-		$cat    = $this->getIntval($cat);
-		$result = $this->getDB("SELECT * FROM poster WHERE (cat_p = $cat) AND (impot=1) AND (active=0) ORDER BY id_poster DESC");
-		while ($row = $result->fetch()) {
-			$list[]=$row;
-		}
-		return $list ?? [];
+	public  function getAllPostersImpotCat( int $cat) {
+		$args = array(
+			'cat_p' => $cat,
+			'impot' => 1,
+			'active' => 0
+		);
+		return $this->poster->selectWhereLimitRow ( 20, 'id_poster', $args , 'DESC', false);
 	}
 
 	public function getAllPostersImpot() {
-		$result = $this->getDB("SELECT * FROM poster WHERE (impot=1) AND (active=0) ORDER BY id_poster DESC");
-		while ($row = $result->fetch()) {
-			$list[]=$row;
-		}
-		return $list ?? [];
+		$args = array(
+			'impot' => 1,
+			'active' => 0
+		);
+		return $this->poster->selectWhereLimitRow ( 20, 'id_poster', $args , 'DESC', false);
 	}
 
 	public  function getAllPostersAllCat($cat, $page = 1) {
@@ -106,10 +105,7 @@ class Poster  extends classGetDB {
 	}
 
 	public  function getPostersCatEd() {
-		$getData = new classGetData('catagory');
-		$catList = $getData->getDataFromTableOrder('cat_cat','');
-		unset($getData);
-		return $catList ?? [];
+		return $this->category->selectOrderBy('cat_cat','DESC', true);
 	}
 
 	public function getPostersCat()	{
@@ -121,9 +117,9 @@ class Poster  extends classGetDB {
 		$type_cat = $this->getTypeCategory();
 		$i      = 1;
 		while ($row = $result->fetch()) {
-			$count_all = 0;
-			$catList[$i]['id']           = $row['id_cat'];
-			$catList[$i]['cat_cat']      = $row['cat_cat'];
+			$count_all              = 0;
+			$catList[$i]['id']      = $row['id_cat'];
+			$catList[$i]['cat_cat'] = $row['cat_cat'];
 
 			for ($j=1; $j < 6; $j++) { 
 				$catList[$i][$type_cat[$j]] = $this->getFormat($row[$type_cat[$j]]);
@@ -145,18 +141,20 @@ class Poster  extends classGetDB {
 		return $catList;
 	}
 
-	public  function getPosterByRand($rand)	{
-		$getData = new classGetData('poster');
-		$elem    = $getData->getDataFromTableByNameFetch2WHERE ($rand,'rand_p',0,'active');
-		unset($getData);
-		return $elem;
+	public  function getPosterByRand( int $rand )	{
+		$args = array(
+			'rand_p' => $rand,
+			'active' => 0
+		);
+		return $this->poster->selectDataFromTableWHEREFetch( $args);
 	}
 
-	public  function getPosterById($id)	{
-		$getData = new classGetData('poster');
-		$elem    = $getData->getDataFromTableByNameFetch2WHERE ($this->getIntval($id),'id_poster',0,'active');
-		unset($getData);
-		return $elem ?? [];
+	public  function getPosterById( int $id )	{
+		$args = array(
+			'id_poster' => $id,
+			'active'    => 0
+		);
+		return $this->poster->selectDataFromTableWHEREFetch( $args);
 	}
 
 	public  function plusId($id) {
@@ -231,6 +229,7 @@ class Poster  extends classGetDB {
 	}
 
 	public  function showPosterAll($posterItem) {
+		print_r($posterItem);
 		foreach ($posterItem as $item) {
 			include ('views/poster/showPosterAll.php');
 		}

@@ -12,8 +12,12 @@ class Video extends classGetDB {
 	}
 
 	public  function getVideo(int $page) {
-		$offset  = ($this->getIntval($page) - 1) * SHOWVIDEO_BY_DEFAULT;
-		$result  = $this->progrnk->getDataByOffsetWithOutRow ('prid',SHOWVIDEO_BY_DEFAULT,$offset);
+
+		$result  = $this->progrnk->selectOrderPage (SHOWVIDEO_BY_DEFAULT, $page, 'prid');
+
+
+		//$offset  = ($this->getIntval($page) - 1) * SHOWVIDEO_BY_DEFAULT;
+		//$result  = $this->progrnk->getDataByOffsetWithOutRow ('prid',SHOWVIDEO_BY_DEFAULT,$offset);
 		$i       = 0;
 		while ($row = $result->fetch()) {			
 			$list[] = $row;

@@ -28,6 +28,7 @@ var vue_tovList = new Vue({
 		edit(g){
 			console.log("send id="+g.id+"  title-"+g.title)
 			let req = this.editF + g.id+"&idYT="+g.idYT+"&title="+g.title
+			console.log (req)
 			this.$http.get(req).then(function (response){
 			},function (error){
 				console.log(error)

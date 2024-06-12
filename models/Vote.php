@@ -11,7 +11,7 @@ class Vote {
 	}
 
 	public function getTxtVote(int $id) {
-		return $this->vote->SelectWhereOrderBy("category",$id, 'countrl');
+		return $this->vote->selectWhereOrderBy("category",$id, 'countrl');
 	}
 
 	public function getVote() {
