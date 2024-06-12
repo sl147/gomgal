@@ -59,7 +59,7 @@ class classGetData extends classGetDB {
 		return $this->getDB("SELECT * FROM ".$this->table.$this->setWhere($args))->fetch();	
 	}
 
-	public function selectWhereLimitRow ( int $SHOW_BY_DEFAULT, string $nameOrder, array $args, string $desc = 'DESC', bool $vue=false){
+	public function selectWhereLimitRow ( string $nameOrder, array $args, string $desc = 'DESC', int $SHOW_BY_DEFAULT, bool $vue=false){
 		$sql = "SELECT * FROM ".$this->table.$this->setWhere( $args ). " ORDER BY " . $nameOrder . " "  . $desc . " LIMIT " . $SHOW_BY_DEFAULT;
 		return ($vue) ? $this->getRow($this->getDBVue( $sql ))
 					  : $this->getRow($this->getDB($sql));

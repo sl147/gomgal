@@ -16,7 +16,7 @@ class Poster  extends classGetDB {
 		$args = array(
 			'active' => 0
 		);
-		return $this->poster->selectWhereLimitRow ( 20, 'id_poster', $args , 'DESC', false);
+		return $this->poster->selectWhereLimitRow ( 'id_poster', $args , 'DESC', 20, false);
 	}
 
 	public  function getAllPostersImpotCat( int $cat) {
@@ -25,7 +25,7 @@ class Poster  extends classGetDB {
 			'impot' => 1,
 			'active' => 0
 		);
-		return $this->poster->selectWhereLimitRow ( 20, 'id_poster', $args , 'DESC', false);
+		return $this->poster->selectWhereLimitRow ( 'id_poster', $args , 'DESC', 20, false);
 	}
 
 	public function getAllPostersImpot() {
@@ -33,7 +33,7 @@ class Poster  extends classGetDB {
 			'impot' => 1,
 			'active' => 0
 		);
-		return $this->poster->selectWhereLimitRow ( 20, 'id_poster', $args , 'DESC', false);
+		return $this->poster->selectWhereLimitRow ( 'id_poster', $args , 'DESC', 20, false);
 	}
 
 	public  function getAllPostersAllCat($cat, $page = 1) {
