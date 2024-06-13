@@ -15,9 +15,8 @@
 <?php foreach ($allNewscat as $item) :?>
 	<?php News::showNews($item)?>
 <?php endforeach; ?>
-<?php echo $total; ?>
-<?php if($total > SHOWNEWS_BY_DEFAULT) :?>
+<!-- <?php if($total > SHOWNEWS_BY_DEFAULT) :?>
 <div class="text-center">
 	<?php echo $pagination->get(); ?>
 </div>
-<?php endif ?>
+<?php endif ?> -->

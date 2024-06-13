@@ -6,7 +6,8 @@ class VideoController {
 	use traitAuxiliary;
 
 	public function __construct() {
-		$this->total = $this->getCount('progrnk');
+		$this->progrnk = new classGetData('progrnk');
+		$this->total = $this->progrnk->selectCount( false);
 	}
 
 	public function actionIndex($page = 1) {
@@ -29,7 +30,7 @@ class VideoController {
 			'page' => $page,
 			);			
 		$json  = json_encode($table);		
-		$pagination = new Pagination($this->total, $page, SHOWVIDEO_BY_DEFAULT, 'page-');
+		$pagination = new Pagination($this->total, $page, SHOWVIDEO_BY_DEFAULT_ADMIN, 'page-');
 		require_once ('views/video/changeVideo.php');
 		return true;
 	}

@@ -36,15 +36,12 @@ class Poster  extends classGetDB {
 		return $this->poster->selectWhereLimitRow ( 'id_poster', $args , 'DESC', 20, false);
 	}
 
-	public  function getAllPostersAllCat($cat, $page = 1) {
-		$cat    = $this->getIntval($cat);
-		$offset = ($this->getIntval($page) - 1) * SHOWPOSTER_BY_DEFAULT;
-		$sql    = "SELECT * FROM poster WHERE (cat_p = $cat) AND (active=0) AND ((NOT impot=1) OR (impot IS NULL)) ORDER BY id_poster DESC LIMIT ".SHOWPOSTER_BY_DEFAULT." OFFSET $offset";
-		$result = $this->getDB($sql);
-		while ($row = $result->fetch()) {
-			$list[]=$row;
-		}
-		return $list ?? [];
+	public  function getAllPostersAllCat( int $cat, int $page = 1) {
+		$args = array(
+			'cat_p' => $cat,
+			'active' => 0
+		);
+		return $this->poster->selectWhereOrderPage( $args, 'id_poster', 'DESC', SHOWPOSTER_BY_DEFAULT, $page, true);
 	}
 
 	private function getListArr($sql) {
@@ -56,9 +53,10 @@ class Poster  extends classGetDB {
 	}
 
 	public function getAllPostersAll($page = 1)	{
-		$offset = ($this->getIntval($page) - 1) * SHOWPOSTER_BY_DEFAULT;
-		$sql    = "SELECT * FROM poster WHERE ((impot=0) OR (impot IS NULL))AND (active = 0)  ORDER BY id_poster DESC LIMIT ".SHOWPOSTER_BY_DEFAULT." OFFSET $offset";
-		return $this->getListArr($sql);
+		$args = array(
+			'active' => 0
+		);
+		return $this->poster->selectWhereOrderPage( $args, 'id_poster', 'DESC', SHOWPOSTER_BY_DEFAULT, $page, true);
 	}
 
 	public  function getFindPosters($txt,$page = 1)	{
@@ -162,10 +160,7 @@ class Poster  extends classGetDB {
 	}
 
 	public  function getFindTotalPoster($txt) {
-		$sql    = "SELECT count(*) as count FROM poster WHERE (LOCATE('".$txt."',msg_p)) AND (active=0)";
-		$result = $this->getDB($sql);
-		$result -> setFetchMode(PDO::FETCH_ASSOC);
-		return $result->fetch()['count'];
+		return $this->poster->selectCountFind( array( 'msg_p' => $txt ), false);
 	}
 
 	public function updateFoto ($id,$foto) {

@@ -14,6 +14,7 @@ define('SHOWPOSTER_BY_DEFAULT', 15);
 define('SHOWCOMMENT_BY_DEFAULT', 25);
 define('SHOWNEWS_BY_DEFAULT', 15);
 define('SHOWVIDEO_BY_DEFAULT', 6);
+define('SHOWVIDEO_BY_DEFAULT_ADMIN', 25);
 define('SHOWFA_BY_DEFAULT', 6);
 define('GOMGAL', " Гомін Галичини");
 define('NO_PHOTO', '/posterFoto/gg.webp');

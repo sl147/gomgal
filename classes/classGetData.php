@@ -30,6 +30,26 @@ class classGetData extends classGetDB {
  *
  *  @return елемент даних
  */
+	private function setWhereLike( array $args) :string {
+		$set = " WHERE";
+		foreach ($args as $key => $value) {
+			$set .= " (" . $key . " LIKE '%" . $value."%') AND";
+		}
+
+		return (string) substr($set, 0, -4);
+	}
+
+	public function selectCountFind ( array $args, bool $vue = true) {
+		$sql = "SELECT count(*) as count FROM ".$this->table.$this->setWhereLike($args);
+		return ($vue) ? $this->getDBVue($sql)->fetch()['count']
+					  : $this->getDB($sql)->fetch()['count'];
+	}
+
+	public function selectCount( bool $vue = true ) {
+		$sql = "SELECT count(*) as count FROM ".$this->table;
+		return ($vue) ? $this->getDBVue($sql)->fetch()['count']
+					  : $this->getDB($sql)->fetch()['count'];
+	}
 
 	public function selectFromTable ( bool $var = true) {
 		return ($var) ? $this->getRow($this->getDB("SELECT * FROM ".$this->table))
@@ -128,6 +148,12 @@ class classGetData extends classGetDB {
 					  : $this->getDBVue( $sql );
 	}
 
+	public function selectWhereOrderPage( array $args, string $nameOrder, string $desk = 'DESC', int $SHOW_BY_DEFAULT, int $page, bool $row = false) {
+		$sql    = "SELECT * FROM ".$this->table.$this->setWhere( $args ) . " ORDER BY ".$nameOrder." ".$desk." LIMIT ".$SHOW_BY_DEFAULT." OFFSET " . $this->getOffset( $page, $SHOW_BY_DEFAULT );
+		return ($row) ? $this->getRow( $this->getDB( $sql ) )
+					  : $this->getDB( $sql );
+	}
+
 	private function formSql2El( $id, $name, $idVal) {
 		$sql = "SELECT * FROM ".$this->table." ORDER BY ".$name;
 		return ($idVal) ? $sql . $this->formSql($id,$idVal) : $sql;
@@ -165,7 +191,7 @@ class classGetData extends classGetDB {
 	}
 
 	public function selectFindNews ( string $txt) {
-		return $this->getDB("SELECT * FROM $this->table WHERE ( LOWER(msg) LIKE '%$txt%') OR ( LOWER(title) LIKE '%$txt%') OR ( LOWER(prew) LIKE '%$txt%')");
+		return $this->getDB("SELECT * FROM $this->table WHERE ( LOWER(msg) LIKE '%" . $txt . "%') OR ( LOWER(title) LIKE '%" . $txt . "%') OR ( LOWER(prew) LIKE '%" . $txt . "%')");
 	}
 
 	public function selectNews( int $month, int $year, int $page, int $SHOWNEWS_BY_DEFAULT){

@@ -5,10 +5,12 @@ class PosterController {
 
 	use traitAuxiliary;
 
+	public function __construct() {
+		$this->poster   = new Poster();
+	}
+
 	public function actionIndex() {
-		$poster    = new Poster();
-		$posterCat = $poster->getPostersCat();
-		unset($poster);
+		$posterCat = $this->poster->getPostersCat();
 		$siteFile  = 'views/poster/index.php';
 		$meta      = $this->getMeta();
 		require_once ('views/layouts/siteIndex.php');
@@ -17,16 +19,15 @@ class PosterController {
 
 	public function actionPosterFind($page = 1) {		
 		if(isset($_POST['submit'])) {
-			$poster         = new Poster();
 			$findTXT        = '';
 			$posterImpotant = [];
 			$posterAll      = [];
 			$total          = 0;
 			if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token'])) {
 				$findTXT        = trim(strip_tags($this->filterTXT('post', 'name_f')));
-				$posterImpotant = $poster->getFindPostersImpot($findTXT);
-				$posterAll      = $poster->getFindPosters($findTXT,$page);
-				$total          = $poster->getFindTotalPoster($findTXT);
+				$posterImpotant = $this->poster->getFindPostersImpot($findTXT);
+				$posterAll      = $this->poster->getFindPosters($findTXT,$page);
+				$total          = $this->poster->getFindTotalPoster($findTXT); 
 				$pagination     = new Pagination($total, $this->getIntval($page), SHOWPOSTER_BY_DEFAULT, 'page-');
 				$siteFile       = 'views/poster/catAll.php';							
 			}else {
@@ -34,8 +35,7 @@ class PosterController {
 				$massage = $subject;
 				$mail    = $this->sendMail($subject,SLMAIL,$massage);
 				$siteFile = 'views/poster/find.php';
-			}		
-			unset($poster);				
+			}				
 		} else {
 			$siteFile = 'views/poster/find.php';
 		}
@@ -56,17 +56,15 @@ class PosterController {
 
 	public function actionPosterCatFull($cat, $page = 1) {
 		$cat            = $this->getIntval($cat);
-		$poster         = new Poster();
-		$posterImpotant = $poster->getAllPostersImpotCat($cat);
-		$posterAll      = $poster->getAllPostersAllCat($cat,$page);
+		$posterImpotant = $this->poster->getAllPostersImpotCat($cat);
+		$posterAll      = $this->poster->getAllPostersAllCat($cat,$page);
 		if( empty($posterAll)) return;
 		$total          = $this->getCountAtr('poster', 'cat_p',$cat);
 		$pagination     = new Pagination($total, $this->getIntval($page), SHOWPOSTER_BY_DEFAULT, 'page-');
 		$siteFile       = 'views/poster/catAll.php';
-		$meta           = $this->getMetaWithSubPoster($poster);
+		$meta           = $this->getMetaWithSubPoster($this->poster);
 		require_once ('views/layouts/siteIndex.php');
 		unset($pagination);
-		unset($poster);
 		return true;
 	}
 
@@ -80,13 +78,11 @@ class PosterController {
 	}
 
 	public function actionPosterFull($page = 1) {
-		$poster         = new Poster();
-		$posterImpotant = $poster->getAllPostersImpot();
-		$posterAll      = $poster->getAllPostersAll($this->getIntval($page));
+		$posterImpotant = $this->poster->getAllPostersImpot();
+		$posterAll      = $this->poster->getAllPostersAll($this->getIntval($page));
 		//$total          = $this->getCount('poster');
 		$total          = $this->getCountPoster('poster');
 		$pagination     = new Pagination($total, $this->getIntval($page), SHOWPOSTER_BY_DEFAULT, 'page-');
-		unset($poster);
 		$siteFile       = 'views/poster/catAll.php';
 		$metaTags       = '';
 		require_once ('views/layouts/siteIndex.php');
@@ -102,11 +98,10 @@ class PosterController {
 	}
 
 	public function actionPosterOne($id = 1) {
-		$poster    = new Poster();
 		$id        = $this->getIntval($id);
-		$posterOne = $poster->getPosterById($id);
+		$posterOne = $this->poster->getPosterById($id);
 		if(empty($posterOne)) return;
-		$res       = $poster->plusId($id);
+		$res       = $this->poster->plusId($id);
 		$title = $posterOne['title_p'];
 		$meta['title'] = $this->getMetaTitle($posterOne['title_p']);
 		$meta['descr'] = $posterOne['title_p'];
@@ -115,16 +110,14 @@ class PosterController {
 		$siteFile  = 'views/poster/one.php';
 		$metaTags  = 'poster';
 		$poster_email = $this->sl147_get_email($posterOne['email_p']);
-		unset($poster);
 		require_once ('views/layouts/siteIndex.php');
 		return true;
 	}	
 
 	public function actionAdd() {
-		$poster  = new Poster();
-		$tPos    = $poster->getAllTypePost();
+		$tPos    = $this->poster->getAllTypePost();
 		$count   = count($tPos)-1;
-		$catList = $poster->getPostersCat();
+		$catList = $this->poster->getPostersCat();
 		$fruit   = array_pop($catList);
 		if(isset($_POST['submit'])) {
 			$nik   = $this->sl147_clean($_POST['nik']);//$this->filterTXT('post', 'nik');
@@ -137,14 +130,13 @@ class PosterController {
 			$foto  = $_FILES['file']['name'];
 			$ip    = $_SERVER['REMOTE_ADDR'];
 			$rand  = rand(11111,99999);
-			$res   = $poster->createPoster($nik,$type,$cat,$email,$msg,$foto,$rand,$ip,$title);
-			$id    = $poster->getPosterByRand($rand);			
+			$res   = $this->poster->createPoster($nik,$type,$cat,$email,$msg,$foto,$rand,$ip,$title);
+			$id    = $this->poster->getPosterByRand($rand);			
 			$jpg   = explode('.', $_FILES['file'] ['name']);
 			$fotoN = $id['id_poster'].'.'.$jpg[count($jpg)-1];
 			$fotoN = $this->savePhoto($fotoN, ROOT."/posterFoto",date('y'),date('m'));
-			$res   = $poster->updateFoto($id['id_poster'],$fotoN);
-			$res   = $poster->incrementTypeCategory($cat,$type);
-			unset($poster);
+			$res   = $this->poster->updateFoto($id['id_poster'],$fotoN);
+			$res   = $this->poster->incrementTypeCategory($cat,$type);
 			header("Location: /posterFull");
 		}
 		$siteFile = 'views/poster/add.php';
@@ -153,7 +145,7 @@ class PosterController {
 		return true;
 	}
 
-	public function actionPosterEdit($page = 1) {
+	public function actionPosterEdit( int $page = 1) {
 		$page  = $this->getIntval($page);
 		$table = array(
 			'page' => $page
@@ -167,21 +159,20 @@ class PosterController {
 		return true;
 	}
 
-	public function actionPosterEditOne($id, $page = 1) {
-		$poster      = new Poster();
+	public function actionPosterEditOne( int $id, int $page = 1) {
 		$id          = $this->getIntval($id);
 		$page        = $this->getIntval($page);		
 		$title       = "редагування оголошення";
-		$post        = $poster->getPosterById($id);
-		$posterCat   = $poster->getPostersCatEd();
+		$post        = $this->poster->getPosterById($id);
+		$posterCat   = $this->poster->getPostersCatEd();
 		$idCat       = $post['cat_p'];
 		$type_p      = $post['type_p'];
 		$foto_name   = $post['foto_p1'];
 		$post['fotoN']   = $post['foto_p1'];
 		$post['foto_p1'] = "/posterFoto/".$post['foto_p1'];
-		$typePost    = $poster->getAllTypePost();
+		$typePost    = $this->poster->getAllTypePost();
 		$typePost[0] = $typePost[$type_p];
-		$cat         = $poster->getPostersByCat($idCat);
+		$cat         = $this->poster->getPostersByCat($idCat);
 		array_unshift($posterCat,$cat);
         if(isset($_POST['submit'])) {
         	$idm     = $this->filterINT  ('post', 'id_m');
@@ -198,26 +189,23 @@ class PosterController {
 	            $jpg   = explode('.', $_FILES['file'] ['name']);
 	            $fotoN = $id.'.'.$jpg[count($jpg)-1];
 				$fotoN = $this->savePhoto($fotoN,ROOT."/posterFoto",date("y",strtotime($post['date_p'])), date("m",strtotime($post['date_p'])));
-				$res   = $poster->updateFoto($id,$fotoN);
+				$res   = $this->poster->updateFoto($id,$fotoN);
 	        } else {
 	            if ($FotoDel == 1) {
-	                    $result = $poster->changePoster($idm,$title_p,$cat,$type,$name,$email,$impot,$msg,"");
+	                    $result = $this->poster->changePoster($idm,$title_p,$cat,$type,$name,$email,$impot,$msg,"");
 	                    $res = $this->delFile($foto_name,"posterFoto");
 	            } else {
-	                    $result = $poster->changePoster($idm,$title_p,$cat,$type,$name,$email,$impot,$msg,$foto_name);
+	                    $result = $this->poster->changePoster($idm,$title_p,$cat,$type,$name,$email,$impot,$msg,$foto_name);
 	            }
 	        }
 			header ("Location: /posterEdit/page-".$page);
 		}
-		unset($poster);
 		require_once ('views/poster/posterEditOne.php');
 		return true;
 	}
 
-	public function actionPosterVerify() {
-		$poster = new Poster();		
-		$t      = $poster->getPostersVerify();
-		unset($poster);
+	public function actionPosterVerify() {	
+		$t = $this->poster->getPostersVerify();
 		require_once ('views/poster/posterVerify.php');
 		return true;
 	}

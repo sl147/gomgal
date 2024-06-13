@@ -103,15 +103,15 @@ class UserController {
 		}
 	}
 
-	private function view_Comment_Wishes( int $page = 1, string $title, array $comms, string $table, string $file) {
-		$page       = $this->getIntval($page);
-		$total      = $this->getCount($table);
+	private function view_Comment_Wishes(  $page = 1, string $title, array $comms, string $table, string $file) {
+		$getDB      = new classGetData( $table );
+		$total      = $getDB->selectCount( false);
 		$pagination = new Pagination($total, $page, SHOWCOMMENT_BY_DEFAULT, 'page-');
 		require_once ($file);
 		return true;
 	}
 
-	public function actionUserComment(int $page = 1) {
+	public function actionUserComment( $page = 1) {
 		$this->view_Comment_Wishes(
 			$page,
 			"перегляд новин клієнтів",
@@ -122,7 +122,7 @@ class UserController {
 		return true;
 	}
 
-	public function actionUserWishes(int $page = 1) {
+	public function actionUserWishes( $page = 1) {
 		$this->view_Comment_Wishes( 
 			$page,
 			"перегляд побажань клієнтів",
