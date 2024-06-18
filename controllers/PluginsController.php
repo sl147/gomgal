@@ -34,7 +34,7 @@ class PluginsController {
 		$getData = new classGetData('plugins_license_key');
 		$res = $getData->selectWhereGetRow( array( 'license_key'=>$license_key), false);
 		//$lk = $value['license_key'];
-		//$res = $getData->selectFromTable(true);
+		//$res = $getData->selectFromTable(false);
 		foreach ($res as $key => $value) {
 			$lk = $value['license_key'];
 			$pl = $value['plugin'];

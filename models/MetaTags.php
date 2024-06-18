@@ -11,7 +11,7 @@ class MetaTags{
 	}
 
 	public function getMTags() {
-		return $this->meta_tags->selectFromTable() ?? [];
+		return $this->meta_tags->selectFromTable(true) ?? [];
 	}
 
 	public function getMTagsByID(int $id) {

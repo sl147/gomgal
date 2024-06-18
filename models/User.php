@@ -80,6 +80,6 @@ class User extends classGetDB {
 	}
 
 	public function getUsers() {
-		return $this->friends->selectFromTable();	
+		return $this->friends->selectFromTable(true);	
 	}
 }

@@ -235,7 +235,7 @@ trait traitAuxiliary {
 
 	private function getSpam() {
 		$getData  = new classGetData("spamTab");
-		return $getData->selectFromTable();		
+		return $getData->selectFromTable( true );		
 	}
 
 	public function getToken( $strength = 16) {
