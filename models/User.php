@@ -10,26 +10,26 @@ class User extends classGetDB {
 		$this->friends = new classGetData('friends');
 	}
 
-	private function getData($table, $nameID, $page) {
+	private function userGetData( string $table, string $nameID, int $page) {
 		$getData = new classGetData($table);
 		return $getData->selectOrderPage ( SHOWCOMMENT_BY_DEFAULT, $page, $nameID, 'DESC', true );
 	}
 
-	public function getUsersComments($page) {
-		return $this->getData('ComCl','id',$page);
+	public function getUsersComments( int $page) {
+		return $this->userGetData('ComCl','id',$page);
 	}
 
-	public function getUsersWishes($page) {
-		return $this->getData('wishCl','id_com',$page);
+	public function getUsersWishes( int $page) {
+		return $this->userGetData('wishCl','id_com',$page);
 	}
 
-	public function createUser($login,$password,$name,$surname,$email){
+	public function createUser( string $login, string $password, string $name, string $surname, string $email){
 		$names  = ['user_login', 'user_password', 'name', 'surname', 'email'];
 		$values = [$login, $password, $name, $surname, $email];
 		$this->friends->insertDataToTable( $values, $names);
 	}
 
-	public function changeUser($login,$name,$surname,$email) {
+	public function changeUser( string $login, string $name, string $surname, string $email) {
 		$args = array(
 			'name'    => $name,
 			'surname' => $surname,
@@ -38,34 +38,29 @@ class User extends classGetDB {
 		$this->friends->updateDataInTable( $args, array('user_login'=>$login));
 	}
 
-	public function chekUserData ($login,$password) {
+	public function chekUserData ( string $login, string $password) {
 		$userCurrent = $this->getUserByLogin($login);
 		if (empty($userCurrent)) return false;
 		if ($userCurrent['id'] < 10) {
 			$password = md5(md5(trim($password)));
-			$sql      = "SELECT * FROM friends  WHERE user_login = '".$login."' AND user_password = '".$password."'";
-			$result   = $this->getDB ($sql);
-			$user     = $result-> fetch();
-			return $user['id'] ?? false;
+			return $this->friends->selectWhereFetch( array( 'user_login'=>$login, 'user_password'=>$password) ) ['id'];
 		}else{
-			$sql      = "SELECT * FROM friends  WHERE user_login = '".$login."'";
-			$result   = $this->getDB ($sql);
-			$user     = $result-> fetch();
+			$user = $this->friends->selectWhereFetch( array( 'user_login'=>$login) );
 			if($user) return (password_verify($password, $user['user_password'])) ? $user['id'] : false;
 		}
 		return false;
 	}
 
-	public function getUserByLogin($login) {
+	public function getUserByLogin( string $login) {
 		return $this->friends->selectDataFromTableWHEREFetch( array('user_login' => $login ) ) ?? [];
 	}
 
-	public function getUserNameById($id) {
+	public function getUserNameById( int $id) {
 		$user = $this->friends->selectDataFromTableWHEREFetch( array('id' => $id ) );
 		return $user['name'] . ' ' . $user['surname'];
 	}
 
-	public static function setcookie ($login,$name,$admin) {
+	public static function setcookie ( string $login, string $name, int $admin) {
 		$user = array ( 
 			   'login'=> $login,
 			   'name' => $name,
