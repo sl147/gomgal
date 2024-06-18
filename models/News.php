@@ -45,7 +45,7 @@ class News {
 	}
 
 	public function getCatEl( int $cat) {
-		return $this->catmsgs->selectWhereFetch ( $cat, 'idcm');
+		return $this->catmsgs->selectWhereFetch ( array( 'idcm'=>$cat) );
 	}
 
 	public function getFindTotalNews( string $txt ) :int{
@@ -93,7 +93,7 @@ class News {
 	}
 
 	public function getNewsTop() :array {
-		$topNews         = $this->msgs->selectWhereLimitFetch ( 1, 'id', 1, 'top');
+		$topNews         = $this->msgs->selectWhereLimitFetch ( 1, 'id', array('top'=>1) );
 		$topNews         = $this->addPhotoSize( $topNews, $topNews['foto']);
 		$topNews['foto'] = "NewsFoto/".$topNews['foto'];
 		
@@ -130,7 +130,7 @@ class News {
 	}
 
 	public function getNewsById( int $id) :array {
-		$list = $this->msgs->selectWhereFetch ( $id, 'id');
+		$list = $this->msgs->selectWhereFetch ( array( 'id'=>$id) );
 		$list['photo']  = "/NewsFoto/".$list['foto'];
 		$list['video']  = "//www.youtube.com/v/".$list['videoYT']."?hl=uk_UA&amp;version=3";
 		unset($getData);
@@ -142,7 +142,7 @@ class News {
 	}
 
 	public function updateCountById( int $id, int $count) {
-		return $this->msgs->updateDataInTable( array (	'countmsgs' => $count + 1), $id, 'id');		
+		return $this->msgs->updateDataInTable( array ( 'countmsgs' => $count + 1), array( 'id'=>$id));		
 	}
 
 	public function createNews( string $title, string $prew, int $category, int $cat2, string $sourse, string $msg, string $foto, int $top, string $videoYT) {
@@ -165,7 +165,7 @@ class News {
 			'videoYT'  => $videoYT,
 		);
 		if ( $foto ) array_push($args, array ( 'foto' => $foto ));
-		return $this->msgs->updateDataInTable( $args, $id, 'id');
+		return $this->msgs->updateDataInTable( $args, array('id'=>$id));
 	}
 
 	public static function showNews($arrNews) {

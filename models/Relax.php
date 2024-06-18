@@ -14,7 +14,7 @@ class Relax {
 	}
 
 	public function getRelaxId( int $id) :int {
-		return (int) $this->catrelax->selectWhereFetch ($this->getIntval($id),'idrl');
+		return (int) $this->catrelax->selectWhereFetch ( array( 'idrl'=>$id) );
 	}
 
 	private function getRowRelax($result) {
@@ -68,7 +68,7 @@ class Relax {
 	}
 
 	public function getRelaxOne( int $id) :array {
-		return (array) $this->msgs_relax->selectWhereFetch ($id,'id');
+		return (array) $this->msgs_relax->selectWhereFetch ( array('id'=>$id ) );
 	}
 
 	public function updateRelax( int $id, string $msg, int $cat) {
@@ -76,23 +76,23 @@ class Relax {
 					'msg' => $this->sl147_clean($msg),
 					'category' => $cat
 		 		);
-		return $this->msgs_relax->updateDataInTable( $args, $id, 'id', false);	
+		return $this->msgs_relax->updateDataInTable( $args, array( 'id'=>$id ), false);	
 	}
 
 	public function updateCountRelax( int $id, int $count) :bool {
-		return $this->msgs_relax->updateDataInTable( array( 'countrl' => $count ), $id, 'id', false);			
+		return $this->msgs_relax->updateDataInTable( array( 'countrl' => $count ), array( 'id'=>$id ), false);			
 	}
 
 	public  function getLike( int $id, int $count) :bool {
-		return (bool) $this->msgs_relax->updateDataInTable( array( 'countrl' => $count ), $id, 'id', true);
+		return (bool) $this->msgs_relax->updateDataInTable( array( 'countrl' => $count ), array( 'id'=>$id), true);
 	}
 
 	public function getAnThemaVue( int $teman = 1, int $page = 1, int $SHOWRELAX = 1)	:array {
-		return (array) $this->msgs_relax->selectWhereOrderPageVue( $teman, 'teman', $SHOWRELAX, $page, 'countrl', 'DESC', true);
+		return (array) $this->msgs_relax->selectWhereOrderPageVue( array('teman'=>$teman),  $SHOWRELAX, $page, 'countrl', 'DESC', true);
 	}
 
 	public function getRelaxVue( int $cat, int $page = 1, int $SHOWRELAX = 1) :array {
 		if ($cat == 0 ) return $this->msgs_relax->selectOrderPageVue( $SHOWRELAX, $page, 'id', 'DESC', true );  
-		return (array) $this->msgs_relax->selectWhereOrderPageVue( $cat, 'category', $SHOWRELAX, $page, 'countrl', 'DESC', true );
+		return (array) $this->msgs_relax->selectWhereOrderPageVue( array( 'category'=>$cat), $SHOWRELAX, $page, 'countrl', 'DESC', true );
 	}
 }

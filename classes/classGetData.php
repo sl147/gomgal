@@ -45,19 +45,25 @@ class classGetData extends classGetDB {
 					  : $this->getDB($sql)->fetch()['count'];
 	}
 
+	public function selectCountWhere ( array $args, bool $vue = true) {
+		$sql = "SELECT count(*) as count FROM ".$this->table.$this->setWhere($args);
+		return ($vue) ? $this->getDBVue($sql)->fetch()['count']
+					  : $this->getDB($sql)->fetch()['count'];
+	}
+
 	public function selectCount( bool $vue = true ) {
 		$sql = "SELECT count(*) as count FROM ".$this->table;
 		return ($vue) ? $this->getDBVue($sql)->fetch()['count']
 					  : $this->getDB($sql)->fetch()['count'];
 	}
 
-	public function selectFromTable ( bool $var = true) {
-		return ($var) ? $this->getRow($this->getDB("SELECT * FROM ".$this->table))
+	public function selectFromTable ( bool $row = true) {
+		return ($row) ? $this->getRow($this->getDB("SELECT * FROM ".$this->table))
 					  :               $this->getDB("SELECT * FROM ".$this->table) ;
 	}
 
-	public function selectFromTableVue ( bool $var = true) {
-		return ($var) ? $this->getRow($this->getDBVue("SELECT * FROM ".$this->table))
+	public function selectFromTableVue ( bool $row = true) {
+		return ($row) ? $this->getRow($this->getDBVue("SELECT * FROM ".$this->table))
 					  :               $this->getDBVue("SELECT * FROM ".$this->table) ;
 	}
 
@@ -90,8 +96,9 @@ class classGetData extends classGetDB {
 	}
 
 	public function selectOrderBy(string $nameOrder, string $desk = 'DESC', bool $row = false) {
-		return ( $row )  ? $this->getRow( $this->getDB("SELECT * FROM ".$this->table." ORDER BY ".$nameOrder." ".$desk) ) 
-						: $this->getDB("SELECT * FROM ".$this->table." ORDER BY ".$nameOrder." ".$desk);
+		$sql = "SELECT * FROM ".$this->table." ORDER BY ".$nameOrder." ".$desk;
+		return ( $row ) ? $this->getRow( $this->getDB($sql) ) 
+						: $this->getDB($sql);
 	}
 
 	public function selectOrderLimit( string $nameOrder, int $limit, string $desk = 'DESC') {
@@ -102,30 +109,30 @@ class classGetData extends classGetDB {
  *
  *  @return елемент даних
  */
-	public function selectWhere ( string $elValue, string $elName, bool $vue=false){
-		$sql = "SELECT * FROM ".$this->table.$this->formSql($elName,$elValue);
+	public function selectWhere ( array $args, bool $vue=false){
+		$sql = "SELECT * FROM ".$this->table.$this->setWhere($args);
 		return ($vue) ? $this->getDBVue($sql)
 					  : $this->getDB($sql);
 	}
 
-	public function selectWhereFetch ( string $elValue, string $elName, bool $vue=false){
-		$sql = "SELECT * FROM ".$this->table.$this->formSql( $elName, $elValue );
+	public function selectWhereFetch ( array $args, bool $vue=false){
+		$sql = "SELECT * FROM ".$this->table.$this->setWhere($args);
 		return ($vue) ? $this->getDBVue($sql)->fetch()
 					  : $this->getDB($sql)->fetch();
 	}
 
-	public function selectWhereOrderBy(string $nameid, int $id, string $nameOrder, string $desk = 'DESC') {
-		return $this->getDB("SELECT * FROM ".$this->table.$this->formSql($nameid,$id)." ORDER BY ".$nameOrder." ".$desk);
+	public function selectWhereOrderBy(array $args, string $nameOrder, string $desk = 'DESC') {
+		return $this->getDB("SELECT * FROM ".$this->table.$this->setWhere($args)." ORDER BY ".$nameOrder." ".$desk);
 	}
 
-	public function selectWhereLimitFetch ( int $SHOW_BY_DEFAULT, string $nameOrder, string $elValue, string $elName, string $desc = 'DESC', bool $vue=false){
-		$sql = "SELECT * FROM ".$this->table.$this->formSql( $elName, $elValue ). " ORDER BY " . $nameOrder . " "  . $desc . " LIMIT " . $SHOW_BY_DEFAULT;
+	public function selectWhereLimitFetch ( int $SHOW_BY_DEFAULT, string $nameOrder, array $args, string $desc = 'DESC', bool $vue=false){
+		$sql = "SELECT * FROM ".$this->table.$this->setWhere( $args ). " ORDER BY " . $nameOrder . " "  . $desc . " LIMIT " . $SHOW_BY_DEFAULT;
 		return ($vue) ? $this->getDBVue($sql)->fetch()
 					  : $this->getDB($sql)->fetch();
 	}
 
-	public function selectWhereGetRow ( string $elValue, string $elName, bool $vue = false) {
-		$sql = "SELECT * FROM ".$this->table.$this->formSql($elName,$elValue);
+	public function selectWhereGetRow ( array $args, bool $vue = false) {
+		$sql = "SELECT * FROM ".$this->table.$this->setWhere($args);
 		return ( $vue ) ? $this->getRow($this->getDBVue( $sql ))
 						: $this->getRow($this->getDB($sql));	
 	}
@@ -142,8 +149,8 @@ class classGetData extends classGetDB {
 						: $this->getDBVue( $sql );
 	}
 
-	public function selectWhereOrderPageVue( string $elValue, string $atr, int $SHOW_BY_DEFAULT, int $page, string $nameOrder, string $desk = 'DESC', bool $row = false) {
-		$sql    = "SELECT * FROM ".$this->table.$this->formSql( $atr, $elValue ) . " ORDER BY ".$nameOrder." ".$desk." LIMIT ".$SHOW_BY_DEFAULT." OFFSET " . $this->getOffset( $page, $SHOW_BY_DEFAULT );
+	public function selectWhereOrderPageVue( array $args, int $SHOW_BY_DEFAULT, int $page, string $nameOrder, string $desk = 'DESC', bool $row = false) {
+		$sql    = "SELECT * FROM ".$this->table.$this->setWhere( $args ) . " ORDER BY ".$nameOrder." ".$desk." LIMIT ".$SHOW_BY_DEFAULT." OFFSET " . $this->getOffset( $page, $SHOW_BY_DEFAULT );
 		return ($row) ? $this->getRow( $this->getDBVue( $sql ) )
 					  : $this->getDBVue( $sql );
 	}
@@ -173,6 +180,11 @@ class classGetData extends classGetDB {
  *  @return масив даних
  */
 	public function getData2ElVue( $id, $name, $idVal=0) {
+		$sql = $this->formSql2El($id,$name,$idVal);
+		return $this->getRow2EL( $this->getDBVue($sql),$id,$name);
+	}
+
+	public function selectData2ElVue( $id, $name, $idVal=0) {
 		$sql = $this->formSql2El($id,$name,$idVal);
 		return $this->getRow2EL( $this->getDBVue($sql),$id,$name);
 	}
@@ -236,13 +248,15 @@ class classGetData extends classGetDB {
 		return substr($update, 0, -1);
 	}
 
-	public function updateDataInTable( array $args, string $valueUpDate, string $nameUpdate, bool $vue = false) {	
-		$sql = "UPDATE ".$this->table." SET ".$this->set_update_names_values($args).$this->formSql($nameUpdate,$valueUpDate);
+	public function updateDataInTable( array $args, array $args_where, bool $vue = false) {	
+		$sql = "UPDATE ".$this->table." SET ".$this->set_update_names_values($args).$this->setWhere($args_where);
 		return  ($vue)  ? $this->getDBVue($sql)
 						: $this->getDB($sql);
 	}
 
-
+	public function updateCountPlusOne( array $args ) {
+		return $this->getDB("UPDATE " . $this->table . " SET count_p = count_p+1".$this->setWhere($args));
+	}
 //--------------------------UPDATE-----------------------------------
 
 //--------------------------INSERT-----------------------------------
@@ -274,8 +288,8 @@ class classGetData extends classGetDB {
      * @return void
      * 
      */ 
-	public function deleteDataFromTable( int $id, string $nameid='id', bool $vue = false) {
-		$sql = "DELETE FROM " . $this->table . $this->formSql($nameid,$id);
+	public function deleteDataFromTable( $args, bool $vue = false) {
+		$sql = "DELETE FROM " . $this->table . $this->setWhere( $args );
 		return ($vue) ? $this->getDBVue($sql)
 					  : $this->getDB($sql); 
 	}

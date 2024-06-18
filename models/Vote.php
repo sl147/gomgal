@@ -11,11 +11,11 @@ class Vote {
 	}
 
 	public function getTxtVote(int $id) {
-		return $this->vote->selectWhereOrderBy("category",$id, 'countrl');
+		return $this->vote->selectWhereOrderBy( array("category"=>$id), 'countrl');
 	}
 
 	public function getVote() {
-		$result = $this->catVote->selectWhereFetch(1, "active");
+		$result = $this->catVote->selectWhereFetch( array( "active"=>1));
 		return $result['idrl'];
 	}
 
@@ -32,19 +32,19 @@ class Vote {
 	}
 
 	public function getVoteVue() {
-		return $this->catVote->selectWhereFetch(1, "active", true);
+		return $this->catVote->selectWhereFetch( array( "active"=>1) , true);
 	}
 
 	public function getTxtVoteVue(int $id) {
-		return $this->vote->selectWhereGetRow($id, "category", true);
+		return $this->vote->selectWhereGetRow( array("category"=>$id), true);
 	}
 
 	public function addVote(int $id, int $count) {
-		return $this->vote->updateDataInTable( array( 'countrl' => $count ), $id, 'id', true);
+		return $this->vote->updateDataInTable( array( 'countrl' => $count ), array( 'id'=>$id),  true);
 	}
 
 	public function activated(int $id){
-		$this->catVote->updateDataInTable( array( 'active' => 0	), 1, 'active');
-		$this->catVote->updateDataInTable( array( 'active' => 1	), $id, 'idrl');
+		$this->catVote->updateDataInTable( array( 'active' => 0	), array('active'=>1));
+		$this->catVote->updateDataInTable( array( 'active' => 1	), array('idrl'=>$id));
 	}
 }

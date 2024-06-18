@@ -37,7 +37,7 @@ class Video extends classGetDB {
 			'pridYT' => $idYT,
 			'prhar'  => $title,
 		);
-		return $this->progrnk->updateDataInTable( $args, $id, 'prid', true);
+		return $this->progrnk->updateDataInTable( $args, array( 'prid'=>$id),  true);
 	}
 
 	public function addVideoVue (string $idYT, string $title) {

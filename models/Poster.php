@@ -98,7 +98,7 @@ class Poster  extends classGetDB {
             	'count_change' => $count_all[4][$id_cat],
             	'count_job'    => $count_all[5][$id_cat]
             );
-            $this->category->updateDataInTable( $args, $id_cat, 'id_cat');
+            $this->category->updateDataInTable( $args, array( 'id_cat'=>$id_cat ) );
 		}
 	}
 
@@ -155,8 +155,8 @@ class Poster  extends classGetDB {
 		return $this->poster->selectDataFromTableWHEREFetch( $args);
 	}
 
-	public  function plusId($id) {
-		return $this->getDB("UPDATE poster SET count_p = count_p+1".$this->formSql("id_poster",$id));
+	public function plusId($id) {
+		return $this->poster->updateCountPlusOne( array( 'id_poster'=>$id ) );
 	}
 
 	public  function getFindTotalPoster($txt) {
@@ -164,7 +164,7 @@ class Poster  extends classGetDB {
 	}
 
 	public function updateFoto ($id,$foto) {
-		return $this->poster->updateDataInTable( array( 'foto_p1' => $foto ), $id, 'id_poster');
+		return $this->poster->updateDataInTable( array( 'foto_p1' => $foto ), array('id_poster'=>$id) );
 	}
 
 	public  function getPostersByCat(int $cat) {
@@ -188,8 +188,7 @@ class Poster  extends classGetDB {
 		$category_type = $this->getTypeCategory();
 		return $this->category->updateDataInTable(
 									array( $category_type[$type] => $row[$category_type[$type]]+1 ),
-									$cat,
-									'id_cat'
+									array( 'id_cat'=>$cat)
 								);
 	}
 
@@ -212,7 +211,7 @@ class Poster  extends classGetDB {
 			'msg_p'   => $msg,
 			'foto_p1' => $foto
 		);
-		return $this->poster->updateDataInTable( $args, $this->getIntval($id), 'id_poster');
+		return $this->poster->updateDataInTable( $args, array( 'id_poster'=>$id) );
 	}
 
 	public function showLineMenuPoster($http,$alt,$title) {

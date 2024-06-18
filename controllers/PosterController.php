@@ -59,7 +59,9 @@ class PosterController {
 		$posterImpotant = $this->poster->getAllPostersImpotCat($cat);
 		$posterAll      = $this->poster->getAllPostersAllCat($cat,$page);
 		if( empty($posterAll)) return;
-		$total          = $this->getCountAtr('poster', 'cat_p',$cat);
+		$poster_t = new classGetData('poster');
+		$args  = array( 'cat_p' => $cat);
+		$total =  $poster_t->selectCountWhere ( $args, false );
 		$pagination     = new Pagination($total, $this->getIntval($page), SHOWPOSTER_BY_DEFAULT, 'page-');
 		$siteFile       = 'views/poster/catAll.php';
 		$meta           = $this->getMetaWithSubPoster($this->poster);
@@ -68,20 +70,11 @@ class PosterController {
 		return true;
 	}
 
-	private function getCountPoster(){
-		$getDB  = new classGetDB();
-		$result = $getDB->getDB("SELECT count(*) as count FROM poster WHERE ((impot=0) OR (impot IS NULL))AND (active = 0)");
-		unset($getDB);
-		$result -> setFetchMode(PDO::FETCH_ASSOC);
-
-		return $result->fetch()['count'];
-	}
-
 	public function actionPosterFull($page = 1) {
 		$posterImpotant = $this->poster->getAllPostersImpot();
 		$posterAll      = $this->poster->getAllPostersAll($this->getIntval($page));
-		//$total          = $this->getCount('poster');
-		$total          = $this->getCountPoster('poster');
+		$poster_t = new classGetData('poster');
+		$total = $poster_t->selectCount(false);
 		$pagination     = new Pagination($total, $this->getIntval($page), SHOWPOSTER_BY_DEFAULT, 'page-');
 		$siteFile       = 'views/poster/catAll.php';
 		$metaTags       = '';
@@ -152,7 +145,8 @@ class PosterController {
 			);
 		$json  = json_encode($table);		
 		$title = "редагування оголошень";
-		$total = $this->getCount('poster');
+		$poster_t = new classGetData('poster');
+		$total = $poster_t->selectCount(false);
 		$pagination = new Pagination($total, $page, SHOWPOSTER_BY_DEFAULT, 'page-');
 		require_once ('views/poster/posterEdit.php');
 		unset($pagination);

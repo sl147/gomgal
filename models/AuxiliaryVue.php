@@ -22,11 +22,11 @@ class AuxiliaryVue {
 		$args = array(
 			 $nameEl  => $name,
 		);
-		return $this->table->updateDataInTable( $args, $id, $nameId, true);		
+		return $this->table->updateDataInTable( $args, array( $nameId=>$id), true);		
 	}
 
 	public function delVue2El(int $id, string $name_Id) {
-		$this->table->deleteDataFromTable($id, $name_Id, true);
+		$this->table->deleteDataFromTable( array( $name_Id=>$id), true);
 
 		if ($tab == "poster") $res = $this->delFilePoster($id);		
 	}
@@ -51,10 +51,5 @@ class AuxiliaryVue {
 		$fdelS = $this->getPathFile($file,$folder);
 		if (file_exists($fdel))  unlink($fdel);
 		if (file_exists($fdelS)) unlink($fdelS);
-	}
-
-	public function getPosterById($id) {
-		$table = new classGetData('poster');
-		return $table->selectWhereGetRow ($id, 'id_poster', true)->fetch();
 	}
 }

@@ -26,7 +26,7 @@ class FA  extends classGetDB {
 	}
 
 	public function getFAId( int $id) {
-		return $this->photoalbum->selectWhereFetch($id,'id_FA');
+		return $this->photoalbum->selectWhereFetch( array('id_FA'=>$id) );
 	}
 
 	public function getFAAll(int $page = 1) {
@@ -49,7 +49,7 @@ class FA  extends classGetDB {
 	}
 
 	public function getFAOne(int $id) {
-		$result  = $this->photoInAlbum->selectWhere ($id,"id_album");
+		$result  = $this->photoInAlbum->selectWhere ( array( "id_album"=>$id), false );
 		$i       = 1;
 		while ($row = $result->fetch()) {			
 			$faOne[$i]['id']        = $row['id_foto'];
@@ -66,19 +66,22 @@ class FA  extends classGetDB {
 	}
 
 	public function getFAOneVue( int $id ) {
-		return $this->photoInAlbum->selectWhereGetRow ($id,'id_album', true);
+		return $this->photoInAlbum->selectWhereGetRow (array('id_album'=>$id), true);
 	}
 
 	public function updateFAOneVue ( int $id, string $subscribe )	{
-		return $this->photoInAlbum->updateDataInTable( array( 'subscribe' => $this->sl147_clean($subscribe) ), $id, 'id_foto', true);
+		return $this->photoInAlbum->updateDataInTable( array( 'subscribe' => $this->sl147_clean($subscribe) ), array( 'id_foto'=>$id), true);
 	}
 
 	public function updateFAVue ( int $id, string $title_FA, string $descr_FA )	{
-		return $this->photoalbum->updateDataInTable( array( 'name_FA' => $this->sl147_clean($title_FA), 'msgs_FA' => $this->sl147_clean($descr_FA) ), $id, 'id_FA', true);
+		return $this->photoalbum->updateDataInTable( 
+			array( 'name_FA' => $this->sl147_clean($title_FA), 'msgs_FA' => $this->sl147_clean($descr_FA) ),
+			array( 'id_FA' => $id),
+			true);
 	}
 
 	public function deleteFAOne ( int $id ) {
-		return $this->photoInAlbum->deleteDataFromTable( $id, 'id_foto', true);
+		return $this->photoInAlbum->deleteDataFromTable( array( 'id_foto'=>$id), true);
 	}
 
 	public function deleteFAOnePhoto( $id, $fotoName, $fotoNames, $idAlbum ){

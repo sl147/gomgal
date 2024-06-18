@@ -224,7 +224,8 @@ require_once ('views/news/checkFiles.php');
 		if( (isset($_POST['submit'])) && (isset($_POST['active']))) $res = $com->changeActiveComment($this->filterTXT('post', 'active'), $this->filterTXT('post', 'id_change'));
 	
 		$title = "перегляд коментарів клієнтів";
-		$total = $this->getCount('Comment');
+		$comment_t = new classGetData('Comment');
+		$total = $comment_t->selectCount(false);
 		$comms = $com->getComments($page);
 		$pagination = new Pagination($total, $page, SHOWPOSTER_BY_DEFAULT, 'page-');
 		unset($com);
@@ -235,7 +236,8 @@ require_once ('views/news/checkFiles.php');
 
 	public function actionNewsEdit($page = 1) {
 		$page  = $this->getIntval($page);
-		$total = $this->getCount('msgs');
+		$msgs_t = new classGetData('msgs');
+		$total = $msgs_t->selectCount(false);
 		$table = array(
 			'page' => $page
 			);
@@ -258,7 +260,9 @@ require_once ('views/news/checkFiles.php');
 		$page  = $this->getIntval($page);
 		$id    = $this->getIntval($id);
 		$title = "редагування новин";
-		if ($this->getCountAtr('msgs', 'id', $id)>0) {
+		$msgs_t    = new classGetData('msgs');
+		$args = array( 'id' => $id);
+		if ($msgs_t->selectCountWhere ( $args, false) ) {
 			$isId    = true;
 			$allNews = $this->newsClass->getNewsById($id,$page);
 			$tPos    = $this->newsClass->getCatNews();

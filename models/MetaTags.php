@@ -29,7 +29,7 @@ class MetaTags{
 			'keywords' => $keywords,
 			'follow'   => $follow,
 		);
-		$this->meta_tags->updateDataInTable( $args, $id, 'id');
+		$this->meta_tags->updateDataInTable( $args, array('id'=>$id));
 	}
 
 	public function saveMTags (string $url_name, string $title, string $description, string $keywords, string $follow) {

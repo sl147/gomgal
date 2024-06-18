@@ -45,12 +45,13 @@ class InsuranceController {
 			$id       = $this->filterINT('post','id');
 			$act      = $this->filterINT('post','active');
 			$getComCl = new classGetData('CommentCalculators');
-			$res      = $getComCl->updateDataInTable( array( 'active' => $act ), $id, 'id');
+			$res      = $getComCl->updateDataInTable( array( 'active' => $act ), array( 'id'=>$id ) );
 			unset($getComCl);
 		}
 		$title      = "перегляд коментарів клієнтів";
 		$comments   = Insurance::getAllComment($page);
-        $total      = $this->getCount('CommentCalculators');
+		$comment_t  = new classGetData('CommentCalculators');
+		$total      = $comment_t->selectCount(false);
         $pagination = new Pagination($total, $page, SHOWCOMMENT_BY_DEFAULT, 'page-');	
 		require_once ('views/insurance/insuranceCommentEdit.php');
 		return true;

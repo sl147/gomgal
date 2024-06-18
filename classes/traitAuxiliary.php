@@ -6,33 +6,8 @@
 
 trait traitAuxiliary {
 
-	public function formSql($atr,$value) {
-		return " WHERE ".$atr." = '".$value."'";
-	}
-
-	public function formSql2($atr1,$value1,$atr2,$value2) {
-		return " WHERE (".$atr1." = '".$value1."') AND (".$atr2." = '".$value2."')";
-	}
-
 	public function getIntval ($i) : int {
         return intval($i) ? intval($i) : 1;
-	}
-
-	public function getCount($table) {
-		$getDB  = new classGetDB();
-		$result = $getDB->getDB("SELECT count(*) as count FROM ".$table);
-		unset($getDB);
-		$result -> setFetchMode(PDO::FETCH_ASSOC);
-		return $result->fetch()['count'];
-	}
-
-	public function getCountAtr($table, $atr, $value) {
-		$getDB  = new classGetDB();
-		$result = $getDB->getDB("SELECT count(*) as count FROM ".$table.self::formSql($atr,$value));
-		unset($getDB);
-		$result -> setFetchMode(PDO::FETCH_ASSOC);
-
-		return $result->fetch()['count'];
 	}
 
 	public function filterINT($type, $field) {
@@ -223,7 +198,7 @@ trait traitAuxiliary {
     private function add_to_email_spam( string $email) {
     	if ( !$email ) return;
     	$spam_email = new classGetData('spam_email');
-    	if ( $spam_email->selectWhere( $email , 'email')->rowCount() > 0 ) return; 
+    	if ( $spam_email->selectWhere( array( 'email'=>$email ), false )->rowCount() > 0 ) return; 
  
     	return $spam_email->insertDataToTable( array( $email ), array('email'));
     }
@@ -231,7 +206,7 @@ trait traitAuxiliary {
 	public function isEmailSpam( string $email ) {		
 		if ( !$email ) return false;
     	$spam_email = new classGetData('spam_email');
-    	if ( $spam_email->selectWhere( $email , 'email')->rowCount() > 0 ) return true; 
+    	if ( $spam_email->selectWhere( array( 'email'=>$email ), false )->rowCount() > 0 ) return true; 
 		return  false;
 	}
 
@@ -376,7 +351,7 @@ trait traitAuxiliary {
 			$args = array(
 				'count'    => $result["count"] + 1,
 			);
-			return $getData->updateDataInTable( $args, $type, 'id_button');
+			return $getData->updateDataInTable( $args, array( 'id_button'=>$type) );
 		}
 		else {
 			$names  = ['id_button', 'count'];

@@ -411,15 +411,15 @@ border-radius: 10px;
 
 .news_msg {
 	text-indent: 5%;
-	white-space:pre-line;
+	/* white-space:pre-line; */
 	width: 100%;
 	overflow-x: auto; 
 	@media only screen and (max-width : 992px){
 		padding: 0px;
 	}
-	ul {
+/* 	ul {
 		line-height: 0.9;
-	}
+	} */
 }
 
 .imgNews {

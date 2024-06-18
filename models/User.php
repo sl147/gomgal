@@ -35,7 +35,7 @@ class User extends classGetDB {
 			'surname' => $surname,
 			'email'   => $email
 		);
-		$this->friends->updateDataInTable( $args, $login, 'user_login');
+		$this->friends->updateDataInTable( $args, array('user_login'=>$login));
 	}
 
 	public function chekUserData ($login,$password) {

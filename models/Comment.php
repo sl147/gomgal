@@ -52,10 +52,10 @@ class Comment {
 	}
 
 	public function delComment(int $id) :void {
-		$this->comment->deleteDataFromTable($id,$nameid='id_com');
+		$this->comment->deleteDataFromTable( array( 'id_com'=>$id));
 	}
 
 	public function changeActiveComment(bool $active, int $id) {
-		return $this->comment->updateDataInTable( array( 'active' => ($active) ? 0 : 1 ), $id, 'id_com');
+		return $this->comment->updateDataInTable( array( 'active' => ($active) ? 0 : 1 ), array( 'id_com'=>$id) );
 	}
 }
