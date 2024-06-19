@@ -14,7 +14,7 @@ class Insurance {
 			'type'    => $type,
 			'active' => 1
 		);
-		return $this->CommentCalculators->selectDataFromTableWHERE( $args );
+		return $this->CommentCalculators->selectFromTableWHERE( $args, false );
 	}
 
 	public function saveComment (int $type, string $nik, string $comment, string $ip, string $email="") {

@@ -14,7 +14,7 @@ class Relax {
 	}
 
 	public function getRelaxId( int $id) :int {
-		return (int) $this->catrelax->selectWhereFetch ( array( 'idrl'=>$id) );
+		return (int) $this->catrelax->selectFromTableWHERE ( array( 'idrl'=>$id), false, false, true );
 	}
 
 	private function getRowRelax($result) {
@@ -63,15 +63,15 @@ class Relax {
 			);	
 	}
 
-	public function getRelaxAll( int $page) :array {
+	public function getRelaxAll( int $page ) :array {
 		return (array) $this->msgs_relax->selectOrderPage (SHOWRELAX_BY_DEFAULT, $page, 'id','DESC', true);
 	}
 
-	public function getRelaxOne( int $id) :array {
-		return (array) $this->msgs_relax->selectWhereFetch ( array('id'=>$id ) );
+	public function getRelaxOne( int $id ) :array {
+		return (array) $this->msgs_relax->selectFromTableWHERE ( array('id'=>$id ), false, false, true );
 	}
 
-	public function updateRelax( int $id, string $msg, int $cat) {
+	public function updateRelax( int $id, string $msg, int $cat ) {
 		$args = array(
 					'msg' => $this->sl147_clean($msg),
 					'category' => $cat

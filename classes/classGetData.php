@@ -61,13 +61,23 @@ class classGetData extends classGetDB {
 
 //-------------------SELECT ---------------------------------------------------------------
 
-	public function selectFromTable ( bool $row = true, bool $vue = false) {
-		$sql = "SELECT * FROM ".$this->table;
+	private function getRowVue( string $sql, bool $row , bool $vue, bool $fetch = false) {
+		$request = ($row) ? ( ($vue) ? $this->getRow($this->getDBVue($sql))
+								 	 : $this->getRow($this->getDB($sql)) )
+			 		  	  : ( ($vue) ? $this->getDBVue($sql)
+			 		  			 	 : $this->getDB($sql));
 
-		return ($row) ? ( ($vue) ? $this->getRow($this->getDBVue($sql))
+		return ( $fetch ) ? $request->fetch() : $request;
+
+/*		return ($row) ? ( ($vue) ? $this->getRow($this->getDBVue($sql))
 								 : $this->getRow($this->getDB($sql)) )
 			 		  : ( ($vue) ? $this->getDBVue($sql)
-			 		  			 : $this->getDB($sql));
+			 		  			 : $this->getDB($sql));*/
+	}
+
+	public function selectFromTable( bool $row = true, bool $vue = false) {
+		$sql = "SELECT * FROM ".$this->table;
+		return $this->getRowVue( $sql, $row, $vue);
 	}
 
 	private function setWhere( array $args) :string {
@@ -78,35 +88,16 @@ class classGetData extends classGetDB {
 		return (string) substr($set, 0, -4);
 	}
 
-	public function selectDataFromTableWHERE (array $args, bool $row = true) {
+	public function selectFromTableWHERE( array $args, bool $row = true, bool $vue = false, bool $fetch = false) {
 		$sql = "SELECT * FROM ".$this->table.$this->setWhere($args);
-		return ( $row ) ? $this->getDB( $sql)
-						: $this->getRow($this->getDB($sql));	
+		return $this->getRowVue( $sql, $row, $vue, $fetch);
 	}
 
-	public function selectWhereGetRow ( array $args, bool $vue = false) {
-		$sql = "SELECT * FROM ".$this->table.$this->setWhere($args);
-		return ( $vue ) ? $this->getRow($this->getDBVue( $sql ))
-						: $this->getRow($this->getDB($sql));	
-	}
-
-	public function selectWhere ( array $args, bool $vue = false){
-		$sql = "SELECT * FROM ".$this->table.$this->setWhere($args);
-		return ($vue) ? $this->getDBVue($sql)
-					  : $this->getDB($sql);
-	}
-
-	public function selectWhereFetch ( array $args, bool $vue=false){
-		$sql = "SELECT * FROM ".$this->table.$this->setWhere($args);
-		return ($vue) ? $this->getDBVue($sql)->fetch()
-					  : $this->getDB($sql)->fetch();
-	}
-
-	public function selectDataFromTableWHEREFetch (array $args) {
+	public function selectDataFromTableWHEREFetch(array $args) {
 		return $this->getDB("SELECT * FROM ".$this->table.$this->setWhere($args))->fetch();	
 	}
 
-	public function selectWhereLimitRow ( string $nameOrder, array $args, string $desc = 'DESC', int $SHOW_BY_DEFAULT, bool $vue=false){
+	public function selectWhereLimitRow( string $nameOrder, array $args, string $desc = 'DESC', int $SHOW_BY_DEFAULT, bool $vue=false){
 		$sql = "SELECT * FROM ".$this->table.$this->setWhere( $args ). " ORDER BY " . $nameOrder . " "  . $desc . " LIMIT " . $SHOW_BY_DEFAULT;
 		return ($vue) ? $this->getRow($this->getDBVue( $sql ))
 					  : $this->getRow($this->getDB($sql));

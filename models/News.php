@@ -45,7 +45,7 @@ class News {
 	}
 
 	public function getCatEl( int $cat) {
-		return $this->catmsgs->selectWhereFetch ( array( 'idcm'=>$cat) );
+		return $this->catmsgs->selectFromTableWHERE( array( 'idcm'=>$cat), false, false, true );
 	}
 
 	public function getFindTotalNews( string $txt ) :int{
@@ -130,7 +130,7 @@ class News {
 	}
 
 	public function getNewsById( int $id) :array {
-		$list = $this->msgs->selectWhereFetch ( array( 'id'=>$id) );
+		$list = $this->msgs->selectFromTableWHERE ( array( 'id'=>$id), false, false, true );
 		$list['photo']  = "/NewsFoto/".$list['foto'];
 		$list['video']  = "//www.youtube.com/v/".$list['videoYT']."?hl=uk_UA&amp;version=3";
 		unset($getData);

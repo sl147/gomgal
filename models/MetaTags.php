@@ -15,10 +15,7 @@ class MetaTags{
 	}
 
 	public function getMTagsByID(int $id) {
-		$args = array(
-			'id' => $id
-		);
-		return $this->meta_tags->selectDataFromTableWHEREFetch( $args );
+		return $this->meta_tags->selectFromTableWHERE( array('id' => $id), false, false, tru );
 	}
 
 	public function editMetaTags(int $id, string $url_name, string $title, string $description, string $keywords, string $follow) {
@@ -42,7 +39,7 @@ class MetaTags{
 		$args = array(
 			'url_name' => $url
 		);
-		return $this->meta_tags->selectDataFromTableWHEREFetch( $args );
+		return $this->meta_tags->selectFromTableWHERE( array('url_name' => $url), false, false, true );
 	}
 
 /*	public function showMeta($metaTags, $news = 1) {

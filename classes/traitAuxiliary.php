@@ -198,7 +198,7 @@ trait traitAuxiliary {
     private function add_to_email_spam( string $email) {
     	if ( !$email ) return;
     	$spam_email = new classGetData('spam_email');
-    	if ( $spam_email->selectWhere( array( 'email'=>$email ), false )->rowCount() > 0 ) return; 
+    	if ( $spam_email->selectFromTableWHERE( array( 'email'=>$email ), false )->rowCount() > 0 ) return; 
  
     	return $spam_email->insertDataToTable( array( $email ), array('email'));
     }
@@ -206,7 +206,7 @@ trait traitAuxiliary {
 	public function isEmailSpam( string $email ) {		
 		if ( !$email ) return false;
     	$spam_email = new classGetData('spam_email');
-    	if ( $spam_email->selectWhere( array( 'email'=>$email ), false )->rowCount() > 0 ) return true; 
+    	if ( $spam_email->selectFromTableWHERE( array( 'email'=>$email ), false )->rowCount() > 0 ) return true; 
 		return  false;
 	}
 
@@ -343,10 +343,7 @@ trait traitAuxiliary {
 
 	public function plusClickButton($type) {
 		$getData  = new classGetData("countClickButton");
-		$args = array(
-			'id_button' => $type
-		);
-		$result = $getData->selectDataFromTableWHEREFetch( $args );
+		$result = $getData->selectFromTableWHERE( array( 'id_button' => $type ), false, false, true );
 		if ($result) {
 			$args = array(
 				'count'    => $result["count"] + 1,
@@ -425,7 +422,7 @@ trait traitAuxiliary {
         $massage = $mass;
         $subject = $massage;
         $subject .= ($width < 993) ? " із мобільного" : '';
-        $massage .= "з країни ".$getIPData['country_code']." з міста ".$getIPData['city']."\r\n";
+        //$massage .= "з країни ".$getIPData['country_code']." з міста ".$getIPData['city']."\r\n";
         $massage .= 'ширина екрану: '.$width."\r\n";
         $massage .= $txt.$_SERVER['HTTP_REFERER']."\r\n";
 

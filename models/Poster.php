@@ -144,7 +144,7 @@ class Poster  extends classGetDB {
 			'rand_p' => $rand,
 			'active' => 0
 		);
-		return $this->poster->selectDataFromTableWHEREFetch( $args);
+		return $this->poster->selectFromTableWHERE( $args, false, false, true);
 	}
 
 	public  function getPosterById( int $id )	{
@@ -152,7 +152,7 @@ class Poster  extends classGetDB {
 			'id_poster' => $id,
 			'active'    => 0
 		);
-		return $this->poster->selectDataFromTableWHEREFetch( $args);
+		return $this->poster->selectFromTableWHERE( $args, false, false, true);
 	}
 
 	public function plusId($id) {
@@ -168,7 +168,7 @@ class Poster  extends classGetDB {
 	}
 
 	public  function getPostersByCat(int $cat) {
-		return $this->category->selectDataFromTableWHEREFetch (array( 'id_cat'=> $cat) );
+		return $this->category->selectFromTableWHERE( array( 'id_cat'=> $cat), false, false, true );
 	}
 
 	public function getAllTypePost() {

@@ -21,7 +21,7 @@ class Comment {
 			'id_cl'  => $id,
 			'active' => 1
 		);
-		return $this->comment->selectDataFromTableWHERE( $args, false );
+		return $this->comment->selectFromTableWHERE( $args );
 	}	
 
 	public function insComment(int $id_cl, string $txt_com, string $nik_com, string $email_com, string $ip_com)	{

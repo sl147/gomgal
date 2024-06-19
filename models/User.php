@@ -43,20 +43,20 @@ class User extends classGetDB {
 		if (empty($userCurrent)) return false;
 		if ($userCurrent['id'] < 10) {
 			$password = md5(md5(trim($password)));
-			return $this->friends->selectWhereFetch( array( 'user_login'=>$login, 'user_password'=>$password) ) ['id'];
+			return $this->friends->selectFromTableWHERE( array( 'user_login'=>$login, 'user_password'=>$password), false, false, true ) ['id'];
 		}else{
-			$user = $this->friends->selectWhereFetch( array( 'user_login'=>$login) );
+			$user = $this->friends->selectFromTableWHERE( array( 'user_login'=>$login), false, false, true );
 			if($user) return (password_verify($password, $user['user_password'])) ? $user['id'] : false;
 		}
 		return false;
 	}
 
 	public function getUserByLogin( string $login) {
-		return $this->friends->selectDataFromTableWHEREFetch( array('user_login' => $login ) ) ?? [];
+		return $this->friends->selectFromTableWHERE( array('user_login' => $login ), false, false, true ) ?? [];
 	}
 
 	public function getUserNameById( int $id) {
-		$user = $this->friends->selectDataFromTableWHEREFetch( array('id' => $id ) );
+		$user = $this->friends->selectFromTableWHERE( array('id' => $id ), false, false, true );
 		return $user['name'] . ' ' . $user['surname'];
 	}
 

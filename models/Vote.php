@@ -15,7 +15,7 @@ class Vote {
 	}
 
 	public function getVote() {
-		$result = $this->catVote->selectWhereFetch( array( "active"=>1));
+		$result = $this->catVote->selectFromTableWHERE( array( "active"=>1), false, false, true);
 		return $result['idrl'];
 	}
 
@@ -32,11 +32,11 @@ class Vote {
 	}
 
 	public function getVoteVue() {
-		return $this->catVote->selectWhereFetch( array( "active"=>1) , true);
+		return $this->catVote->selectFromTableWHERE( array( "active"=>1) ,false, true, true);
 	}
 
 	public function getTxtVoteVue(int $id) {
-		return $this->vote->selectWhereGetRow( array("category"=>$id), true);
+		return $this->vote->selectFromTableWHERE( array("category"=>$id), true, true);
 	}
 
 	public function addVote(int $id, int $count) {
