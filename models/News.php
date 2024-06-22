@@ -41,11 +41,18 @@ class News {
 	}
 
 	public function getCatNews() :array {
-		return (array) $this->catmsgs->getData2El('idcm','namecm');
+		$result = $this->catmsgs->selectDataFromTable( array(), 'namecm', 0, 'ASC', false);
+		$i  = 0;
+		while ($row = $result->fetch()) {
+			$list[$i]['id']   = $row['idcm'];
+			$list[$i]['name'] = $row['namecm'];
+			$i++;
+		}
+		return $list ?? [];
 	}
 
-	public function getCatEl( int $cat) {
-		return $this->catmsgs->selectFromTableWHERE( array( 'idcm'=>$cat), false, false, true );
+	public function getCatEl( int $cat ) {
+		return $this->catmsgs->selectDataFromTable( array( 'idcm'=>$cat), "", 0, 'DESC', false, false, true);
 	}
 
 	public function getFindTotalNews( string $txt ) :int{
@@ -69,11 +76,11 @@ class News {
 	}
 
 	public function getAllNewsVue( int $page = 1) {
-		return $this->msgs->selectOrderPageVue( self::SHOWNEWS_BY_DEFAULT_Vue, $page, 'id', 'DESC', true);
+		return $this->msgs->selectDataFromTable( array(), 'id', self::SHOWNEWS_BY_DEFAULT_Vue, 'DESC', true, true, false, true, $page);
 	}
 
 	public function getNews() : array {
-		$result = $this->msgs->selectOrderPage (25, 1, 'id' );
+		$result = $this->msgs->selectDataFromTable( array(), 'id', 25, 'DESC', false, false, false, true, 1);
 		$i      = 0;
 		while ($row = $result->fetch()) {
 			$NewsList[]            = $row;
@@ -93,7 +100,7 @@ class News {
 	}
 
 	public function getNewsTop() :array {
-		$topNews         = $this->msgs->selectWhereLimitFetch ( 1, 'id', array('top'=>1) );
+		$topNews         = $this->msgs->selectDataFromTable( array('top'=>1), 'id', 1, 'DESC', false, false, true);
 		$topNews         = $this->addPhotoSize( $topNews, $topNews['foto']);
 		$topNews['foto'] = "NewsFoto/".$topNews['foto'];
 		
@@ -130,7 +137,7 @@ class News {
 	}
 
 	public function getNewsById( int $id) :array {
-		$list = $this->msgs->selectFromTableWHERE ( array( 'id'=>$id), false, false, true );
+		$list = $this->msgs->selectDataFromTable( array( 'id'=>$id), "", 0, 'DESC', false, false, true);
 		$list['photo']  = "/NewsFoto/".$list['foto'];
 		$list['video']  = "//www.youtube.com/v/".$list['videoYT']."?hl=uk_UA&amp;version=3";
 		unset($getData);

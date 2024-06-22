@@ -1,7 +1,7 @@
 <?php
 $response = [];
 $getData  = new classGetData('msgs');
-$result   = $getData->selectOrderLimit('id',20);
+$result   = $getData->selectDataFromTable( array(), 'id', 20, 'DESC', false);
 if ($result) {
 	while ($row = $result->fetch()) {
 		$new_item = array(

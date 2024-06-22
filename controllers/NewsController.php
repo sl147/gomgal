@@ -49,7 +49,7 @@ class NewsController {
 
 	public function actionCheckFilesNews() {
 		$getData = new classGetData('msgs');
-		$result  = $getData->selectFromTable(false);
+		$result  = $getData->selectDataFromTable( array(), "", 0, 'DESC', false);
 		unset($getData);
 
 		$i       = 1;

@@ -13,10 +13,7 @@ class Poster  extends classGetDB {
 	}
 
 	public function getPosters20() {
-		$args = array(
-			'active' => 0
-		);
-		return $this->poster->selectWhereLimitRow ( 'id_poster', $args , 'DESC', 20, false);
+		return $this->poster->selectDataFromTable( array( 'active' => 0 ), 'id_poster', 20);
 	}
 
 	public  function getAllPostersImpotCat( int $cat) {
@@ -25,7 +22,7 @@ class Poster  extends classGetDB {
 			'impot' => 1,
 			'active' => 0
 		);
-		return $this->poster->selectWhereLimitRow ( 'id_poster', $args , 'DESC', 20, false);
+		return $this->poster->selectDataFromTable( $args, 'id_poster');
 	}
 
 	public function getAllPostersImpot() {
@@ -33,7 +30,7 @@ class Poster  extends classGetDB {
 			'impot' => 1,
 			'active' => 0
 		);
-		return $this->poster->selectWhereLimitRow ( 'id_poster', $args , 'DESC', 20, false);
+		return $this->poster->selectDataFromTable( $args, 'id_poster');
 	}
 
 	public  function getAllPostersAllCat( int $cat, int $page = 1) {
@@ -41,7 +38,7 @@ class Poster  extends classGetDB {
 			'cat_p' => $cat,
 			'active' => 0
 		);
-		return $this->poster->selectWhereOrderPage( $args, 'id_poster', 'DESC', SHOWPOSTER_BY_DEFAULT, $page, true);
+		return $this->poster->selectDataFromTable( $args, 'id_poster', SHOWPOSTER_BY_DEFAULT, 'DESC', true, false, false, true, $page );
 	}
 
 	private function getListArr($sql) {
@@ -53,10 +50,7 @@ class Poster  extends classGetDB {
 	}
 
 	public function getAllPostersAll($page = 1)	{
-		$args = array(
-			'active' => 0
-		);
-		return $this->poster->selectWhereOrderPage( $args, 'id_poster', 'DESC', SHOWPOSTER_BY_DEFAULT, $page, true);
+		return $this->poster->selectDataFromTable( array( 'active' => 0), 'id_poster', SHOWPOSTER_BY_DEFAULT, 'DESC', true, false, false, true, $page );
 	}
 
 	public  function getFindPosters($txt,$page = 1)	{
@@ -75,19 +69,18 @@ class Poster  extends classGetDB {
 	}
 
 	public function getPostersVerify()	{
-		$category = $this->category->selectFromTable(false);
+		$category = $this->category->selectDataFromTable( array(), "", 0, 'DESC', false);
 		while ($row = $category->fetch()) {
 			for ($j=0; $j < 6; $j++) { 
 				$count_all[$j][$row['id_cat']] = 0;
 			}
 		}
-		$result = $this->poster->selectFromTable(false);
+		$result = $this->poster->selectDataFromTable( array(), "", 0, 'DESC', false);
 		while ($row = $result->fetch()) {
 		    $type_p = $this->getIntval($row['type_p']);
 		    $cat_p  = $this->getIntval($row['cat_p']);
 		    $count_all[$type_p][$cat_p] +=1;
 		}
-		$category = $this->category->selectFromTable(false);
 		$type_cat = $this->getTypeCategory();
 		while ($row = $category->fetch()) {
             $id_cat = $row['id_cat'];
@@ -103,7 +96,7 @@ class Poster  extends classGetDB {
 	}
 
 	public  function getPostersCatEd() {
-		return $this->category->selectOrderBy('cat_cat','DESC', true);
+		return $this->category->selectDataFromTable( array(), 'cat_cat');
 	}
 
 	public function getPostersCat()	{
@@ -111,7 +104,7 @@ class Poster  extends classGetDB {
 			$count_all_in_column[$j] = 0;
 		}
 		$count_all_posters = 0;
-		$result = $this->category->selectOrderBy('cat_cat', 'ASC');
+		$result = $this->category->selectDataFromTable( array(), 'cat_cat', 0, 'ASC', false);
 		$type_cat = $this->getTypeCategory();
 		$i      = 1;
 		while ($row = $result->fetch()) {
@@ -144,7 +137,7 @@ class Poster  extends classGetDB {
 			'rand_p' => $rand,
 			'active' => 0
 		);
-		return $this->poster->selectFromTableWHERE( $args, false, false, true);
+		return $this->poster->selectDataFromTable( $args, "", 0, 'DESC', false, false, true);
 	}
 
 	public  function getPosterById( int $id )	{
@@ -152,7 +145,7 @@ class Poster  extends classGetDB {
 			'id_poster' => $id,
 			'active'    => 0
 		);
-		return $this->poster->selectFromTableWHERE( $args, false, false, true);
+		return $this->poster->selectDataFromTable( $args, "", 0, 'DESC', false, false, true);
 	}
 
 	public function plusId($id) {
@@ -163,12 +156,12 @@ class Poster  extends classGetDB {
 		return $this->poster->selectCountFind( array( 'msg_p' => $txt ), false);
 	}
 
-	public function updateFoto ($id,$foto) {
+	public function updateFoto($id,$foto) {
 		return $this->poster->updateDataInTable( array( 'foto_p1' => $foto ), array('id_poster'=>$id) );
 	}
 
 	public  function getPostersByCat(int $cat) {
-		return $this->category->selectFromTableWHERE( array( 'id_cat'=> $cat), false, false, true );
+		return $this->category->selectDataFromTable( array( 'id_cat'=> $cat), "", 0, 'DESC', false, false, true );
 	}
 
 	public function getAllTypePost() {
@@ -183,7 +176,7 @@ class Poster  extends classGetDB {
 		return $this->getAllTypePost() [$type];
 	}
 
-	public function incrementTypeCategory (int $cat, int $type) {
+	public function incrementTypeCategory(int $cat, int $type) {
 		$row = $this->getPostersByCat($cat);
 		$category_type = $this->getTypeCategory();
 		return $this->category->updateDataInTable(
@@ -235,8 +228,8 @@ class Poster  extends classGetDB {
 	}
 
 	public  function getAllPostersVue($page = 1) {
-		$i          = 1;
-		$result = $this->poster->selectOrderPageVue($this->show,$page, 'id_poster', $desk = 'DESC');
+		$i      = 1;
+		$result = $this->poster->selectDataFromTable( array(), 'id_poster', $this->show, 'DESC', false, true, false, true, $page);
 		while ($row = $result->fetch()) {
 			$postList[$i]['id']       = $row['id_poster'];
 			$postList[$i]['title_p']  = $row['title_p'];

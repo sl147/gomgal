@@ -2,7 +2,7 @@
 $response = [];
 if (isset($_POST['id'])) {
 	$getData = new classGetData('msgs');
-	$result  = $getData->selectFromTableWHERE( array( 'id' => $_POST['id']), false, false );
+	$result  = $getData->selectDataFromTable( array( 'id' => $_POST['id']), "", 0, 'DESC', false);
 	if ($result) {
 		while ($row = $result->fetch()) {
 			$new_item = array(

@@ -10,8 +10,15 @@ class AuxiliaryVue {
 		$this->table = new classGetData($table);
 	}
 
-	public function sel2El( string $name, string $id, string $idVal, bool $isId) {
-		return $this->table->getData2ElVue($id,$name,$idVal);
+	public function sel2El( string $name, string $id, string $idVal, bool $isId) :array{
+		$result = $this->table->selectDataFromTable( array(), $name, 0, 'ASC', false,true);
+		$i  = 0;
+		while ($row = $result->fetch()) {
+			$list[$i]['id']   = $row[$id];
+			$list[$i]['name'] = $row[$name];
+			$i++;
+		}
+		return (array) $list ?? [];
 	}
 
 	public function addVue2El( string $name, string $nameEl) {

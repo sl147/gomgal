@@ -11,12 +11,11 @@ class Vote {
 	}
 
 	public function getTxtVote(int $id) {
-		return $this->vote->selectWhereOrderBy( array("category"=>$id), 'countrl');
+		return $this->vote->selectDataFromTable( array("category"=>$id), 'countrl', 0, 'DESC', false);
 	}
 
 	public function getVote() {
-		$result = $this->catVote->selectFromTableWHERE( array( "active"=>1), false, false, true);
-		return $result['idrl'];
+		return $this->catVote->selectDataFromTable( array( "active"=>1), "", 0, 'DESC', false, false, true)['idrl'];
 	}
 
 	public function addElVote(string $name, int $cat) {
@@ -24,7 +23,7 @@ class Vote {
 	}
 
 	public function getAllVote() {
-		return $this->catVote->selectFromTable(false) ?? [];
+		return $this->catVote->selectDataFromTable( array(), "", 0, 'DESC', false) ?? [];
 	}
 
 	public static function showVote() {
@@ -32,11 +31,11 @@ class Vote {
 	}
 
 	public function getVoteVue() {
-		return $this->catVote->selectFromTableWHERE( array( "active"=>1) ,false, true, true);
+		return $this->catVote->selectDataFromTable( array( "active" => 1 ), "", 0, 'DESC', false, true, true);
 	}
 
 	public function getTxtVoteVue(int $id) {
-		return $this->vote->selectFromTableWHERE( array("category"=>$id), true, true);
+		return $this->vote->selectDataFromTable( array( "category" => $id ), "", 0, 'DESC', true, true);
 	}
 
 	public function addVote(int $id, int $count) {

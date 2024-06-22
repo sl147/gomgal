@@ -10,17 +10,17 @@ class User extends classGetDB {
 		$this->friends = new classGetData('friends');
 	}
 
-	private function userGetData( string $table, string $nameID, int $page) {
+	private function userGetData( string $table, string $nameID, int $page ) {
 		$getData = new classGetData($table);
-		return $getData->selectOrderPage ( SHOWCOMMENT_BY_DEFAULT, $page, $nameID, 'DESC', true );
+		return $getData->selectDataFromTable( array(), $nameID, SHOWCOMMENT_BY_DEFAULT, 'DESC', true, false, false, true, $page);
 	}
 
-	public function getUsersComments( int $page) {
-		return $this->userGetData('ComCl','id',$page);
+	public function getUsersComments( int $page ) {
+		return $this->userGetData( 'ComCl', 'id', $page );
 	}
 
 	public function getUsersWishes( int $page) {
-		return $this->userGetData('wishCl','id_com',$page);
+		return $this->userGetData( 'wishCl', 'id_com', $page );
 	}
 
 	public function createUser( string $login, string $password, string $name, string $surname, string $email){
@@ -43,20 +43,20 @@ class User extends classGetDB {
 		if (empty($userCurrent)) return false;
 		if ($userCurrent['id'] < 10) {
 			$password = md5(md5(trim($password)));
-			return $this->friends->selectFromTableWHERE( array( 'user_login'=>$login, 'user_password'=>$password), false, false, true ) ['id'];
+			return $this->friends->selectDataFromTable( array( 'user_login'=>$login, 'user_password'=>$password), "", 0, 'DESC', false, false, true);
 		}else{
-			$user = $this->friends->selectFromTableWHERE( array( 'user_login'=>$login), false, false, true );
+			$user = $this->friends->selectDataFromTable( array( 'user_login'=>$login), "", 0, 'DESC', false, false, true);
 			if($user) return (password_verify($password, $user['user_password'])) ? $user['id'] : false;
 		}
 		return false;
 	}
 
 	public function getUserByLogin( string $login) {
-		return $this->friends->selectFromTableWHERE( array('user_login' => $login ), false, false, true ) ?? [];
+		return $this->friends->selectDataFromTable( array( 'user_login'=>$login), "", 0, 'DESC', false, false, true) ?? [];
 	}
 
 	public function getUserNameById( int $id) {
-		$user = $this->friends->selectFromTableWHERE( array('id' => $id ), false, false, true );
+		$user = $this->friends->selectDataFromTable( array('id' => $id ), "", 0, 'DESC', false, false, true);
 		return $user['name'] . ' ' . $user['surname'];
 	}
 
@@ -80,6 +80,6 @@ class User extends classGetDB {
 	}
 
 	public function getUsers() {
-		return $this->friends->selectFromTable(true);	
+		return $this->friends->selectDataFromTable( array(), "");
 	}
 }

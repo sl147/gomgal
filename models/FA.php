@@ -26,11 +26,11 @@ class FA  extends classGetDB {
 	}
 
 	public function getFAId( int $id) {
-		return $this->photoalbum->selectFromTableWHERE( array('id_FA'=>$id), false, false, true );
+		return $this->photoalbum->selectDataFromTable( array('id_FA'=>$id), '', 0, 'DESC', false,false, true);
 	}
 
 	public function getFAAll(int $page = 1) {
-		$result = $this->photoalbum->selectOrderPage (self::SHOWFA_BY_DEFAULT_Vue, $page, 'id_FA');
+		$result = $this->photoalbum->selectDataFromTable( array(), 'id_FA', self::SHOWFA_BY_DEFAULT_Vue, 'DESC', false, false, false, true, $page);
 		$i      = 1;
 		while ($row = $result->fetch()) {			
 			$faList[$i]['id']   = $row['id_FA'];
@@ -49,7 +49,7 @@ class FA  extends classGetDB {
 	}
 
 	public function getFAOne(int $id) {
-		$result  = $this->photoInAlbum->selectFromTableWHERE( array( "id_album"=>$id), false, false );
+		$result  = $this->photoInAlbum->selectDataFromTable( array( "id_album"=>$id), '', 0, 'DESC', false, false);
 		$i       = 1;
 		while ($row = $result->fetch()) {			
 			$faOne[$i]['id']        = $row['id_foto'];
@@ -62,11 +62,11 @@ class FA  extends classGetDB {
 	}
 
 	public function getFAVue( int $page = 1 ) {
-		return $this->photoalbum->selectOrderPageVue(self::SHOWFA_BY_DEFAULT_Vue, $page, 'id_FA', 'DESC', true);
+		return $this->photoalbum->selectDataFromTable( array(), 'id_FA', self::SHOWFA_BY_DEFAULT_Vue, 'DESC', true, true, false, true, $page);
 	}
 
 	public function getFAOneVue( int $id ) {
-		return $this->photoInAlbum->selectFromTableWHERE (array('id_album'=>$id), true, true);
+		return $this->photoInAlbum->selectDataFromTable( array( 'id_album' => $id ), '', 0, 'DESC', true, true);
 	}
 
 	public function updateFAOneVue( int $id, string $subscribe )	{

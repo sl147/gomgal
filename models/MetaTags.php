@@ -11,11 +11,11 @@ class MetaTags{
 	}
 
 	public function getMTags() {
-		return $this->meta_tags->selectFromTable(true) ?? [];
+		return $this->meta_tags->selectDataFromTable( array() ) ?? [];
 	}
 
 	public function getMTagsByID(int $id) {
-		return $this->meta_tags->selectFromTableWHERE( array('id' => $id), false, false, tru );
+		return $this->meta_tags->selectDataFromTable( array('id' => $id), "", 0, 'DESC', false, false, true);
 	}
 
 	public function editMetaTags(int $id, string $url_name, string $title, string $description, string $keywords, string $follow) {
@@ -39,7 +39,7 @@ class MetaTags{
 		$args = array(
 			'url_name' => $url
 		);
-		return $this->meta_tags->selectFromTableWHERE( array('url_name' => $url), false, false, true );
+		return $this->meta_tags->selectDataFromTable( array('url_name' => $url), "", 0, 'DESC', false, false, true);
 	}
 
 /*	public function showMeta($metaTags, $news = 1) {

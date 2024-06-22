@@ -13,7 +13,7 @@ class Comment {
 	}
 
 	public function getComments(int $page) :array {
-		return (array) $this->comment->selectOrderPage( SHOWCOMMENT_BY_DEFAULT, $page, 'id_com', 'DESC', true );
+		return (array) $this->comment->selectDataFromTable( array(), 'id_com', SHOWCOMMENT_BY_DEFAULT, 'DESC', true, false, false, true, $page);
 	}
 
 	public function getCommentsById(int $id) :array {
@@ -21,7 +21,7 @@ class Comment {
 			'id_cl'  => $id,
 			'active' => 1
 		);
-		return $this->comment->selectFromTableWHERE( $args );
+		return $this->comment->selectDataFromTable( $args );
 	}	
 
 	public function insComment(int $id_cl, string $txt_com, string $nik_com, string $email_com, string $ip_com)	{

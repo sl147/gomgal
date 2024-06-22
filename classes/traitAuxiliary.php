@@ -198,7 +198,7 @@ trait traitAuxiliary {
     private function add_to_email_spam( string $email) {
     	if ( !$email ) return;
     	$spam_email = new classGetData('spam_email');
-    	if ( $spam_email->selectFromTableWHERE( array( 'email'=>$email ), false )->rowCount() > 0 ) return; 
+    	if ( $spam_email->selectDataFromTable( array( 'email'=>$email ), "", 0, 'DESC', false)->rowCount() > 0 ) return;
  
     	return $spam_email->insertDataToTable( array( $email ), array('email'));
     }
@@ -206,7 +206,7 @@ trait traitAuxiliary {
 	public function isEmailSpam( string $email ) {		
 		if ( !$email ) return false;
     	$spam_email = new classGetData('spam_email');
-    	if ( $spam_email->selectFromTableWHERE( array( 'email'=>$email ), false )->rowCount() > 0 ) return true; 
+    	if ( $spam_email->selectDataFromTable( array( 'email'=>$email ), "", 0, 'DESC', false)->rowCount() > 0 ) return true;
 		return  false;
 	}
 
@@ -235,7 +235,7 @@ trait traitAuxiliary {
 
 	private function getSpam() {
 		$getData  = new classGetData("spamTab");
-		return $getData->selectFromTable( true );		
+		return $getData->selectDataFromTable( array() );	
 	}
 
 	public function getToken( $strength = 16) {
@@ -343,7 +343,7 @@ trait traitAuxiliary {
 
 	public function plusClickButton($type) {
 		$getData  = new classGetData("countClickButton");
-		$result = $getData->selectFromTableWHERE( array( 'id_button' => $type ), false, false, true );
+		$result = $getData->selectDataFromTable( array( 'id_button' => $type ), "", 0, 'DESC', false, false, true);
 		if ($result) {
 			$args = array(
 				'count'    => $result["count"] + 1,

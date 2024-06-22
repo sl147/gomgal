@@ -12,8 +12,7 @@ class Video extends classGetDB {
 	}
 
 	public  function getVideo(int $page) {
-
-		$result  = $this->progrnk->selectOrderPage (SHOWVIDEO_BY_DEFAULT, $page, 'prid');
+		$result  = $this->progrnk->selectDataFromTable( array(), 'prid', SHOWVIDEO_BY_DEFAULT, 'DESC', false, false, false, true, $page );
 		$i       = 0;
 		while ($row = $result->fetch()) {			
 			$list[] = $row;
@@ -25,7 +24,7 @@ class Video extends classGetDB {
 	}
 
 	public function getVideoVue(int $page = 1) {
-		return $this->progrnk->selectOrderPageVue( self::SHOWVIDEO_BY_DEFAULT_Vue, $page, 'prid', 'DESC', true);
+		return $this->progrnk->selectDataFromTable( array(), 'prid', self::SHOWVIDEO_BY_DEFAULT_Vue, 'DESC', true, true, false, true, $page );
 	}
 
 	public function updateVideoVue (int $id, string $idYT, string $title) {

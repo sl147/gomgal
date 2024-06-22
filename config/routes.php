@@ -108,7 +108,7 @@ return array(
 'userNews' => 'user/userComment',
 'userUnreg' => 'user/unreg',
 'usersView' => 'user/usersView',
-'userWishes/([0-9]+)' => 'user/userWishes/$1',
+'userWishes/page-([0-9]+)' => 'user/userWishes/$1',
 'userWishes' => 'user/userWishes',
 'page-([0-9]+)' => 'site/index/$1',
 '' => 'site/index',
