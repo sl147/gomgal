@@ -35,6 +35,18 @@
 			</div>
 			<div class="btn-group btn-group-justified">
 				<button type="button" data-toggle="dropdown" class="btn btn-delta11 dropdown-toggle">
+					ДОЗВІЛЛЯ<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<?php
+						Auxiliary::showElementMenu("relaxEdit","редагування дозвілля","редагування дозвілля");
+						Auxiliary::showElementMenu("relaxCatAf","редагування категорій дозвілля","категорії дозвілля");
+						Auxiliary::showElementMenu("relaxCatAn","редагування категорій анекдотів","категорії анекдотів")
+					?>
+				</ul>		
+			</div>
+			<div class="btn-group btn-group-justified">
+				<button type="button" data-toggle="dropdown" class="btn btn-delta11 dropdown-toggle">
 					ФОТОАЛЬБОМИ<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
@@ -46,6 +58,19 @@
 					</li>
 				</ul>			
 			</div> 
+			<div class="btn-group btn-group-justified">
+				<button type="button" data-toggle="dropdown" class="btn btn-delta11 dropdown-toggle">
+					ОГОЛОШЕННЯ<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<?php
+					Auxiliary::showElementMenu("posterEdit","редагування оголошень","редагування оголошень");
+					Auxiliary::showElementMenu("posterGr","редагування груп оголошень","групи оголошень");
+					Auxiliary::showElementMenu("posterCatEd","редагування категорій оголошень","категорії оголошень");
+					Auxiliary::showElementMenu("posterVerify","перевірка оголошень","перевірка оголошень")
+					?>
+				</ul>			
+			</div>
 			<div class="btn-group btn-group-justified">
 				<button type="button" data-toggle="dropdown" class="btn btn-delta11 dropdown-toggle">
 					ВІДЕО<span class="caret"></span>
@@ -63,31 +88,6 @@
 						Auxiliary::showElementMenu("voteActive","активне голосування","активне голосування");
 						Auxiliary::showElementMenu("voteEdit","редагування категорій голосування","редагування голосування");
 						Auxiliary::showElementMenu("voteShow","результати голосування","результати голосування");
-					?>
-				</ul>			
-			</div>
-			<div class="btn-group btn-group-justified">
-				<button type="button" data-toggle="dropdown" class="btn btn-delta11 dropdown-toggle">
-					ДОЗВІЛЛЯ<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu">
-					<?php
-						Auxiliary::showElementMenu("relaxEdit","редагування дозвілля","редагування дозвілля");
-						Auxiliary::showElementMenu("relaxCatAf","редагування категорій дозвілля","категорії дозвілля");
-						Auxiliary::showElementMenu("relaxCatAn","редагування категорій анекдотів","категорії анекдотів")
-					?>
-				</ul>		
-			</div>
-			<div class="btn-group btn-group-justified">
-				<button type="button" data-toggle="dropdown" class="btn btn-delta11 dropdown-toggle">
-					ОГОЛОШЕННЯ<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu">
-					<?php
-					Auxiliary::showElementMenu("posterEdit","редагування оголошень","редагування оголошень");
-					Auxiliary::showElementMenu("posterGr","редагування груп оголошень","групи оголошень");
-					Auxiliary::showElementMenu("posterCatEd","редагування категорій оголошень","категорії оголошень");
-					Auxiliary::showElementMenu("posterVerify","перевірка оголошень","перевірка оголошень")
 					?>
 				</ul>			
 			</div>
