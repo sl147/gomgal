@@ -21,7 +21,7 @@ class ContaktController {
 					$this->mailToClient($email_com,'Дякуєм за Ваше повідомлення.');
 					$subject = "Нове повідомлення зі сторінки Контакти";
 					$massage = $subject."\r\n від: $nik_com\r\n email:$email_com\r\n$txt_com\r\n"." ip=".$ip_com."  з HTTP_REFERER ".$_SERVER['HTTP_REFERER']."\r\n"."  з REMOTE_ADDR ".$_SERVER['REMOTE_ADDR'];
-					$this->sendMail($subject,BanMAIL,$massage);					
+					$this->mailing(BanMAIL, $subject, $massage);					
 				}else{
 					$subject = "Нове не зрозуміле повідомлення";
 					$massage = $subject."\r\n".$txt_com."\r\n".$nik_com."\r\n".$email_com;
@@ -35,7 +35,7 @@ class ContaktController {
 			$subject = "haks зі сторінки Contakt";
 			$massage = $subject."\r\n".$txt_com."\r\n".$nik_com."\r\n".$email_com;				
 		}
-		$this->sendMail($subject,SLMAIL,$massage);
+		$this->mailing(SLMAIL, $subject, $massage);
 	}
 
 

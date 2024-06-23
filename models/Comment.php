@@ -30,20 +30,20 @@ class Comment {
 		if ($this->isEmailSpam($email_com)) {
 			$subject = "email в Спамі зі сторінки новини коментар";
 			$massage = $subject."\r\nвід: $nik_com\r\nemail:$email_com\r\ntxt_com:$txt_com\r\n";
-			$mail    = $this->sendMail($subject,SLMAIL,$massage);
+			$mail    = $this->mailing(SLMAIL, $subject, $massage);
 			return false;
 		}
 
 		if ($this->isSpam($nik_com,$ip_com,$email_com,$txt_com)) {
 			$subject = "Спам зі сторінки новини коментар";
 			$massage = $subject."\r\nвід: $nik_com\r\nemail:$email_com\r\ntxt_com:$txt_com\r\n";
-			$mail    = $this->sendMail($subject,SLMAIL,$massage);
+			$mail    = $this->mailing(SLMAIL, $subject, $massage);
 			return false;
 		}
 		
 		$subject = "Новий коментар для затвердження";
 		$massage = $subject."\r\nвід: $nik_com\r\nemail:$email_com\r\ntxt_com:$txt_com\r\n";
-		$mail    = $this->sendMail($subject,SLMAIL,$massage);
+		$mail    = $this->mailing(SLMAIL, $subject, $massage);
 
 		return $this->comment->insertDataToTable( 
 									array($id_cl, $txt_com, $nik_com, $email_com, $ip_com),

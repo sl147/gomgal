@@ -80,11 +80,13 @@ class classGetData extends classGetDB {
 	}
 
 	public function selectDataFromTable( array $args, string $nameOrder = "", int $limit = 0, string $desc = 'DESC', bool $row = true, bool $vue = false, bool $fetch = false, bool $offset = false, int $page = 1) {
-		$sql = "SELECT * FROM " . $this->table;
-		if ( !empty($args)) $sql .= $this->setWhere($args);
-		if ( $nameOrder )   $sql .= " ORDER BY " . $nameOrder ." " . $desc;
-		if ( $limit )       $sql .= " LIMIT " . $limit;
-		if ( $offset )      $sql .= " OFFSET ". $this->getOffset( $page, $limit );
+		$sql = sprintf("SELECT * FROM %s %s %s %s %s",
+					$this->table,
+					(!empty($args)) ? $this->setWhere($args) : "",
+					( $nameOrder )  ? sprintf(" ORDER BY %s %s", $nameOrder, $desc) : "",
+					( $limit)       ? sprintf(" LIMIT %s",$limit) : "",
+					( $offset )     ? sprintf(" OFFSET %s", $this->getOffset( $page, $limit )) : ""
+				);
 
  		return $this->getRowVueFetch( $sql, $row, $vue, $fetch);
 	}
@@ -145,14 +147,21 @@ class classGetData extends classGetDB {
 		return substr($update, 0, -1);
 	}
 
-	public function updateDataInTable( array $args, array $args_where, bool $vue = false) {	
-		$sql = "UPDATE ".$this->table." SET ".$this->set_update_names_values($args).$this->setWhere($args_where);
+	public function updateDataInTable( array $args, array $args_where, bool $vue = false) {
+		$sql = sprintf("UPDATE %s SET %s %s ",
+						$this->table,
+						$this->set_update_names_values($args),
+						$this->setWhere($args_where)
+				);
 		return  ($vue)  ? $this->getDBVue($sql)
 						: $this->getDB($sql);
 	}
 
 	public function updateCountPlusOne( array $args ) {
-		return $this->getDB("UPDATE " . $this->table . " SET count_p = count_p+1".$this->setWhere($args));
+		return $this->getDB(sprintf("UPDATE %s SET count_p = count_p+1 %s",
+									$this->table,
+									$this->setWhere($args)
+								));
 	}
 //--------------------------UPDATE-----------------------------------
 
@@ -170,7 +179,11 @@ class classGetData extends classGetDB {
 	}
 
 	public function insertDataToTable( array $values, array $names, bool $vue = false) {
-		$sql = "INSERT INTO " . $this->table . " (" . $this->set_insert_values($names, true) . ") VALUES(" . $this->set_insert_values($values, false) . ")";
+		$sql = sprintf("INSERT INTO %s (%s) VALUES (%s)",
+						$this->table,
+						$this->set_insert_values($names, true),
+						$this->set_insert_values($values, false)
+					);
 		return ($vue) ? $this->getDBVue($sql)
 					  : $this->getDB($sql); 
 	}
@@ -186,7 +199,10 @@ class classGetData extends classGetDB {
      * 
      */ 
 	public function deleteDataFromTable( $args, bool $vue = false) {
-		$sql = "DELETE FROM " . $this->table . $this->setWhere( $args );
+		$sql = sprintf("DELETE FROM %s %s",
+						$this->table,
+						$this->setWhere( $args )
+					);
 		return ($vue) ? $this->getDBVue($sql)
 					  : $this->getDB($sql); 
 	}

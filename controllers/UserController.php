@@ -29,7 +29,7 @@ class UserController {
 			}else {
 				$subject = "haks зі сторінки логування";
 				$massage = $subject;
-				$mail    = $this->sendMail($subject,SLMAIL,$massage);
+				$mail    = $this->mailing(SLMAIL, $subject, $massage);
 			}
 		}
 		$token = $this->getToken();
@@ -50,12 +50,12 @@ class UserController {
 				$result   = $this->user->createUser($login,$password,$name,$surname,$email);
 				$res      = $this->user->setcookie($login,$name,0);
 				$subject  = "Новий користувач на сайті ".$name;
-				$mail    = $this->sendMail($subject,BanMAIL,$massage);			
+				$mail     = $this->mailing(BanMAIL, $subject, $subject);		
 			}else {
 				$subject = "haks зі сторінки реєстрації";
 			}
 			$massage = $subject;
-			$mail    = $this->sendMail($subject,SLMAIL,$massage);
+			$mail    = $this->mailing(SLMAIL, $subject, $massage);
 			header("Location: /"); exit();
 		}
 		$token    = $this->getToken();
@@ -85,12 +85,12 @@ class UserController {
 					$result   = $this->user->changeUser($login,$name,$surname,$email);
 					$res      = $this->user->setcookie($login,$name,0);
 					$subject  = "Редагування даних відвідувача ".$name;
-					$mail     = $this->sendMail($subject,BanMAIL,$massage);								
+					$mail     = $this->mailing(BanMAIL, $subject, $massage);
 				} else {
 					$subject = "haks зі сторінки редагування даних";
 				}
 				$massage = $subject;
-				$mail    = $this->sendMail($subject,SLMAIL,$massage);
+				$mail    = $this->mailing(SLMAIL, $subject, $massage);
 				header("Location: /"); exit();
 			}
 			$token = $this->getToken();

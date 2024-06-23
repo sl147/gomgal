@@ -33,7 +33,7 @@ class PosterController {
 			}else {
 				$subject = "haks зі сторінки poster find";
 				$massage = $subject;
-				$mail    = $this->sendMail($subject,SLMAIL,$massage);
+				$mail    = $this->mailing(SLMAIL, $subject, $massage);
 				$siteFile = 'views/poster/find.php';
 			}				
 		} else {
@@ -130,6 +130,9 @@ class PosterController {
 			$fotoN = $this->savePhoto($fotoN, ROOT."/posterFoto",date('y'),date('m'));
 			$res   = $this->poster->updateFoto($id['id_poster'],$fotoN);
 			$res   = $this->poster->incrementTypeCategory($cat,$type);
+			$subject  = "Нове оголошення на сайті\r\n". $title ." \r\n від ".$nik;
+			$mail     = $this->mailing(BanMAIL, $subject, $subject);
+			$mail     = $this->mailing(SLMAIL, $subject, $subject);
 			header("Location: /posterFull");
 		}
 		$siteFile = 'views/poster/add.php';

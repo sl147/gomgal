@@ -114,14 +114,14 @@ require_once ('views/news/checkFiles.php');
 				$this->mailToClient($email_com,'Дякуєм за Ваш коментар.');
 				$subject = "Новий коментар до id=".$id." ip=".$ip_com;
 				$massage = "Новий коментар з ".$_SERVER['HTTP_REFERER']."\r\n Для затвердження перейдіть за посиланням https://www.gomgal.lviv.ua/newsCommentEdit"; 
-				$mail    = $this->sendMail($subject,BanMAIL,$massage);
-				$mail    = $this->sendMail($subject,SLMAIL,$massage);
+				$mail    = $this->mailing(BanMAIL, $subject, $massage);
+				$mail    = $this->mailing(SLMAIL, $subject, $massage);
 			}
 		}
 		else {
 			$subject = "haks зі сторінки fullnew";
 			$massage = $subject." https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."\r\n".$txt_com."\r\n".$nik_com."\r\n".$email_com;				
-			$mail = $this->sendMail($subject,SLMAIL,$massage);
+			$mail = $this->mailing(SLMAIL, $subject, $massage);
 		}	
 	}
 

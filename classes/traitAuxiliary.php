@@ -409,7 +409,7 @@ trait traitAuxiliary {
 		return $this->mailing($to,$subject,$massage);
 	}
 
-	private function mailing ($to,$subject,$massage) {
+	private function mailing($to,$subject,$massage) {
 		$from    = "info@gomgal.lviv.ua";
 		$headers = "From: $from\r\nReplay-To: $from\r\nContent-Type: text/plain; charset=utf-8\r\n ";
 		return mail($to,$subject,$massage,$headers);
@@ -445,7 +445,7 @@ trait traitAuxiliary {
 		$send   = $this->formMailToSend($mass, $txt);
 	}
 
-	public function mailToClient($email,$subject) {
+	public function mailToClient( string $email, string $subject) {
 		if ($email) {
 			$massage = $subject." Завжди раді зустрічі з Вами на нашому сайті https://www.gomgal.lviv.ua/";
 			$mail    = $this->mailing($email,$subject,$massage);

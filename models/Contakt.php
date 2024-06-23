@@ -19,7 +19,7 @@ class Contakt {
 		if ($this->isSpam($nik,$ip,$email,$txt)) {
 				$subject = "Спам зі сторінки Контакти";
 				$massage = $subject."\r\nвід: $nik\r\nemail:$email\r\n$txt\r\n";
-				return $this->sendMail($subject,SLMAIL,$massage);
+				return $this->mailing(SLMAIL, $subject, $massage);
 		}
 		$names  = ['nik_com', 'ip_com', 'email_com', 'txt_com'];
 		$values = [$nik, $ip, $email, $txt];

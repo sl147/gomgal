@@ -114,14 +114,14 @@ class RelaxController {
 				$show  = true;
 				$subject = "новий анекдот зі сторінки add an";
 				$massage = $msg;
-				$mail    = $this->sendMail($subject,SLMAIL,$massage);
+				$mail    = $this->mailing(SLMAIL, $subject, $massage);
 				header("Location: /relax/1");		
 			}
 			else
 			{
 				$subject = "haks зі сторінки add an";
 				$massage = $subject;
-				$mail    = $this->sendMail($subject,SLMAIL,$massage);
+				$mail    = $this->mailing(SLMAIL, $subject, $massage);
 				header("Location: /ralaxAddAn");
 			}
 		}
