@@ -82,7 +82,7 @@ class RelaxController {
 		return true;
 	}
 
-	public function actionFullAnCat($teman = 1, $page=1) {
+	public function actionFullAnCat($teman = 1, $page = 1) {
 		$teman = ($this->check_index_theme_an($teman)) ? $teman : 1;
 
 		$relax_t = new classGetData('msgs_relax');

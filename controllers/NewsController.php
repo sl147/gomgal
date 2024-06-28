@@ -227,14 +227,14 @@ require_once ('views/news/checkFiles.php');
 		$comment_t = new classGetData('Comment');
 		$total = $comment_t->selectCount(false);
 		$comms = $com->getComments($page);
-		$pagination = new Pagination($total, $page, SHOWPOSTER_BY_DEFAULT, 'page-');
+		$pagination = new Pagination($total, $page, SHOWCOMMENT_BY_DEFAULT, 'page-');
 		unset($com);
 		require_once ('views/news/newsCommentEdit.php');
 		unset($pagination);
 		return true;
 	}
 
-	public function actionNewsEdit($page = 1) {
+	public function actionNewsEdit( $page = 1) {
 		$page  = $this->getIntval($page);
 		$msgs_t = new classGetData('msgs');
 		$total = $msgs_t->selectCount(false);
@@ -243,7 +243,7 @@ require_once ('views/news/checkFiles.php');
 			);
 		$json  = json_encode($table);		
 		$title = "редагування новин";		
-		$pagination = new Pagination($total, $page, SHOWPOSTER_BY_DEFAULT, 'page-');
+		$pagination = new Pagination($total, $page, SHOWNEWS_BY_DEFAULT_EDIT, 'page-');
 		require_once ('views/news/newsEdit.php');
 		unset($pagination);
 		return true;

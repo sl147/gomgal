@@ -7,7 +7,7 @@
 trait traitAuxiliary {
 
 	public function getIntval ($i) : int {
-        return intval($i) ? intval($i) : 1;
+        return ( intval($i) ) ? intval($i) : 1;
 	}
 
 	public function filterINT($type, $field) {

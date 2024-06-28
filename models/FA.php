@@ -30,7 +30,7 @@ class FA  extends classGetDB {
 	}
 
 	public function getFAAll(int $page = 1) {
-		$result = $this->photoalbum->selectDataFromTable( array(), 'id_FA', self::SHOWFA_BY_DEFAULT_Vue, 'DESC', false, false, false, true, $page);
+		$result = $this->photoalbum->selectDataFromTable( array(), 'id_FA', SHOWFA_BY_DEFAULT, 'DESC', false, false, false, true, $page);
 		$i      = 1;
 		while ($row = $result->fetch()) {			
 			$faList[$i]['id']   = $row['id_FA'];

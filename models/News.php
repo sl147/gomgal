@@ -7,7 +7,7 @@
 class News {
 
 	use traitAuxiliary;
-	const SHOWNEWS_BY_DEFAULT_Vue=25;
+	const SHOWNEWS_BY_DEFAULT_Vue=30;
 
 	public function __construct() {
 		$this->msgs    = new classGetData('msgs');
