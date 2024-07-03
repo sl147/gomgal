@@ -1,4 +1,10 @@
 <?php include 'views/poster/menuPoster.php';?>
+<div class="row">
+	<div class='col-lg-2 col-md-2 col-sm-0 col-xs-0'></div>
+	<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>
+		<h2 class="text-center"><?= $title?></h2>
+	</div>
+</div>
 <div class="container-fluid">
 	<div class="row">
 		<div class='posterTXT col-lg-4 col-md-4 col-sm-12 col-xs-12 text-center'>

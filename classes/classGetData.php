@@ -30,7 +30,7 @@ class classGetData extends classGetDB {
 	private function setWhereLike( array $args) :string {
 		$set = " WHERE";
 		foreach ($args as $key => $value) {
-			$set .= " (" . $key . " LIKE '%" . $value."%') AND";
+			$set .= " (" . strtoupper($key) . " LIKE '%" . strtoupper($value)."%') AND";
 		}
 		return (string) substr($set, 0, -4);
 	}
@@ -40,20 +40,13 @@ class classGetData extends classGetDB {
 					  : $this->getDB($sql)->fetch()['count'];
 	}
 
-	public function selectCount( bool $vue = true ) {
+	public function selectCount( bool $vue = true, array $args=[], bool $where = false, bool $like = false ) {
 		$sql = "SELECT count(*) as count FROM ".$this->table;
+		if ( $where ) $sql .= $this->setWhere( $args );
+		if ( $like  ) $sql .= $this->setWhereLike( $args );
 		return $this->getCountFetch( $sql, $vue );
 	}
 
-	public function selectCountWhere ( array $args, bool $vue = true) {
-		$sql = "SELECT count(*) as count FROM ".$this->table.$this->setWhere($args);
-		return $this->getCountFetch( $sql, $vue );
-	}
-	
-	public function selectCountFind ( array $args, bool $vue = true) {
-		$sql = "SELECT count(*) as count FROM ".$this->table.$this->setWhereLike($args);
-		return $this->getCountFetch( $sql, $vue );
-	}
 //-------------------SELECT COUNT----------------------------------------------------------
 
 //-------------------SELECT ---------------------------------------------------------------

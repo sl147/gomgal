@@ -9,7 +9,7 @@ class Poster  extends classGetDB {
 	public function __construct() {
 		$this->poster   = new classGetData('poster');
 		$this->category = new classGetData('catagory');
-		$this->show     = 25;
+		$this->show     = 30;
 	}
 
 	public function getPosters20() {
@@ -153,7 +153,7 @@ class Poster  extends classGetDB {
 	}
 
 	public  function getFindTotalPoster($txt) {
-		return $this->poster->selectCountFind( array( 'msg_p' => $txt ), false);
+		return $this->poster->selectCount( false, array( 'msg_p' => $txt ), false, true );
 	}
 
 	public function updateFoto($id,$foto) {

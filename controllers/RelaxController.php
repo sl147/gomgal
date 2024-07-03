@@ -33,9 +33,7 @@ class RelaxController {
 		$cat   = ($this->check_index_catagory($cat)) ? $cat : 1;
 
 		$relax_t = new classGetData('msgs_relax');
-		$args  = array( 'category' => $cat);
-		$total =  $relax_t->selectCountWhere ( $args, false );
-
+		$total = $relax_t->selectCount( false, array( 'category' => $cat ), true, false );
 		//$page  = $this->check_index_page($this->getIntval($page), $total, SHOWRELAX_BY_DEFAULT);
 		$table = array(
 			'cat'   => $cat,
@@ -86,8 +84,7 @@ class RelaxController {
 		$teman = ($this->check_index_theme_an($teman)) ? $teman : 1;
 
 		$relax_t = new classGetData('msgs_relax');
-		$args  = array( 'teman' => $teman);
-		$total =  $relax_t->selectCountWhere ( $args, false );
+		$total = $relax_t->selectCount( false, array( 'teman' => $teman ), true, false );
 		$page  = $this->check_index_page($this->getIntval($page), $total, SHOWRELAX_BY_DEFAULT);
 		$table = array(
 			'cat'   => $teman,

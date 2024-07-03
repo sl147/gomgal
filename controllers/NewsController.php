@@ -257,12 +257,11 @@ require_once ('views/news/checkFiles.php');
 	}
 
 	public function actionNewsEditOne($id, $page = 1) {
-		$page  = $this->getIntval($page);
-		$id    = $this->getIntval($id);
-		$title = "редагування новин";
-		$msgs_t    = new classGetData('msgs');
-		$args = array( 'id' => $id);
-		if ($msgs_t->selectCountWhere ( $args, false) ) {
+		$page   = $this->getIntval($page);
+		$id     = $this->getIntval($id);
+		$title  = "редагування новин";
+		$msgs_t = new classGetData('msgs');
+		if( $msgs_t->selectCount( false, array( 'id' => $id ), true, false ) ) {
 			$isId    = true;
 			$allNews = $this->newsClass->getNewsById($id,$page);
 			$tPos    = $this->newsClass->getCatNews();

@@ -1,4 +1,5 @@
 <?php include 'views/layouts/headerAdmin.php';?>
+<div class="col-lg-2 col-md-2 col-sm-0 col-xs-0"></div>
 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
 	<h2 class="text-center">Редагування відео</h2>
 	<div id="vueVideo">

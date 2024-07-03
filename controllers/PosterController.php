@@ -59,9 +59,8 @@ class PosterController {
 		$posterImpotant = $this->poster->getAllPostersImpotCat($cat);
 		$posterAll      = $this->poster->getAllPostersAllCat($cat,$page);
 		if( empty($posterAll)) return;
-		$poster_t = new classGetData('poster');
-		$args  = array( 'cat_p' => $cat);
-		$total =  $poster_t->selectCountWhere ( $args, false );
+		$poster_t       = new classGetData('poster');
+		$total          = $poster_t->selectCount( false, array( 'cat_p' => $cat ), true, false );
 		$pagination     = new Pagination($total, $this->getIntval($page), SHOWPOSTER_BY_DEFAULT, 'page-');
 		$siteFile       = 'views/poster/catAll.php';
 		$meta           = $this->getMetaWithSubPoster($this->poster);
@@ -131,8 +130,8 @@ class PosterController {
 			$res   = $this->poster->updateFoto($id['id_poster'],$fotoN);
 			$res   = $this->poster->incrementTypeCategory($cat,$type);
 			$subject  = "Нове оголошення на сайті\r\n". $title ." \r\n від ".$nik;
-			$mail     = $this->mailing(BanMAIL, $subject, $subject);
-			$mail     = $this->mailing(SLMAIL, $subject, $subject);
+			$this->mailing(BanMAIL, $subject, $subject);
+			$this->mailing(SLMAIL, $subject, $subject);
 			header("Location: /posterFull");
 		}
 		$siteFile = 'views/poster/add.php';
@@ -150,7 +149,7 @@ class PosterController {
 		$title = "редагування оголошень";
 		$poster_t = new classGetData('poster');
 		$total = $poster_t->selectCount(false);
-		$pagination = new Pagination($total, $page, SHOWPOSTER_BY_DEFAULT, 'page-');
+		$pagination = new Pagination($total, $page, SHOWPOSTER_BY_DEFAULT_EDIT, 'page-');
 		require_once ('views/poster/posterEdit.php');
 		unset($pagination);
 		return true;
@@ -187,10 +186,12 @@ class PosterController {
 	            $fotoN = $id.'.'.$jpg[count($jpg)-1];
 				$fotoN = $this->savePhoto($fotoN,ROOT."/posterFoto",date("y",strtotime($post['date_p'])), date("m",strtotime($post['date_p'])));
 				$res   = $this->poster->updateFoto($id,$fotoN);
+				$this->mailing(SLMAIL, 'нове фото до оголошення '.$id, 'нове фото до фотоальбому '.$id);
 	        } else {
 	            if ($FotoDel == 1) {
-	                    $result = $this->poster->changePoster($idm,$title_p,$cat,$type,$name,$email,$impot,$msg,"");
-	                    $res = $this->delFile($foto_name,"posterFoto");
+	                    $this->poster->changePoster($idm,$title_p,$cat,$type,$name,$email,$impot,$msg,"");
+	                    $this->delFile($foto_name,"posterFoto");
+	                    $this->mailing(SLMAIL, 'видалено фото до оголошення '.$id, 'видалено фото до фотоальбому '.$id);
 	            } else {
 	                    $result = $this->poster->changePoster($idm,$title_p,$cat,$type,$name,$email,$impot,$msg,$foto_name);
 	            }

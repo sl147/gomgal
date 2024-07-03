@@ -2,14 +2,14 @@
 class FAController {
 	use traitAuxiliary;
 	public function __construct() {
-		$this->FAClass = new FA();
-		$photoalbum_t  = new classGetData('photoalbum');
-		$this->total   = $photoalbum_t->selectCount(false);
+		$this->FA     = new FA();
+		$photoalbum_t = new classGetData('photoalbum');
+		$this->total  = $photoalbum_t->selectCount(false);
 	}
 
 	public function actionLook( int $page = 1) {
 		$page       = $this->check_index_page($this->getIntval($page), $this->total, SHOWFA_BY_DEFAULT);
-		$faList     = $this->FAClass->getFAAll($page);
+		$faList     = $this->FA->getFAAll($page);
 		$pagination = new Pagination($this->total, $page, SHOWFA_BY_DEFAULT, 'page-');
 		$meta     = $this->getMeta();
 		$siteFile   = 'views/FA/look.php';
@@ -20,9 +20,9 @@ class FAController {
 
 	public function actionLookOne( int $id) {	
 		$id     = $this->getIntval($id);
-		$faList = $this->FAClass->getFAOne($id);
+		$faList = $this->FA->getFAOne($id);
 		if( empty($faList)) return;
-		$nameFA = $this->FAClass->getFAId($id);
+		$nameFA = $this->FA->getFAId($id);
 		$metaTags = 'FA';
 		$siteFile = 'views/FA/lookOne.php';
 		require_once ('views/layouts/siteIndex.php');
@@ -34,24 +34,12 @@ class FAController {
 	        $name_FA = $this->filterTXT('post', 'name_FA');
 	        $msgs_FA = $this->filterTXT('post', 'msgs_FA');
 	        $log_FA  = 1;
-	        $result  = $this->FAClass->createFA($name_FA,$msgs_FA,$log_FA);
+	        $result  = $this->FA->createFA($name_FA,$msgs_FA,$log_FA);
+	        $result  = $this->mailing(SLMAIL, 'Новий фотоальбом', 'Новий фотоальбом');
 	        header ("Location: /FAedit");			
 		}
 		require_once ('views/FA/create.php');
 		return true;
-	}
-
-	public function actionUpload( int $id) {
-        if(isset($_POST['submit'])) {
-	        $subscribe = $this->filterTXT('post', 'subscribe');
-	        $fotoName  = $this->rus2translit($_FILES['photo']['name']);
-			$fotoNameS = "s".$fotoName;
-			$pathdir   = 'album/'.$id;
-			move_uploaded_file ($_FILES['photo'] ['tmp_name'],$pathdir.'/'.$fotoName);
-	        $res = $this->FAClass->insertPhoto($id,$subscribe,$fotoName,$fotoNameS);
-        }
-		require_once ('views/FA/upload.php');
-		return true;	
 	}
 
 	public function actionEditOne( int $id) {
@@ -63,9 +51,10 @@ class FAController {
 				$pathdir   = 'album/'.$id;
 				$res  = $this->makeDir($pathdir);
 				move_uploaded_file ($_FILES['photo'] ['tmp_name'],$pathdir.'/'.$fotoName);
-				$res = $this->FAClass->insertPhoto($id, $subscribe, $this->convertNameToWebp($fotoName));
+				$res = $this->FA->insertPhoto($id, $subscribe, $this->convertNameToWebp($fotoName));
 				$this->webpImage('./'.$pathdir."/".$fotoName);
 				unlink('./'.$pathdir."/".$fotoName);
+				$this->mailing(SLMAIL, 'нове фото до фотоальбому '.$id, 'нове фото до фотоальбому '.$id);
 			}
 			header ("Location: /faEditOne/$id");
 		}
@@ -75,7 +64,7 @@ class FAController {
 			'id'   => $id
 			);
 		$json   = json_encode($table);
-		$nameFA = $this->FAClass->getFAId($id);
+		$nameFA = $this->FA->getFAId($id);
 		if(isset($_POST['submit'])) {
 			$subscr = $this->filterTXT('post', 'subscr');
 			$file   = $this->filterTXT('post', 'file');
