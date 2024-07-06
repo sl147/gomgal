@@ -25,15 +25,16 @@ class classGetData extends classGetDB {
 		return (array) $list;
 	}
 
-//-------------------SELECT COUNT----------------------------------------------------------
-
-	private function setWhereLike( array $args) :string {
+	private function setWhere( array $args, bool $like = false) :string {
 		$set = " WHERE";
 		foreach ($args as $key => $value) {
-			$set .= " (" . strtoupper($key) . " LIKE '%" . strtoupper($value)."%') AND";
+			$set .= ( $like ) ? " (" . strtoupper($key) . " LIKE '%" . strtoupper($value)."%') AND"
+							  : " (" . $key . "='" . $value."') AND";
 		}
 		return (string) substr($set, 0, -4);
 	}
+
+//-------------------SELECT COUNT----------------------------------------------------------
 
 	private function getCountFetch( string $sql, bool $vue ) {
 		return ($vue) ? $this->getDBVue($sql)->fetch()['count']
@@ -41,9 +42,7 @@ class classGetData extends classGetDB {
 	}
 
 	public function selectCount( bool $vue = true, array $args=[], bool $where = false, bool $like = false ) {
-		$sql = "SELECT count(*) as count FROM ".$this->table;
-		if ( $where ) $sql .= $this->setWhere( $args );
-		if ( $like  ) $sql .= $this->setWhereLike( $args );
+		$sql = "SELECT count(*) as count FROM " . $this->table . $this->setWhere( $args, $like );
 		return $this->getCountFetch( $sql, $vue );
 	}
 
@@ -60,16 +59,8 @@ class classGetData extends classGetDB {
 		return ( $fetch ) ? $request->fetch() : $request;
 	}
 
-	private function setWhere( array $args) :string {
-		$set = " WHERE";
-		foreach ($args as $key => $value) {
-			$set .= " (" . $key . "='" . $value."') AND";
-		}
-		return (string) substr($set, 0, -4);
-	}
-
-	private function getOffset( int $page, int $SHOW_BY_DEFAULT) {
-		return ($page - 1) * $SHOW_BY_DEFAULT;
+	private function getOffset( int $page, int $limit) {
+		return ( $page - 1 ) * $limit;
 	}
 
 	public function selectDataFromTable( array $args, string $nameOrder = "", int $limit = 0, string $desc = 'DESC', bool $row = true, bool $vue = false, bool $fetch = false, bool $offset = false, int $page = 1) {

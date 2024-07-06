@@ -27,4 +27,10 @@ class SiteController {
 		unset($pagination);
 		return true;
 	}
+
+	public function actionPolityka() {
+		$siteFile   = 'views/site/polityka.php';
+		require_once ('views/layouts/siteMain.php');
+		return true;	
+	}
 }
