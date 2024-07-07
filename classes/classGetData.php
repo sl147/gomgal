@@ -3,11 +3,6 @@
 /**
  * 
  */
-//namespace classes;
-
-//use classes\classGetDB;
-
-//use classes\traitAuxiliary;
 
 class classGetData extends classGetDB {
 
@@ -23,6 +18,11 @@ class classGetData extends classGetDB {
 			$list[] = $row;
 		}
 		return (array) $list;
+	}
+
+	private function getDataDB ( string $sql, bool $vue) {
+		return  ($vue)  ? $this->getDBVue($sql)
+						: $this->getDB($sql);
 	}
 
 	private function setWhere( array $args, bool $like = false) :string {
@@ -53,9 +53,7 @@ class classGetData extends classGetDB {
 	private function getRowVueFetch( string $sql, bool $row , bool $vue, bool $fetch) {
 		$request = ($row) ? ( ($vue) ? $this->getRow($this->getDBVue($sql))
 								 	 : $this->getRow($this->getDB($sql)) )
-			 		  	  : ( ($vue) ? $this->getDBVue($sql)
-			 		  			 	 : $this->getDB($sql));
-
+						  : $this->getDataDB($sql, $vue);
 		return ( $fetch ) ? $request->fetch() : $request;
 	}
 
@@ -137,8 +135,7 @@ class classGetData extends classGetDB {
 						$this->set_update_names_values($args),
 						$this->setWhere($args_where)
 				);
-		return  ($vue)  ? $this->getDBVue($sql)
-						: $this->getDB($sql);
+		return $this->getDataDB($sql, $vue);
 	}
 
 	public function updateCountPlusOne( array $args ) {
@@ -168,8 +165,7 @@ class classGetData extends classGetDB {
 						$this->set_insert_values($names, true),
 						$this->set_insert_values($values, false)
 					);
-		return ($vue) ? $this->getDBVue($sql)
-					  : $this->getDB($sql); 
+		return $this->getDataDB($sql, $vue);
 	}
 //--------------------------INSERT-------------------------------------------------
 
@@ -187,8 +183,7 @@ class classGetData extends classGetDB {
 						$this->table,
 						$this->setWhere( $args )
 					);
-		return ($vue) ? $this->getDBVue($sql)
-					  : $this->getDB($sql); 
+		return $this->getDataDB($sql, $vue);
 	}
 
 //--------------------------DELETE-------------------------------------------------
