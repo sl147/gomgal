@@ -107,7 +107,7 @@ require_once ('views/news/checkFiles.php');
 	private function getSubmit(int $id, OBJECT $com) {
 		$txt_com   = $this->filterTXT('post','txt_com');
 		$nik_com   = $this->filterTXT('post','nik_com');
-		$email_com = $this->filterTXT('post','email_com');
+		$email_com = $this->filterEmail('post','email_com');
 		if (!empty($_POST['_token']) && $this->tokensMatch($_POST['_token'])) {			
 			$ip_com  = $_SERVER['REMOTE_ADDR'];
 			if ($com->insComment($id,$txt_com,$nik_com,$email_com,$ip_com)) {

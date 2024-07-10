@@ -8,6 +8,10 @@ class ContaktController {
 
 	use traitAuxiliary;
 
+	private function getMassage( string $subject, string $txt_com, string $nik_com, string $email_com) {
+		return (string) $subject."\r\n".$txt_com."\r\n".$nik_com."\r\n".$email_com;
+	}
+
 	private function getSubmit() {
 		$txt_com   = $this->sl147_clean($_POST['txt_com']);
 		$nik_com   = $this->sl147_clean($_POST['nik_com']);
@@ -24,16 +28,16 @@ class ContaktController {
 					$this->mailing(BanMAIL, $subject, $massage);					
 				}else{
 					$subject = "Нове не зрозуміле повідомлення";
-					$massage = $subject."\r\n".$txt_com."\r\n".$nik_com."\r\n".$email_com;
+					$massage = $this->getMassage( $subject, $txt_com, $nik_com, $email_com);
 				}
 			}else {
 				$subject = "пусте повідомлення зі сторінки Contakt";
-				$massage = $subject."\r\n".$txt_com."\r\n".$nik_com."\r\n".$email_com;				
+				$massage = $this->getMassage( $subject, $txt_com, $nik_com, $email_com);	
 			}
 		}
 		else {
 			$subject = "haks зі сторінки Contakt";
-			$massage = $subject."\r\n".$txt_com."\r\n".$nik_com."\r\n".$email_com;				
+			$massage = $this->getMassage( $subject, $txt_com, $nik_com, $email_com);		
 		}
 		$this->mailing(SLMAIL, $subject, $massage);
 	}

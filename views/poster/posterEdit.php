@@ -16,7 +16,7 @@
 				<tbody>
 					<tr v-for="elm in elements">
 						<td class="text-center">{{elm.id}}</td>
-						<td class="text-center">{{elm.title_p}}</td>
+						<td class="text-center" v-html="elm.title_p"></td>
 						<td>
 							<a class="btn btn-block btn-default btn-lg" :href="/posterEditOne/+elm.id+'/'+elm.page" title="редагувати запис">
 								<i class="fa fa-edit fa-fw"></i>

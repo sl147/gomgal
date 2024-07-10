@@ -28,7 +28,7 @@ class Comment {
 		if ( empty(trim($txt_com))) return false;
 
 		if ($this->isEmailSpam($email_com)) {
-			$subject = "email в Спамі зі сторінки новини коментар";
+			$subject = "email " . $email_com . " в cпамі зі сторінки новини коментар";
 			$massage = $subject."\r\nвід: $nik_com\r\nemail:$email_com\r\ntxt_com:$txt_com\r\n";
 			$mail    = $this->mailing(SLMAIL, $subject, $massage);
 			return false;

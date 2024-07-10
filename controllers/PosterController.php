@@ -112,12 +112,12 @@ class PosterController {
 		$catList = $this->poster->getPostersCat();
 		$fruit   = array_pop($catList);
 		if(isset($_POST['submit'])) {
-			$nik   = $this->sl147_clean($_POST['nik']);//$this->filterTXT('post', 'nik');
+			$nik   = $this->filterTXT('post', 'nik');
 			$type  = $this->filterINT('post', 'type');
 			$type  = ($type == 0 ) ? 1 : $type;
 			$cat   = $this->filterINT('post', 'category');
-			$title = $this->sl147_clean($_POST['title']);//$this->filterTXT('post', 'title');
-			$msg   = $this->sl147_clean($_POST['msg']);//$this->filterTXT('post', 'msg');
+			$title = $this->filterTXT('post', 'title');
+			$msg   = $this->filterTXT('post', 'msg');
 			$email = $this->filterEmail('post', 'email');
 			$foto  = $_FILES['file']['name'];
 			$ip    = $_SERVER['REMOTE_ADDR'];
