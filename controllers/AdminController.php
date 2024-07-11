@@ -57,4 +57,9 @@ class AdminController {
 		$this->runForm('spamTab', "spam", "name", "id");
 		return true;
 	}
+
+	public function actionSpamEMail() {
+		$this->runForm('spam_email', "spam email", "email", "id");
+		return true;
+	}
 }

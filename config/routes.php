@@ -87,6 +87,7 @@ return array(
 'relax/([0-9]+)/page-([0-9]+)' => 'relax/index/$1/$2',
 'relax/([0-9]+)' => 'relax/index/$1',
 'spam' => 'admin/spam',
+'spamEMail' => 'admin/spamEMail',
 'topBarlicensekey/([a-z0-9]+)' => 'plugins/licensekey/$1',
 'topBar/([a-z]+)' => 'plugins/topBarLang/$1',
 'topBar' => 'plugins/topBarRun',

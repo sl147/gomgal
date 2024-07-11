@@ -28,8 +28,12 @@
 						Auxiliary::showElementMenu("newsCommentEdit","редагування коментарів","перегляд коментарів");
 						Auxiliary::showElementMenu("userNews","редагування новин клієнтів","редагування новин клієнтів");
 						Auxiliary::showElementMenu("userWishes","перегляд побажань клієнтів","перегляд побажань клієнтів");
-						Auxiliary::showElementMenu("spam","перегляд spam","перегляд spam");
-						Auxiliary::showElementMenu("newsFB","перегляд FB","перегляд FB");
+
+						if ( (User::isGuest()) && (User::isGuest()['login'] == 'sl147adm')) {
+							Auxiliary::showElementMenu("spam","перегляд spam","перегляд spam");
+							Auxiliary::showElementMenu("spamEMail","перегляд spam email","перегляд spam email");
+							Auxiliary::showElementMenu("newsFB","перегляд FB","перегляд FB");
+					}
 					?>
 				<ul>
 			</div>

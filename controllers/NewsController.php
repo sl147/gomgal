@@ -113,16 +113,15 @@ require_once ('views/news/checkFiles.php');
 			if ($com->insComment($id,$txt_com,$nik_com,$email_com,$ip_com)) {
 				$this->mailToClient($email_com,'Дякуєм за Ваш коментар.');
 				$subject = "Новий коментар до id=".$id." ip=".$ip_com;
-				$massage = "Новий коментар з ".$_SERVER['HTTP_REFERER']."\r\n Для затвердження перейдіть за посиланням https://www.gomgal.lviv.ua/newsCommentEdit"; 
-				$mail    = $this->mailing(BanMAIL, $subject, $massage);
-				$mail    = $this->mailing(SLMAIL, $subject, $massage);
+				$massage = "Новий коментар з ".$_SERVER['HTTP_REFERER']."\r\n Для затвердження перейдіть за посиланням https://www.gomgal.lviv.ua/newsCommentEdit"; 		
 			}
+			return false;
 		}
 		else {
 			$subject = "haks зі сторінки fullnew";
-			$massage = $subject." https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."\r\n".$txt_com."\r\n".$nik_com."\r\n".$email_com;				
-			$mail = $this->mailing(SLMAIL, $subject, $massage);
-		}	
+			$massage = $subject." https://www.gomgal.lviv.ua/Fullnewsfile.php?newsid=".$id."\r\n".$txt_com."\r\n".$nik_com."\r\n".$email_com;
+		}
+		$mail    = $this->mailing(SLMAIL, $subject, $massage);
 	}
 
 	public function actionIndex($cat=1, $page = 1) {
