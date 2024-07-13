@@ -8,6 +8,7 @@
 	<?php else:?>
 		<title>Гомін Галичини</title>
 	<?php endif; ?>
+	<meta name="robots" content="noindex, nofollow" />
 	<link rel="stylesheet" href="/libs/bootstrap/bootstrap.min.css" />
 	<link rel="stylesheet" href="/css/fonts.css" /> 
 	<link rel="stylesheet" href="/css/main.css" />
