@@ -3,13 +3,17 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script data-ad-client="pub-9370914710542990" async src="https://pagead2.googlesyndication.com/
 pagead/js/adsbygoogle.js"></script>
-	<?php if ($siteFile  == 'views/news/fullNew.php') :?>
+	<?php if ($siteFile == 'views/news/fullNew.php') :?>
 		<meta property="og:url"         content="<?php echo $fb?>" />
 		<meta property="og:type"        content="article" />
 		<meta property="og:title"       content="<?=$news['title']?>" />
 		<meta property="og:description" content="<?=$news['prew']?>" />
 		<meta property="og:image"       content="<?='https://www.gomgal.lviv.ua'.$news['photo']?>" />
 		<title><?= $news['title']?></title>
+		<meta name="description" content="<? echo $meta['descr']?>">
+		<meta name="keywords" content="<? echo $meta['keywords']?>">
+	<?php elseif ( ($siteFile == 'views/user/index.php') || ($siteFile == 'views/user/author.php') ) :?>
+		<meta name="robots" content="noindex, nofollow" />
 	<?php else :?>
 		<?php include 'views/layouts/showMeta.php';?>		
 	<?php endif; ?>

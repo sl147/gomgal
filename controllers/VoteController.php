@@ -1,27 +1,21 @@
 <?php
 
-/**
- * 
- */
 class VoteController {
 
 	use traitAuxiliary;
 
 	public function actionVote() {
 		$clVote  = new Vote();
-		$vote    = $clVote->getVote();
-		$txtVote = $clVote->getTxtVote($vote);
+		$txtVote = $clVote->getTxtVote($clVote->getVote());
 
 		require_once ('views/vote/showVote.php');
 		return true;
 	}
 
 	public function actionVoteActive() {
-		$vote  = new Vote();
-		if(isset($_POST['submit'])) {
-			$id  = $this->filterTXT('post','id');
-			$res = $vote->activated($id);
-		}
+		$vote = new Vote();
+		if( isset( $_POST['submit'] ) ) $vote->activated( $this->filterTXT('post','id') );
+
 		$allVotes = $vote->getAllVote();
 		require_once ('views/vote/voteActive.php');
 		return true;
@@ -47,8 +41,8 @@ class VoteController {
 	}
 
 	public function actionVoteEdit() {
-		$title = 'Редагування голосування';
-		$json  = $this->set_arr('catVote', 'idrl', 'namerl', 0, 0);
+		$title   = 'Редагування голосування';
+		$json    = $this->set_arr('catVote', 'idrl', 'namerl', 0, 0);
 		$countEl = 3;
 		$isId    = false;
 		require_once ('views/vote/editVote.php');
