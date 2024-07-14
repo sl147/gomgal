@@ -183,8 +183,7 @@ require_once ('views/news/checkFiles.php');
 	}
 
 	public function actionnewsPrint($id) {
-		$id   = $this->getIntval($id);
-		$news = $this->newsClass->getNewsById($id);
+		$news = $this->newsClass->getNewsById($this->getIntval($id));
 		require_once ('views/news/newsPrint.php');
 		return true;
 	}

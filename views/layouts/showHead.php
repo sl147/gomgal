@@ -13,7 +13,7 @@ pagead/js/adsbygoogle.js"></script>
 		<meta name="description" content="<? echo $meta['descr']?>">
 		<meta name="keywords" content="<? echo $meta['keywords']?>">
 	<?php elseif ( ($siteFile == 'views/user/index.php') || ($siteFile == 'views/user/author.php') ) :?>
-		<meta name="robots" content="noindex, nofollow" />
+		<meta name="robots" content="noindex, follow" />
 	<?php else :?>
 		<?php include 'views/layouts/showMeta.php';?>		
 	<?php endif; ?>
