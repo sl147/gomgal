@@ -23,14 +23,14 @@ class SiteController {
 		$siteFile   = 'views/site/index.php';
 		$siteSmall  = 'views/layouts/leftSide.php';
 		$meta       = $this->getMeta();
-		require_once ('views/layouts/siteMain.php');
+		require_once ('views/layouts/siteIndex.php');
 		unset($pagination);
 		return true;
 	}
 
 	public function actionPolityka() {
 		$siteFile   = 'views/site/polityka.php';
-		require_once ('views/layouts/siteMain.php');
+		require_once ('views/layouts/siteIndex.php');
 		return true;	
 	}
 }
