@@ -52,7 +52,7 @@ class Auxiliary{
 		include ('views/layouts/showArchive.php');
 	}
 
-	public static function showReklRand() {
+	public static function showReklRand( bool $header = false) {
 		$poster       = new Poster();
 		$arr          = $poster->getPosters20();
 		unset($poster);

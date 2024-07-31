@@ -112,6 +112,7 @@ class News {
 	}
 
 	public function getLatestNewsCat( int $cat, int $month, int $year, int $page = 1) :array{
+		$NewsList = [];
 		$result = $this->msgs->selectLatestNewsCat( $cat, $month, $year, $page, SHOWNEWS_BY_DEFAULT);
 		$i      = 0;
 		while ($row = $result->fetch()) {
@@ -120,7 +121,7 @@ class News {
 			$NewsList[$i]['foto'] = "NewsFoto/".$row['foto'];			
 			$i++;
 		}
-		return (array) $NewsList ?? [];
+		return (array) $NewsList;
 	}
 
 	public function getLatestNews( int $month, int $year, int $page = 1) :array {

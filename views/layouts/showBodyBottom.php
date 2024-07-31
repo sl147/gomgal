@@ -1,4 +1,5 @@
-<?php include 'views/layouts/footer.php';?>
+<?php
+include 'views/layouts/footer.php';?>
 <script src="/libs/fancybox/jquery.fancybox.pack.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/vue.min.js"></script>
@@ -26,4 +27,3 @@ ssnowStick = 1;
 sfollowMouse = 1;
 </script>
 <!-- <script type="text/javascript" src="/js/snow.js"></script> -->
-</body>

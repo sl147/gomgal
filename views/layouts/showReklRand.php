@@ -1,4 +1,4 @@
-<div class='text-center reklRand'>
+<div class="text-center <?= ($header) ? 'reklRandHeader' : 'reklRand'?>">
 	<a href ='/posterOne/<?=$post['id']?>' target='_blank'>
 		<?= $post['title'] ?>
 	</a>
