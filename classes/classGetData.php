@@ -26,6 +26,7 @@ class classGetData extends classGetDB {
 	}
 
 	private function setWhere( array $args, bool $like = false) :string {
+		if ( empty($args) ) return "";
 		$set = " WHERE";
 		foreach ($args as $key => $value) {
 			$set .= ( $like ) ? " (" . strtoupper($key) . " LIKE '%" . strtoupper($value)."%') AND"

@@ -1,7 +1,8 @@
 <?php include 'views/relax/headerRelax.php';?>
 <div id='relax'>
 	<div v-for="item in relaxes">
-		<p style='font-size: 15px;'>{{item.msg}}</p>
+		<div style='font-size: 15px;' v-html="item.msg"></div>
+		<!-- <p style='font-size: 15px;'>{{item.msg}}</p> -->
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-1 col-md-1 col-sm-1 col-xs-0"></div>
@@ -32,4 +33,4 @@
 <script>
 	window.table=<?= $json ?>;
 </script>
-<script src="../js/vue/relaxAnThema.js"></script>
+<script src="/js/vue/relaxAnThema.js"></script>

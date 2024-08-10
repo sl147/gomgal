@@ -9,6 +9,7 @@ var vue_tovList = new Vue({
 		cat:'',
 		SHOWRELAX:'',
 		relaxes: [],
+		test:'',
 		j:1
 	},
 	methods: {
@@ -25,8 +26,10 @@ var vue_tovList = new Vue({
 			console.log('getRelaxes - '+req)
 			this.$http.get(req).then(function (response) {
 				this.relaxes = JSON.parse(response.data)
-
+				console.log(this.test)
+				this.test = '<p>test1</p><p>test2</p><p>test3</p>'
 				for (var bas of this.relaxes) {
+					//bas.msg = bas.msg.replace(/\n/g, '')
 					console.log(bas)
 					console.log("id - "+bas.id+"   category - "+bas.cat+"   msg - "+bas.msg)
 				}

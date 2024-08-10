@@ -42,10 +42,8 @@ class ContaktController {
 		$this->mailing(SLMAIL, $subject, $massage);
 	}
 
-
 	public function actionIndex() {
 		if(isset($_POST['submit'])) $this->getSubmit();
-
 		$token    = $this->getToken();
 		$siteFile = 'views/contakt/index.php';
 		$meta     = $this->getMeta();
