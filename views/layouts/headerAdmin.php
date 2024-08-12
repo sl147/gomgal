@@ -33,6 +33,7 @@
 							Auxiliary::showElementMenu("spam","перегляд spam","перегляд spam");
 							Auxiliary::showElementMenu("spamEMail","перегляд spam email","перегляд spam email");
 							Auxiliary::showElementMenu("newsFB","перегляд FB","перегляд FB");
+							Auxiliary::showElementMenu("countUser","користувачі на сайті","користувачі на сайті");
 					}
 					?>
 				<ul>

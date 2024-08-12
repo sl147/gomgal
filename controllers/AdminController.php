@@ -62,4 +62,11 @@ class AdminController {
 		$this->runForm('spam_email', "spam email", "email", "id");
 		return true;
 	}
+
+	public function actionCountUser() {
+		$visit = new CountUser();
+		$visitList = $visit->getVisits();
+		require_once ('views/admin/countUser.php');
+		return true;
+	}
 }
