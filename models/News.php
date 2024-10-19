@@ -139,6 +139,7 @@ class News {
 
 	public function getNewsById( int $id) :array {
 		$list = $this->msgs->selectDataFromTable( array( 'id'=>$id), "", 0, 'DESC', false, false, true);
+		if ( !$list ) return array();
 		$list['photo']  = "/NewsFoto/".$list['foto'];
 		$list['video']  = "//www.youtube.com/v/".$list['videoYT']."?hl=uk_UA&amp;version=3";
 		unset($getData);

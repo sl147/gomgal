@@ -167,19 +167,23 @@ require_once ('views/news/checkFiles.php');
 
 		$token     = $this->getToken();
 		$news      = $this->newsClass->getNewsById($id);
-		$newsCount = $this->newsClass->updateCountById($id,$news['countmsgs']);	
-		$newsOther = $this->newsClass->newsOther($id,$news['category'],$news['cat2']);
-		$comm      = $com->getCommentsById($id);
-		$meta      = $mt->getMTagsByUrl('fullnew');
-		$meta['title'] = $this->getMetaTitle($news['title']);
-		$meta['descr'] = $news['prew'];
-		$meta['keywords'] = $this->getMetaKeywords($news['title'],$news['category'],$news['cat2']);
-		$fb = 'https://www.gomgal.lviv.ua/Fullnew/'.$id;
-		$siteFile  = 'views/news/fullNew.php';
-		unset($com);
-		unset($mt);
+		if(count($news) === 0)  {
+        $siteFile  = 'views/news/404.php';
+    } else {
+			$newsCount = $this->newsClass->updateCountById($id,$news['countmsgs']);	
+			$newsOther = $this->newsClass->newsOther($id,$news['category'],$news['cat2']);
+			$comm      = $com->getCommentsById($id);
+			$meta      = $mt->getMTagsByUrl('fullnew');
+			$meta['title'] = $this->getMetaTitle($news['title']);
+			$meta['descr'] = $news['prew'];
+			$meta['keywords'] = $this->getMetaKeywords($news['title'],$news['category'],$news['cat2']);
+			$fb = 'https://www.gomgal.lviv.ua/Fullnew/'.$id;
+			$siteFile  = 'views/news/fullNew.php';
+			unset($com);
+			unset($mt);
+		}
 		require_once ('views/layouts/siteIndex.php');
-		return true;
+			return true;
 	}
 
 	public function actionnewsPrint($id) {
