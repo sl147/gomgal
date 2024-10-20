@@ -1,5 +1,6 @@
 <?php
 return array(
+'archives' => 'site/archive',
 'admin' => 'admin/index',
 'admin/page-([0-9]+)' => 'admin/index/$1',
 'apiSaveNews' => 'API/SaveNews',

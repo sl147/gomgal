@@ -33,4 +33,10 @@ class SiteController {
 		require_once ('views/layouts/siteIndex.php');
 		return true;	
 	}
+
+	public function actionArchive() {
+		$siteFile   = 'views/site/archive.php';
+		require_once ('views/layouts/siteIndex.php');
+		return true;
+	}
 }
