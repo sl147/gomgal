@@ -20,7 +20,11 @@
 		</div>
 <table class="table table-responsive table-striped table-hover">
 	<tbody>
-		<?php $j=1; foreach ($faList as $item) :?>
+		<?php $j=true; foreach ($faList as $item) :?>
+					<?php if($j) :?>
+						<?php $j=false;?>
+			<tr><td style="width: 100%;"><?=Auxiliary::getAdSence()?></td></tr>
+			<?php endif;?>
 			<tr>
 				<td>
 					<div class="row">
@@ -37,18 +41,7 @@
 					</div>									
 				</td>
 			</tr>
-			<?php $j++; if($j == 4) :?>
-			<tr>
-				<td>
-					<div class="row">
-					<div class="col-lg-2 col-md-2 col-sm-0 col-xs-0"></div>
-					<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-								<?=Auxiliary::getAdSence()?>
-					</div>
-				</div>
-				</td>
-			</tr>
-			<?php endif;?>
+
 		<?php endforeach; ?>
 	</tbody>
 </table>

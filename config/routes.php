@@ -1,6 +1,5 @@
 <?php
 return array(
-'archives' => 'site/archive',
 'admin' => 'admin/index',
 'admin/page-([0-9]+)' => 'admin/index/$1',
 'apiSaveNews' => 'API/SaveNews',
@@ -15,6 +14,7 @@ return array(
 'apiUpdateCountdoz' => 'API/apiUpdateCountdoz',
 'archive/([0-9]+)/([0-9]+)/page-([0-9]+)' => 'news/archive/$1/$2/$3',
 'archive/([0-9]+)/([0-9]+)' => 'news/archive/$1/$2',
+'archives' => 'site/archive',
 'cSubEdit' => 'calculator/cSubEdit',
 'calctypes' => 'calculator/typesCalculator',
 'cEdit' => 'calculator/edit',
@@ -61,6 +61,7 @@ return array(
 'newsEdit' => 'news/newsEdit',
 'newsFB' => 'news/FB_SDK',
 'newsPrint/([0-9]+)' => 'news/newsPrint/$1',
+'polityka' => 'site/polityka',
 'posterAdd' => 'poster/add',
 'posterCatFull/([0-9]+)/page-([0-9]+)' => 'poster/posterCatFull/$1/$2',
 'posterCatFull/([0-9]+)' => 'poster/posterCatFull/$1',
@@ -114,6 +115,5 @@ return array(
 'userWishes/page-([0-9]+)' => 'user/userWishes/$1',
 'userWishes' => 'user/userWishes',
 'page-([0-9]+)' => 'site/index/$1',
-'polityka' => 'site/polityka',
 '' => 'site/index',
 	);

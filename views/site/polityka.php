@@ -1,3 +1,4 @@
+<?php include 'views/layouts/hamburgerMenu.php';?>
 <h2 class="text-center">Політика приватності</h2>
 
 1. Вступ

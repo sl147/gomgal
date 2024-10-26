@@ -29,7 +29,7 @@
 		<?php endif; ?>
 		<?php $j++; if( ($j == 10) || ($j == 25) ) :?>
 			<tr >
-				<td colspan="7"><?=Auxiliary::getAdSence()?></td>
+				<td colspan="7" style="width: 100%;"><?=Auxiliary::getAdSence()?></td>
 			</tr>
 		<?php endif;?>
 	<?php endforeach; ?>
