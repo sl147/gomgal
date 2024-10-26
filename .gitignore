@@ -25,3 +25,7 @@
 /.htaccess1
 /facebook
 /controllers/Language
+/*.xml
+/Vue/selVoteAd1.php
+/Vue/editVoteAd1.php
+/js/vue/editVoteAd1.js
