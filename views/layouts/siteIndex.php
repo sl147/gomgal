@@ -1,4 +1,3 @@
-
 <html>
 	<head>
 		<?php include 'views/layouts/showHead.php';?>

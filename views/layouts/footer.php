@@ -29,7 +29,7 @@
 
 <div class="showSmall">
   <div class="row">
-    <div class='col-sm-12 col-xs-12 text-center'><a href="/polityka">Політика приватності</a></div>
-    <div class='col-sm-12 col-xs-12 text-center'><a href="/archives">Архіви новин</a></div>
+    <div class='col-sm-12 col-xs-12 text-center sl147_footer_small'><a href="/polityka">Політика приватності</a></div>
+    <div class='col-sm-12 col-xs-12 text-center sl147_footer_small'><a href="/archives">Архіви новин</a></div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="text-align: center;">
+		<div class="col-lg-3 col-md-4 col-sm-3 col-xs-12 text-center">
 			<a href="/main">
 				<img src="/image/gg.png" alt="Гомін Галичини" title="новини з Галичини оголошення" height="50" width="auto"> 
 			</a>
@@ -8,7 +8,7 @@
 				<script type="text/javascript">datecurr()</script>	
 			</div>
 		</div>
-		<div class="col-lg-9 col-md-9 col-sm-6 col-xs-12">
+		<div class="col-lg-9 col-md-8 col-sm-9 col-xs-12">
 			<nav class="main_menu clearfix">
 				<?php include 'views/layouts/headerMenu.php' ?>
 			</nav>

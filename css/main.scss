@@ -139,8 +139,14 @@ visibility: hidden;
 
 .btn-delta11{
 	color:#fff;
-	background-color:#d9534f;
-	border-color:#d43f3a
+	background-color:#d9534f; /* EE1289 */
+	border-color:#d43f3a;
+	@media only screen and (min-width : 993px) {
+		font-size: 9px;
+	}
+	@media only screen and (min-width : 1400px) {
+		font-size: 14px;
+	}
 }
 
 .btn-delta11.focus,.btn-delta11:focus{
@@ -648,4 +654,8 @@ border-radius: 10px;
  }
  .sl147_polityka_ul {
  	margin-left: 65px;
+ }
+ .sl147_footer_small{
+ 	font-size: 22px;
+ 	margin-bottom: 15px;
  }
