@@ -13,6 +13,7 @@
 							<th class="width_th_photoalbum text-center">редагувати назву і опис фотоальбому</th>
 							<th class="width_th_photoalbum text-center">видалити фотоальбом</th>
 							<th class="width_th_photoalbum text-center">редагувати фотографії</th>
+							<th class="width_th_photoalbum text-center">перемішати фотографії</th>
 						</tr>					
 					</thead>
 					<tbody>
@@ -36,6 +37,11 @@
 						</td>
 						<td class="text-center">
 							<a v-bind:href="/faEditOne/+item.id_FA" title='редагувати фотографії фотоальбому' class='btn btn-default btn-lg'>
+								<i class="fa fa-edit fa-fw"></i>
+							</a>
+						</td>
+						<td class="text-center">
+							<a v-bind:href="/FAdrugndropAlbum/+item.id_FA" title='перемішати фотографії фотоальбому' class='btn btn-default btn-lg'>
 								<i class="fa fa-edit fa-fw"></i>
 							</a>
 						</td>

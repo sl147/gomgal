@@ -11,6 +11,11 @@ class Video extends classGetDB {
 		$this->progrnk = new classGetData('progrnk');
 	}
 
+	public function getAllVideo( ) :array {
+		//return (array) $this->msgs_relax->selectDataFromTable( array(), '', 0, 'DESC', false);
+		return (array) $this->progrnk->selectDataFromTable( array(), '', 0, 'DESC', true);
+	}
+
 	public  function getVideo(int $page) {
 		$result  = $this->progrnk->selectDataFromTable( array(), 'prid', SHOWVIDEO_BY_DEFAULT, 'DESC', false, false, false, true, $page );
 		$i       = 0;

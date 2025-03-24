@@ -4,6 +4,21 @@ class AdminController {
 
 	use traitAuxiliary;
 
+	public function actionOutExcell() {
+		$class   = new News; //Video();
+		$arr = $class->getAllNews(); //getAllVideo();
+		/*echo '<pre>';
+		var_dump($arr);
+		echo '</pre>';*/
+		//require_once 'PHPExcel-1.8/Classes/PHPExcel.php';
+		//require_once ('PHPExcel-1.8/template/out_video.php');
+		require_once ('PHPExcel-1.8/template/out_news.php');
+		$loc="Location:".$_SERVER['HTTP_REFERER'];
+ 		//header( $loc);
+ 		//echo "<br><br><br><br><br><br><br><br><br><br><br><br>starting11111";
+		return true;
+	}
+
 	public function actionIndex($page = 1) {
 		require_once ('views/admin/main.php');
 		return true;

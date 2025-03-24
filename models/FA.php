@@ -35,6 +35,7 @@ class FA  extends classGetDB {
 		while ($row = $result->fetch()) {			
 			$faList[$i]['id']   = $row['id_FA'];
 			$faList[$i]['name'] = $row['name_FA'];
+			$faList[$i]['msgs'] = $row['msgs_FA'];
 			$foto               = self::getFAOne($row['id_FA']);
 			if ( count($foto) ) {
 				$faList[$i]['foto'] = $foto[1]["fotoName"];

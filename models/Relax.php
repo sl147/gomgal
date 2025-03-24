@@ -63,6 +63,11 @@ class Relax {
 			);	
 	}
 
+	public function getAllRelax( ) :array {
+		//return (array) $this->msgs_relax->selectDataFromTable( array(), '', 0, 'DESC', false);
+		return (array) $this->msgs_relax->selectDataFromTable( array(), '', 0, 'DESC', true);
+	}
+
 	public function getRelaxAll( int $page ) :array {
 		return (array) $this->msgs_relax->selectDataFromTable( array(), 'id', SHOWRELAX_BY_DEFAULT, 'DESC', true, false, false, true, $page );
 	}

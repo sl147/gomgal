@@ -61,6 +61,8 @@
 					<li>
 						<a class="btn btn-block btn-info" href="/FAedit" title="редагування фотоальбомів">редагування фотоальбомів</a>
 					</li>
+					<?php Auxiliary::showElementMenu("FAdrugndrop","перетягування фото","перетягування фото");?>
+					<?php Auxiliary::showElementMenu("FAdrugndropAll","перетягування фото","перетягування фото");?>
 				</ul>			
 			</div> 
 			<div class="btn-group btn-group-justified">
@@ -106,6 +108,7 @@
 					<?php Auxiliary::showElementMenu("countClickButton","переходи по типах кнопок","переходи по типах кнопок")?>
 					<?php Auxiliary::showElementMenu("checkFilesNews","Видалення фото","Видалення фото")?>
 					<?php Auxiliary::showElementMenu("usersView","Перегляд користувачів","Перегляд користувачів")?>
+					<?php Auxiliary::showElementMenu("outExcell","Вигрузка в Excell","Вигрузка в Excell")?>
 				</ul>		
 			</div>
 			<?php if ( (User::isGuest()) && (User::isGuest()['login'] == 'sl147adm')) :?>

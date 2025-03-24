@@ -92,9 +92,9 @@
 		</div>
 	</div>
 
-			</div>
-			<?php include 'views/layouts/footerAdmin.php';?>
-			<script>
-				window.table=<?= $json ?>;
-			</script>
-			<script src="../js/vue/FAOne.js"></script>
+</div>
+<?php include 'views/layouts/footerAdmin.php';?>
+<script>
+	window.table=<?= $json ?>;
+</script>
+<script src="../js/vue/FAOne.js"></script>

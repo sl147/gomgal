@@ -27,3 +27,5 @@ ssnowStick = 1;
 sfollowMouse = 1;
 </script>
 <!-- <script type="text/javascript" src="/js/snow.js"></script> -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9370914710542990"
+     crossorigin="anonymous"></script>

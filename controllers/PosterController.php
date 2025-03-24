@@ -6,7 +6,7 @@ class PosterController {
 	use traitAuxiliary;
 
 	public function __construct() {
-		$this->poster   = new Poster();
+		$this->poster = new Poster();
 	}
 
 	public function actionIndex() {

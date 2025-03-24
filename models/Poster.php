@@ -12,6 +12,10 @@ class Poster  extends classGetDB {
 		$this->show     = 30;
 	}
 
+	public function getAllPosters( ) :array {
+		return (array) $this->poster->selectDataFromTable( array(), '', 0, 'DESC', true);
+	}
+
 	public function getPosters20() {
 		return $this->poster->selectDataFromTable( array( 'active' => 0 ), 'id_poster', 20);
 	}
@@ -75,13 +79,16 @@ class Poster  extends classGetDB {
 				$count_all[$j][$row['id_cat']] = 0;
 			}
 		}
+
 		$result = $this->poster->selectDataFromTable( array(), "", 0, 'DESC', false);
+
 		while ($row = $result->fetch()) {
 		    $type_p = $this->getIntval($row['type_p']);
 		    $cat_p  = $this->getIntval($row['cat_p']);
 		    $count_all[$type_p][$cat_p] +=1;
 		}
 		$type_cat = $this->getTypeCategory();
+		$category = $this->category->selectDataFromTable( array(), "", 0, 'DESC', false);
 		while ($row = $category->fetch()) {
             $id_cat = $row['id_cat'];
             $args = array(

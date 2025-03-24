@@ -94,4 +94,33 @@ class FAController {
 			header ("Location: /FAedit");
 		}
 	}
+
+private function dr($id,$v) {
+	$faList = $this->FA->getFAOne($id);
+		if( empty($faList)) return;
+		$nameFA = $this->FA->getFAId($id);
+		$var=$v;
+		require_once ('views/FA/drugndrop.php');
+		return true;
+}
+	public function actionDrugndrop(){
+		$id = 106;
+		$var=1;
+		$this->dr($id,$var);
+		return true;
+	}
+
+	public function actionDrugndropAlbum( $idd ){
+		$id = $idd;
+		$var=2;
+		$this->dr($id, $var);
+		return true;
+	}
+
+	public function actionDrugndropAll(){
+		//$faList     = $this->FA->getFAAll($page);
+		$faList     = $this->FA->getFAAll();
+		require_once ('views/FA/edit_drugndrop.php');
+		return true;
+	}
 }

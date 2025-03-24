@@ -1,6 +1,12 @@
 User-Agent:*
 
+Disallow:/archive/
 
+Disallow:/archive/
+
+Disallow:/posterCatFull/16/page-3/
+
+Disallow:/Fullnew/4917/
 
 Disallow:/addVote.php
 
@@ -43,9 +49,3 @@ Disallow:/login.php
 Disallow:/newsFromFile.php
 
 Disallow:/verifyCat.php
-
-
-
-Host: gomgal.lviv.ua
-
-Sitemap: http://gomgal.lviv.ua/210711.xml

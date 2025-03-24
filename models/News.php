@@ -79,6 +79,10 @@ class News {
 		return $this->msgs->selectDataFromTable( array(), 'id', self::SHOWNEWS_BY_DEFAULT_Vue, 'DESC', true, true, false, true, $page);
 	}
 
+	public function getAllNews( ) :array {
+		return (array) $this->msgs->selectDataFromTable( array(), '', 0, 'DESC', true);
+	}
+
 	public function getNews() : array {
 		$result = $this->msgs->selectDataFromTable( array(), 'id', 25, 'DESC', false, false, false, true, 1);
 		$i      = 0;

@@ -14,7 +14,10 @@ class SiteController {
 		$allNews = $news->getLatestNews($month, $year, $page);
 		if (count($allNews) == 0) {
 			$month--;
-			$month = ($month == 0) ? 12 : $month;
+			if( 0 == $month){
+				$year  -= 1;
+				$month = 12;
+			}
 			$allNews = $news->getLatestNews($month, $year, $page);			 
 		}
 		$total   = $news->getTotalNews($month, $year);
